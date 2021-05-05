@@ -1,20 +1,34 @@
 package fr.laboulangerie.laboulangeriemmo.utils;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class FileUtils {
 
-
-
-    public static void save(String name, String content) {
-        File file = new File(name);
+    public static String read(File file) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+    public static void save(File file, String content) {
         File parentFile = file.getParentFile();
         if (!parentFile.exists())parentFile.mkdir();
 
         if(!file.exists()) {
             try {
                 file.createNewFile();
+
+                FileWriter writer = new FileWriter(file);
+                writer.write(content);
+                writer.flush();
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

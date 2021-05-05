@@ -7,12 +7,13 @@ public class BlockusRestoration extends BukkitRunnable {
 
     private LaBoulangerieMmo laBoulangerieMmo;
 
-    public BlockusRestoration(BlockusDataManager blockusDataManager) {
-        this.blockusDataManager = blockusDataManager;
+    public BlockusRestoration(LaBoulangerieMmo laBoulangerieMmo) {
+        this.laBoulangerieMmo = laBoulangerieMmo;
     }
 
     @Override
     public void run() {
-
+        BlockusDataHolder blockusDataHolder = this.laBoulangerieMmo.getBlockusDataManager().getBlockusDataHolder();
+        blockusDataHolder.getBlockuses().forEach(blockus -> blockus.markAsBlockus(this.laBoulangerieMmo));
     }
 }
