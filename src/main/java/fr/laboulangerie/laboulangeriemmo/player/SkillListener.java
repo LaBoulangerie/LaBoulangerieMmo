@@ -8,5 +8,9 @@ public class SkillListener implements Listener {
 
     private LaBoulangerieMmo laBoulangerieMmo;
 
+    public SkillListener(LaBoulangerieMmo laBoulangerieMmo) {
+        this.laBoulangerieMmo = laBoulangerieMmo;
+    }
+
 
 }

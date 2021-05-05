@@ -1,9 +1,11 @@
 package fr.laboulangerie.laboulangeriemmo.player;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -28,5 +30,15 @@ public class MmoPlayerListener implements Listener {
     public void onLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         this.mmoPlayerManager.savePlayerData(player);
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
+        Block block = event.getBlock();
+
+        MmoPlayer mmoPlayer = this.mmoPlayerManager.getPlayer(player);
+        MmoPlayerBreakBlockEvent breakBlockEvent = new MmoPlayerBreakBlockEvent(player, mmoPlayer, block);
+        this.laBoulangerieMmo.getServer().getPluginManager().callEvent(breakBlockEvent);
     }
 }
