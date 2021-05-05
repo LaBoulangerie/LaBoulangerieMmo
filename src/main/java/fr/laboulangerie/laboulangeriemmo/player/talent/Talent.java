@@ -1,13 +1,15 @@
 package fr.laboulangerie.laboulangeriemmo.player.talent;
 
-import java.util.List;
+import fr.laboulangerie.laboulangeriemmo.player.ability.Abilities;
+
+import java.util.Map;
 
 public interface Talent {
 
 
     int getXp();
 
-    List<Ability> getAbilities();
+    Map<Abilities, Long> getAbilities();
 
     void incrementXp(int amount);
 

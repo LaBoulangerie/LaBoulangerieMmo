@@ -15,6 +15,9 @@ public class MmoPlayer implements GsonSerializable {
     private Set<Talent> talents;
 
     public MmoPlayer(Player player) {
+        this.uniqueId = player.getUniqueId();
+        this.name = player.getName();
+
 
     }
 }
