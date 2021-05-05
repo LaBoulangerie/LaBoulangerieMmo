@@ -12,7 +12,8 @@ public abstract class AbilityExecutor {
     public abstract AbilityTrigger getAbilityTrigger();
 
     /**
-     * shouldTrigger method indicate if the ability should trigger or not based on the event where it happen
+     * shouldTrigger method indicate if the ability should trigger or not based on the event where it happen.
+     * ps: the cooldown will be managed elsewhere
      * @param baseEvent can be any instance of Event
      * @return True if the ability can trigger,false if not
      */
