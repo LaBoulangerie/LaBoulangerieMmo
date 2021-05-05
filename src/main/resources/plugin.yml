@@ -1,0 +1,5 @@
+name: LaBoulangerieMmo
+version: ${project.version}
+main: fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
+api-version: 1.16
+authors: [ TheHunter365 ]
