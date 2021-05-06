@@ -8,7 +8,6 @@ public class Mining implements Talent {
 
     private int xp;
 
-
     @Override
     public int getXp() {
         return 0;
