@@ -13,7 +13,7 @@ public class AbilitiesManager implements Listener {
     public void onClick(PlayerInteractEvent event) {
         switch (event.getAction()) {
             case LEFT_CLICK_AIR:
-                Abilities.stream()
+                Abilities.supplier().get()
                     .filter(x -> 
                         x.getExecutor().getAbilityTrigger() == AbilityTrigger.CLICK_AIR
                         && x.getExecutor().shouldTrigger(event)
@@ -21,7 +21,7 @@ public class AbilitiesManager implements Listener {
                     .forEach(x -> x.getExecutor().trigger(event));
                 break;
             case LEFT_CLICK_BLOCK:
-                Abilities.stream()
+                Abilities.supplier().get()
                     .filter(x -> 
                         x.getExecutor().getAbilityTrigger() == AbilityTrigger.CLICK_BLOCK
                         && x.getExecutor().shouldTrigger(event)
@@ -35,7 +35,7 @@ public class AbilitiesManager implements Listener {
 
     @EventHandler
     public void onConsumeItem(PlayerItemConsumeEvent event) {
-        Abilities.stream()
+        Abilities.supplier().get()
             .filter(x -> 
                 x.getExecutor().getAbilityTrigger() == AbilityTrigger.EAT
                 && x.getExecutor().shouldTrigger(event)
@@ -45,7 +45,7 @@ public class AbilitiesManager implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        Abilities.stream()
+        Abilities.supplier().get()
             .filter(x -> 
                 x.getExecutor().getAbilityTrigger() == AbilityTrigger.PLACE
                 && x.getExecutor().shouldTrigger(event)
@@ -55,7 +55,7 @@ public class AbilitiesManager implements Listener {
 
     @EventHandler
     public void onClickEntity(PlayerInteractEntityEvent event) {
-        Abilities.stream()
+        Abilities.supplier().get()
             .filter(x -> 
                 x.getExecutor().getAbilityTrigger() == AbilityTrigger.CLICK_ENTITY
                 && x.getExecutor().shouldTrigger(event)

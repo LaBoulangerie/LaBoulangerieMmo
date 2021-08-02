@@ -1,6 +1,7 @@
 package fr.laboulangerie.laboulangeriemmo.player.ability;
 
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public enum Abilities {
@@ -30,8 +31,8 @@ public enum Abilities {
         return this.executor;
     }
 
-    public static Stream<Abilities> stream() {
-        return Stream.of(Abilities.values());
+    public static Supplier<Stream<Abilities>> supplier() {
+        return () -> Stream.of(Abilities.values());
     }
 
 }
