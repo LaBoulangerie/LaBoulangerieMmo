@@ -8,6 +8,8 @@ import fr.laboulangerie.laboulangeriemmo.listener.ServerListener;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayerListener;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayerManager;
 import fr.laboulangerie.laboulangeriemmo.player.SkillListener;
+import fr.laboulangerie.laboulangeriemmo.player.ability.AbilitiesManager;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -22,6 +24,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
         this.serializer = new GsonSerializer();
 
         this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
@@ -49,10 +52,11 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     private void registerListeners() {
         Arrays.asList(
-               new ServerListener(this),
+                new ServerListener(this),
                 new BlockusListener(this),
                 new MmoPlayerListener(this),
-                new SkillListener(this)
+                new SkillListener(this),
+                new AbilitiesManager()
         ).forEach(l->this.getServer().getPluginManager().registerEvents(l, this));
     }
 
