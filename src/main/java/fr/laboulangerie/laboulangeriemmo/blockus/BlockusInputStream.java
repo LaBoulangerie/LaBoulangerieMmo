@@ -13,6 +13,7 @@ public class BlockusInputStream extends FileInputStream {
 
     public BlockusDataHolder readBlockuses() throws IOException, ClassNotFoundException {
         int size = this.read();
+        if (size == -1) return null;
         byte[] buffer = new byte[size];
 
         this.read(buffer, 4, size);
