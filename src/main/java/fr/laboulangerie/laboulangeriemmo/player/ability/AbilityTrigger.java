@@ -3,15 +3,16 @@ package fr.laboulangerie.laboulangeriemmo.player.ability;
 public enum AbilityTrigger {
 
 
-    CLICK_AIR,
+    LEFT_CLICK_AIR,
+    RIGHT_CLICK_AIR,
 
-    CLICK_ENTITY,
+    LEFT_CLICK_ENTITY,
+    RIGHT_CLICK_ENTITY,
 
-    CLICK_BLOCK,
+    LEFT_CLICK_BLOCK,
+    RIGHT_CLICK_BLOCK,
 
     PLACE,
 
     EAT,
-
-
 }

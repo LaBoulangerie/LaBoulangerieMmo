@@ -12,7 +12,7 @@ public class FastMine extends AbilityExecutor {
 
     @Override
     public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.CLICK_BLOCK;
+        return AbilityTrigger.LEFT_CLICK_BLOCK;
     }
 
     @Override
