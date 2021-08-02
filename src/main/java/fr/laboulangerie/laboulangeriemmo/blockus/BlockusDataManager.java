@@ -24,6 +24,9 @@ public class BlockusDataManager {
         } catch (IOException | ClassNotFoundException ignored) {
             this.blockusDataHolder = new BlockusDataHolder();
         }
+        if (this.blockusDataHolder == null) {
+            this.blockusDataHolder = new BlockusDataHolder();
+        }
     }
 
 
