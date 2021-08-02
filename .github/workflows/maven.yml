@@ -20,5 +20,5 @@ jobs:
         run: mvn clean package
       - uses: actions/upload-artifact@v1
         with:
-          name: artifact
+          name: laboulangeriemmo
           path: target
