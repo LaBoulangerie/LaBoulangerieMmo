@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import com.google.gson.JsonSyntaxException;
+
 public class MmoPlayerManager {
 
     private GsonSerializer serializer;
@@ -45,11 +47,17 @@ public class MmoPlayerManager {
 
     public void loadPlayerData(Player player) {
         String uniqueId = player.getUniqueId().toString();
-        String json = FileUtils.read(new File(this.playersFolder, uniqueId+".json"));
-        if (!json.equals("")) {
-            MmoPlayer mmoPlayer = (MmoPlayer) this.serializer.deserialize(json, MmoPlayer.class);
-            this.playersMap.put(uniqueId, mmoPlayer);
-        } else {
+
+        try {
+            File file = new File(this.playersFolder, uniqueId + ".json");
+            if (!file.exists()) throw new JsonSyntaxException("hacky");
+            String json = FileUtils.read(file);
+
+            if (!json.equals("")) {
+                MmoPlayer mmoPlayer = (MmoPlayer) this.serializer.deserialize(json, MmoPlayer.class);
+                this.playersMap.put(uniqueId, mmoPlayer);
+            }
+        } catch (JsonSyntaxException e) {
             MmoPlayer mmoPlayer = new MmoPlayer(player);
             this.playersMap.put(uniqueId, mmoPlayer);
         }

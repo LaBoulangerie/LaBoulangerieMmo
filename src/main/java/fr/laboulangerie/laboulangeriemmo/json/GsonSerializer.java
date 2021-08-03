@@ -2,6 +2,7 @@ package fr.laboulangerie.laboulangeriemmo.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 public class GsonSerializer {
 
@@ -19,7 +20,7 @@ public class GsonSerializer {
         return this.gson.toJson(serializable);
     }
 
-    public GsonSerializable deserialize(String json, Class<? extends GsonSerializable> type) {
+    public GsonSerializable deserialize(String json, Class<? extends GsonSerializable> type) throws JsonSyntaxException{
         return this.gson.fromJson(json, type);
     }
 }
