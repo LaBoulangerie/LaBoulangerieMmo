@@ -10,56 +10,68 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import fr.laboulangerie.laboulangeriemmo.player.MmoPlayerManager;
+import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 
 public class AbilitiesManager implements Listener {
 
     private LaBoulangerieMmo plugin;
-    private MmoPlayerManager players;
 
     public AbilitiesManager(LaBoulangerieMmo plugin) {
         this.plugin = plugin;
-        this.players = plugin.getMmoPlayerManager();
     }
 
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
+        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
+
         switch (event.getAction()) {
             case LEFT_CLICK_AIR:
                 Abilities.supplier().get()
                     .filter(x ->
-                        players.getPlayer(event.getPlayer()).getTalent(x.getParentTalent()).getLevel(0) >= x.getRequiredLevel()
-                        && x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_AIR
+                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_AIR
+                        && player.canUseAbility(x)
                         && x.getExecutor().shouldTrigger(event)
                     )
-                    .forEach(x -> x.getExecutor().trigger(event));
+                    .forEach(x -> {
+                        x.getExecutor().trigger(event);
+                        player.useAbility(x);
+                    });
                 break;
             case RIGHT_CLICK_AIR:
                 Abilities.supplier().get()
                     .filter(x ->
-                        players.getPlayer(event.getPlayer()).getTalent(x.getParentTalent()).getLevel(0) >= x.getRequiredLevel()
-                        && x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_AIR
+                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_AIR
+                        && player.canUseAbility(x)
                         && x.getExecutor().shouldTrigger(event)
                     )
-                    .forEach(x -> x.getExecutor().trigger(event));
+                    .forEach(x -> {
+                        x.getExecutor().trigger(event);
+                        player.useAbility(x);
+                    });
                 break;
             case LEFT_CLICK_BLOCK:
                 Abilities.supplier().get()
-                    .filter(x -> 
-                        players.getPlayer(event.getPlayer()).getTalent(x.getParentTalent()).getLevel(0) >= x.getRequiredLevel()
-                        && x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_BLOCK
+                    .filter(x ->
+                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_BLOCK
+                        && player.canUseAbility(x)
                         && x.getExecutor().shouldTrigger(event)
                     )
-                    .forEach(x -> x.getExecutor().trigger(event));
+                    .forEach(x -> {
+                        x.getExecutor().trigger(event);
+                        player.useAbility(x);
+                    });
                 break;
             case RIGHT_CLICK_BLOCK:
                 Abilities.supplier().get()
-                    .filter(x -> 
-                        players.getPlayer(event.getPlayer()).getTalent(x.getParentTalent()).getLevel(0) >= x.getRequiredLevel()
-                        && x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_BLOCK
+                    .filter(x ->
+                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_BLOCK
+                        && player.canUseAbility(x)
                         && x.getExecutor().shouldTrigger(event)
                     )
-                    .forEach(x -> x.getExecutor().trigger(event));
+                    .forEach(x -> {
+                        x.getExecutor().trigger(event);
+                        player.useAbility(x);
+                    });
                 break;
             default:
                 break;
@@ -68,47 +80,64 @@ public class AbilitiesManager implements Listener {
 
     @EventHandler
     public void onConsumeItem(PlayerItemConsumeEvent event) {
+        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
-            .filter(x -> 
-                players.getPlayer(event.getPlayer()).getTalent(x.getParentTalent()).getLevel(0) >= x.getRequiredLevel()
-                && x.getExecutor().getAbilityTrigger() == AbilityTrigger.EAT
+            .filter(x ->
+                x.getExecutor().getAbilityTrigger() == AbilityTrigger.EAT
+                && player.canUseAbility(x)
                 && x.getExecutor().shouldTrigger(event)
             )
-            .forEach(x -> x.getExecutor().trigger(event));
+            .forEach(x -> {
+                x.getExecutor().trigger(event);
+                player.useAbility(x);
+            });
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
+        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
-            .filter(x -> 
-                players.getPlayer(event.getPlayer()).getTalent(x.getParentTalent()).getLevel(0) >= x.getRequiredLevel()
-                && x.getExecutor().getAbilityTrigger() == AbilityTrigger.PLACE
+            .filter(x ->
+                x.getExecutor().getAbilityTrigger() == AbilityTrigger.PLACE
+                && player.canUseAbility(x)
                 && x.getExecutor().shouldTrigger(event)
             )
-            .forEach(x -> x.getExecutor().trigger(event));
+            .forEach(x -> {
+                x.getExecutor().trigger(event);
+                player.useAbility(x);
+            });
     }
 
     @EventHandler
     public void onClickEntity(PlayerInteractEntityEvent event) {
+        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
-            .filter(x -> 
-                players.getPlayer(event.getPlayer()).getTalent(x.getParentTalent()).getLevel(0) >= x.getRequiredLevel()
-                && x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_ENTITY
+            .filter(x ->
+                x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_ENTITY
+                && player.canUseAbility(x)
                 && x.getExecutor().shouldTrigger(event)
             )
-            .forEach(x -> x.getExecutor().trigger(event));
+            .forEach(x -> {
+                x.getExecutor().trigger(event);
+                player.useAbility(x);
+            });
     }
 
     @EventHandler
     public void onHurtEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
+
+            MmoPlayer player = plugin.getMmoPlayerManager().getPlayer((Player) event.getDamager());
             Abilities.supplier().get()
-                .filter(x -> 
-                    players.getPlayer((Player) event.getDamager()).getTalent(x.getParentTalent()).getLevel(0) >= x.getRequiredLevel()
-                    && x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_ENTITY
+                .filter(x ->
+                    x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_ENTITY
+                    && player.canUseAbility(x)
                     && x.getExecutor().shouldTrigger(event)
                 )
-                .forEach(x -> x.getExecutor().trigger(event));
+                .forEach(x -> {
+                    x.getExecutor().trigger(event);
+                    player.useAbility(x);
+                });
         }
     }
 }

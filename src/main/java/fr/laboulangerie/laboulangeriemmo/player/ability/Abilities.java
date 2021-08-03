@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public enum Abilities {
 
-    FAST_MINE(5, TimeUnit.MINUTES, 0, "mining", new FastMine());
+    FAST_MINE(0, TimeUnit.SECONDS, 25, "mining", new FastMine());
 
 
     private int requiredLevel;
@@ -23,6 +23,7 @@ public enum Abilities {
     ) {
         this.requiredLevel = requiredLevel;
         this.cooldownUnit = cooldownUnit;
+        this.cooldown = cooldown;
         this.parentTalent = parentTalent;
         this.executor = executor;
     }
