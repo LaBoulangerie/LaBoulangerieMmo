@@ -1,6 +1,5 @@
 package fr.laboulangerie.laboulangeriemmo.player;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -8,9 +7,7 @@ import org.bukkit.entity.Player;
 
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Baking;
-import fr.laboulangerie.laboulangeriemmo.player.talent.Excavation;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Fishing;
-import fr.laboulangerie.laboulangeriemmo.player.talent.Herbalism;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Mining;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
 import fr.laboulangerie.laboulangeriemmo.player.talent.WoodCutting;
