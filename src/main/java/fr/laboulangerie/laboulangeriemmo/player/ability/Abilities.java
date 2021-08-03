@@ -6,29 +6,37 @@ import java.util.stream.Stream;
 
 public enum Abilities {
 
-    FAST_MINE(0, TimeUnit.MINUTES, 0, null, new FastMine());
+    FAST_MINE(0, TimeUnit.MINUTES, 0, "mining", new FastMine());
 
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;
     private int cooldown;
 
-    private Class<?> parentTalentClass;
+    private String parentTalent;
     private AbilityExecutor executor;
 
     Abilities(
         int requiredLevel, TimeUnit cooldownUnit,
-        int cooldown, Class<?> parentTalentClass, 
+        int cooldown, String parentTalent, 
         AbilityExecutor executor
     ) {
         this.requiredLevel = requiredLevel;
         this.cooldownUnit = cooldownUnit;
-        this.parentTalentClass = parentTalentClass;
+        this.parentTalent = parentTalent;
         this.executor = executor;
     }
 
     public AbilityExecutor getExecutor() {
         return this.executor;
+    }
+
+    public String getParentTalent() {
+        return parentTalent;
+    }
+
+    public int getRequiredLevel() {
+        return requiredLevel;
     }
 
     public static Supplier<Stream<Abilities>> supplier() {
