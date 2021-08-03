@@ -12,6 +12,7 @@ out/
 .classpath
 .project
 .settings
+.vscode
 
 # Compiled class file
 *.class
