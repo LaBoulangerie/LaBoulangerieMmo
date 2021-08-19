@@ -7,11 +7,7 @@ import org.bukkit.entity.Player;
 
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 import fr.laboulangerie.laboulangeriemmo.player.ability.Abilities;
-import fr.laboulangerie.laboulangeriemmo.player.talent.Baking;
-import fr.laboulangerie.laboulangeriemmo.player.talent.Fishing;
-import fr.laboulangerie.laboulangeriemmo.player.talent.Mining;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
-import fr.laboulangerie.laboulangeriemmo.player.talent.WoodCutting;
 
 public class MmoPlayer implements GsonSerializable {
 
@@ -26,10 +22,10 @@ public class MmoPlayer implements GsonSerializable {
         this.name = player.getName();
 
         talents = new HashMap<String, Talent>();
-        talents.put("baking", new Baking());
-        talents.put("fishing", new Fishing());
-        talents.put("mining", new Mining());
-        talents.put("woodcutting", new WoodCutting());
+        talents.put("baking", new Talent("baking"));
+        talents.put("fishing", new Talent("fishing"));
+        talents.put("mining", new Talent("mining"));
+        talents.put("woodcutting", new Talent("woodcutting"));
 
         cooldownsHolder = new CooldownsHolder();
     }

@@ -1,19 +1,31 @@
 package fr.laboulangerie.laboulangeriemmo.player.talent;
 
-import fr.laboulangerie.laboulangeriemmo.player.ability.Abilities;
+public class Talent {
 
-import java.util.Map;
+    private int xp = 0;
+    private String talentId;
 
-public interface Talent {
+    public Talent() {
+        talentId = "default";
+    }
 
+    public Talent(String talentId) {
+        this.talentId = talentId;
+    }
 
-    int getXp();
+    public int getXp() {
+        return xp;
+    }
 
-    Map<Abilities, Long> getAbilities();
+    public void incrementXp(int amount) {
+        xp += amount;
+    }
 
-    void incrementXp(int amount);
+    public int getLevel(double multiplier) {
+        return (int) Math.round(multiplier * Math.sqrt(this.getXp()));
+    }
 
-    default int getLevel(double multiplier) {
-        return (int)Math.round(multiplier*Math.sqrt(this.getXp()));
+    public String getTalentId() {
+        return talentId;
     }
 }
