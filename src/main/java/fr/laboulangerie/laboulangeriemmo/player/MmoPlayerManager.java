@@ -1,16 +1,18 @@
 package fr.laboulangerie.laboulangeriemmo.player;
 
-import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
-import fr.laboulangerie.laboulangeriemmo.utils.FileUtils;
-import org.bukkit.entity.Player;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import com.google.gson.JsonSyntaxException;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
+import fr.laboulangerie.laboulangeriemmo.utils.FileUtils;
 
 public class MmoPlayerManager {
 
@@ -67,5 +69,7 @@ public class MmoPlayerManager {
         return this.playersMap.get(player.getUniqueId().toString());
     }
 
-
+    public void savePlayersData() {
+        Bukkit.getOnlinePlayers().stream().forEach(p -> savePlayerData(p));
+    }
 }
