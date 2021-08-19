@@ -27,22 +27,23 @@ public class LaBoulangerieMmo extends JavaPlugin {
         this.saveDefaultConfig();
         this.serializer = new GsonSerializer();
 
-        this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
+        // TODO uncomment when blockus is fixed
+        // this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
         this.mmoPlayerManager = new MmoPlayerManager(this);
 
-        BlockusRestoration blockusRestoration = new BlockusRestoration(this);
-        blockusRestoration.runTaskLater(this, 20);
+        // BlockusRestoration blockusRestoration = new BlockusRestoration(this);
+        // blockusRestoration.runTaskLater(this, 20);
 
         this.registerListeners();
     }
 
     @Override
     public void onDisable() {
-        try {
-            this.blockusDataManager.writeBlockuses();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // try {
+        //     this.blockusDataManager.writeBlockuses();
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     public GsonSerializer getSerializer() {
