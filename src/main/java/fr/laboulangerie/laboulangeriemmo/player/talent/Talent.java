@@ -1,8 +1,7 @@
 package fr.laboulangerie.laboulangeriemmo.player.talent;
 
 public class Talent {
-
-    private int xp = 0;
+    private double xp = 0;
     private String talentId;
 
     public Talent() {
@@ -13,11 +12,11 @@ public class Talent {
         this.talentId = talentId;
     }
 
-    public int getXp() {
+    public double getXp() {
         return xp;
     }
 
-    public void incrementXp(int amount) {
+    public void incrementXp(double amount) {
         xp += amount;
     }
 
