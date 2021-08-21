@@ -3,13 +3,16 @@ package fr.laboulangerie.laboulangeriemmo.player.talent;
 public class Talent {
     private double xp = 0;
     private String talentId;
+    private String displayName;
 
     public Talent() {
         talentId = "default";
+        displayName = "default";
     }
 
-    public Talent(String talentId) {
+    public Talent(String talentId, String displayName) {
         this.talentId = talentId;
+        this.displayName = displayName;
     }
 
     public double getXp() {
@@ -26,5 +29,9 @@ public class Talent {
 
     public String getTalentId() {
         return talentId;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }

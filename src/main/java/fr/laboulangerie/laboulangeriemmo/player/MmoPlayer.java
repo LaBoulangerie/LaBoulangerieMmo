@@ -2,6 +2,9 @@ package fr.laboulangerie.laboulangeriemmo.player;
 
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.stream.Stream;
+
+import com.google.common.base.Supplier;
 
 import org.bukkit.entity.Player;
 
@@ -22,10 +25,10 @@ public class MmoPlayer implements GsonSerializable {
         this.name = player.getName();
 
         talents = new HashMap<String, Talent>();
-        talents.put("baking", new Talent("baking"));
-        talents.put("fishing", new Talent("fishing"));
-        talents.put("mining", new Talent("mining"));
-        talents.put("woodcutting", new Talent("woodcutting"));
+        talents.put("baking", new Talent("baking", "Boulanger"));
+        talents.put("fishing", new Talent("fishing", "Pêcheur"));
+        talents.put("mining", new Talent("mining", "Mineur"));
+        talents.put("woodcutting", new Talent("woodcutting", "Bûcheron"));
 
         cooldownsHolder = new CooldownsHolder();
     }
@@ -49,5 +52,9 @@ public class MmoPlayer implements GsonSerializable {
 
     public UUID getUniqueId() {
         return uniqueId;
+    }
+
+    public Supplier<Stream<Talent>> streamTalents() {
+        return () -> talents.values().stream();
     }
 }
