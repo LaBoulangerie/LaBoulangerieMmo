@@ -3,3 +3,11 @@ version: ${project.version}
 main: fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
 api-version: 1.16
 authors: [ TheHunter365 ]
+commands:
+  stats:
+    permission: laboulangeriemmo.stats
+    description: See your level and other information
+    usage: /stats [player]
+permissions:
+  laboulangeriemmo.stats:
+    default: true

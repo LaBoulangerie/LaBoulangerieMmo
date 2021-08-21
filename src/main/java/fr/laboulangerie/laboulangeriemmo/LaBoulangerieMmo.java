@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.laboulangerie.laboulangeriemmo.blockus.BlockusDataManager;
 import fr.laboulangerie.laboulangeriemmo.blockus.BlockusListener;
+import fr.laboulangerie.laboulangeriemmo.commands.Stats;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
 import fr.laboulangerie.laboulangeriemmo.listener.ServerListener;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayerListener;
@@ -14,7 +15,7 @@ import fr.laboulangerie.laboulangeriemmo.player.SkillListener;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilitiesManager;
 
 public class LaBoulangerieMmo extends JavaPlugin {
-
+    public static LaBoulangerieMmo PLUGIN;
     private GsonSerializer serializer;
 
     private BlockusDataManager blockusDataManager;
@@ -22,6 +23,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        LaBoulangerieMmo.PLUGIN = this;
         this.saveDefaultConfig();
         this.serializer = new GsonSerializer();
 
@@ -33,6 +35,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         // blockusRestoration.runTaskLater(this, 20);
 
         this.registerListeners();
+        getCommand("stats").setExecutor(new Stats());
         getLogger().info("Plugin started");
     }
 
