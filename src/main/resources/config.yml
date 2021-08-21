@@ -1,12 +1,11 @@
 talent-grinding:
-
   mining:
     break:
-      - stone: 1
-      - diorite: 1.5
+      STONE: 1
+      DIORITE: 1.5
     craft:
-      - netherite_pickaxe: 5
+      NETHERITE_PICKAXE: 5
 
   hunter:
     kill:
-      - creeper: 2
+      CREEPER: 2
