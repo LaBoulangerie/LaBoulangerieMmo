@@ -1,7 +1,6 @@
 package fr.laboulangerie.laboulangeriemmo.player;
 
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 import org.bukkit.GameMode;
 import org.bukkit.configuration.ConfigurationSection;
@@ -25,40 +24,29 @@ public class SkillListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        MmoPlayer player = laBoulangerieMmo.getMmoPlayerManager().getPlayer(event.getPlayer());
-        giveReward(event.getPlayer(), GrindingCategory.BREAK, event.getBlock().getType().toString(), (talentName, amount) -> player.incrementXp(talentName, amount));
+        giveReward(event.getPlayer(), GrindingCategory.BREAK, event.getBlock().getType().toString());
     }
 
     @EventHandler
     public void onEntityKill(EntityDeathEvent event) {
         if (!(event.getEntity().getKiller() instanceof Player)) return;
-
-        Player bukkitPlayer = event.getEntity().getKiller();
-        MmoPlayer player = laBoulangerieMmo.getMmoPlayerManager().getPlayer(bukkitPlayer);
         
-        giveReward(bukkitPlayer, GrindingCategory.KILL, event.getEntity().getType().toString(),
-            (talentName, amount) -> player.incrementXp(talentName, amount));
+        giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString());
     }
 
     @EventHandler
     public void onCraft(CraftItemEvent event) {
-        Player bukkitPlayer = (Player) event.getWhoClicked();
-        MmoPlayer player = laBoulangerieMmo.getMmoPlayerManager().getPlayer(bukkitPlayer);
+        if (!(event.getWhoClicked() instanceof Player)) return;
 
-        giveReward(bukkitPlayer, GrindingCategory.CRAFT, event.getRecipe().getResult().getType().toString(),
-            (talentName, amount) -> player.incrementXp(talentName, amount));
+        giveReward((Player) event.getWhoClicked(), GrindingCategory.CRAFT, event.getRecipe().getResult().getType().toString());
     }
 
     @EventHandler
     public void onRecipeDiscover(PlayerRecipeDiscoverEvent event) {
-        Player bukkitPlayer = event.getPlayer();
-        MmoPlayer player = laBoulangerieMmo.getMmoPlayerManager().getPlayer(bukkitPlayer);
-
-        giveReward(bukkitPlayer, GrindingCategory.DISCOVER_RECIPE, event.getRecipe().getKey(),
-            (talentName, amount) -> player.incrementXp(talentName, amount));
+        giveReward(event.getPlayer(), GrindingCategory.DISCOVER_RECIPE, event.getRecipe().getKey());
     }
 
-    private void giveReward(Player player, GrindingCategory category, String identifier, BiConsumer<String, Double> consumer) {
+    private void giveReward(Player player, GrindingCategory category, String identifier) {
         if (player.getGameMode() == GameMode.CREATIVE) return;
         Set<String> keys = laBoulangerieMmo.getConfig().getConfigurationSection("talent-grinding").getKeys(false);
 
@@ -66,7 +54,7 @@ public class SkillListener implements Listener {
             ConfigurationSection section = laBoulangerieMmo.getConfig().getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
             if (section == null) return;
 
-            if (section.getKeys(false).contains(identifier)) consumer.accept(talentName, section.getDouble(identifier));
+            if (section.getKeys(false).contains(identifier)) laBoulangerieMmo.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, section.getDouble(identifier));
         });
     }
 }
