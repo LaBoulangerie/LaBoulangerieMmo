@@ -29,6 +29,7 @@ public class MmoPlayer implements GsonSerializable {
         talents.put("fishing", new Talent("fishing", "Pêcheur"));
         talents.put("mining", new Talent("mining", "Mineur"));
         talents.put("woodcutting", new Talent("woodcutting", "Bûcheron"));
+        talents.put("thehunter", new Talent("thehunter", "Chasseur"));
 
         cooldownsHolder = new CooldownsHolder();
     }
@@ -43,7 +44,7 @@ public class MmoPlayer implements GsonSerializable {
 
     public boolean canUseAbility(Abilities ability) {
         return cooldownsHolder.isCooldownElapsed(ability)
-            && talents.get(ability.getParentTalent()).getLevel(0) >= ability.getRequiredLevel();
+            && talents.get(ability.getParentTalent()).getLevel(0.5) >= ability.getRequiredLevel();
     }
 
     public String getName() {
