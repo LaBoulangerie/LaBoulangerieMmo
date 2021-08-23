@@ -6,8 +6,10 @@ import java.util.stream.Stream;
 
 import com.google.common.base.Supplier;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import fr.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 import fr.laboulangerie.laboulangeriemmo.player.ability.Abilities;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
@@ -57,5 +59,9 @@ public class MmoPlayer implements GsonSerializable {
 
     public Supplier<Stream<Talent>> streamTalents() {
         return () -> talents.values().stream();
+    }
+    public void incrementXp(String talentId, double amount) {
+        Bukkit.getPluginManager().callEvent(new PlayerEarnsXpEvent(amount, talentId, this));
+        getTalent(talentId).incrementXp(amount);
     }
 }

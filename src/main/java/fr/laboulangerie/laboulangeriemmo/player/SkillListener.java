@@ -26,7 +26,7 @@ public class SkillListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         MmoPlayer player = laBoulangerieMmo.getMmoPlayerManager().getPlayer(event.getPlayer());
-        giveReward(event.getPlayer(), GrindingCategory.BREAK, event.getBlock().getType().toString(), (talentName, amount) -> player.getTalent(talentName).incrementXp(amount));
+        giveReward(event.getPlayer(), GrindingCategory.BREAK, event.getBlock().getType().toString(), (talentName, amount) -> player.incrementXp(talentName, amount));
     }
 
     @EventHandler
@@ -37,7 +37,7 @@ public class SkillListener implements Listener {
         MmoPlayer player = laBoulangerieMmo.getMmoPlayerManager().getPlayer(bukkitPlayer);
         
         giveReward(bukkitPlayer, GrindingCategory.KILL, event.getEntity().getType().toString(),
-            (talentName, amount) -> player.getTalent(talentName).incrementXp(amount));
+            (talentName, amount) -> player.incrementXp(talentName, amount));
     }
 
     @EventHandler
@@ -46,7 +46,7 @@ public class SkillListener implements Listener {
         MmoPlayer player = laBoulangerieMmo.getMmoPlayerManager().getPlayer(bukkitPlayer);
 
         giveReward(bukkitPlayer, GrindingCategory.CRAFT, event.getRecipe().getResult().getType().toString(),
-            (talentName, amount) -> player.getTalent(talentName).incrementXp(amount));
+            (talentName, amount) -> player.incrementXp(talentName, amount));
     }
 
     @EventHandler
@@ -55,7 +55,7 @@ public class SkillListener implements Listener {
         MmoPlayer player = laBoulangerieMmo.getMmoPlayerManager().getPlayer(bukkitPlayer);
 
         giveReward(bukkitPlayer, GrindingCategory.DISCOVER_RECIPE, event.getRecipe().getKey(),
-            (talentName, amount) -> player.getTalent(talentName).incrementXp(amount));
+            (talentName, amount) -> player.incrementXp(talentName, amount));
     }
 
     private void giveReward(Player player, GrindingCategory category, String identifier, BiConsumer<String, Double> consumer) {
