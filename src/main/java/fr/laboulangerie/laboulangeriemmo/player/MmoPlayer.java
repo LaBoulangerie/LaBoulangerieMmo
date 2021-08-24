@@ -21,6 +21,7 @@ public class MmoPlayer implements GsonSerializable {
 
     private HashMap<String, Talent> talents;
     private CooldownsHolder cooldownsHolder;
+    private transient XpCountDown xpCountdown;
 
     public MmoPlayer(Player player) {
         this.uniqueId = player.getUniqueId();
@@ -34,6 +35,13 @@ public class MmoPlayer implements GsonSerializable {
         talents.put("thehunter", new Talent("thehunter", "Chasseur"));
 
         cooldownsHolder = new CooldownsHolder();
+        xpCountdown = new XpCountDown(this);
+        xpCountdown.start();
+    }
+
+    public MmoPlayer() {
+        xpCountdown = new XpCountDown(this);
+        xpCountdown.start();
     }
 
     public Talent getTalent(String talentName) {
@@ -62,6 +70,7 @@ public class MmoPlayer implements GsonSerializable {
     }
     public void incrementXp(String talentId, double amount) {
         Bukkit.getPluginManager().callEvent(new PlayerEarnsXpEvent(amount, talentId, this));
+        xpCountdown.startCountDown(talentId, amount);
         getTalent(talentId).incrementXp(amount);
     }
 }
