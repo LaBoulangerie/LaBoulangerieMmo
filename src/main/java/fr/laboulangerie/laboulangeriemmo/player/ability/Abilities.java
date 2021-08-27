@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import fr.laboulangerie.laboulangeriemmo.player.ability.mining.FastMine;
+
 public enum Abilities {
 
     FAST_MINE(0, TimeUnit.SECONDS, 25, "mining", new FastMine());

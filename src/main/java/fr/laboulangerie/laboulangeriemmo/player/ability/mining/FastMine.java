@@ -1,4 +1,4 @@
-package fr.laboulangerie.laboulangeriemmo.player.ability;
+package fr.laboulangerie.laboulangeriemmo.player.ability.mining;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -7,6 +7,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
+import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
 public class FastMine extends AbilityExecutor {
 
