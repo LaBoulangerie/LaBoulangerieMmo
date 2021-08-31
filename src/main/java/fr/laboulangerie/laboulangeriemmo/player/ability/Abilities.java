@@ -5,10 +5,12 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import fr.laboulangerie.laboulangeriemmo.player.ability.mining.FastMine;
+import fr.laboulangerie.laboulangeriemmo.player.ability.mining.FastSmelt;
 
 public enum Abilities {
 
-    FAST_MINE(0, TimeUnit.SECONDS, 25, "mining", new FastMine());
+    FAST_MINE(0, TimeUnit.SECONDS, 25, "mining", new FastMine()),
+    FAST_SMELT(1, TimeUnit.SECONDS, 10, "mining", new FastSmelt());
 
 
     private int requiredLevel;
@@ -20,7 +22,7 @@ public enum Abilities {
 
     Abilities(
         int requiredLevel, TimeUnit cooldownUnit,
-        int cooldown, String parentTalent, 
+        int cooldown, String parentTalent,
         AbilityExecutor executor
     ) {
         this.requiredLevel = requiredLevel;
