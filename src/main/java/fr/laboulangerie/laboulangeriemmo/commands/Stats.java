@@ -49,7 +49,11 @@ public class Stats implements CommandExecutor {
         levelSection.setScore(1);
 
         source.streamTalents().get().forEach(talent -> {
-            Score xpScore = objective.getScore("§b"+talent.getDisplayName()+"§r: lvl §e"+talent.getLevel(1)+"§r, xp §e"+talent.getXp());
+            Score xpScore = objective.getScore(
+                "§b"+talent.getDisplayName()
+                +"§r: lvl §e"+talent.getLevel(0.2)
+                +"§r, xp §e" + ((talent.getXp() * 100_000 - talent.getLevelXp(0.2) * 100_000) / 100_000)
+            );
             xpScore.setScore(0);
         });
 

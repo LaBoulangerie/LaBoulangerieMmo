@@ -54,7 +54,7 @@ public class MmoPlayer implements GsonSerializable {
 
     public boolean canUseAbility(Abilities ability) {
         return cooldownsHolder.isCooldownElapsed(ability)
-            && talents.get(ability.getParentTalent()).getLevel(0.5) >= ability.getRequiredLevel();
+            && talents.get(ability.getParentTalent()).getLevel(0.2) >= ability.getRequiredLevel();
     }
 
     public String getName() {
