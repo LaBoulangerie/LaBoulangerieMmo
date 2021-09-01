@@ -83,6 +83,6 @@ public class FastSmelt extends AbilityExecutor {
             newHand = new ItemStack(Material.AIR);
 
         player.getInventory().setItemInMainHand(newHand);
-        player.sendMessage("§bLe contenu du for a été cuit.");
+        player.sendMessage("§bLe contenu du four a été cuit.");
     }
 }
