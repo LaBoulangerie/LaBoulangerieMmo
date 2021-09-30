@@ -7,8 +7,7 @@ import java.util.stream.Stream;
 import com.google.common.base.Supplier;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
+import org.bukkit.OfflinePlayer;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 import fr.laboulangerie.laboulangeriemmo.player.ability.Abilities;
@@ -23,7 +22,7 @@ public class MmoPlayer implements GsonSerializable {
     private CooldownsHolder cooldownsHolder;
     private transient XpCountDown xpCountdown;
 
-    public MmoPlayer(Player player) {
+    public MmoPlayer(OfflinePlayer player) {
         this.uniqueId = player.getUniqueId();
         this.name = player.getName();
 

@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-
 import com.google.gson.JsonSyntaxException;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
@@ -47,7 +47,7 @@ public class MmoPlayerManager {
         }
     }
 
-    public void loadPlayerData(Player player) {
+    public void loadPlayerData(OfflinePlayer player) {
         String uniqueId = player.getUniqueId().toString();
 
         try {
@@ -67,6 +67,15 @@ public class MmoPlayerManager {
 
     public MmoPlayer getPlayer(Player player) {
         return this.playersMap.get(player.getUniqueId().toString());
+    }
+
+    public MmoPlayer getOfflinePlayer(OfflinePlayer player) {
+        MmoPlayer mmoPlayer = this.playersMap.get(player.getUniqueId().toString());
+        if (mmoPlayer == null) {
+            loadPlayerData(player);
+            mmoPlayer = this.playersMap.get(player.getUniqueId().toString());
+        }
+        return mmoPlayer;
     }
 
     public void savePlayersData() {
