@@ -2,12 +2,18 @@ name: LaBoulangerieMmo
 version: ${project.version}
 main: fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
 api-version: 1.16
-authors: [ TheHunter365 ]
+authors: [ TheHunter365, Grooble_ ]
 commands:
   stats:
     permission: laboulangeriemmo.stats
     description: See your level and other information
     usage: /stats [player]
+  mmo:
+    permission: laboulangeriemmo.mmo
+    description: Admin command
+    usage: /mmo xp <player> [see|add|subtract] <talent> ?[amount]
 permissions:
   laboulangeriemmo.stats:
     default: true
+  laboulangeriemmo.mmo:
+    default: op

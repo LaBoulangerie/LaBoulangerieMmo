@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.laboulangerie.laboulangeriemmo.blockus.BlockusDataManager;
 import fr.laboulangerie.laboulangeriemmo.blockus.BlockusListener;
+import fr.laboulangerie.laboulangeriemmo.commands.MmoCommand;
 import fr.laboulangerie.laboulangeriemmo.commands.Stats;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
 import fr.laboulangerie.laboulangeriemmo.listener.ServerListener;
@@ -36,6 +37,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
         this.registerListeners();
         getCommand("stats").setExecutor(new Stats());
+        getCommand("mmo").setExecutor(new MmoCommand());
         getLogger().info("Plugin started");
     }
 
