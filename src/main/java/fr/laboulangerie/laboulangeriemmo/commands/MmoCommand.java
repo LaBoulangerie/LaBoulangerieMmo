@@ -1,6 +1,7 @@
 package fr.laboulangerie.laboulangeriemmo.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,12 +19,12 @@ public class MmoCommand implements CommandExecutor {
         if (args.length == 0) return false;
 
         if (args[0].equalsIgnoreCase("xp") && args.length >= 4) {
-            Player player = Bukkit.getPlayer(args[1]);
-            if (player == null || !player.isOnline() || LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player) == null) {
+            OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
+            if (player == null || LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player) == null) {
                 sender.sendMessage("§4Impossible de récupérer le joueur: "+args[1]);
                 return false;
             }
-            MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player);
+            MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
             Talent talent = mmoPlayer.getTalent(args[3]);
 
             if (talent == null) {
@@ -52,14 +53,21 @@ public class MmoCommand implements CommandExecutor {
 
             if (args[2].equalsIgnoreCase("add")) {
                 talent.incrementXp(amount);
-                sender.sendMessage("§aVous avez ajouté §e" + args[4] + "§exp au talent §e"
+                sender.sendMessage("§aVous avez ajouté §e" + args[4] + "§axp au talent §e"
                  + talent.getDisplayName() + "§a de §e" + args[1]);
                 return true;
             }
 
             if (args[2].equalsIgnoreCase("substract")) {
                 talent.decrementXp(amount);
-                sender.sendMessage("§aVous avez retiré §e" + args[4] + "§exp au talent §e"
+                sender.sendMessage("§aVous avez retiré §e" + args[4] + "§axp au talent §e"
+                 + talent.getDisplayName() + "§a de §e" + args[1]);
+                return true;
+            }
+
+            if (args[2].equalsIgnoreCase("set")) {
+                talent.setXp(amount);
+                sender.sendMessage("§aVous avez mis à §e" + args[4] + "§axp le talent §e"
                  + talent.getDisplayName() + "§a de §e" + args[1]);
                 return true;
             }
