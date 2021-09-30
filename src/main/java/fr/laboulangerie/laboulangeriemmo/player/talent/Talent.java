@@ -19,8 +19,16 @@ public class Talent {
         return xp;
     }
 
+    public void setXp(Double amount) {
+        xp = amount;
+    }
+
     public void incrementXp(double amount) {
         xp += amount;
+    }
+
+    public void decrementXp(double amount) {
+        xp -= amount;
     }
 
     public int getLevel(double multiplier) {
