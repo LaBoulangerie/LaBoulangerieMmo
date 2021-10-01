@@ -1,6 +1,7 @@
 package fr.laboulangerie.laboulangeriemmo.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,15 +26,15 @@ public class Stats implements CommandExecutor {
             return false;
         }
 
-        Player bukkitPlayer = (Player) sender;
+        OfflinePlayer bukkitPlayer = (OfflinePlayer) sender;
         if(args.length > 0) {
-            bukkitPlayer = Bukkit.getPlayer(args[0]);
+            bukkitPlayer = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
             if (bukkitPlayer == null) {
                 sender.sendMessage("§4Invalid player!");
                 return false;
             }
         }
-        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(bukkitPlayer);
+        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(bukkitPlayer);
         sendStatsTo((Player) sender, player);
         return true;
     }
