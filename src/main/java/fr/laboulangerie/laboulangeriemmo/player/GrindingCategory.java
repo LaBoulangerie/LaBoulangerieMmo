@@ -4,7 +4,7 @@ public enum GrindingCategory {
     BREAK,
     CRAFT,
     KILL,
-    DISCOVER_RECIPE;
+    FIRST_CRAFT;
 
     public String toString() {
         return super.toString().toLowerCase();

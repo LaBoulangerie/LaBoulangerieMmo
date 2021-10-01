@@ -3,6 +3,8 @@ package fr.laboulangerie.laboulangeriemmo.player;
 import java.util.Set;
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.Statistic;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,14 +38,15 @@ public class SkillListener implements Listener {
 
     @EventHandler
     public void onCraft(CraftItemEvent event) {
+        Player player = (Player) event.getWhoClicked();
         if (!(event.getWhoClicked() instanceof Player)) return;
+        Material crafted = event.getRecipe().getResult().getType();
 
-        giveReward((Player) event.getWhoClicked(), GrindingCategory.CRAFT, event.getRecipe().getResult().getType().toString());
-    }
+        giveReward(player, GrindingCategory.CRAFT, crafted.toString());
 
-    @EventHandler
-    public void onRecipeDiscover(PlayerRecipeDiscoverEvent event) {
-        giveReward(event.getPlayer(), GrindingCategory.DISCOVER_RECIPE, event.getRecipe().getKey());
+        if (player.getStatistic(Statistic.CRAFT_ITEM, crafted) == 0) {
+            giveReward(player, GrindingCategory.FIRST_CRAFT, crafted.toString());
+        }
     }
 
     private void giveReward(Player player, GrindingCategory category, String identifier) {

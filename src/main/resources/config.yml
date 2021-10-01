@@ -5,8 +5,8 @@ talent-grinding:
       DIORITE: 1.5
     craft:
       NETHERITE_PICKAXE: 5
-    recipe_discover:
-      diamond_pickaxe: 2.7
+    first_craft:
+      DIAMOND_PICKAXE: 2.7
 
   thehunter:
     kill:
