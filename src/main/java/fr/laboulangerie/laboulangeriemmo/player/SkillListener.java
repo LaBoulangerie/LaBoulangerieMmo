@@ -12,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.player.PlayerRecipeDiscoverEvent;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
