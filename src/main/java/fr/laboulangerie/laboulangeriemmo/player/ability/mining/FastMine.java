@@ -8,7 +8,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
@@ -29,7 +28,19 @@ public class FastMine extends AbilityExecutor {
     @Override
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-        Player bukkitPlayer = event.getPlayer();
-        bukkitPlayer.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20*20, 1, true));
+        Player player = event.getPlayer();
+        int duration = 0;
+        int amplifier = 0;
+        if (level >= 60) {
+            duration = 300;
+            amplifier = 3;
+        }else if (level >= 40) {
+            duration = 60;
+            amplifier = 2;
+        }else {
+            duration = 20;
+            amplifier = 1;
+        }
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration*20, amplifier, true));
     }
 }

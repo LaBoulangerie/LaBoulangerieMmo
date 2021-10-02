@@ -9,7 +9,7 @@ import fr.laboulangerie.laboulangeriemmo.player.ability.mining.FastSmelt;
 
 public enum Abilities {
 
-    FAST_MINE(0, TimeUnit.SECONDS, 25, "mining", new FastMine()),
+    FAST_MINE(10, TimeUnit.SECONDS, 25, "mining", new FastMine()),
     FAST_SMELT(1, TimeUnit.SECONDS, 10, "mining", new FastSmelt());
 
 
