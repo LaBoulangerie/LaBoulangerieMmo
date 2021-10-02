@@ -13,6 +13,7 @@ import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
+import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
@@ -47,10 +48,10 @@ public class FastSmelt extends AbilityExecutor {
     }
 
     @Override
-    public void trigger(Event baseEvent) {
+    public void trigger(Event baseEvent, MmoPlayer player) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         Furnace furnace = (Furnace) event.getClickedBlock().getState();
-        Player player = event.getPlayer();
+        Player bukkitPlayer = event.getPlayer();
 
         ItemStack result = null;
         Iterator<Recipe> iter = Bukkit.recipeIterator();
@@ -72,17 +73,17 @@ public class FastSmelt extends AbilityExecutor {
             result.setAmount(result.getAmount() + (inv.getResult() != null ? inv.getResult().getAmount() : 0));
             inv.setResult(result);
         }else {
-            player.getWorld().dropItemNaturally(player.getLocation(), result);
+            bukkitPlayer.getWorld().dropItemNaturally(bukkitPlayer.getLocation(), result);
         }
 
-        ItemStack newHand = player.getInventory().getItemInMainHand();
+        ItemStack newHand = bukkitPlayer.getInventory().getItemInMainHand();
 
-        if (player.getInventory().getItemInMainHand().getAmount() > 1)
+        if (bukkitPlayer.getInventory().getItemInMainHand().getAmount() > 1)
             newHand.setAmount(newHand.getAmount() - 1);
         else
             newHand = new ItemStack(Material.AIR);
 
-        player.getInventory().setItemInMainHand(newHand);
-        player.sendMessage("§bLe contenu du four a été cuit.");
+        bukkitPlayer.getInventory().setItemInMainHand(newHand);
+        bukkitPlayer.sendMessage("§bLe contenu du four a été cuit.");
     }
 }

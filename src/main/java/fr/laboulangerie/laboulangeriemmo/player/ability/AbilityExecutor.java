@@ -2,6 +2,8 @@ package fr.laboulangerie.laboulangeriemmo.player.ability;
 
 import org.bukkit.event.Event;
 
+import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
+
 public abstract class AbilityExecutor {
 
     /**
@@ -22,7 +24,8 @@ public abstract class AbilityExecutor {
     /**
      * trigger method indicate the core of an ability
      * @param baseEvent can be any instance of Event
+     * @param player player who triggered the ability
      */
-    public abstract void trigger(Event baseEvent);
+    public abstract void trigger(Event baseEvent, MmoPlayer player);
 
 }
