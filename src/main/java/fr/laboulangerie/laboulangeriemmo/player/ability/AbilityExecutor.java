@@ -2,6 +2,8 @@ package fr.laboulangerie.laboulangeriemmo.player.ability;
 
 import org.bukkit.event.Event;
 
+import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
+
 public abstract class AbilityExecutor {
 
     /**
