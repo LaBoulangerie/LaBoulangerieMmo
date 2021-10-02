@@ -1,17 +1,16 @@
 package fr.laboulangerie.laboulangeriemmo.blockus;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Blockus {
+import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
+
+public class Blockus implements Serializable {
 
     private UUID worldId;
     private int x, y, z;

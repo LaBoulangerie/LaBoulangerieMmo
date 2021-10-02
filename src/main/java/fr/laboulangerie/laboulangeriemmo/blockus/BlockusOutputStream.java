@@ -1,10 +1,16 @@
 package fr.laboulangerie.laboulangeriemmo.blockus;
 
-import com.github.luben.zstd.Zstd;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
+
+import com.github.luben.zstd.Zstd;
+
+import org.jetbrains.annotations.NotNull;
 
 public class BlockusOutputStream extends FileOutputStream {
 
@@ -26,5 +32,4 @@ public class BlockusOutputStream extends FileOutputStream {
         this.write(compressed);
         this.flush();
     }
-
 }

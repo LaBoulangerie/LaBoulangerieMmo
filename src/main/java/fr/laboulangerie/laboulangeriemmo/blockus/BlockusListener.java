@@ -23,7 +23,7 @@ public class BlockusListener implements Listener {
         Blockus blockus = new Blockus(block);
         blockus.putMetadata("laboulangerie:blockus", player.getUniqueId());
         blockus.markAsBlockus(this.laBoulangerieMmo);
-        //this.laBoulangerieMmo.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus); TODO uncomment when blockus is fixed
+        this.laBoulangerieMmo.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus);
     }
 
 

@@ -25,6 +25,7 @@ public class SkillListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event.getBlock().hasMetadata("laboulangerie:placed")) return;
         giveReward(event.getPlayer(), GrindingCategory.BREAK, event.getBlock().getType().toString());
     }
 

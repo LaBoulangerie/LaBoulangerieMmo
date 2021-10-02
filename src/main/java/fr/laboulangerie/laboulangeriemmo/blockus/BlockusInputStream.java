@@ -4,6 +4,7 @@ import com.github.luben.zstd.Zstd;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
+import java.nio.ByteBuffer;
 
 public class BlockusInputStream extends FileInputStream {
 
@@ -12,11 +13,16 @@ public class BlockusInputStream extends FileInputStream {
     }
 
     public BlockusDataHolder readBlockuses() throws IOException, ClassNotFoundException {
-        int size = this.read();
-        if (size == -1) return null;
-        byte[] buffer = new byte[size];
+        byte[] bytes = new byte[4];
+        this.read(bytes);
 
-        this.read(buffer, 4, size);
+        ByteBuffer wrapped = ByteBuffer.wrap(bytes);
+        int size = wrapped.getInt();
+
+        if (size == 0) return null;
+        byte[] buffer = new byte[this.available()];
+
+        this.read(buffer);
         byte[] data = Zstd.decompress(buffer, size);
         ObjectInput oi = new ObjectInputStream(new ByteArrayInputStream(data));
 
