@@ -15,5 +15,13 @@ commands:
 permissions:
   laboulangeriemmo.stats:
     default: true
+  laboulangeriemmo.stats.see:
+    default: op
   laboulangeriemmo.mmo:
     default: op
+  laboulangeriemmo.*:
+    default: op
+    children:
+      laboulangeriemmo.stats: true
+      laboulangeriemmo.stats.see: true
+      laboulangeriemmo.mmo: true

@@ -28,6 +28,10 @@ public class Stats implements CommandExecutor {
 
         OfflinePlayer bukkitPlayer = (OfflinePlayer) sender;
         if(args.length > 0) {
+            if (!sender.hasPermission("laboulangeriemmo.stats.see")) {
+                sender.sendMessage("§4Vous n'avez pas la permission de voir les statistiques d'un autre joueur.");
+                return true;
+            }
             bukkitPlayer = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
             if (bukkitPlayer == null) {
                 sender.sendMessage("§4Invalid player!");
