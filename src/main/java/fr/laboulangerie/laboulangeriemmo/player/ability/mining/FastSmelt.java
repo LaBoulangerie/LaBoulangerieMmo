@@ -47,7 +47,7 @@ public class FastSmelt extends AbilityExecutor {
     }
 
     @Override
-    public void trigger(Event baseEvent) {
+    public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         Furnace furnace = (Furnace) event.getClickedBlock().getState();
         Player player = event.getPlayer();

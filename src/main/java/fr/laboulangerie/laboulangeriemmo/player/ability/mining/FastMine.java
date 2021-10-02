@@ -26,7 +26,7 @@ public class FastMine extends AbilityExecutor {
     }
 
     @Override
-    public void trigger(Event baseEvent) {
+    public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         Player player = event.getPlayer();
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20*20, 1, true));

@@ -33,7 +33,7 @@ public class AbilitiesManager implements Listener {
                         && x.getExecutor().shouldTrigger(event)
                     )
                     .forEach(x -> {
-                        x.getExecutor().trigger(event);
+                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
                         player.useAbility(x);
                     });
                 break;
@@ -45,7 +45,7 @@ public class AbilitiesManager implements Listener {
                         && x.getExecutor().shouldTrigger(event)
                     )
                     .forEach(x -> {
-                        x.getExecutor().trigger(event);
+                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
                         player.useAbility(x);
                     });
                 break;
@@ -57,7 +57,7 @@ public class AbilitiesManager implements Listener {
                         && x.getExecutor().shouldTrigger(event)
                     )
                     .forEach(x -> {
-                        x.getExecutor().trigger(event);
+                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
                         player.useAbility(x);
                     });
                 break;
@@ -69,7 +69,7 @@ public class AbilitiesManager implements Listener {
                         && x.getExecutor().shouldTrigger(event)
                     )
                     .forEach(x -> {
-                        x.getExecutor().trigger(event);
+                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
                         player.useAbility(x);
                     });
                 break;
@@ -88,7 +88,7 @@ public class AbilitiesManager implements Listener {
                 && x.getExecutor().shouldTrigger(event)
             )
             .forEach(x -> {
-                x.getExecutor().trigger(event);
+                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
                 player.useAbility(x);
             });
     }
@@ -103,7 +103,7 @@ public class AbilitiesManager implements Listener {
                 && x.getExecutor().shouldTrigger(event)
             )
             .forEach(x -> {
-                x.getExecutor().trigger(event);
+                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
                 player.useAbility(x);
             });
     }
@@ -118,7 +118,7 @@ public class AbilitiesManager implements Listener {
                 && x.getExecutor().shouldTrigger(event)
             )
             .forEach(x -> {
-                x.getExecutor().trigger(event);
+                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
                 player.useAbility(x);
             });
     }
@@ -135,7 +135,7 @@ public class AbilitiesManager implements Listener {
                     && x.getExecutor().shouldTrigger(event)
                 )
                 .forEach(x -> {
-                    x.getExecutor().trigger(event);
+                    x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
                     player.useAbility(x);
                 });
         }
