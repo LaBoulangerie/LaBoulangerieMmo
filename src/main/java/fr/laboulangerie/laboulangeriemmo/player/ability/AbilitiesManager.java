@@ -3,6 +3,7 @@ package fr.laboulangerie.laboulangeriemmo.player.ability;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -99,6 +100,20 @@ public class AbilitiesManager implements Listener {
         Abilities.supplier().get()
             .filter(x ->
                 x.getExecutor().getAbilityTrigger() == AbilityTrigger.PLACE
+                && player.canUseAbility(x)
+                && x.getExecutor().shouldTrigger(event)
+            )
+            .forEach(x -> {
+                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                player.useAbility(x);
+            });
+    }
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
+        Abilities.supplier().get()
+            .filter(x ->
+                x.getExecutor().getAbilityTrigger() == AbilityTrigger.BREAK
                 && player.canUseAbility(x)
                 && x.getExecutor().shouldTrigger(event)
             )
