@@ -1,0 +1,3 @@
+mvn package
+
+PAUSE

@@ -12,8 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
-public class DoubleDropLog extends AbilityExecutor {
-
+public class BetterAppleDrop extends AbilityExecutor {
 	@Override
 	public AbilityTrigger getAbilityTrigger() {
 		return AbilityTrigger.BREAK;
@@ -24,8 +23,7 @@ public class DoubleDropLog extends AbilityExecutor {
 		  BlockBreakEvent event = (BlockBreakEvent) baseEvent;
 	      Block block = event.getBlock();
 	      if (event.getBlock().hasMetadata("laboulangerie:placed")) return false;
-	      return block != null && Tag.LOGS.isTagged(block.getType());
-
+	      return block != null && Tag.LEAVES.isTagged(block.getType()); 
 	}
 
 	@Override
@@ -33,7 +31,7 @@ public class DoubleDropLog extends AbilityExecutor {
 
 		BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
-        ItemStack item = new ItemStack(block.getType());
+        ItemStack item = new ItemStack(Material.APPLE);
 
         	  
         int max_number = 100;
