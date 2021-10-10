@@ -21,7 +21,7 @@ public class BlockusListener implements Listener {
         Block block = event.getBlock();
 
         Blockus blockus = new Blockus(block);
-        blockus.putMetadata("laboulangerie:blockus", player.getUniqueId());
+        blockus.putMetadata("laboulangerie:placed", player.getUniqueId());
         blockus.markAsBlockus(this.laBoulangerieMmo);
         this.laBoulangerieMmo.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus);
     }
