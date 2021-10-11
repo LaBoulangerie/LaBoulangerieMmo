@@ -1,0 +1,13 @@
+talent-grinding:
+  mining:
+    break:
+      STONE: 1
+      DIORITE: 1.5
+    craft:
+      NETHERITE_PICKAXE: 5
+    first_craft:
+      DIAMOND_PICKAXE: 2.7
+
+  thehunter:
+    kill:
+      CREEPER: 2

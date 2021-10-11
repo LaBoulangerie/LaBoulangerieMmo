@@ -33,11 +33,14 @@ public class BlockusDataManager {
     public void writeBlockuses() throws IOException {
         BlockusOutputStream bos = new BlockusOutputStream(this.blockusFile);
         bos.writeBlockuses(this.blockusDataHolder);
+        bos.close();
     }
 
     public BlockusDataHolder readBlockuses() throws IOException, ClassNotFoundException {
         BlockusInputStream bis = new BlockusInputStream(this.blockusFile);
-        return bis.readBlockuses();
+        BlockusDataHolder data = bis.readBlockuses();
+        bis.close();
+        return data;
     }
 
     public BlockusDataHolder getBlockusDataHolder() {

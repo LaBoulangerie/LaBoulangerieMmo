@@ -1,14 +1,18 @@
 package fr.laboulangerie.laboulangeriemmo.player;
 
-import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
-import fr.laboulangerie.laboulangeriemmo.utils.FileUtils;
-import org.bukkit.entity.Player;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import com.google.gson.JsonSyntaxException;
+
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+
+import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
+import fr.laboulangerie.laboulangeriemmo.utils.FileUtils;
 
 public class MmoPlayerManager {
 
@@ -43,13 +47,19 @@ public class MmoPlayerManager {
         }
     }
 
-    public void loadPlayerData(Player player) {
+    public void loadPlayerData(OfflinePlayer player) {
         String uniqueId = player.getUniqueId().toString();
-        String json = FileUtils.read(new File(this.playersFolder, uniqueId+".json"));
-        if (!json.equals("")) {
-            MmoPlayer mmoPlayer = (MmoPlayer) this.serializer.deserialize(json, MmoPlayer.class);
-            this.playersMap.put(uniqueId, mmoPlayer);
-        } else {
+
+        try {
+            File file = new File(this.playersFolder, uniqueId + ".json");
+            if (!file.exists()) throw new JsonSyntaxException("hacky");
+            String json = FileUtils.read(file);
+
+            if (!json.equals("")) {
+                MmoPlayer mmoPlayer = (MmoPlayer) this.serializer.deserialize(json, MmoPlayer.class);
+                this.playersMap.put(uniqueId, mmoPlayer);
+            }
+        } catch (JsonSyntaxException e) {
             MmoPlayer mmoPlayer = new MmoPlayer(player);
             this.playersMap.put(uniqueId, mmoPlayer);
         }
@@ -59,5 +69,16 @@ public class MmoPlayerManager {
         return this.playersMap.get(player.getUniqueId().toString());
     }
 
+    public MmoPlayer getOfflinePlayer(OfflinePlayer player) {
+        MmoPlayer mmoPlayer = this.playersMap.get(player.getUniqueId().toString());
+        if (mmoPlayer == null) {
+            loadPlayerData(player);
+            mmoPlayer = this.playersMap.get(player.getUniqueId().toString());
+        }
+        return mmoPlayer;
+    }
 
+    public void savePlayersData() {
+        Bukkit.getOnlinePlayers().stream().forEach(p -> savePlayerData(p));
+    }
 }

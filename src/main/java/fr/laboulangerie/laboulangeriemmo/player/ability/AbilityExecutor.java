@@ -22,7 +22,8 @@ public abstract class AbilityExecutor {
     /**
      * trigger method indicate the core of an ability
      * @param baseEvent can be any instance of Event
+     * @param level level of the player in the concerned talent
      */
-    public abstract void trigger(Event baseEvent);
+    public abstract void trigger(Event baseEvent, int level);
 
 }
