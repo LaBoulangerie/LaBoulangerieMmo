@@ -23,7 +23,7 @@ public class BetterAppleDrop extends AbilityExecutor {
 		  BlockBreakEvent event = (BlockBreakEvent) baseEvent;
 	      Block block = event.getBlock();
 	      if (event.getBlock().hasMetadata("laboulangerie:placed")) return false;
-	      return block != null && Tag.LEAVES.isTagged(block.getType()); 
+	      return block != null && block.getType() == Material.OAK_LEAVES;
 	}
 
 	@Override
