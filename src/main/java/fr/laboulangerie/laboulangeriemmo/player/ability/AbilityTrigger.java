@@ -13,6 +13,7 @@ public enum AbilityTrigger {
     RIGHT_CLICK_BLOCK,
 
     PLACE,
+    BREAK,
 
     EAT,
 }
