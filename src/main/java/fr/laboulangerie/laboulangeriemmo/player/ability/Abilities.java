@@ -7,12 +7,16 @@ import java.util.stream.Stream;
 import fr.laboulangerie.laboulangeriemmo.player.ability.mining.FastMine;
 import fr.laboulangerie.laboulangeriemmo.player.ability.mining.FastSmelt;
 import fr.laboulangerie.laboulangeriemmo.player.ability.mining.MagneticField;
+import fr.laboulangerie.laboulangeriemmo.player.ability.woodcutting.BetterAppleDrop;
+import fr.laboulangerie.laboulangeriemmo.player.ability.woodcutting.DoubleDropLog;
 
 public enum Abilities {
 
     FAST_MINE(10, TimeUnit.SECONDS, 25, "mining", new FastMine()),
     FAST_SMELT(1, TimeUnit.SECONDS, 10, "mining", new FastSmelt()),
-    MAGNETIC_FIELD(0, TimeUnit.SECONDS, 5, "mining", new MagneticField());
+    MAGNETIC_FIELD(0, TimeUnit.SECONDS, 5, "mining", new MagneticField()),
+    DOUBLE_DROP_LOG(1, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog()),
+	BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop());
 
 
     private int requiredLevel;
