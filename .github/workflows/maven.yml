@@ -1,4 +1,4 @@
-name: LaBoulangerieMmo continious delivery
+name: LaBoulangerieMmo continuous delivery
 
 on:
   push:
@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: JDk 1.8 setup
+      - name: JDk 1.16 setup
         uses: actions/setup-java@v1
         with:
-          java-version: 1.8
+          java-version: 1.16
       - name: Maven build
         run: mvn clean package
       - uses: actions/upload-artifact@v1

@@ -3,7 +3,6 @@ package fr.laboulangerie.laboulangeriemmo.player.ability.woodcutting;
 import java.util.Random;
 
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;

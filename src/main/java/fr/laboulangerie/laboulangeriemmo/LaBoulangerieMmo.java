@@ -39,6 +39,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         this.registerListeners();
         getCommand("stats").setExecutor(new Stats());
         getCommand("mmo").setExecutor(new MmoCommand());
+        getCommand("mmo").setTabCompleter(new MmoCommand());
         getLogger().info("Plugin started");
     }
 

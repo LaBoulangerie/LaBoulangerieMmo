@@ -1,17 +1,23 @@
 package fr.laboulangerie.laboulangeriemmo.commands;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
-public class MmoCommand implements CommandExecutor {
+public class MmoCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
@@ -57,7 +63,7 @@ public class MmoCommand implements CommandExecutor {
                 return true;
             }
 
-            if (args[2].equalsIgnoreCase("substract")) {
+            if (args[2].equalsIgnoreCase("subtract")) {
                 talent.decrementXp(amount);
                 sender.sendMessage("§aVous avez retiré §e" + args[4] + "§axp au talent §e"
                  + talent.getDisplayName() + "§a de §e" + args[1]);
@@ -72,5 +78,28 @@ public class MmoCommand implements CommandExecutor {
             }
         }
         return false;
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
+        if (args.length == 1) return Arrays.asList("xp");
+        if (args[0].equalsIgnoreCase("xp")) {
+            switch (args.length) {
+                default:
+                case 2:
+                    return null; // List players
+                case 3:
+                    return Arrays.asList("add", "subtract", "see", "set");
+                case 4:
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
+                    MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
+                    
+                    return mmoPlayer.streamTalents().get().map(talent -> talent.getTalentId()).collect(Collectors.toList());
+                case 5:
+                    if (args[2].equalsIgnoreCase("see")) return Arrays.asList("");
+                    return Arrays.asList("10", "100", "1000");
+            }
+        }
+        return null;
     }
 }

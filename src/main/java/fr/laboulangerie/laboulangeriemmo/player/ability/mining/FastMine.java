@@ -22,7 +22,7 @@ public class FastMine extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         ItemStack item = event.getItem();
-        return item != null && item.getType() == Material.DIAMOND_PICKAXE;
+        return item != null && item.getType() == Material.NETHERITE_PICKAXE;
     }
 
     @Override
