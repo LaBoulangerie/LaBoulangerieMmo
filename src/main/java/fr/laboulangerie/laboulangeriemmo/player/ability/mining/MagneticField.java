@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import fr.laboulangerie.laboulangeriemmo.core.MagneticFieldTask;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 

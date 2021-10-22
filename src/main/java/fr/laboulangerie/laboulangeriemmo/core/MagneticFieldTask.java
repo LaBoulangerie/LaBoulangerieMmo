@@ -1,4 +1,4 @@
-package fr.laboulangerie.laboulangeriemmo.player.ability.mining;
+package fr.laboulangerie.laboulangeriemmo.core;
 
 import java.util.Arrays;
 import java.util.List;
