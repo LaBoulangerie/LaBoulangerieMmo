@@ -3,10 +3,24 @@ talent-grinding:
     break:
       STONE: 1
       DIORITE: 1.5
+      ANDESITE : 1.5
+      GRANITE : 1.5
+      DEEPSLATE : 3
+      COAL_ORE : 6
+      COPPER_ORE : 6
+      IRON_ORE : 6
+      GOLD_ORE : 12
+      REDSTONE_ORE : 12
+      DIAMOND__ORE : 24
+      EMERALD_ORE : 32
+      ANCIENT_DEBRIS : 48
     craft:
       NETHERITE_PICKAXE: 5
     first_craft:
-      DIAMOND_PICKAXE: 2.7
+      DIAMOND_PICKAXE: 100
+      IRON_PICKAXE: 50
+      STONE_PICKAXE: 25
+      WOODEN_PICKAXE: 10
 
   thehunter:
     kill:
