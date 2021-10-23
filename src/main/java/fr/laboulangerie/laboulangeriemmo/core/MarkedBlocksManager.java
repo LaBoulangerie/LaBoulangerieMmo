@@ -1,4 +1,4 @@
-package fr.laboulangerie.laboulangeriemmo.player.ability.mining;
+package fr.laboulangerie.laboulangeriemmo.core;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -18,15 +18,39 @@ import org.bukkit.entity.Player;
 
 public class MarkedBlocksManager {
     private static MarkedBlocksManager INSTANCE = null;
-    private Map<Block, Integer> markedBlocks = new HashMap<Block, Integer>();
+    private Map<Block, BlockWatcher> markedBlocks = new HashMap<Block, BlockWatcher>();
     private int idCount = 100000;
 
     public void markBlock(Block block, Player player) {
-        Integer id = markedBlocks.get(block);
-        if (id == null) {
+        BlockWatcher blockWatcher = markedBlocks.get(block);
+        if (blockWatcher == null) {
             sendShulker(player, block, idCount);
+            markedBlocks.put(block, new BlockWatcher(idCount, player));
             idCount++;
+        }else {
+            if (blockWatcher.isWatching(player)) return;
+
+            sendShulker(player, block, blockWatcher.getEntityId());
+            blockWatcher.addWatcher(player);
         }
+    }
+
+    /**
+     * Remove the mark on the block for all watchers, called when the block is destroyed
+     */
+    public void unmarkBlock(Block block) {
+        BlockWatcher blockWatcher = markedBlocks.get(block);
+        if (blockWatcher == null) return;
+
+        blockWatcher.getWatchers().stream().forEach(p -> removeShulker(p, blockWatcher.getEntityId()));
+    }
+
+    public void unmarkBlock(Block block, Player player) {
+        BlockWatcher blockWatcher = markedBlocks.get(block);
+        if (blockWatcher == null) return;
+
+        removeShulker(player, blockWatcher.getEntityId());
+        if (blockWatcher.removeWatcher(player)) markedBlocks.remove(block);
     }
     private void sendShulker(Player player, Block block, Integer id) {
         // https://github.com/libraryaddict/LibsDisguises/blob/master/src/main/java/me/libraryaddict/disguise/utilities/packets/packethandlers/PacketHandlerSpawn.java
@@ -57,6 +81,17 @@ public class MarkedBlocksManager {
         try {
             ProtocolLibrary.getProtocolManager().sendServerPacket(player, spawnShulker);
             ProtocolLibrary.getProtocolManager().sendServerPacket(player, shulkerMetadata);
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void removeShulker(Player player, int id) {
+        PacketContainer destroyShulker = new PacketContainer(PacketType.Play.Server.ENTITY_DESTROY);
+        destroyShulker.getIntegerArrays().write(0, new int[]{id});
+
+        try {
+            ProtocolLibrary.getProtocolManager().sendServerPacket(player, destroyShulker);
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
