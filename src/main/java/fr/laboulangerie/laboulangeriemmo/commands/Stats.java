@@ -1,6 +1,7 @@
 package fr.laboulangerie.laboulangeriemmo.commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -44,31 +45,26 @@ public class Stats implements CommandExecutor {
     }
 
     private void sendStatsTo(Player target, MmoPlayer source) {
-        ScoreboardManager manager = Bukkit.getScoreboardManager();
-        Scoreboard board = manager.getNewScoreboard();
-        Objective objective = board.registerNewObjective("stats-"+source.getName(), "dummy", Component.text("Stats"));
+
+        target.sendMessage("");
+        target.sendMessage(ChatColor.BOLD + "Stats");
+        target.sendMessage(ChatColor.GREEN + "Experience :");
         
-        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-        Score levelSection = objective.getScore("§aExperience:");
-        levelSection.setScore(1);
-
         source.streamTalents().get().forEach(talent -> {
-            Score xpScore = objective.getScore(
-                "§b"+talent.getDisplayName()
-                +"§r: lvl §e"+talent.getLevel(0.2)
-                +"§r, xp §e" + ((talent.getXp() * 100_000 - talent.getLevelXp(0.2) * 100_000) / 100_000)
-            );
-            xpScore.setScore(0);
+        	
+                String partie_un = "§b"+talent.getDisplayName();
+                String partie_deux = "§r: lvl §e"+talent.getLevel(0.2);
+                String partie_trois = "§r, xp §e" + ((talent.getXp() * 100_000 - talent.getLevelXp(0.2) * 100_000) / 100_000);
+                target.sendMessage(partie_un + "" + partie_deux + "" + partie_trois);
+            
+            
+            
+            
+            
+            
         });
 
-        target.setScoreboard(board);
+        
 
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                target.setScoreboard(manager.getNewScoreboard());
-            }
-        }.runTaskLater(LaBoulangerieMmo.PLUGIN, 200);
     }
 }
