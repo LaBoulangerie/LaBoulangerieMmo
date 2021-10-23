@@ -28,6 +28,8 @@ public class MmoPlayerManager {
         this.playersFolder = new File(laBoulangerieMmo.getDataFolder(), "players/");
 
         this.playersMap = new HashMap<>();
+        
+        Bukkit.getOnlinePlayers().stream().forEach(p -> loadPlayerData(p));
     }
 
     public void savePlayerData(Player player) {
