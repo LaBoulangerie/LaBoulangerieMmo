@@ -44,6 +44,14 @@ public class MarkedBlocksManager {
 
         blockWatcher.getWatchers().stream().forEach(p -> removeShulker(p, blockWatcher.getEntityId()));
     }
+
+    public void unmarkBlock(Block block, Player player) {
+        BlockWatcher blockWatcher = markedBlocks.get(block);
+        if (blockWatcher == null) return;
+
+        removeShulker(player, blockWatcher.getEntityId());
+        if (blockWatcher.removeWatcher(player)) markedBlocks.remove(block);
+    }
     private void sendShulker(Player player, Block block, Integer id) {
         // https://github.com/libraryaddict/LibsDisguises/blob/master/src/main/java/me/libraryaddict/disguise/utilities/packets/packethandlers/PacketHandlerSpawn.java
         PacketContainer spawnShulker = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY_LIVING);

@@ -29,4 +29,12 @@ public class BlockWatcher {
     public void addWatcher(Player player) {
         watchers.add(player);
     }
+
+    /**
+     * @return true if there's no other watchers
+     */
+    public boolean removeWatcher(Player player) {
+        watchers.remove(player);
+        return watchers.size() == 0;
+    }
 }
