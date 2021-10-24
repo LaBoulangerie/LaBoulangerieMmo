@@ -1,5 +1,6 @@
 package fr.laboulangerie.laboulangeriemmo.player.ability.mining;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -10,6 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
+import fr.laboulangerie.laboulangeriemmo.player.ability.ParticulEffect;
 
 public class FastMine extends AbilityExecutor {
 
@@ -41,6 +43,8 @@ public class FastMine extends AbilityExecutor {
             duration = 20;
             amplifier = 1;
         }
+        player.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.YELLOW + "Vous gagnez Haste " + amplifier + " §pendant " + duration*20 + " secondes");
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration*20, amplifier, true));
+        new ParticulEffect().createHelix(player);
     }
 }

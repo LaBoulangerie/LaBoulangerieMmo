@@ -23,14 +23,14 @@ public class Stats implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§4You must be in game to execute this command!");
+            sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + "§4You must be in game to execute this command!");
             return false;
         }
 
         OfflinePlayer bukkitPlayer = (OfflinePlayer) sender;
         if(args.length > 0) {
             if (!sender.hasPermission("laboulangeriemmo.stats.see")) {
-                sender.sendMessage("§4Vous n'avez pas la permission de voir les statistiques d'un autre joueur.");
+                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + "§4Vous n'avez pas la permission de voir les statistiques d'un autre joueur.");
                 return true;
             }
             bukkitPlayer = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
@@ -47,7 +47,7 @@ public class Stats implements CommandExecutor {
     private void sendStatsTo(Player target, MmoPlayer source) {
 
         target.sendMessage("");
-        target.sendMessage(ChatColor.BOLD + "Stats");
+        target.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.BOLD + "Stats");
         target.sendMessage(ChatColor.GREEN + "Experience :");
         
         source.streamTalents().get().forEach(talent -> {

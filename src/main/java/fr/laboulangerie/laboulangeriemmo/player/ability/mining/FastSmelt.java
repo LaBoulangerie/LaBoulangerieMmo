@@ -3,6 +3,7 @@ package fr.laboulangerie.laboulangeriemmo.player.ability.mining;
 import java.util.Iterator;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Furnace;
 import org.bukkit.entity.Player;
@@ -15,6 +16,7 @@ import org.bukkit.inventory.Recipe;
 
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
+import fr.laboulangerie.laboulangeriemmo.player.ability.ParticulEffect;
 
 public class FastSmelt extends AbilityExecutor {
 
@@ -83,6 +85,8 @@ public class FastSmelt extends AbilityExecutor {
             newHand = new ItemStack(Material.AIR);
 
         bukkitPlayer.getInventory().setItemInMainHand(newHand);
-        bukkitPlayer.sendMessage("§bLe contenu du four a été cuit.");
+        new ParticulEffect().createHelix(bukkitPlayer);
+        bukkitPlayer.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.YELLOW + "Le contenu du four a été cuit.");
+        
     }
 }
