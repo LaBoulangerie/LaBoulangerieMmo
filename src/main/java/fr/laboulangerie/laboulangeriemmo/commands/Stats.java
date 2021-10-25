@@ -7,17 +7,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 import org.jetbrains.annotations.NotNull;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
-import net.kyori.adventure.text.Component;
 
 public class Stats implements CommandExecutor {
     @Override
@@ -47,24 +40,15 @@ public class Stats implements CommandExecutor {
     private void sendStatsTo(Player target, MmoPlayer source) {
 
         target.sendMessage("");
-        target.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.BOLD + "Stats");
-        target.sendMessage(ChatColor.GREEN + "Experience :");
+        target.sendMessage("§8------§6Stats§8------");
+        target.sendMessage("§aExperience :");
         
         source.streamTalents().get().forEach(talent -> {
         	
-                String partie_un = "§b"+talent.getDisplayName();
-                String partie_deux = "§r: lvl §e"+talent.getLevel(0.2);
-                String partie_trois = "§r, xp §e" + ((talent.getXp() * 100_000 - talent.getLevelXp(0.2) * 100_000) / 100_000);
-                target.sendMessage(partie_un + "" + partie_deux + "" + partie_trois);
-            
-            
-            
-            
-            
-            
+            String firstPart = "§b"+talent.getDisplayName();
+            String secondPart = "§r: lvl §e"+talent.getLevel(0.2);
+            String thirdPart = "§r, xp §e" + ((talent.getXp() * 100_000 - talent.getLevelXp(0.2) * 100_000) / 100_000);
+            target.sendMessage(firstPart + "" + secondPart + "" + thirdPart);
         });
-
-        
-
     }
 }
