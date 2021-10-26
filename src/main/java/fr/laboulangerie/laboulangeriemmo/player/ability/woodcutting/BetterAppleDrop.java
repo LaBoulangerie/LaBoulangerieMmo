@@ -10,9 +10,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
+import fr.laboulangerie.laboulangeriemmo.core.ParticleEffect;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
-import fr.laboulangerie.laboulangeriemmo.player.ability.ParticulEffect;
 
 public class BetterAppleDrop extends AbilityExecutor {
 	@Override
@@ -43,20 +43,20 @@ public class BetterAppleDrop extends AbilityExecutor {
         	
         if (level >= 60) {
         	if (find_nearest_int <= 80) {
-        		new ParticulEffect().createHelix(player);
+        		new ParticleEffect().createHelix(player);
         		block.getWorld().dropItemNaturally(block.getLocation(), item);
         		player.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.YELLOW + "Vous avez obtenu une pomme bonus.");
         		
         	}
         }else if (level >= 40) {
         	if (find_nearest_int <= 40) {
-        		new ParticulEffect().createHelix(player);
+        		new ParticleEffect().createHelix(player);
         		block.getWorld().dropItemNaturally(block.getLocation(), item);
         		player.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.YELLOW + "Vous avez obtenu une pomme bonus.");
         	}
         }else {
         	if (find_nearest_int <= 10) {
-        		new ParticulEffect().createHelix(player);
+        		new ParticleEffect().createHelix(player);
         		block.getWorld().dropItemNaturally(block.getLocation(), item);
         		player.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.YELLOW + "Vous avez obtenu une pomme bonus.");
         	}
