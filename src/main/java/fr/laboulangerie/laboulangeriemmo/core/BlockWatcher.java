@@ -2,20 +2,27 @@ package fr.laboulangerie.laboulangeriemmo.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
 public class BlockWatcher {
     private int entityId;
+    private UUID uuid;
     private List<Player> watchers = new ArrayList<Player>();
 
-    BlockWatcher(int entityId, Player firstWatcher) {
+    BlockWatcher(int entityId, UUID uuid, Player firstWatcher) {
         this.entityId = entityId;
+        this.uuid = uuid;
         watchers.add(firstWatcher);
     }
 
     public int getEntityId() {
         return entityId;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public List<Player> getWatchers() {

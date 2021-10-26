@@ -16,12 +16,14 @@ public class MagneticFieldTask extends BukkitRunnable {
     private Location center;
     private int radius;
     private Player player;
-    private List<Material> ores = Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE);
+    private boolean colorize;
+    private List<Material> ores = Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.REDSTONE_ORE, Material.ANCIENT_DEBRIS, Material.LAPIS_ORE, Material.EMERALD_ORE);
 
-    public MagneticFieldTask(Location center, int radius, Player player) {
+    public MagneticFieldTask(Location center, int radius, Player player, boolean colorize) {
         this.center = center;
         this.radius = radius;
         this.player = player;
+        this.colorize = colorize;
     }
 
     @Override
@@ -38,6 +40,7 @@ public class MagneticFieldTask extends BukkitRunnable {
 
                     MarkedBlocksManager.manager().markBlock(block, player);
                     toUnmark.add(block);
+                    if (colorize) MarkedBlocksManager.manager().colorize(block, player);
                 }
             }
         }

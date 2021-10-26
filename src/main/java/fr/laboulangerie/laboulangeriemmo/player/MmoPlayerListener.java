@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import fr.laboulangerie.laboulangeriemmo.core.MarkedBlocksManager;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 
 public class MmoPlayerListener implements Listener {
@@ -26,6 +27,7 @@ public class MmoPlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         this.mmoPlayerManager.loadPlayerData(player);
+        MarkedBlocksManager.manager().setupTeams(player);
     }
 
     @EventHandler

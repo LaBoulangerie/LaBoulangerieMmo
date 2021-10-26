@@ -1,6 +1,5 @@
 package fr.laboulangerie.laboulangeriemmo.player.ability.mining;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -30,7 +29,14 @@ public class MagneticField extends AbilityExecutor {
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         Player player = event.getPlayer();
-        Location location = player.getLocation();
-        new MagneticFieldTask(location, 10, player).runTask(LaBoulangerieMmo.PLUGIN);
+        boolean colorize = false;
+        int radius = 5;
+
+        if (level >= 100) {
+            colorize = true;
+        }else if (level >= 65) {
+            radius = 10;
+        }
+        new MagneticFieldTask(player.getLocation(), radius, player, colorize).runTask(LaBoulangerieMmo.PLUGIN);
     }
 }
