@@ -1,6 +1,7 @@
 package fr.laboulangerie.laboulangeriemmo.player.ability.mining;
 
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -23,7 +24,9 @@ public class FastMine extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         ItemStack item = event.getItem();
-        return item != null && item.getType() == Material.NETHERITE_PICKAXE;
+        return item != null 
+            && (item.getType() == Material.NETHERITE_PICKAXE || item.getType() == Material.DIAMOND_PICKAXE || item.getType() == Material.IRON_PICKAXE) 
+            && event.getClickedBlock().getType() == Material.STONE; // TODO Replace by Tag.BASE_STONE_OVERWORLD in 1.17
     }
 
     @Override
@@ -42,7 +45,7 @@ public class FastMine extends AbilityExecutor {
             duration = 20;
             amplifier = 1;
         }
-        player.sendMessage("§eVous gagnez Haste " + amplifier + " §pendant " + duration*20 + " secondes");
+        player.sendMessage("§eVous gagnez Haste " + amplifier+1 + " pendant " + duration*20 + " secondes");
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration*20, amplifier, true));
         new ParticleEffect().createHelix(player);
     }
