@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import com.google.common.base.Supplier;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
@@ -64,7 +65,8 @@ public class MmoPlayer implements GsonSerializable {
 
     public boolean canUseAbility(Abilities ability) {
         return cooldownsHolder.isCooldownElapsed(ability)
-            && talents.get(ability.getParentTalent()).getLevel(0.2) >= ability.getRequiredLevel();
+            && talents.get(ability.getParentTalent()).getLevel(0.2) >= ability.getRequiredLevel()
+            && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 
     public String getName() {
