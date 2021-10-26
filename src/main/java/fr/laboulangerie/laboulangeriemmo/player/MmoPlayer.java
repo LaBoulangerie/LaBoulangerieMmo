@@ -7,10 +7,15 @@ import java.util.stream.Stream;
 import com.google.common.base.Supplier;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+
 import fr.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 import fr.laboulangerie.laboulangeriemmo.player.ability.Abilities;
+import fr.laboulangerie.laboulangeriemmo.player.ability.AbilitiesManager;
+import fr.laboulangerie.laboulangeriemmo.player.ability.ParticulEffect;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
 public class MmoPlayer implements GsonSerializable {
@@ -41,6 +46,7 @@ public class MmoPlayer implements GsonSerializable {
     public MmoPlayer() {
         xpCountdown = new XpCountDown(this);
         xpCountdown.start();
+        
     }
 
     public Talent getTalent(String talentName) {
@@ -49,7 +55,14 @@ public class MmoPlayer implements GsonSerializable {
 
     public void useAbility(Abilities ability) {
         cooldownsHolder.startCooldown(ability);
+        Player player = Bukkit.getPlayer(uniqueId);
+        boolean shouldlog = ability.shouldLog(); 
+        if (shouldlog = true) {
+		new ParticulEffect().createHelix(player);
+        player.sendMessage(ChatColor.YELLOW + "Vous avez utilisez " + ability.toString() + ", cooldown de " + ability.getCooldown() + ability.getCooldownUnit());
+        }
     }
+        
 
     public boolean canUseAbility(Abilities ability) {
         return cooldownsHolder.isCooldownElapsed(ability)

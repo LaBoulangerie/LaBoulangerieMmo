@@ -86,7 +86,7 @@ public class FastSmelt extends AbilityExecutor {
 
         bukkitPlayer.getInventory().setItemInMainHand(newHand);
         new ParticulEffect().createHelix(bukkitPlayer);
-        bukkitPlayer.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.YELLOW + "Le contenu du four a été cuit.");
+        
         
     }
 }
