@@ -34,33 +34,20 @@ public class BetterAppleDrop extends AbilityExecutor {
 		BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
         ItemStack item = new ItemStack(Material.APPLE);
-        Player player = event.getPlayer();
         	  
         int max_number = 100;
         int min_number = 1;
         Random random_chance = new Random();
         int find_nearest_int = min_number + random_chance.nextInt(max_number);
+        boolean shouldDrop = false;
         	
-        if (level >= 60) {
-        	if (find_nearest_int <= 80) {
-        		new ParticleEffect().createHelix(player);
-        		block.getWorld().dropItemNaturally(block.getLocation(), item);
-        		player.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.YELLOW + "Vous avez obtenu une pomme bonus.");
-        		
-        	}
-        }else if (level >= 40) {
-        	if (find_nearest_int <= 40) {
-        		new ParticleEffect().createHelix(player);
-        		block.getWorld().dropItemNaturally(block.getLocation(), item);
-        		player.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.YELLOW + "Vous avez obtenu une pomme bonus.");
-        	}
-        }else {
-        	if (find_nearest_int <= 10) {
-        		new ParticleEffect().createHelix(player);
-        		block.getWorld().dropItemNaturally(block.getLocation(), item);
-        		player.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + ChatColor.YELLOW + "Vous avez obtenu une pomme bonus.");
-        	}
-        }
+        if (level >= 60 && find_nearest_int <= 80) shouldDrop = true;
+        else if (level >= 40 && find_nearest_int <= 40) shouldDrop = true;
+        else if (find_nearest_int <= 10) shouldDrop = true;
+
+		if (shouldDrop) {
+			block.getWorld().dropItemNaturally(block.getLocation(), item);
+		}
 	}
 
 }
