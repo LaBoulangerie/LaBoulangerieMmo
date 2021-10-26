@@ -78,12 +78,18 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
         }
+
+        if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
+            LaBoulangerieMmo.PLUGIN.reloadConfig();
+            sender.sendMessage("§aReload complete");
+            return true;
+        }
         return false;
     }
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("xp");
+        if (args.length == 1) return Arrays.asList("xp", "reload", "rl");
         if (args[0].equalsIgnoreCase("xp")) {
             switch (args.length) {
                 default:

@@ -12,7 +12,7 @@ commands:
   mmo:
     permission: laboulangeriemmo.mmo
     description: Admin command
-    usage: /mmo xp <player> [see|add|subtract] <talent> ?[amount]
+    usage: /mmo [xp|reload] <player> [see|add|subtract] <talent> ?[amount]
 permissions:
   laboulangeriemmo.stats:
     default: true
