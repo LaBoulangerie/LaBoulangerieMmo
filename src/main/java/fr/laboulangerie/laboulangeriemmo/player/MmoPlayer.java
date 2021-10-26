@@ -57,7 +57,7 @@ public class MmoPlayer implements GsonSerializable {
 
         if (ability.shouldLog() == true) {
             new ParticleEffect().createHelix(player);
-            player.sendMessage("§eVous avez utilisez " + ability.toString() + ", cooldown de " + ability.getCooldown() + ability.getCooldownUnit());
+            player.sendMessage("§eVous avez utilisé " + ability.toString() + ", cooldown de " + ability.getCooldown() +" "+ ability.getCooldownUnit().toString().toLowerCase());
         }
     }
         
