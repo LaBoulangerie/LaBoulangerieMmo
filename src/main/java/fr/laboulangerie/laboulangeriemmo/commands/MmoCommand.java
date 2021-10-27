@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,20 +26,20 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         if (args[0].equalsIgnoreCase("xp") && args.length >= 4) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
             if (player == null || LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player) == null) {
-                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + "§4Impossible de récupérer le joueur: "+args[1]);
+                sender.sendMessage("§4Impossible de récupérer le joueur: "+args[1]);
                 return false;
             }
             MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
             Talent talent = mmoPlayer.getTalent(args[3]);
 
             if (talent == null) {
-                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + "§4"+args[1]+" n'as pas le talent "+args[3]);
+                sender.sendMessage("§4"+args[1]+" n'as pas le talent "+args[3]);
                 return false;
             }
 
             if (args[2].equalsIgnoreCase("see")) {
                 sender.sendMessage(
-                		ChatColor.GOLD + "[LaBoulangerieMmo] " + "§a" + args[1] + ": §b"
+                	"§a" + args[1] + ": §b"
                     + args[3] + ": §rlvl §e"+talent.getLevel(0.2)
                     + "§r, xp §e" + ((talent.getXp() * 100_000 - talent.getLevelXp(0.2) * 100_000) / 100_000)
                 );
@@ -53,27 +52,27 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             try {
                 amount =  Double.parseDouble(args[4]);
             } catch (Exception e) {
-                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + "§4L'argument §e"+ args[4] + " §4n'est pas un nombre décimal valide.");
+                sender.sendMessage("§4L'argument §e"+ args[4] + " §4n'est pas un nombre décimal valide.");
                 return true;
             }
 
             if (args[2].equalsIgnoreCase("add")) {
                 talent.incrementXp(amount);
-                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + "§aVous avez ajouté §e" + args[4] + "§axp au talent §e"
+                sender.sendMessage("§aVous avez ajouté §e" + args[4] + "§axp au talent §e"
                  + talent.getDisplayName() + "§a de §e" + args[1]);
                 return true;
             }
 
             if (args[2].equalsIgnoreCase("subtract")) {
                 talent.decrementXp(amount);
-                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + "§aVous avez retiré §e" + args[4] + "§axp au talent §e"
+                sender.sendMessage("§aVous avez retiré §e" + args[4] + "§axp au talent §e"
                  + talent.getDisplayName() + "§a de §e" + args[1]);
                 return true;
             }
 
             if (args[2].equalsIgnoreCase("set")) {
                 talent.setXp(amount);
-                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + "§aVous avez mis à §e" + args[4] + "§axp le talent §e"
+                sender.sendMessage("§aVous avez mis à §e" + args[4] + "§axp le talent §e"
                  + talent.getDisplayName() + "§a de §e" + args[1]);
                 return true;
             }
@@ -94,7 +93,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             switch (args.length) {
                 default:
                 case 2:
-                    return null; // List players
+                    return null; // Lists players
                 case 3:
                     return Arrays.asList("add", "subtract", "see", "set");
                 case 4:

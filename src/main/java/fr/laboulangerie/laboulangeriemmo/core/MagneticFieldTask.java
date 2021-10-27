@@ -17,7 +17,7 @@ public class MagneticFieldTask extends BukkitRunnable {
     private int radius;
     private Player player;
     private boolean colorize;
-    private List<Material> ores = Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.REDSTONE_ORE, Material.ANCIENT_DEBRIS, Material.LAPIS_ORE, Material.EMERALD_ORE);
+    private List<Material> ores = Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.EMERALD_ORE, Material.COPPER_ORE, Material.DEEPSLATE_COAL_ORE, Material.DEEPSLATE_IRON_ORE, Material.DEEPSLATE_GOLD_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.DEEPSLATE_REDSTONE_ORE, Material.DEEPSLATE_LAPIS_ORE, Material.DEEPSLATE_EMERALD_ORE, Material.DEEPSLATE_COPPER_ORE, Material.NETHER_GOLD_ORE, Material.ANCIENT_DEBRIS, Material.NETHER_QUARTZ_ORE);
 
     public MagneticFieldTask(Location center, int radius, Player player, boolean colorize) {
         this.center = center;

@@ -26,7 +26,7 @@ public class FastMine extends AbilityExecutor {
         ItemStack item = event.getItem();
         return item != null 
             && (item.getType() == Material.NETHERITE_PICKAXE || item.getType() == Material.DIAMOND_PICKAXE || item.getType() == Material.IRON_PICKAXE) 
-            && event.getClickedBlock().getType() == Material.STONE; // TODO Replace by Tag.BASE_STONE_OVERWORLD in 1.17
+            && Tag.BASE_STONE_OVERWORLD.isTagged(event.getClickedBlock().getType());
     }
 
     @Override
