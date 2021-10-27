@@ -41,7 +41,9 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 sender.sendMessage(
                 	"§a" + args[1] + ": §b"
                     + args[3] + ": §rlvl §e"+talent.getLevel(0.2)
-                    + "§r, xp §e" + ((talent.getXp() * 100_000 - talent.getLevelXp(0.2) * 100_000) / 100_000)
+                    + "§r, xp §e" + (talent.getXp() - talent.getLevelXp(0.2))
+                    + "§r, total xp §e"+ talent.getXp()
+                    + " " + talent.getLevelXp(0.2)
                 );
                 return true;
             }
