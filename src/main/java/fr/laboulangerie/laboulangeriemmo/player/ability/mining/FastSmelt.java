@@ -84,6 +84,5 @@ public class FastSmelt extends AbilityExecutor {
             newHand = new ItemStack(Material.AIR);
 
         bukkitPlayer.getInventory().setItemInMainHand(newHand);
-        new ParticleEffect().createHelix(bukkitPlayer);
     }
 }

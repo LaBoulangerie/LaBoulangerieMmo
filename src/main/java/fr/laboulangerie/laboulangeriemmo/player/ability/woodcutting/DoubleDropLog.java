@@ -47,9 +47,7 @@ public class DoubleDropLog extends AbilityExecutor {
         else if (find_nearest_int <= 10) shouldDouble = true;
 
 		if (shouldDouble) {
-			new ParticleEffect().createHelix(player);
 			block.getWorld().dropItemNaturally(block.getLocation(), item);
-			player.sendMessage("§eVotre drop a été doublé.");
 		}
 	}
 }
