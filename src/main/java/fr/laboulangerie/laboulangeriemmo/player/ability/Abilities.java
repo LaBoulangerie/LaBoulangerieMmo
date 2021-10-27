@@ -13,8 +13,8 @@ import fr.laboulangerie.laboulangeriemmo.player.ability.woodcutting.DoubleDropLo
 
 public enum Abilities {
 
-    FAST_MINE(10, TimeUnit.SECONDS, 25, "mining", new FastMine(), true),
-    FAST_SMELT(1, TimeUnit.SECONDS, 10, "mining", new FastSmelt(), true),
+    FAST_MINE(10, TimeUnit.SECONDS, 25, "mining", new FastMine(), false),
+    FAST_SMELT(1, TimeUnit.SECONDS, 10, "mining", new FastSmelt(), false),
     MAGNETIC_FIELD(0, TimeUnit.SECONDS, 5, "mining", new MagneticField(), true),
     DOUBLE_DROP_LOG(1, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), false),
 	BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false),
