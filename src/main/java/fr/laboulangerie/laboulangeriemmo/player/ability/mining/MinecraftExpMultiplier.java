@@ -1,9 +1,15 @@
 package fr.laboulangerie.laboulangeriemmo.player.ability.mining;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import fr.laboulangerie.laboulangeriemmo.core.MarkedBlocksManager;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
@@ -19,7 +25,9 @@ public class MinecraftExpMultiplier extends AbilityExecutor{
 		BlockBreakEvent event = (BlockBreakEvent) baseEvent;
 	      Block block = event.getBlock();
 	      if (event.getBlock().hasMetadata("laboulangerie:placed")) return false;
-	      return block != null && !(event.getExpToDrop() == 0);
+	      List<Material> ores = Arrays.asList(Material.COAL_ORE,  Material.DIAMOND_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.EMERALD_ORE, Material.DEEPSLATE_COAL_ORE, Material.DEEPSLATE_DIAMOND_ORE, Material.DEEPSLATE_REDSTONE_ORE, Material.DEEPSLATE_LAPIS_ORE, Material.DEEPSLATE_EMERALD_ORE, Material.NETHER_GOLD_ORE, Material.NETHER_QUARTZ_ORE);
+	      
+	      return block != null && !(event.getExpToDrop() == 0) && ores.contains(block.getType());
 	}
 
 	@Override
