@@ -1,19 +1,48 @@
 talent-grinding:
   mining:
     break:
+      NETHERRACK: 0.5
       STONE: 1
       DIORITE: 1.5
       ANDESITE : 1.5
       GRANITE : 1.5
+      TERRACOTTA: 1.5
+      BROWN_TERRACOTTA: 1.5
+      WHITE_TERRACOTTA: 1.5
+      LIGHT_GRAY_TERRACOTTA: 1.5
+      YELLOW_TERRACOTTA: 1.5
+      ORANGE_TERRACOTTA: 1.5
+      RED_TERRACOTTA: 1.5
       DEEPSLATE : 3
+      CALCITE: 3
+      TUFF: 3
+      DRIPSTONE_BLOCK: 3
+      BASALT: 3
+      END_STONE: 3
+      BLACKSTONE: 4
       COAL_ORE : 6
       COPPER_ORE : 6
       IRON_ORE : 6
+      NETHER_QUARTZ_ORE: 6
+      NETHER_GOLD_ORE: 6
+      AMETHYST_BLOCK: 10
+      AMETHYST_CLUSTER: 10
       GOLD_ORE : 12
       REDSTONE_ORE : 12
-      DIAMOND__ORE : 24
+      LAPIS_ORE: 12
+      OBSIDIAN: 16
+      DIAMOND_ORE : 24
       EMERALD_ORE : 32
       ANCIENT_DEBRIS : 48
+
+      DEEPSLATE_COAL_ORE : 7
+      DEEPSLATE_COPPER_ORE : 7
+      DEEPSLATE_IRON_ORE : 7
+      DEEPSLATE_GOLD_ORE : 13
+      DEEPSLATE_REDSTONE_ORE : 13
+      DEEPSLATE_LAPIS_ORE: 13
+      DEEPSLATE_DIAMOND_ORE : 25
+      DEEPSLATE_EMERALD_ORE : 33
     craft:
       NETHERITE_PICKAXE: 5
     first_craft:
