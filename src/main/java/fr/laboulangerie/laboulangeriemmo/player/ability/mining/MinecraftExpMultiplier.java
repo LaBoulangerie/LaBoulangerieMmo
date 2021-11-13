@@ -33,16 +33,16 @@ public class MinecraftExpMultiplier extends AbilityExecutor{
 		BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         int exp_boost = 0;
         
-        if (level >= 60) {
-        	 exp_boost =  (int) (event.getExpToDrop()*5);
+        if (level >= 24) {
+        	 exp_boost = (int) (event.getExpToDrop()*5);
         	 event.setExpToDrop(exp_boost);
         
-        }else if (level >= 40) {
-        	exp_boost =  (int) (event.getExpToDrop()*2);
+        }else if (level >= 12) {
+        	exp_boost = (int) (event.getExpToDrop()*2);
         	event.setExpToDrop(exp_boost);
         	
         }else {
-        	exp_boost =  (int) (event.getExpToDrop()*1.25);
+        	exp_boost = (int) (event.getExpToDrop()*1.25);
         	event.setExpToDrop(exp_boost);
 		
         }

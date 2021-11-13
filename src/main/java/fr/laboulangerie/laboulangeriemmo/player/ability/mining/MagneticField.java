@@ -32,7 +32,7 @@ public class MagneticField extends AbilityExecutor {
         boolean colorize = false;
         int radius = 5;
 
-        if (level >= 100) {
+        if (level >= 95) {
             colorize = true;
             radius = 30;
         }else if (level >= 65) {

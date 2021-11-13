@@ -13,12 +13,13 @@ import fr.laboulangerie.laboulangeriemmo.player.ability.woodcutting.DoubleDropLo
 
 public enum Abilities {
 
-    FAST_MINE(10, TimeUnit.SECONDS, 25, "mining", new FastMine(), false),
-    FAST_SMELT(1, TimeUnit.SECONDS, 10, "mining", new FastSmelt(), false),
-    MAGNETIC_FIELD(0, TimeUnit.SECONDS, 5, "mining", new MagneticField(), true),
+
+    MINECRAFT_EXP_MULTIPLIER(5, TimeUnit.SECONDS, 1, "mining", new MinecraftExpMultiplier(), false),
+    FAST_MINE(15, TimeUnit.MINUTES, 15, "mining", new FastMine(), false),
+    FAST_SMELT(85, TimeUnit.HOURS, 1, "mining", new FastSmelt(), false),
+    MAGNETIC_FIELD(35, TimeUnit.MINUTES, 30, "mining", new MagneticField(), true),
     DOUBLE_DROP_LOG(1, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), false),
-	BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false),
-    MINECRAFT_EXP_MULTIPLIER(1, TimeUnit.SECONDS, 1, "mining", new MinecraftExpMultiplier(), false);
+	BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false);
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;

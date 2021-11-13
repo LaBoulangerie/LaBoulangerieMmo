@@ -35,17 +35,17 @@ public class FastMine extends AbilityExecutor {
         Player player = event.getPlayer();
         int duration = 0;
         int amplifier = 0;
-        if (level >= 60) {
+        if (level >= 75) {
             duration = 300;
             amplifier = 3;
-        }else if (level >= 40) {
+        }else if (level >= 45) {
             duration = 60;
             amplifier = 2;
         }else {
             duration = 20;
             amplifier = 1;
         }
-        player.sendMessage("§eVous gagnez Haste " + amplifier+1 + " pendant " + duration*20 + " secondes");
+        player.sendMessage("§eVous gagnez Haste " + (amplifier+1) + " pendant " + duration*20 + " secondes");
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration*20, amplifier, true));
         new ParticleEffect().createHelix(player);
     }
