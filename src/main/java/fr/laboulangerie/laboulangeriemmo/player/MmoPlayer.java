@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import fr.laboulangerie.laboulangeriemmo.core.ParticleEffect;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
+import fr.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 import fr.laboulangerie.laboulangeriemmo.player.ability.Abilities;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
@@ -82,7 +83,10 @@ public class MmoPlayer implements GsonSerializable {
     }
     public void incrementXp(String talentId, double amount) {
         Bukkit.getPluginManager().callEvent(new PlayerEarnsXpEvent(amount, talentId, this));
+        int oldLevel = getTalent(talentId).getLevel(0.2);
+
         xpCountdown.startCountDown(talentId, amount);
         getTalent(talentId).incrementXp(amount);
+        if (oldLevel != getTalent(talentId).getLevel(0.2)) Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
     }
 }
