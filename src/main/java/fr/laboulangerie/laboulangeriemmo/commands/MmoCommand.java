@@ -37,9 +37,6 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             }
             MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
             Talent talent = mmoPlayer.getTalent(args[3]);
-            
-            
-
             if (talent == null) {
                 sender.sendMessage("§4"+args[1]+" n'as pas le talent "+args[3]);
                 return false;
@@ -57,12 +54,10 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             }
             
             if (args[2].equalsIgnoreCase("leaderboard")) {
-            	
             	this.playersFolder = new File(laBoulangerieMmo.getDataFolder(), "players/");
+            	Double max = 0.0;
+            	String name = null;
 
-            	
-            	Double max= 0.0;
-            	String name = null;    
             	for(File file : playersFolder.listFiles()){
             	    OfflinePlayer player2 = Bukkit.getOfflinePlayer(UUID.fromString(file.getName()));
             	    MmoPlayer mmoPlayer2 = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player2);
@@ -72,13 +67,12 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             	      name = mmoPlayer2.getName();
             	    }
             	}
-            	                if (name == null) {
-            	                    sender.sendMessage("§cIl n'y a aucun joueur qui n'a d'exp en §a" + args[3]);
-            	                }
-            	                else {
-            	                sender.sendMessage("§rLe meilleur joueur en §a" + args[3] + "§r est §a" + name + "§r car il a §e" + max + "§r d'exp");
-            	                }
-            	                return true;
+                if (name == null) {
+                    sender.sendMessage("§cAucun joueur n'a d'exp en §a" + args[3]);
+                }else {
+                sender.sendMessage("§rLe meilleur joueur en §a" + args[3] + "§r est §a" + name + "§r car il a §e" + max + "§r d'exp");
+                }
+                return true;
             }
 
             if (args.length < 5) return false;
