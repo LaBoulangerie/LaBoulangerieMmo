@@ -2,7 +2,9 @@ package fr.laboulangerie.laboulangeriemmo;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
 
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.laboulangerie.laboulangeriemmo.blockus.BlockusDataManager;
@@ -11,14 +13,17 @@ import fr.laboulangerie.laboulangeriemmo.blockus.BlockusRestoration;
 import fr.laboulangerie.laboulangeriemmo.commands.MmoCommand;
 import fr.laboulangerie.laboulangeriemmo.commands.Stats;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
+import fr.laboulangerie.laboulangeriemmo.listener.MmoListener;
 import fr.laboulangerie.laboulangeriemmo.listener.ServerListener;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayerListener;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayerManager;
 import fr.laboulangerie.laboulangeriemmo.player.SkillListener;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilitiesManager;
+import net.milkbowl.vault.economy.Economy;
 
 public class LaBoulangerieMmo extends JavaPlugin {
     public static LaBoulangerieMmo PLUGIN;
+    public static Economy ECONOMY = null;
     private GsonSerializer serializer;
 
     private BlockusDataManager blockusDataManager;
@@ -28,6 +33,11 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public void onEnable() {
         LaBoulangerieMmo.PLUGIN = this;
         this.saveDefaultConfig();
+        if (!setupEconomy()) {
+            getLogger().log(Level.SEVERE, "Can't load the plugin, Vault isn't present");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         this.serializer = new GsonSerializer();
 
         this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
@@ -65,7 +75,8 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 new BlockusListener(this),
                 new MmoPlayerListener(this),
                 new SkillListener(this),
-                new AbilitiesManager(this)
+                new AbilitiesManager(this),
+                new MmoListener()
         ).forEach(l->this.getServer().getPluginManager().registerEvents(l, this));
     }
 
@@ -75,5 +86,15 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     public BlockusDataManager getBlockusDataManager() {
         return blockusDataManager;
+    }
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) return false;
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        ECONOMY = rsp.getProvider();
+        return ECONOMY != null;
     }
 }
