@@ -4,10 +4,12 @@ import java.util.Iterator;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.BlastFurnace;
 import org.bukkit.block.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.BlastingRecipe;
 import org.bukkit.inventory.FurnaceInventory;
 import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
@@ -27,9 +29,9 @@ public class FastSmelt extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-        if (event.getClickedBlock().getType() != Material.FURNACE || event.getItem().getType() != Material.COAL) return false;
+        if (event.getClickedBlock().getType() != Material.BLAST_FURNACE || event.getItem().getType() != Material.COAL) return false;
 
-        Furnace furnace = (Furnace) event.getClickedBlock().getState();
+        BlastFurnace furnace = (BlastFurnace) event.getClickedBlock().getState();
         ItemStack toSmelt = furnace.getInventory().getSmelting();
         if (toSmelt == null || toSmelt.getType() == Material.AIR) return false;
 
@@ -38,8 +40,8 @@ public class FastSmelt extends AbilityExecutor {
         while (iter.hasNext()) {
             Recipe recipe = iter.next();
 
-            if (!(recipe instanceof FurnaceRecipe)) continue;
-            if (((FurnaceRecipe) recipe).getInput().getType() != toSmelt.getType()) continue;
+            if (!(recipe instanceof BlastingRecipe)) continue;
+            if (((BlastingRecipe) recipe).getInput().getType() != toSmelt.getType()) continue;
 
             result = recipe.getResult();
             break;
