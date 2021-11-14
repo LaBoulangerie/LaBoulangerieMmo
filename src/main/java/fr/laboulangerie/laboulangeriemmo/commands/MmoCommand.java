@@ -57,6 +57,10 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             	this.playersFolder = new File(laBoulangerieMmo.getDataFolder(), "players/");
             	Double max = 0.0;
             	String name = null;
+            	Double max2 = 0.0;
+            	Double max3 = 0.0;
+            	String name2 = null;
+            	String name3 = null;
 
             	for(File file : playersFolder.listFiles()){
             	    OfflinePlayer player2 = Bukkit.getOfflinePlayer(UUID.fromString(file.getName()));
@@ -66,12 +70,23 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             	      max = talent.getXp();
             	      name = mmoPlayer2.getName();
             	    }
+            	    else if (talent2.getXp() < max && talent2.getXp() > max2) {
+                	      max2 = talent.getXp();
+                	      name2 = mmoPlayer2.getName();
+                	    }
+              	    else if (talent2.getXp() < max2 && talent2.getXp() > max3) {
+                  	      max3 = talent.getXp();
+                  	      name3 = mmoPlayer2.getName();
+                  	    }
             	}
                 if (name == null) {
                     sender.sendMessage("§cAucun joueur n'a d'exp en §a" + args[3]);
                 }else {
-                sender.sendMessage("§rLe meilleur joueur en §a" + args[3] + "§r est §a" + name + "§r car il a §e" + max + "§r d'exp");
-                }
+                	sender.sendMessage("§rLe meilleur joueur en §a" + args[3] + "§r est §a" + name + "§r car il a §e" + max + "§r d'exp");
+            		sender.sendMessage("§lClassement de §a" + args[3] + "§r :");
+            		sender.sendMessage("§e1. §a" + name + " " + max + "§r exp");
+            		sender.sendMessage("§62. §a" + name2 + " " + max2 + "§r exp");
+            		sender.sendMessage("§c3. §a" + name3 + " " + max3 + "§r exp");                }
                 return true;
             }
 
