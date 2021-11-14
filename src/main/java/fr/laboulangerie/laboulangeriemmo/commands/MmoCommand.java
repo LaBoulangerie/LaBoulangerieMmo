@@ -69,15 +69,13 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             	    if (talent2.getXp() > max) {
             	      max = talent.getXp();
             	      name = mmoPlayer2.getName();
-            	    }
-            	    else if (talent2.getXp() < max && talent2.getXp() > max2) {
-                	      max2 = talent.getXp();
-                	      name2 = mmoPlayer2.getName();
-                	    }
-              	    else if (talent2.getXp() < max2 && talent2.getXp() > max3) {
-                  	      max3 = talent.getXp();
-                  	      name3 = mmoPlayer2.getName();
-                  	    }
+            	    }else if (talent2.getXp() < max && talent2.getXp() > max2) {
+                        max2 = talent.getXp();
+                        name2 = mmoPlayer2.getName();
+                	}else if (talent2.getXp() < max2 && talent2.getXp() > max3) {
+                        max3 = talent.getXp();
+                        name3 = mmoPlayer2.getName();
+                  	}
             	}
                 if (name == null) {
                     sender.sendMessage("§cAucun joueur n'a d'exp en §a" + args[3]);
