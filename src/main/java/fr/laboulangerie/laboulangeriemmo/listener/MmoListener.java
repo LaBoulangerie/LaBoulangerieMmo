@@ -8,7 +8,9 @@ import org.bukkit.event.Listener;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
+import fr.laboulangerie.laboulangeriemmo.events.XpCountDownFinishedEvent;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
+import net.kyori.adventure.text.Component;
 
 public class MmoListener implements Listener {
     @EventHandler
@@ -20,5 +22,13 @@ public class MmoListener implements Listener {
             "§aVous êtes passé au niveau §e"+talent.getLevel(0.2)
             +"§a en §e"+talent.getDisplayName()
             +"§a, vous gagnez §e"+talent.getLevelXp(0.2)+"$");
+    }
+
+    @EventHandler
+    public void onCountDownFinished(XpCountDownFinishedEvent event) {
+        Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
+        player.sendMessage(Component.text(
+            "§aVous avez gagné §e" + event.getAmount() + "§axp en §e"
+            + event.getTalent().getDisplayName()));
     }
 }

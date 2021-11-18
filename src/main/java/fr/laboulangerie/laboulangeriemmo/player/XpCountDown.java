@@ -7,8 +7,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.events.XpCountDownFinishedEvent;
-import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
-import net.kyori.adventure.text.Component;
 
 public class XpCountDown extends BukkitRunnable {
 
@@ -26,12 +24,8 @@ public class XpCountDown extends BukkitRunnable {
             talentToCountDown.put(key, talentToCountDown.get(key)-1);
 
             if (talentToCountDown.get(key) == 0) {
-                Talent talent = player.getTalent(key);
-                Bukkit.getPlayer(player.getUniqueId())
-                    .sendMessage(Component.text("§aVous avez gagné §e" + talentToXp.get(key) + "§axp en §e"
-                        + talent.getDisplayName()));
                 talentToXp.put(key, 0.0);
-                Bukkit.getPluginManager().callEvent(new XpCountDownFinishedEvent(talent, player, talentToXp.get(key)));
+                Bukkit.getPluginManager().callEvent(new XpCountDownFinishedEvent(player.getTalent(key), player, talentToXp.get(key)));
             }
         });
     }
