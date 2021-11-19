@@ -1,9 +1,7 @@
 package fr.laboulangerie.laboulangeriemmo.commands;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -20,10 +18,6 @@ import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
 public class MmoCommand implements CommandExecutor, TabCompleter {
-	
-	private File playersFolder;
-    private LaBoulangerieMmo laBoulangerieMmo;
-
 	
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
@@ -50,41 +44,6 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                     + "§r, total xp §e"+ talent.getXp()
                     + " " + talent.getLevelXp(0.2)
                 );
-                return true;
-            }
-            
-            if (args[2].equalsIgnoreCase("leaderboard")) {
-            	this.playersFolder = new File(laBoulangerieMmo.getDataFolder(), "players/");
-            	Double max = 0.0;
-            	String name = null;
-            	Double max2 = 0.0;
-            	Double max3 = 0.0;
-            	String name2 = null;
-            	String name3 = null;
-
-            	for(File file : playersFolder.listFiles()){
-            	    OfflinePlayer player2 = Bukkit.getOfflinePlayer(UUID.fromString(file.getName()));
-            	    MmoPlayer mmoPlayer2 = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player2);
-            	    Talent talent2 = mmoPlayer2.getTalent(args[3]);
-            	    if (talent2.getXp() > max) {
-            	      max = talent.getXp();
-            	      name = mmoPlayer2.getName();
-            	    }else if (talent2.getXp() < max && talent2.getXp() > max2) {
-                        max2 = talent.getXp();
-                        name2 = mmoPlayer2.getName();
-                	}else if (talent2.getXp() < max2 && talent2.getXp() > max3) {
-                        max3 = talent.getXp();
-                        name3 = mmoPlayer2.getName();
-                  	}
-            	}
-                if (name == null) {
-                    sender.sendMessage("§cAucun joueur n'a d'exp en §a" + args[3]);
-                }else {
-                	sender.sendMessage("§rLe meilleur joueur en §a" + args[3] + "§r est §a" + name + "§r car il a §e" + max + "§r d'exp");
-            		sender.sendMessage("§lClassement de §a" + args[3] + "§r :");
-            		sender.sendMessage("§e1. §a" + name + " " + max + "§r exp");
-            		sender.sendMessage("§62. §a" + name2 + " " + max2 + "§r exp");
-            		sender.sendMessage("§c3. §a" + name3 + " " + max3 + "§r exp");                }
                 return true;
             }
 
@@ -137,7 +96,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 case 2:
                     return null; // Lists players
                 case 3:
-                    return Arrays.asList("add", "subtract", "see", "set", "leaderboard");
+                    return Arrays.asList("add", "subtract", "see", "set");
                 case 4:
                     OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
                     MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
