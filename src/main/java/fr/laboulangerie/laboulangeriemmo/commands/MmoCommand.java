@@ -1,5 +1,6 @@
 package fr.laboulangerie.laboulangeriemmo.commands;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,6 +81,13 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
+            sender.sendMessage("§bWriting blockuses...");
+            try {
+                LaBoulangerieMmo.PLUGIN.getBlockusDataManager().writeBlockuses();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            sender.sendMessage("§bReloading config");
             LaBoulangerieMmo.PLUGIN.reloadConfig();
             sender.sendMessage("§aReload complete");
             return true;
