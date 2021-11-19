@@ -24,8 +24,8 @@ public class XpCountDown extends BukkitRunnable {
             talentToCountDown.put(key, talentToCountDown.get(key)-1);
 
             if (talentToCountDown.get(key) == 0) {
-                talentToXp.put(key, 0.0);
                 Bukkit.getPluginManager().callEvent(new XpCountDownFinishedEvent(player.getTalent(key), player, talentToXp.get(key)));
+                talentToXp.put(key, 0.0);
             }
         });
     }
@@ -34,6 +34,6 @@ public class XpCountDown extends BukkitRunnable {
         talentToXp.put(talentId, talentToXp.getOrDefault(talentId, 0.0) + xpAmount);
     }
     public void start() {
-        runTaskTimerAsynchronously(LaBoulangerieMmo.PLUGIN, 0, 20);
+        runTaskTimer(LaBoulangerieMmo.PLUGIN, 0, 20);
     }
 }

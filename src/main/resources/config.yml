@@ -50,7 +50,3 @@ talent-grinding:
       IRON_PICKAXE: 50
       STONE_PICKAXE: 25
       WOODEN_PICKAXE: 10
-
-  thehunter:
-    kill:
-      CREEPER: 2
