@@ -54,9 +54,10 @@ public class Stats implements CommandExecutor {
                     sender.sendMessage("§cAucun joueur n'a d'exp en §a" + args[1]);
                 }else {
                 	sender.sendMessage("§lClassement de §a" + args[1] + "§r :");
-            		sender.sendMessage("§e1. §a" + name + " " + max + "§r exp");
-            		sender.sendMessage("§62. §a" + name2 + " " + max2 + "§r exp");
-            		sender.sendMessage("§c3. §a" + name3 + " " + max3 + "§r exp");                }
+            		sender.sendMessage("§e1. §a" + name + " " + max + "§r xp");
+            		sender.sendMessage("§62. §a" + name2 + " " + max2 + "§r xp");
+            		sender.sendMessage("§c3. §a" + name3 + " " + max3 + "§r xp");
+                }
                 return true;
             }
             if (!sender.hasPermission("laboulangeriemmo.stats.see")) {
