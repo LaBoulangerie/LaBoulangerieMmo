@@ -87,6 +87,9 @@ public class MmoPlayer implements GsonSerializable {
 
         xpCountdown.startCountDown(talentId, amount);
         getTalent(talentId).incrementXp(amount);
-        if (oldLevel != getTalent(talentId).getLevel(0.2)) Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
+        int newLevel = getTalent(talentId).getLevel(0.2);
+        if (oldLevel < newLevel) {
+            Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
+        }
     }
 }

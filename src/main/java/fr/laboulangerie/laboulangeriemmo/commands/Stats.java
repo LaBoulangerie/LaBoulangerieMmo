@@ -84,7 +84,7 @@ public class Stats implements CommandExecutor {
         source.streamTalents().get().forEach(talent -> {
             String firstPart = "§b"+talent.getDisplayName();
             String secondPart = "§r: lvl §e"+talent.getLevel(0.2);
-            String thirdPart = "§r, xp §e" + (talent.getXp() - talent.getLevelXp(0.2)) +"§5/§e"+(int) Math.pow((talent.getLevel(0.2)+1) / 0.2, 2);
+            String thirdPart = "§r, xp §e" + (talent.getXp() - talent.getLevelXp(0.2)) +"§5/§e"+((int) Math.pow((talent.getLevel(0.2)+1) / 0.2, 2)-talent.getLevelXp(0.2));
             target.sendMessage(firstPart + "" + secondPart + "" + thirdPart);
         });
     }
