@@ -8,6 +8,7 @@ import org.bukkit.Statistic;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -23,23 +24,23 @@ public class SkillListener implements Listener {
         this.laBoulangerieMmo = laBoulangerieMmo;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (event.getBlock().hasMetadata("laboulangerie:placed")) return;
+        if (event.isCancelled() || event.getBlock().hasMetadata("laboulangerie:placed")) return;
         giveReward(event.getPlayer(), GrindingCategory.BREAK, event.getBlock().getType().toString());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityKill(EntityDeathEvent event) {
-        if (!(event.getEntity().getKiller() instanceof Player)) return;
+        if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player)) return;
         
         giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onCraft(CraftItemEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (!(event.getWhoClicked() instanceof Player)) return;
+        if (event.isCancelled() || !(event.getWhoClicked() instanceof Player)) return;
         Material crafted = event.getRecipe().getResult().getType();
 
         giveReward(player, GrindingCategory.CRAFT, crafted.toString());
