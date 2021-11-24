@@ -45,7 +45,7 @@ public class FastMine extends AbilityExecutor {
             duration = 20;
             amplifier = 1;
         }
-        player.sendMessage("§eVous gagnez Haste " + (amplifier+1) + " pendant " + duration*20 + " secondes");
+        player.sendMessage("§eVous gagnez Haste " + (amplifier+1) + " pendant " + duration + " secondes");
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration*20, amplifier, true));
         new ParticleEffect().createHelix(player);
     }
