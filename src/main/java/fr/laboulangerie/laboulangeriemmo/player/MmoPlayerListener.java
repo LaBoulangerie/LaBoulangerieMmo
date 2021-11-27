@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.core.MarkedBlocksManager;
+import fr.laboulangerie.laboulangeriemmo.events.MmoPlayerBreakBlockEvent;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 
 public class MmoPlayerListener implements Listener {

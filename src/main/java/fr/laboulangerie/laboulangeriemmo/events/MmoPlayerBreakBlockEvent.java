@@ -1,4 +1,4 @@
-package fr.laboulangerie.laboulangeriemmo.player;
+package fr.laboulangerie.laboulangeriemmo.events;
 
 
 import org.bukkit.block.Block;
@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
+
+import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 
 public class MmoPlayerBreakBlockEvent extends Event {
 
