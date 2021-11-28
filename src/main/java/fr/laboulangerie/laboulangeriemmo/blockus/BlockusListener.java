@@ -37,7 +37,7 @@ public class BlockusListener implements Listener {
 
         Blockus blockus = new Blockus(block);
         blockus.putMetadata("laboulangerie:placed", player.getUniqueId());
-        blockus.markAsBlockus(this.laBoulangerieMmo);
+        blockus.markAsBlockus();
         this.laBoulangerieMmo.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus);
     }
     @EventHandler(priority = EventPriority.MONITOR)
@@ -52,7 +52,7 @@ public class BlockusListener implements Listener {
             
             Blockus blockus = new Blockus(block.getLocation().add(vec));
             blockus.putMetadata("laboulangerie:placed", value);
-            blockus.markAsBlockus(this.laBoulangerieMmo);
+            blockus.markAsBlockus();
         });
     }
     @EventHandler(priority = EventPriority.MONITOR)
@@ -67,7 +67,7 @@ public class BlockusListener implements Listener {
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
             blockus.putMetadata("laboulangerie:placed", value);
-            blockus.markAsBlockus(this.laBoulangerieMmo);
+            blockus.markAsBlockus();
         });
     }
     @EventHandler(priority = EventPriority.MONITOR)

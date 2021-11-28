@@ -7,14 +7,19 @@ import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
+import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import fr.laboulangerie.laboulangeriemmo.blockus.Blockus;
+import fr.laboulangerie.laboulangeriemmo.blockus.BlockusDataHolder;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
@@ -92,6 +97,46 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage("§aReload complete");
             return true;
         }
+
+        if (args[0].equalsIgnoreCase("blockus")) {
+            if (args.length < 2) {
+                sender.sendMessage("§bIl y a §e"+LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockuses().size()+ " §bblockus");
+                return true;
+            }
+            if (!(sender instanceof Player)) {
+                sender.sendMessage("§4Vous devez être en jeu pour exécuter la commande");
+                return true;
+            }
+            Player player = (Player) sender;
+            RayTraceResult result = player.rayTraceBlocks(5);
+            if (result == null) {
+                player.sendMessage("§4Vous ne regardez pas un bloc dans un rayon de 5 blocs");
+                return true;
+            }
+            Block block = result.getHitBlock();
+
+            if (args[1].equalsIgnoreCase("isBlockus")) {
+                player.sendMessage(block.hasMetadata("laboulangerie:placed") ? "§aLe bloc visé est un blockus": "§eLe bloc visé n'est pas un blocus");
+                return true;
+            }
+            if (args[1].equalsIgnoreCase("mark")) {
+                Blockus blockus = new Blockus(block);
+                blockus.putMetadata("laboulangerie:placed", player.getUniqueId());
+                blockus.markAsBlockus();
+                LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus);
+                player.sendMessage("§aLe bloc visé est maintenant un blockus");
+                return true;
+            }
+            if (args[1].equalsIgnoreCase("unmark")) {
+                if (!block.hasMetadata("laboulangerie:placed")) {
+                    sender.sendMessage("§eLe bloc visé n'est pas un blocus impossible de le dé-marquer");
+                    return true;
+                }
+                block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
+                BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
+                dataHolder.removeBlockus(dataHolder.getBlockus(block));
+            }
+        }
         return false;
     }
 
@@ -115,6 +160,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                     return Arrays.asList("10", "100", "1000");
             }
         }
+        if (args[0].equalsIgnoreCase("blockus")) return Arrays.asList("isBlockus", "mark", "unmark");
         return null;
     }
 }

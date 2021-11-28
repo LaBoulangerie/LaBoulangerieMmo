@@ -9,7 +9,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
+
+import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class Blockus implements Serializable {
 
@@ -39,11 +40,11 @@ public class Blockus implements Serializable {
         this.metaData.put(key, value);
     }
 
-    public void markAsBlockus(Plugin plugin) {
+    public void markAsBlockus() {
         Block block = Bukkit.getWorld(this.worldId).getBlockAt(x, y, z);
         metaData.entrySet().stream()
             .filter(entry -> !block.hasMetadata(entry.getKey()))
-            .forEach(entry -> block.setMetadata(entry.getKey(), new FixedMetadataValue(plugin, entry.getValue())));
+            .forEach(entry -> block.setMetadata(entry.getKey(), new FixedMetadataValue(LaBoulangerieMmo.PLUGIN, entry.getValue())));
 
     }
 
