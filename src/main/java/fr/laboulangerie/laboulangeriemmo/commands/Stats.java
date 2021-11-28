@@ -24,11 +24,6 @@ public class Stats implements CommandExecutor, TabCompleter {
 	
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] " + "§4You must be in game to execute this command!");
-            return false;
-        }
-
         OfflinePlayer bukkitPlayer = (OfflinePlayer) sender;
         if(args.length > 0) {
             if (args.length > 1 && args[0].equalsIgnoreCase("leaderboard") && "miningwoodcuttingthehunterbaking".contains(args[1])){
