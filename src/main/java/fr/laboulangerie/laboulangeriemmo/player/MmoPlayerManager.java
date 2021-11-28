@@ -22,10 +22,10 @@ public class MmoPlayerManager {
 
     private Map<String, MmoPlayer> playersMap;
 
-    public MmoPlayerManager(LaBoulangerieMmo laBoulangerieMmo) {
-        this.serializer = laBoulangerieMmo.getSerializer();
+    public MmoPlayerManager() {
+        this.serializer = LaBoulangerieMmo.PLUGIN.getSerializer();
 
-        this.playersFolder = new File(laBoulangerieMmo.getDataFolder(), "players/");
+        this.playersFolder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
 
         this.playersMap = new HashMap<>();
         

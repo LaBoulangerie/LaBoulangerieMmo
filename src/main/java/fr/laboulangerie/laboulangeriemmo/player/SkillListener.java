@@ -17,12 +17,7 @@ import org.bukkit.event.inventory.CraftItemEvent;
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class SkillListener implements Listener {
-
-    private LaBoulangerieMmo laBoulangerieMmo;
-
-    public SkillListener(LaBoulangerieMmo laBoulangerieMmo) {
-        this.laBoulangerieMmo = laBoulangerieMmo;
-    }
+    public SkillListener() {}
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent event) {
@@ -52,13 +47,13 @@ public class SkillListener implements Listener {
 
     private void giveReward(Player player, GrindingCategory category, String identifier) {
         if (player.getGameMode() == GameMode.CREATIVE) return;
-        Set<String> keys = laBoulangerieMmo.getConfig().getConfigurationSection("talent-grinding").getKeys(false);
+        Set<String> keys = LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding").getKeys(false);
 
         keys.stream().forEach(talentName -> {
-            ConfigurationSection section = laBoulangerieMmo.getConfig().getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
+            ConfigurationSection section = LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
             if (section == null) return;
 
-            if (section.getKeys(false).contains(identifier)) laBoulangerieMmo.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, section.getDouble(identifier));
+            if (section.getKeys(false).contains(identifier)) LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, section.getDouble(identifier));
         });
     }
 }

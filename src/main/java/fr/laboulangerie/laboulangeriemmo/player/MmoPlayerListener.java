@@ -14,14 +14,10 @@ import fr.laboulangerie.laboulangeriemmo.events.MmoPlayerBreakBlockEvent;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 
 public class MmoPlayerListener implements Listener {
-
-
-    private LaBoulangerieMmo laBoulangerieMmo;
     private MmoPlayerManager mmoPlayerManager;
 
-    public MmoPlayerListener(LaBoulangerieMmo laBoulangerieMmo) {
-        this.laBoulangerieMmo = laBoulangerieMmo;
-        this.mmoPlayerManager = laBoulangerieMmo.getMmoPlayerManager();
+    public MmoPlayerListener() {
+        this.mmoPlayerManager = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager();
     }
 
     @EventHandler
@@ -44,7 +40,7 @@ public class MmoPlayerListener implements Listener {
 
         MmoPlayer mmoPlayer = this.mmoPlayerManager.getPlayer(player);
         MmoPlayerBreakBlockEvent breakBlockEvent = new MmoPlayerBreakBlockEvent(player, mmoPlayer, block);
-        this.laBoulangerieMmo.getServer().getPluginManager().callEvent(breakBlockEvent);
+        LaBoulangerieMmo.PLUGIN.getServer().getPluginManager().callEvent(breakBlockEvent);
     }
 
     @EventHandler

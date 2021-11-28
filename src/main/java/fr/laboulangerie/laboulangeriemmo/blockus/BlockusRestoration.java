@@ -5,15 +5,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class BlockusRestoration extends BukkitRunnable {
 
-    private LaBoulangerieMmo laBoulangerieMmo;
-
-    public BlockusRestoration(LaBoulangerieMmo laBoulangerieMmo) {
-        this.laBoulangerieMmo = laBoulangerieMmo;
-    }
+    public BlockusRestoration() {}
 
     @Override
     public void run() {
-        BlockusDataHolder blockusDataHolder = this.laBoulangerieMmo.getBlockusDataManager().getBlockusDataHolder();
+        BlockusDataHolder blockusDataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         blockusDataHolder.getBlockuses().forEach(blockus -> blockus.markAsBlockus());
     }
 }

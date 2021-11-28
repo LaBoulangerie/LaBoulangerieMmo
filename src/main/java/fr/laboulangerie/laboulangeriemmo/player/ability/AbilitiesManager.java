@@ -15,15 +15,11 @@ import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 
 public class AbilitiesManager implements Listener {
 
-    private LaBoulangerieMmo plugin;
-
-    public AbilitiesManager(LaBoulangerieMmo plugin) {
-        this.plugin = plugin;
-    }
+    public AbilitiesManager() {}
 
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
-        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
+        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
 
         switch (event.getAction()) {
             case LEFT_CLICK_AIR:
@@ -81,7 +77,7 @@ public class AbilitiesManager implements Listener {
 
     @EventHandler
     public void onConsumeItem(PlayerItemConsumeEvent event) {
-        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
+        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
             .filter(x ->
                 x.getExecutor().getAbilityTrigger() == AbilityTrigger.EAT
@@ -96,7 +92,7 @@ public class AbilitiesManager implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
+        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
             .filter(x ->
                 x.getExecutor().getAbilityTrigger() == AbilityTrigger.PLACE
@@ -110,7 +106,7 @@ public class AbilitiesManager implements Listener {
     }
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
+        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
             .filter(x ->
                 x.getExecutor().getAbilityTrigger() == AbilityTrigger.BREAK
@@ -125,7 +121,7 @@ public class AbilitiesManager implements Listener {
 
     @EventHandler
     public void onClickEntity(PlayerInteractEntityEvent event) {
-        MmoPlayer player = plugin.getMmoPlayerManager().getPlayer(event.getPlayer());
+        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
             .filter(x ->
                 x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_ENTITY
@@ -142,7 +138,7 @@ public class AbilitiesManager implements Listener {
     public void onHurtEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
 
-            MmoPlayer player = plugin.getMmoPlayerManager().getPlayer((Player) event.getDamager());
+            MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) event.getDamager());
             Abilities.supplier().get()
                 .filter(x ->
                     x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_ENTITY

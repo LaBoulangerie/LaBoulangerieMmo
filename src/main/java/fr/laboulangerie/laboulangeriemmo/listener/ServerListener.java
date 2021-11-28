@@ -13,12 +13,7 @@ import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.core.MarkedBlocksManager;
 
 public class ServerListener implements Listener {
-
-    private LaBoulangerieMmo laBoulangerieMmo;
-
-    public ServerListener(LaBoulangerieMmo laBoulangerieMmo) {
-        this.laBoulangerieMmo = laBoulangerieMmo;
-    }
+    public ServerListener() {}
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
@@ -28,7 +23,7 @@ public class ServerListener implements Listener {
         boolean hasMetaData = block.hasMetadata("laboulangerie:placed");
         if (!hasMetaData) {
             block.setMetadata("laboulangerie:placed",
-                    new FixedMetadataValue(this.laBoulangerieMmo, player.getUniqueId().toString())
+                    new FixedMetadataValue(LaBoulangerieMmo.PLUGIN, player.getUniqueId().toString())
             );
         }
     }

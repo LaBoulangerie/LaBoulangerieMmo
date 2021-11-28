@@ -42,9 +42,9 @@ public class LaBoulangerieMmo extends JavaPlugin {
         this.serializer = new GsonSerializer();
 
         this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
-        this.mmoPlayerManager = new MmoPlayerManager(this);
+        this.mmoPlayerManager = new MmoPlayerManager();
 
-        BlockusRestoration blockusRestoration = new BlockusRestoration(this);
+        BlockusRestoration blockusRestoration = new BlockusRestoration();
         blockusRestoration.runTaskLater(this, 20);
 
         this.registerListeners();
@@ -71,12 +71,12 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     private void registerListeners() {
         Arrays.asList(
-                new ServerListener(this),
-                new MmoPlayerListener(this),
-                new SkillListener(this),
-                new AbilitiesManager(this),
+                new ServerListener(),
+                new MmoPlayerListener(),
+                new SkillListener(),
+                new AbilitiesManager(),
                 new MmoListener(),
-                new BlockusListener(this)
+                new BlockusListener()
         ).forEach(l->this.getServer().getPluginManager().registerEvents(l, this));
     }
 
