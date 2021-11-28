@@ -27,6 +27,7 @@ public class BlockusDataManager {
         if (this.blockusDataHolder == null) {
             this.blockusDataHolder = new BlockusDataHolder();
         }
+        
     }
 
 
