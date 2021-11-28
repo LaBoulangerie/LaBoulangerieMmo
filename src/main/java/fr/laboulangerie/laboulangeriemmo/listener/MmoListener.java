@@ -17,7 +17,7 @@ public class MmoListener implements Listener {
     public void onLevelUp(PlayerLevelUpEvent event) {
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
         Talent talent = event.getTalent();
-        LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, talent.getLevelXp(0.2));
+        LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, 1_000);
         player.sendMessage(
             "§aVous êtes passé au niveau §e"+talent.getLevel(0.2)
             +"§a en §e"+talent.getDisplayName()
