@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -25,6 +26,14 @@ public class Blockus implements Serializable {
 
         this.metaData = new HashMap<>();
     }
+    public Blockus(Location location) {
+        this.worldId = location.getWorld().getUID();
+        this.x = (int) location.getX();
+        this.y = (int) location.getY();
+        this.z = (int) location.getZ();
+
+        this.metaData = new HashMap<>();
+    }
 
     public void putMetadata(String key, Object value) {
         this.metaData.put(key, value);
@@ -33,8 +42,24 @@ public class Blockus implements Serializable {
     public void markAsBlockus(Plugin plugin) {
         Block block = Bukkit.getWorld(this.worldId).getBlockAt(x, y, z);
         metaData.entrySet().stream()
-                .filter(entry -> !block.hasMetadata(entry.getKey()))
-                .forEach(entry -> block.setMetadata(entry.getKey(), new FixedMetadataValue(plugin, entry.getValue())));
+            .filter(entry -> !block.hasMetadata(entry.getKey()))
+            .forEach(entry -> block.setMetadata(entry.getKey(), new FixedMetadataValue(plugin, entry.getValue())));
 
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getZ() {
+        return z;
+    }
+
+    public UUID getWorldId() {
+        return worldId;
     }
 }

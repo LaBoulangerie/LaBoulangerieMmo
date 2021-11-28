@@ -48,9 +48,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
         this.registerListeners();
         getCommand("stats").setExecutor(new Stats());
-        getCommand("stats").setExecutor(new Stats());
         getCommand("mmo").setExecutor(new MmoCommand());
-        getCommand("mmo").setTabCompleter(new MmoCommand());
         getLogger().info("Plugin started");
     }
 
@@ -73,11 +71,11 @@ public class LaBoulangerieMmo extends JavaPlugin {
     private void registerListeners() {
         Arrays.asList(
                 new ServerListener(this),
-                new BlockusListener(this),
                 new MmoPlayerListener(this),
                 new SkillListener(this),
                 new AbilitiesManager(this),
-                new MmoListener()
+                new MmoListener(),
+                new BlockusListener(this)
         ).forEach(l->this.getServer().getPluginManager().registerEvents(l, this));
     }
 
