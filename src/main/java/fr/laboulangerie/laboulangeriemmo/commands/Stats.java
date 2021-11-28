@@ -1,6 +1,7 @@
 package fr.laboulangerie.laboulangeriemmo.commands;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -93,7 +94,8 @@ public class Stats implements CommandExecutor, TabCompleter {
 	@Override
 	public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
         if (args.length == 1) {
-            List<String> list = Arrays.asList("leaderboard");
+            List<String> list = new ArrayList<String>();
+            list.add("leaderboard");
             if (sender.hasPermission("laboulangeriemmo.stats.see")) list.addAll(Bukkit.getOnlinePlayers().stream().map(p -> p.getName()).collect(Collectors.toList()));
             return list;
         }

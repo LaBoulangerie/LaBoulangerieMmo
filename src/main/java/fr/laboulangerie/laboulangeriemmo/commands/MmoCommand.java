@@ -142,7 +142,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("xp", "reload", "rl");
+        if (args.length == 1) return Arrays.asList("xp", "reload", "rl", "blockus");
         if (args[0].equalsIgnoreCase("xp")) {
             switch (args.length) {
                 default:
