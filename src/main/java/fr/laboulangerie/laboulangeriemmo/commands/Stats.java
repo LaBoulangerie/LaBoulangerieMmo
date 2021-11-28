@@ -1,7 +1,10 @@
 package fr.laboulangerie.laboulangeriemmo.commands;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -9,14 +12,17 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
-public class Stats implements CommandExecutor {
+public class Stats implements CommandExecutor, TabCompleter {
+	
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
         if (!(sender instanceof Player)) {
@@ -88,4 +94,19 @@ public class Stats implements CommandExecutor {
             target.sendMessage(firstPart + "" + secondPart + "" + thirdPart);
         });
     }
+
+	@Override
+	public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        if (args.length == 1) return Arrays.asList("leaderboard");
+        if (args[0].equalsIgnoreCase("leaderboard")) {
+            switch (args.length) {
+                default:
+                case 2:
+                    return null; // Lists players
+                case 3:
+                    return Arrays.asList("mining", "woodcutting", "thehunter", "baking");
+            }
+        }
+        return null;
+	}
 }
