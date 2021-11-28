@@ -19,9 +19,9 @@ public class MmoListener implements Listener {
         Talent talent = event.getTalent();
         LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, 1_000);
         player.sendMessage(
-            "§aVous êtes passé au niveau §e"+talent.getLevel(0.2)
+            "§aVous êtes passé au niveau §e"+talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
             +"§a en §e"+talent.getDisplayName()
-            +"§a, vous gagnez §e"+talent.getLevelXp(0.2)+"$");
+            +"§a, vous gagnez §e"+talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER)+"$");
     }
 
     @EventHandler

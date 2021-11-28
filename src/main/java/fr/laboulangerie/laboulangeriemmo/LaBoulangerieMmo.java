@@ -24,8 +24,9 @@ import net.milkbowl.vault.economy.Economy;
 public class LaBoulangerieMmo extends JavaPlugin {
     public static LaBoulangerieMmo PLUGIN;
     public static Economy ECONOMY = null;
-    private GsonSerializer serializer;
+    public static double XP_MULTIPLIER = 0.1;
 
+    private GsonSerializer serializer;
     private BlockusDataManager blockusDataManager;
     private MmoPlayerManager mmoPlayerManager;
 

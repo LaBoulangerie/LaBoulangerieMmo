@@ -11,6 +11,7 @@ import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.core.ParticleEffect;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
@@ -66,7 +67,7 @@ public class MmoPlayer implements GsonSerializable {
 
     public boolean canUseAbility(Abilities ability) {
         return cooldownsHolder.isCooldownElapsed(ability)
-            && talents.get(ability.getParentTalent()).getLevel(0.2) >= ability.getRequiredLevel()
+            && talents.get(ability.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability.getRequiredLevel()
             && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 
@@ -82,15 +83,15 @@ public class MmoPlayer implements GsonSerializable {
         return () -> talents.values().stream();
     }
     public void incrementXp(String talentId, double amount) {
-        if (getTalent(talentId).getLevel(0.2) >= 100) {
+        if (getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= 100) {
         	return;
         }
         Bukkit.getPluginManager().callEvent(new PlayerEarnsXpEvent(amount, talentId, this));
-        int oldLevel = getTalent(talentId).getLevel(0.2);
+        int oldLevel = getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
 
         xpCountdown.startCountDown(talentId, amount);
         getTalent(talentId).incrementXp(amount);
-        int newLevel = getTalent(talentId).getLevel(0.2);
+        int newLevel = getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
         if (oldLevel < newLevel) {
             Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
         }

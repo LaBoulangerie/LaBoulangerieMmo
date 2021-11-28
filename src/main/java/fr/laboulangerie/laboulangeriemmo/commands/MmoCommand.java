@@ -40,10 +40,10 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             if (args[2].equalsIgnoreCase("see")) {
                 sender.sendMessage(
                 	"§a" + args[1] + ": §b"
-                    + args[3] + ": §rlvl §e"+talent.getLevel(0.2)
-                    + "§r, xp §e" + (talent.getXp() - talent.getLevelXp(0.2))
+                    + args[3] + ": §rlvl §e"+talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
+                    + "§r, xp §e" + (talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))
                     + "§r, total xp §e"+ talent.getXp()
-                    + "§r/§e" + talent.getLevelXp(0.2)
+                    + "§r/§e" + talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER)
                 );
                 return true;
             }

@@ -34,7 +34,7 @@ public class AbilitiesManager implements Listener {
                         && x.getExecutor().shouldTrigger(event)
                     )
                     .forEach(x -> {
-                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                         player.useAbility(x);
                     });
                 break;
@@ -46,7 +46,7 @@ public class AbilitiesManager implements Listener {
                         && x.getExecutor().shouldTrigger(event)
                     )
                     .forEach(x -> {
-                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                         player.useAbility(x);
                     });
                 break;
@@ -58,7 +58,7 @@ public class AbilitiesManager implements Listener {
                         && x.getExecutor().shouldTrigger(event)
                     )
                     .forEach(x -> {
-                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                         player.useAbility(x);
                     });
                 break;
@@ -70,7 +70,7 @@ public class AbilitiesManager implements Listener {
                         && x.getExecutor().shouldTrigger(event)
                     )
                     .forEach(x -> {
-                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                         player.useAbility(x);
                     });
                 break;
@@ -89,7 +89,7 @@ public class AbilitiesManager implements Listener {
                 && x.getExecutor().shouldTrigger(event)
             )
             .forEach(x -> {
-                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                 player.useAbility(x);
             });
     }
@@ -104,7 +104,7 @@ public class AbilitiesManager implements Listener {
                 && x.getExecutor().shouldTrigger(event)
             )
             .forEach(x -> {
-                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                 player.useAbility(x);
             });
     }
@@ -118,7 +118,7 @@ public class AbilitiesManager implements Listener {
                 && x.getExecutor().shouldTrigger(event)
             )
             .forEach(x -> {
-                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                 player.useAbility(x);
             });
     }
@@ -133,7 +133,7 @@ public class AbilitiesManager implements Listener {
                 && x.getExecutor().shouldTrigger(event)
             )
             .forEach(x -> {
-                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                 player.useAbility(x);
             });
     }
@@ -150,7 +150,7 @@ public class AbilitiesManager implements Listener {
                     && x.getExecutor().shouldTrigger(event)
                 )
                 .forEach(x -> {
-                    x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(0.2));
+                    x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                     player.useAbility(x);
                 });
         }
