@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -91,13 +92,17 @@ public class Stats implements CommandExecutor, TabCompleter {
 
 	@Override
 	public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("leaderboard");
+        if (args.length == 1) {
+            List<String> list = Arrays.asList("leaderboard");
+            if (sender.hasPermission("laboulangeriemmo.stats.see")) list.addAll(Bukkit.getOnlinePlayers().stream().map(p -> p.getName()).collect(Collectors.toList()));
+            return list;
+        }
         if (args[0].equalsIgnoreCase("leaderboard")) {
             switch (args.length) {
                 case 2:
                     return Arrays.asList("mining", "woodcutting", "thehunter", "baking"); // Lists players
                 default:
-                    return null; 
+                    return Arrays.asList(""); 
             }
         }
         return null;
