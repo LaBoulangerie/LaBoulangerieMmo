@@ -21,7 +21,7 @@ public class MmoListener implements Listener {
         player.sendMessage(
             "§aVous êtes passé au niveau §e"+talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
             +"§a en §e"+talent.getDisplayName()
-            +"§a, vous gagnez §e"+talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER)+"$");
+            +"§a, vous gagnez §e1000$");
     }
 
     @EventHandler
