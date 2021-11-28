@@ -82,7 +82,7 @@ public class MmoPlayer implements GsonSerializable {
         return () -> talents.values().stream();
     }
     public void incrementXp(String talentId, double amount) {
-        if (getTalent(talentId).getLevel(0.2) > 100) {
+        if (getTalent(talentId).getLevel(0.2) >= 100) {
         	return;
         }
         Bukkit.getPluginManager().callEvent(new PlayerEarnsXpEvent(amount, talentId, this));
