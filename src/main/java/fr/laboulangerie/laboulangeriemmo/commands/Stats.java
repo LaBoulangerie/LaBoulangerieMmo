@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -100,11 +99,10 @@ public class Stats implements CommandExecutor, TabCompleter {
         if (args.length == 1) return Arrays.asList("leaderboard");
         if (args[0].equalsIgnoreCase("leaderboard")) {
             switch (args.length) {
-                default:
                 case 2:
-                    return null; // Lists players
-                case 3:
-                    return Arrays.asList("mining", "woodcutting", "thehunter", "baking");
+                    return Arrays.asList("mining", "woodcutting", "thehunter", "baking"); // Lists players
+                default:
+                    return null; 
             }
         }
         return null;
