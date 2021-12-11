@@ -6,15 +6,22 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.checkerframework.checker.signature.qual.ClassGetName;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import it.unimi.dsi.fastutil.floats.Float2BooleanAVLTreeMap;
 
 public class SkillListener implements Listener {
     public SkillListener() {}
@@ -45,6 +52,23 @@ public class SkillListener implements Listener {
         }
     }
 
+    @EventHandler
+    public static void onExpBottle(PlayerInteractEvent event) {
+    	Player player = (Player) event.getPlayer();
+    	if (event.getAction().isRightClick() && !(player.getItemInHand().getItemMeta() == null)) {
+    	
+    	ItemMeta im = player.getItemInHand().getItemMeta();
+    	if (im.getDisplayName().equals("§aBouteille de 1 Level")) {
+    		event.setCancelled(true);
+    		player.getItemInHand().setAmount(player.getItemInHand().getAmount()-1);
+            
+    		event.getPlayer().getWorld().spawn(event.getPlayer().getLocation(), ExperienceOrb.class).setExperience(player.getExpToLevel());
+    		Float playerExp = player.getExp();
+    		player.setExp(playerExp);
+    	}
+    	}
+    }
+
     private void giveReward(Player player, GrindingCategory category, String identifier) {
         if (player.getGameMode() == GameMode.CREATIVE) return;
         Set<String> keys = LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding").getKeys(false);
@@ -55,5 +79,7 @@ public class SkillListener implements Listener {
 
             if (section.getKeys(false).contains(identifier)) LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, section.getDouble(identifier));
         });
+        
     }
+
 }
