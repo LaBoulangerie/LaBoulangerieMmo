@@ -30,8 +30,8 @@ public class MarkedBlocksManager {
     private static MarkedBlocksManager INSTANCE = null;
     private Map<Block, BlockWatcher> markedBlocks = new HashMap<Block, BlockWatcher>();
     private int idCount = 100000;
-    private String[] teamsIdentifier = { "DIAMOND_ORE", "IRON_ORE", "COAL_ORE", "GOLD_ORE", "LAPIS_ORE", "REDSTONE_ORE", "EMERALD_ORE", "COPPER_ORE", "ANCIENT_DEBRIS", "NETHER_GOLD_ORE" };
-    private ChatColor[] teamsColor = {ChatColor.AQUA,ChatColor.GRAY,ChatColor.BLACK,ChatColor.YELLOW,ChatColor.DARK_BLUE,ChatColor.RED,ChatColor.GREEN,ChatColor.GOLD,ChatColor.DARK_GRAY,ChatColor.YELLOW};
+    private String[] teamsIdentifier = { "DIAMOND_ORE", "IRON_ORE", "COAL_ORE", "GOLD_ORE", "LAPIS_ORE", "REDSTONE_ORE", "EMERALD_ORE", "COPPER_ORE", "ANCIENT_DEBRIS", "NETHER_GOLD_ORE", "AMETHYST_CLUSTER" };
+    private ChatColor[] teamsColor = {ChatColor.AQUA,ChatColor.GRAY,ChatColor.BLACK,ChatColor.YELLOW,ChatColor.DARK_BLUE,ChatColor.RED,ChatColor.GREEN,ChatColor.GOLD,ChatColor.DARK_GRAY,ChatColor.YELLOW,ChatColor.DARK_PURPLE};
 
     public void markBlock(Block block, Player player) {
         BlockWatcher blockWatcher = markedBlocks.get(block);
