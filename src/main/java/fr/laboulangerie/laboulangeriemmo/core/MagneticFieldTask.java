@@ -29,9 +29,9 @@ public class MagneticFieldTask extends BukkitRunnable {
     @Override
     public void run() {
         List<Block> toUnmark = new ArrayList<Block>();
-        for(long x = Math.round(center.getX()) - radius; x < center.getX() + radius; x++) {
-            for(long y = Math.round(center.getY()) - radius; y < center.getY() + radius; y++) {
-                for(long z = Math.round(center.getZ()) - radius; z < center.getZ() + radius; z++) {
+        for (long x = Math.round(center.getX()) - radius; x < center.getX() + radius; x++) {
+            for (long y = Math.round(center.getY()) - radius; y < center.getY() + radius; y++) {
+                for (long z = Math.round(center.getZ()) - radius; z < center.getZ() + radius; z++) {
                     Location point = new Location(this.center.getWorld(), x, y, z);
                     if (!isInTheBall(point)) continue;
 
@@ -51,6 +51,7 @@ public class MagneticFieldTask extends BukkitRunnable {
             }
         }.runTaskLater(LaBoulangerieMmo.PLUGIN, 200);
     }
+
     private boolean isInTheBall(Location point) {
         return center.distanceSquared(point) <= Math.pow(radius, 2);
     }

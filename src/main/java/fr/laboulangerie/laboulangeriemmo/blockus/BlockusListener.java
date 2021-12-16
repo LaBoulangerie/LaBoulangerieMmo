@@ -24,7 +24,8 @@ import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class BlockusListener implements Listener {
 
-    public BlockusListener() {}
+    public BlockusListener() {
+    }
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {
@@ -36,6 +37,7 @@ public class BlockusListener implements Listener {
         blockus.markAsBlockus();
         LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus);
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPistonExtend(BlockPistonExtendEvent event) {
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
@@ -45,12 +47,13 @@ public class BlockusListener implements Listener {
 
             block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
-            
+
             Blockus blockus = new Blockus(block.getLocation().add(vec));
             blockus.putMetadata("laboulangerie:placed", value);
             blockus.markAsBlockus();
         });
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPistonRetract(BlockPistonRetractEvent event) {
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
@@ -66,26 +69,32 @@ public class BlockusListener implements Listener {
             blockus.markAsBlockus();
         });
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDestroyed(BlockDestroyEvent event) {
         unMark(event.getBlock());
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBreak(BlockBreakEvent event) {
         unMark(event.getBlock());
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onExplode(BlockExplodeEvent event) {
         event.blockList().stream().forEach(block -> unMark(block));
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityExplode(EntityExplodeEvent event) {
         event.blockList().stream().forEach(block -> unMark(block));
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPrimed(TNTPrimeEvent event) {
         unMark(event.getBlock());
     }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBurn(BlockBurnEvent event) {
         unMark(event.getBlock());
@@ -93,10 +102,11 @@ public class BlockusListener implements Listener {
 
     /**
      * Removes the block from blockuses if it is a blockus
+     *
      * @param block
      */
     private void unMark(Block block) {
-        if (!block.hasMetadata("laboulangerie:placed"))return;
+        if (!block.hasMetadata("laboulangerie:placed")) return;
         block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         dataHolder.removeBlockus(dataHolder.getBlockus(block));

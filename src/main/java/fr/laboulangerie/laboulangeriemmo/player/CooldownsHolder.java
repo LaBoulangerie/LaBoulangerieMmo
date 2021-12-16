@@ -14,12 +14,13 @@ public class CooldownsHolder {
     }
 
     public long getCooldown(Abilities ability) {
-        return ability.getCooldownUnit().convert(new Date().getTime() - cooldowns.get(ability).getTime(), 
-            TimeUnit.MILLISECONDS);
+        return ability.getCooldownUnit().convert(new Date().getTime() - cooldowns.get(ability).getTime(),
+                TimeUnit.MILLISECONDS);
     }
 
     public boolean isCooldownElapsed(Abilities ability) {
         return cooldowns.get(ability) == null || getCooldown(ability) >= ability.getCooldown();
+
     }
 
     public void startCooldown(Abilities ability) {

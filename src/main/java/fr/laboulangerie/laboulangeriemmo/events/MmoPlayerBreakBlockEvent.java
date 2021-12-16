@@ -36,7 +36,8 @@ public class MmoPlayerBreakBlockEvent extends Event {
     }
 
     @Override
-    public @NotNull HandlerList getHandlers() {
+    public @NotNull
+    HandlerList getHandlers() {
         return HANDLERS;
     }
 

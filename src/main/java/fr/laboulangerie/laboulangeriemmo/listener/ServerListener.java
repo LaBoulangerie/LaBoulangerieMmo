@@ -13,7 +13,8 @@ import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.core.MarkedBlocksManager;
 
 public class ServerListener implements Listener {
-    public ServerListener() {}
+    public ServerListener() {
+    }
 
     @EventHandler
     public void onPlace(BlockPlaceEvent event) {

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
 import com.google.gson.JsonSyntaxException;
 
 import org.bukkit.Bukkit;
@@ -28,7 +29,7 @@ public class MmoPlayerManager {
         this.playersFolder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
 
         this.playersMap = new HashMap<>();
-        
+
         Bukkit.getOnlinePlayers().stream().forEach(p -> loadPlayerData(p));
     }
 
@@ -38,7 +39,7 @@ public class MmoPlayerManager {
 
         if (mmoPlayerOptional.isPresent()) {
             String json = this.serializer.serialize(mmoPlayerOptional.get());
-            FileUtils.save(new File(this.playersFolder, uniqueId+".json"), json);
+            FileUtils.save(new File(this.playersFolder, uniqueId + ".json"), json);
         } else {
             MmoPlayer mmoPlayer = new MmoPlayer(player);
             this.playersMap.put(uniqueId, mmoPlayer);

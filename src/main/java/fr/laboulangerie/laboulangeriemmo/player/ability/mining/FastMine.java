@@ -24,9 +24,9 @@ public class FastMine extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         ItemStack item = event.getItem();
-        return item != null 
-            && (item.getType() == Material.NETHERITE_PICKAXE || item.getType() == Material.DIAMOND_PICKAXE || item.getType() == Material.IRON_PICKAXE) 
-            && Tag.BASE_STONE_OVERWORLD.isTagged(event.getClickedBlock().getType());
+        return item != null
+                && (item.getType() == Material.NETHERITE_PICKAXE || item.getType() == Material.DIAMOND_PICKAXE || item.getType() == Material.IRON_PICKAXE)
+                && Tag.BASE_STONE_OVERWORLD.isTagged(event.getClickedBlock().getType());
     }
 
     @Override
@@ -38,15 +38,15 @@ public class FastMine extends AbilityExecutor {
         if (level >= 75) {
             duration = 300;
             amplifier = 3;
-        }else if (level >= 45) {
+        } else if (level >= 45) {
             duration = 60;
             amplifier = 2;
-        }else {
+        } else {
             duration = 20;
             amplifier = 1;
         }
-        player.sendMessage("§eVous gagnez Haste " + (amplifier+1) + " pendant " + duration + " secondes");
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration*20, amplifier, true));
+        player.sendMessage("§eVous gagnez Haste " + (amplifier + 1) + " pendant " + duration + " secondes");
+        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration * 20, amplifier, true));
         new ParticleEffect().createHelix(player);
     }
 }

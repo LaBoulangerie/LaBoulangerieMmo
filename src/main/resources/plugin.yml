@@ -3,7 +3,7 @@ version: ${project.version}
 main: fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
 api-version: 1.17
 authors: [ TheHunter365, Grooble_, Pikachuz3 ]
-depend: [ProtocolLib, Vault]
+depend: [ ProtocolLib, Vault ]
 commands:
   stats:
     permission: laboulangeriemmo.stats

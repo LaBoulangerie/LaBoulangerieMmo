@@ -23,16 +23,21 @@ public class XpCountDownFinishedEvent extends Event {
     public Talent getTalent() {
         return talent;
     }
+
     public MmoPlayer getPlayer() {
         return player;
     }
+
     public double getAmount() {
         return amount;
     }
+
     @Override
-    public @NotNull HandlerList getHandlers() {
+    public @NotNull
+    HandlerList getHandlers() {
         return handlers;
     }
+
     public static HandlerList getHandlerList() {
         return handlers;
     }

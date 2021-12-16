@@ -20,8 +20,8 @@ public enum Abilities {
     FAST_SMELT(85, TimeUnit.HOURS, 1, "mining", new FastSmelt(), true),
     MAGNETIC_FIELD(35, TimeUnit.MINUTES, 30, "mining", new MagneticField(), true),
     DOUBLE_DROP_LOG(1, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), false),
-	BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false),
-	EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false);
+    BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false),
+    EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false);
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;
@@ -29,13 +29,13 @@ public enum Abilities {
 
     private String parentTalent;
     private AbilityExecutor executor;
-	private Boolean shouldlog;
+    private Boolean shouldlog;
 
     Abilities(
-        int requiredLevel, TimeUnit cooldownUnit,
-        int cooldown, String parentTalent,
-        AbilityExecutor executor,
-        boolean shouldlog
+            int requiredLevel, TimeUnit cooldownUnit,
+            int cooldown, String parentTalent,
+            AbilityExecutor executor,
+            boolean shouldlog
     ) {
         this.requiredLevel = requiredLevel;
         this.cooldownUnit = cooldownUnit;
@@ -43,7 +43,7 @@ public enum Abilities {
         this.parentTalent = parentTalent;
         this.executor = executor;
         this.shouldlog = shouldlog;
-        
+
     }
 
     public AbilityExecutor getExecutor() {
@@ -65,8 +65,9 @@ public enum Abilities {
     public TimeUnit getCooldownUnit() {
         return cooldownUnit;
     }
+
     public boolean shouldLog() {
-    	return shouldlog;
+        return shouldlog;
     }
 
     public static Supplier<Stream<Abilities>> supplier() {

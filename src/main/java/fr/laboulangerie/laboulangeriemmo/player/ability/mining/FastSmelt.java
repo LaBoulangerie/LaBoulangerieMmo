@@ -29,7 +29,8 @@ public class FastSmelt extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-        if (event.getClickedBlock().getType() != Material.BLAST_FURNACE || event.getItem().getType() != Material.COAL) return false;
+        if (event.getClickedBlock().getType() != Material.BLAST_FURNACE || event.getItem().getType() != Material.COAL)
+            return false;
 
         BlastFurnace furnace = (BlastFurnace) event.getClickedBlock().getState();
         ItemStack toSmelt = furnace.getInventory().getSmelting();
@@ -74,7 +75,7 @@ public class FastSmelt extends AbilityExecutor {
         if (inv.getResult() == null || (inv.getResult().getType() == result.getType() && inv.getResult().getAmount() + result.getAmount() <= 64)) {
             result.setAmount(result.getAmount() + (inv.getResult() != null ? inv.getResult().getAmount() : 0));
             inv.setResult(result);
-        }else {
+        } else {
             bukkitPlayer.getWorld().dropItemNaturally(bukkitPlayer.getLocation(), result);
         }
 

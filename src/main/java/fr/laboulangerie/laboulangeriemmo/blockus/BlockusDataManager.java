@@ -11,10 +11,10 @@ public class BlockusDataManager {
     public BlockusDataManager(String path) {
         this.blockusFile = new File(path);
         File parentFile = this.blockusFile.getParentFile();
-        if (!parentFile.exists())parentFile.mkdir();
+        if (!parentFile.exists()) parentFile.mkdir();
 
         try {
-            if (!this.blockusFile.exists())this.blockusFile.createNewFile();
+            if (!this.blockusFile.exists()) this.blockusFile.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,7 +27,7 @@ public class BlockusDataManager {
         if (this.blockusDataHolder == null) {
             this.blockusDataHolder = new BlockusDataHolder();
         }
-        
+
     }
 
 

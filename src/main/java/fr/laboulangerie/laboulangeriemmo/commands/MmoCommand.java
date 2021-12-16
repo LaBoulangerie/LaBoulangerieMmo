@@ -24,7 +24,7 @@ import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
 public class MmoCommand implements CommandExecutor, TabCompleter {
-	
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
         if (args.length == 0) return false;
@@ -32,23 +32,23 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         if (args[0].equalsIgnoreCase("xp") && args.length >= 4) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
             if (player == null || LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player) == null) {
-                sender.sendMessage("§4Impossible de récupérer le joueur: "+args[1]);
+                sender.sendMessage("§4Impossible de récupérer le joueur: " + args[1]);
                 return false;
             }
             MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
             Talent talent = mmoPlayer.getTalent(args[3]);
             if (talent == null) {
-                sender.sendMessage("§4"+args[1]+" n'as pas le talent "+args[3]);
+                sender.sendMessage("§4" + args[1] + " n'as pas le talent " + args[3]);
                 return false;
             }
 
             if (args[2].equalsIgnoreCase("see")) {
                 sender.sendMessage(
-                	"§a" + args[1] + ": §b"
-                    + args[3] + ": §rlvl §e"+talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
-                    + "§r, xp §e" + (talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))
-                    + "§r, total xp §e"+ talent.getXp()
-                    + "§r/§e" + talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER)
+                        "§a" + args[1] + ": §b"
+                                + args[3] + ": §rlvl §e" + talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
+                                + "§r, xp §e" + (talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))
+                                + "§r, total xp §e" + talent.getXp()
+                                + "§r/§e" + talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER)
                 );
                 return true;
             }
@@ -57,30 +57,30 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
             Double amount = null;
             try {
-                amount =  Double.parseDouble(args[4]);
+                amount = Double.parseDouble(args[4]);
             } catch (Exception e) {
-                sender.sendMessage("§4L'argument §e"+ args[4] + " §4n'est pas un nombre décimal valide.");
+                sender.sendMessage("§4L'argument §e" + args[4] + " §4n'est pas un nombre décimal valide.");
                 return true;
             }
 
             if (args[2].equalsIgnoreCase("add")) {
                 talent.incrementXp(amount);
                 sender.sendMessage("§aVous avez ajouté §e" + args[4] + "§axp au talent §e"
-                 + talent.getDisplayName() + "§a de §e" + args[1]);
+                        + talent.getDisplayName() + "§a de §e" + args[1]);
                 return true;
             }
 
             if (args[2].equalsIgnoreCase("subtract")) {
                 talent.decrementXp(amount);
                 sender.sendMessage("§aVous avez retiré §e" + args[4] + "§axp au talent §e"
-                 + talent.getDisplayName() + "§a de §e" + args[1]);
+                        + talent.getDisplayName() + "§a de §e" + args[1]);
                 return true;
             }
 
             if (args[2].equalsIgnoreCase("set")) {
                 talent.setXp(amount);
                 sender.sendMessage("§aVous avez mis à §e" + args[4] + "§axp le talent §e"
-                 + talent.getDisplayName() + "§a de §e" + args[1]);
+                        + talent.getDisplayName() + "§a de §e" + args[1]);
                 return true;
             }
         }
@@ -100,7 +100,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
         if (args[0].equalsIgnoreCase("blockus")) {
             if (args.length < 2) {
-                sender.sendMessage("§bIl y a §e"+LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockuses().size()+ " §bblockus");
+                sender.sendMessage("§bIl y a §e" + LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockuses().size() + " §bblockus");
                 return true;
             }
             if (!(sender instanceof Player)) {
@@ -116,7 +116,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             Block block = result.getHitBlock();
 
             if (args[1].equalsIgnoreCase("isBlockus")) {
-                player.sendMessage(block.hasMetadata("laboulangerie:placed") ? "§aLe bloc visé est un blockus": "§eLe bloc visé n'est pas un blocus");
+                player.sendMessage(block.hasMetadata("laboulangerie:placed") ? "§aLe bloc visé est un blockus" : "§eLe bloc visé n'est pas un blocus");
                 return true;
             }
             if (args[1].equalsIgnoreCase("mark")) {
@@ -141,7 +141,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
+    public @Nullable
+    List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias, @NotNull String[] args) {
         if (args.length == 1) return Arrays.asList("xp", "reload", "rl", "blockus");
         if (args[0].equalsIgnoreCase("xp")) {
             switch (args.length) {
@@ -153,7 +154,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 case 4:
                     OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
                     MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
-                    
+
                     return mmoPlayer.streamTalents().get().map(talent -> talent.getTalentId()).collect(Collectors.toList());
                 case 5:
                     if (args[2].equalsIgnoreCase("see")) return Arrays.asList("");

@@ -27,6 +27,7 @@ public class Blockus implements Serializable {
 
         this.metaData = new HashMap<>();
     }
+
     public Blockus(Location location) {
         this.worldId = location.getWorld().getUID();
         this.x = (int) location.getX();
@@ -43,8 +44,8 @@ public class Blockus implements Serializable {
     public void markAsBlockus() {
         Block block = Bukkit.getWorld(this.worldId).getBlockAt(x, y, z);
         metaData.entrySet().stream()
-            .filter(entry -> !block.hasMetadata(entry.getKey()))
-            .forEach(entry -> block.setMetadata(entry.getKey(), new FixedMetadataValue(LaBoulangerieMmo.PLUGIN, entry.getValue())));
+                .filter(entry -> !block.hasMetadata(entry.getKey()))
+                .forEach(entry -> block.setMetadata(entry.getKey(), new FixedMetadataValue(LaBoulangerieMmo.PLUGIN, entry.getValue())));
 
     }
 

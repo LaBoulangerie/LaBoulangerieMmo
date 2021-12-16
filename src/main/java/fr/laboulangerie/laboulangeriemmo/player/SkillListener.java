@@ -24,7 +24,8 @@ import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import it.unimi.dsi.fastutil.floats.Float2BooleanAVLTreeMap;
 
 public class SkillListener implements Listener {
-    public SkillListener() {}
+    public SkillListener() {
+    }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent event) {
@@ -35,7 +36,7 @@ public class SkillListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityKill(EntityDeathEvent event) {
         if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player)) return;
-        
+
         giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString());
     }
 
@@ -54,19 +55,19 @@ public class SkillListener implements Listener {
 
     @EventHandler
     public static void onExpBottle(PlayerInteractEvent event) {
-    	Player player = (Player) event.getPlayer();
-    	if (event.getAction().isRightClick() && !(player.getItemInHand().getItemMeta() == null)) {
-    	
-    	ItemMeta im = player.getItemInHand().getItemMeta();
-    	if (im.getDisplayName().equals("§aBouteille de 1 Level")) {
-    		event.setCancelled(true);
-    		player.getItemInHand().setAmount(player.getItemInHand().getAmount()-1);
-            
-    		event.getPlayer().getWorld().spawn(event.getPlayer().getLocation(), ExperienceOrb.class).setExperience(player.getExpToLevel());
-    		Float playerExp = player.getExp();
-    		player.setExp(playerExp);
-    	}
-    	}
+        Player player = (Player) event.getPlayer();
+        if (event.getAction().isRightClick() && !(player.getItemInHand().getItemMeta() == null)) {
+
+            ItemMeta im = player.getItemInHand().getItemMeta();
+            if (im.getDisplayName().equals("§aBouteille de 1 Level")) {
+                event.setCancelled(true);
+                player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+
+                event.getPlayer().getWorld().spawn(event.getPlayer().getLocation(), ExperienceOrb.class).setExperience(player.getExpToLevel());
+                Float playerExp = player.getExp();
+                player.setExp(playerExp);
+            }
+        }
     }
 
     private void giveReward(Player player, GrindingCategory category, String identifier) {
@@ -77,9 +78,10 @@ public class SkillListener implements Listener {
             ConfigurationSection section = LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
             if (section == null) return;
 
-            if (section.getKeys(false).contains(identifier)) LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, section.getDouble(identifier));
+            if (section.getKeys(false).contains(identifier))
+                LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, section.getDouble(identifier));
         });
-        
+
     }
 
 }

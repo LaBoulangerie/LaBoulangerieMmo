@@ -77,7 +77,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 new AbilitiesManager(),
                 new MmoListener(),
                 new BlockusListener()
-        ).forEach(l->this.getServer().getPluginManager().registerEvents(l, this));
+        ).forEach(l -> this.getServer().getPluginManager().registerEvents(l, this));
     }
 
     public MmoPlayerManager getMmoPlayerManager() {

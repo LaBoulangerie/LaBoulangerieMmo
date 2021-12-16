@@ -20,7 +20,7 @@ public class GsonSerializer {
         return this.gson.toJson(serializable);
     }
 
-    public GsonSerializable deserialize(String json, Class<? extends GsonSerializable> type) throws JsonSyntaxException{
+    public GsonSerializable deserialize(String json, Class<? extends GsonSerializable> type) throws JsonSyntaxException {
         return this.gson.fromJson(json, type);
     }
 }

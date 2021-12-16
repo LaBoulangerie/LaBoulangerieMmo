@@ -15,7 +15,8 @@ import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 
 public class AbilitiesManager implements Listener {
 
-    public AbilitiesManager() {}
+    public AbilitiesManager() {
+    }
 
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
@@ -24,51 +25,51 @@ public class AbilitiesManager implements Listener {
         switch (event.getAction()) {
             case LEFT_CLICK_AIR:
                 Abilities.supplier().get()
-                    .filter(x ->
-                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_AIR
-                        && player.canUseAbility(x)
-                        && x.getExecutor().shouldTrigger(event)
-                    )
-                    .forEach(x -> {
-                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                        player.useAbility(x);
-                    });
+                        .filter(x ->
+                                x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_AIR
+                                        && player.canUseAbility(x)
+                                        && x.getExecutor().shouldTrigger(event)
+                        )
+                        .forEach(x -> {
+                            x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                            player.useAbility(x);
+                        });
                 break;
             case RIGHT_CLICK_AIR:
                 Abilities.supplier().get()
-                    .filter(x ->
-                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_AIR
-                        && player.canUseAbility(x)
-                        && x.getExecutor().shouldTrigger(event)
-                    )
-                    .forEach(x -> {
-                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                        player.useAbility(x);
-                    });
+                        .filter(x ->
+                                x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_AIR
+                                        && player.canUseAbility(x)
+                                        && x.getExecutor().shouldTrigger(event)
+                        )
+                        .forEach(x -> {
+                            x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                            player.useAbility(x);
+                        });
                 break;
             case LEFT_CLICK_BLOCK:
                 Abilities.supplier().get()
-                    .filter(x ->
-                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_BLOCK
-                        && player.canUseAbility(x)
-                        && x.getExecutor().shouldTrigger(event)
-                    )
-                    .forEach(x -> {
-                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                        player.useAbility(x);
-                    });
+                        .filter(x ->
+                                x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_BLOCK
+                                        && player.canUseAbility(x)
+                                        && x.getExecutor().shouldTrigger(event)
+                        )
+                        .forEach(x -> {
+                            x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                            player.useAbility(x);
+                        });
                 break;
             case RIGHT_CLICK_BLOCK:
                 Abilities.supplier().get()
-                    .filter(x ->
-                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_BLOCK
-                        && player.canUseAbility(x)
-                        && x.getExecutor().shouldTrigger(event)
-                    )
-                    .forEach(x -> {
-                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                        player.useAbility(x);
-                    });
+                        .filter(x ->
+                                x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_BLOCK
+                                        && player.canUseAbility(x)
+                                        && x.getExecutor().shouldTrigger(event)
+                        )
+                        .forEach(x -> {
+                            x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                            player.useAbility(x);
+                        });
                 break;
             default:
                 break;
@@ -79,59 +80,60 @@ public class AbilitiesManager implements Listener {
     public void onConsumeItem(PlayerItemConsumeEvent event) {
         MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
-            .filter(x ->
-                x.getExecutor().getAbilityTrigger() == AbilityTrigger.EAT
-                && player.canUseAbility(x)
-                && x.getExecutor().shouldTrigger(event)
-            )
-            .forEach(x -> {
-                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                player.useAbility(x);
-            });
+                .filter(x ->
+                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.EAT
+                                && player.canUseAbility(x)
+                                && x.getExecutor().shouldTrigger(event)
+                )
+                .forEach(x -> {
+                    x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                    player.useAbility(x);
+                });
     }
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
-            .filter(x ->
-                x.getExecutor().getAbilityTrigger() == AbilityTrigger.PLACE
-                && player.canUseAbility(x)
-                && x.getExecutor().shouldTrigger(event)
-            )
-            .forEach(x -> {
-                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                player.useAbility(x);
-            });
+                .filter(x ->
+                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.PLACE
+                                && player.canUseAbility(x)
+                                && x.getExecutor().shouldTrigger(event)
+                )
+                .forEach(x -> {
+                    x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                    player.useAbility(x);
+                });
     }
+
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
-            .filter(x ->
-                x.getExecutor().getAbilityTrigger() == AbilityTrigger.BREAK
-                && player.canUseAbility(x)
-                && x.getExecutor().shouldTrigger(event)
-            )
-            .forEach(x -> {
-                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                player.useAbility(x);
-            });
+                .filter(x ->
+                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.BREAK
+                                && player.canUseAbility(x)
+                                && x.getExecutor().shouldTrigger(event)
+                )
+                .forEach(x -> {
+                    x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                    player.useAbility(x);
+                });
     }
 
     @EventHandler
     public void onClickEntity(PlayerInteractEntityEvent event) {
         MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
-            .filter(x ->
-                x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_ENTITY
-                && player.canUseAbility(x)
-                && x.getExecutor().shouldTrigger(event)
-            )
-            .forEach(x -> {
-                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                player.useAbility(x);
-            });
+                .filter(x ->
+                        x.getExecutor().getAbilityTrigger() == AbilityTrigger.RIGHT_CLICK_ENTITY
+                                && player.canUseAbility(x)
+                                && x.getExecutor().shouldTrigger(event)
+                )
+                .forEach(x -> {
+                    x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                    player.useAbility(x);
+                });
     }
 
     @EventHandler
@@ -140,15 +142,15 @@ public class AbilitiesManager implements Listener {
 
             MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) event.getDamager());
             Abilities.supplier().get()
-                .filter(x ->
-                    x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_ENTITY
-                    && player.canUseAbility(x)
-                    && x.getExecutor().shouldTrigger(event)
-                )
-                .forEach(x -> {
-                    x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                    player.useAbility(x);
-                });
+                    .filter(x ->
+                            x.getExecutor().getAbilityTrigger() == AbilityTrigger.LEFT_CLICK_ENTITY
+                                    && player.canUseAbility(x)
+                                    && x.getExecutor().shouldTrigger(event)
+                    )
+                    .forEach(x -> {
+                        x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                        player.useAbility(x);
+                    });
         }
     }
 }

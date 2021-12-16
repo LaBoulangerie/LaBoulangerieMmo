@@ -28,9 +28,9 @@ public class BlockusDataHolder implements Serializable {
         while (it.hasNext()) {
             Blockus blockus = it.next();
             if (blockus.getX() == block.getLocation().getX()
-                && blockus.getY() == block.getLocation().getY()
-                && blockus.getZ() == block.getLocation().getZ()
-                && blockus.getWorldId() == block.getLocation().getWorld().getUID()) return blockus;
+                    && blockus.getY() == block.getLocation().getY()
+                    && blockus.getZ() == block.getLocation().getZ()
+                    && blockus.getWorldId() == block.getLocation().getWorld().getUID()) return blockus;
         }
         return null;
     }

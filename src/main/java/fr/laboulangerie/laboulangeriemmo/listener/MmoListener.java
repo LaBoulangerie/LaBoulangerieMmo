@@ -19,16 +19,16 @@ public class MmoListener implements Listener {
         Talent talent = event.getTalent();
         LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, 1_000);
         player.sendMessage(
-            "§aVous êtes passé au niveau §e"+talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
-            +"§a en §e"+talent.getDisplayName()
-            +"§a, vous gagnez §e1000$");
+                "§aVous êtes passé au niveau §e" + talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
+                        + "§a en §e" + talent.getDisplayName()
+                        + "§a, vous gagnez §e1000$");
     }
 
     @EventHandler
     public void onCountDownFinished(XpCountDownFinishedEvent event) {
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
         player.sendMessage(Component.text(
-            "§aVous avez gagné §e" + event.getAmount() + "§axp en §e"
-            + event.getTalent().getDisplayName()));
+                "§aVous avez gagné §e" + event.getAmount() + "§axp en §e"
+                        + event.getTalent().getDisplayName()));
     }
 }

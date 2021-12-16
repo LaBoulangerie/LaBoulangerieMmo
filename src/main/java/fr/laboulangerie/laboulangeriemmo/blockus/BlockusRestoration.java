@@ -5,7 +5,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class BlockusRestoration extends BukkitRunnable {
 
-    public BlockusRestoration() {}
+    public BlockusRestoration() {
+    }
 
     @Override
     public void run() {

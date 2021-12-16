@@ -30,8 +30,8 @@ public class MarkedBlocksManager {
     private static MarkedBlocksManager INSTANCE = null;
     private Map<Block, BlockWatcher> markedBlocks = new HashMap<Block, BlockWatcher>();
     private int idCount = 100000;
-    private String[] teamsIdentifier = { "DIAMOND_ORE", "IRON_ORE", "COAL_ORE", "GOLD_ORE", "LAPIS_ORE", "REDSTONE_ORE", "EMERALD_ORE", "COPPER_ORE", "ANCIENT_DEBRIS", "NETHER_GOLD_ORE", "AMETHYST_CLUSTER" };
-    private ChatColor[] teamsColor = {ChatColor.AQUA,ChatColor.GRAY,ChatColor.BLACK,ChatColor.YELLOW,ChatColor.DARK_BLUE,ChatColor.RED,ChatColor.GREEN,ChatColor.GOLD,ChatColor.DARK_GRAY,ChatColor.YELLOW,ChatColor.DARK_PURPLE};
+    private String[] teamsIdentifier = {"DIAMOND_ORE", "IRON_ORE", "COAL_ORE", "GOLD_ORE", "LAPIS_ORE", "REDSTONE_ORE", "EMERALD_ORE", "COPPER_ORE", "ANCIENT_DEBRIS", "NETHER_GOLD_ORE", "AMETHYST_CLUSTER"};
+    private ChatColor[] teamsColor = {ChatColor.AQUA, ChatColor.GRAY, ChatColor.BLACK, ChatColor.YELLOW, ChatColor.DARK_BLUE, ChatColor.RED, ChatColor.GREEN, ChatColor.GOLD, ChatColor.DARK_GRAY, ChatColor.YELLOW, ChatColor.DARK_PURPLE};
 
     public void markBlock(Block block, Player player) {
         BlockWatcher blockWatcher = markedBlocks.get(block);
@@ -40,7 +40,7 @@ public class MarkedBlocksManager {
             sendShulker(player, block, idCount, uuid);
             markedBlocks.put(block, new BlockWatcher(idCount, uuid, player));
             idCount++;
-        }else {
+        } else {
             if (blockWatcher.isWatching(player)) return;
 
             sendShulker(player, block, blockWatcher.getEntityId(), blockWatcher.getUuid());
@@ -66,23 +66,24 @@ public class MarkedBlocksManager {
         removeShulker(player, blockWatcher.getEntityId());
         if (blockWatcher.removeWatcher(player)) markedBlocks.remove(block);
     }
+
     private void sendShulker(Player player, Block block, Integer id, UUID uuid) {
         // https://github.com/libraryaddict/LibsDisguises/blob/master/src/main/java/me/libraryaddict/disguise/utilities/packets/packethandlers/PacketHandlerSpawn.java
         PacketContainer spawnShulker = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY_LIVING);
         StructureModifier<Object> mods = spawnShulker.getModifier();
 
         mods.write(0, id) //Entity ID
-            .write(1, uuid) // entity UUID
-            .write(2, 75) // 75 = shulker
-            .write(3, block.getX()+0.5) // Pos X, Y, Z
-            .write(4, block.getY())
-            .write(5, block.getZ()+0.5)
-            .write(6, (short) 0) // Velocity X, Y, Z
-            .write(7, (short) 0)
-            .write(8, (short) 0)
-            .write(9, (byte) 0) // yaw
-            .write(10, (byte) 0) // pitch
-            .write(11, (byte) 0); // yaw
+                .write(1, uuid) // entity UUID
+                .write(2, 75) // 75 = shulker
+                .write(3, block.getX() + 0.5) // Pos X, Y, Z
+                .write(4, block.getY())
+                .write(5, block.getZ() + 0.5)
+                .write(6, (short) 0) // Velocity X, Y, Z
+                .write(7, (short) 0)
+                .write(8, (short) 0)
+                .write(9, (byte) 0) // yaw
+                .write(10, (byte) 0) // pitch
+                .write(11, (byte) 0); // yaw
 
         PacketContainer shulkerMetadata = new PacketContainer(PacketType.Play.Server.ENTITY_METADATA);
         StructureModifier<Object> metadataMods = shulkerMetadata.getModifier();
@@ -90,7 +91,7 @@ public class MarkedBlocksManager {
         metadataMods.write(0, id);
 
         WrappedDataWatcher watcher = new WrappedDataWatcher();
-        watcher.setObject(new WrappedDataWatcherObject(0, Registry.get(Byte.class)),(byte) (0x20 | 0x40)); //0x20 invisible 0x40 glowing
+        watcher.setObject(new WrappedDataWatcherObject(0, Registry.get(Byte.class)), (byte) (0x20 | 0x40)); //0x20 invisible 0x40 glowing
         shulkerMetadata.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
         try {
             ProtocolLibrary.getProtocolManager().sendServerPacket(player, spawnShulker);
@@ -113,13 +114,14 @@ public class MarkedBlocksManager {
 
     public void colorize(Block block, Player player) {
         BlockWatcher blockWatcher = markedBlocks.get(block);
-        if (blockWatcher == null || block.getType() == Material.NETHER_QUARTZ_ORE) return; // Quartz is white no need for a team
+        if (blockWatcher == null || block.getType() == Material.NETHER_QUARTZ_ORE)
+            return; // Quartz is white no need for a team
         String teamId = block.getType().toString().startsWith("DEEPSLATE_") ? block.getType().toString().substring(10) : block.getType().toString();
 
         PacketContainer updateTeam = new PacketContainer(PacketType.Play.Server.SCOREBOARD_TEAM);
         updateTeam.getStrings().write(0, teamId);
         updateTeam.getIntegers()
-            .write(0, 3); //Mode: 3 = ADD ENTITIES
+                .write(0, 3); //Mode: 3 = ADD ENTITIES
         updateTeam.getSpecificModifier(Collection.class).write(0, Collections.singletonList(blockWatcher.getUuid().toString()));
         try {
             ProtocolLibrary.getProtocolManager().sendServerPacket(player, updateTeam);
@@ -137,14 +139,14 @@ public class MarkedBlocksManager {
             team.getIntegers().write(0, 0x0);//Mode: 0 = CREATE
 
             struct.getStrings().write(0, "always") //name tag visibility rules
-                .write(1, "never"); //collisions rules
+                    .write(1, "never"); //collisions rules
             struct.getIntegers().write(0, 0x02); //flags
             struct.getChatComponents()
-                .write(0, WrappedChatComponent.fromText(""))
-                .write(1, WrappedChatComponent.fromText(""))
-                .write(2, WrappedChatComponent.fromText(""));
+                    .write(0, WrappedChatComponent.fromText(""))
+                    .write(1, WrappedChatComponent.fromText(""))
+                    .write(2, WrappedChatComponent.fromText(""));
             struct.getEnumModifier(ChatColor.class, MinecraftReflection.getMinecraftClass("EnumChatFormat")).write(0, teamsColor[i]);
-            
+
             team.getOptionalStructures().write(0, Optional.of((InternalStructure) struct));
             try {
                 ProtocolLibrary.getProtocolManager().sendServerPacket(player, team);

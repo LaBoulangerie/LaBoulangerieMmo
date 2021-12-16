@@ -47,7 +47,7 @@ public class MmoPlayer implements GsonSerializable {
     public MmoPlayer() {
         xpCountdown = new XpCountDown(this);
         xpCountdown.start();
-        
+
     }
 
     public Talent getTalent(String talentName) {
@@ -60,15 +60,15 @@ public class MmoPlayer implements GsonSerializable {
 
         if (ability.shouldLog() == true) {
             new ParticleEffect().createHelix(player);
-            player.sendMessage("§eVous avez utilisé " + ability.toString() + ", cooldown de " + ability.getCooldown() +" "+ ability.getCooldownUnit().toString().toLowerCase());
+            player.sendMessage("§eVous avez utilisé " + ability.toString() + ", cooldown de " + ability.getCooldown() + " " + ability.getCooldownUnit().toString().toLowerCase());
         }
     }
-        
+
 
     public boolean canUseAbility(Abilities ability) {
         return cooldownsHolder.isCooldownElapsed(ability)
-            && talents.get(ability.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability.getRequiredLevel()
-            && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
+                && talents.get(ability.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability.getRequiredLevel()
+                && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 
     public String getName() {
@@ -82,9 +82,10 @@ public class MmoPlayer implements GsonSerializable {
     public Supplier<Stream<Talent>> streamTalents() {
         return () -> talents.values().stream();
     }
+
     public void incrementXp(String talentId, double amount) {
         if (getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= 100) {
-        	return;
+            return;
         }
         Bukkit.getPluginManager().callEvent(new PlayerEarnsXpEvent(amount, talentId, this));
         int oldLevel = getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
