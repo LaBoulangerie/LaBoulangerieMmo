@@ -19,7 +19,7 @@ public enum Abilities {
     FAST_MINE(15, TimeUnit.MINUTES, 15, "mining", new FastMine(), false),
     FAST_SMELT(85, TimeUnit.HOURS, 1, "mining", new FastSmelt(), true),
     MAGNETIC_FIELD(35, TimeUnit.MINUTES, 30, "mining", new MagneticField(), true),
-    DOUBLE_DROP_LOG(1, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), false),
+    DOUBLE_DROP_LOG(0, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), true),
     BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false),
     EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false);
 

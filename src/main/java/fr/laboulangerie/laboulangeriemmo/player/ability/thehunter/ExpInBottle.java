@@ -1,5 +1,7 @@
 package fr.laboulangerie.laboulangeriemmo.player.ability.thehunter;
 
+import java.util.Arrays;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -7,9 +9,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import fr.laboulangerie.laboulangeriemmo.player.SkillListener;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
+import net.kyori.adventure.text.Component;
 
 public class ExpInBottle extends AbilityExecutor {
 
@@ -29,16 +31,24 @@ public class ExpInBottle extends AbilityExecutor {
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         Player player = event.getPlayer();
-        if (player.getLevel() >= 1) {
-            Integer playerCurrentLevel = player.getLevel();
-            player.setLevel(playerCurrentLevel - 1);
+        int lvlToSubtract = 10;
+        int playerCurrentLevel = player.getTotalExperience();
+        
+        if (playerCurrentLevel >= lvlToSubtract) {
+            player.setLevel(0); // this is a needed trick, it works, don't touch it :p
+            player.setExp(0);
+            player.setTotalExperience(0);
+            player.giveExp(playerCurrentLevel - lvlToSubtract);
+
             ItemStack item = new ItemStack(Material.EXPERIENCE_BOTTLE);
             ItemMeta itemMeta = item.getItemMeta();
-            itemMeta.setDisplayName("§aBouteille de 1 Level");
+            itemMeta.lore(Arrays.asList(Component.text("Quantité: "+lvlToSubtract+" xp")));
             item.setItemMeta(itemMeta);
-            player.getInventory().addItem(new ItemStack(item));
+            if (player.getInventory().firstEmpty() != -1) {
+                player.getInventory().addItem(item);
+            }else {
+                player.getWorld().dropItemNaturally(player.getLocation(), item);
+            }
         }
-
     }
-
 }
