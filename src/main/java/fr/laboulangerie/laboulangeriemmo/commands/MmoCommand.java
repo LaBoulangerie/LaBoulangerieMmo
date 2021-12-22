@@ -116,7 +116,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             Block block = result.getHitBlock();
 
             if (args[1].equalsIgnoreCase("isBlockus")) {
-                player.sendMessage(block.hasMetadata("laboulangerie:placed") ? "§aLe bloc visé est un blockus" : "§eLe bloc visé n'est pas un blocus");
+                player.sendMessage(block.hasMetadata("laboulangerie:placed") ? "§aLe bloc visé est un blockus" : "§eLe bloc visé n'est pas un blockus");
                 return true;
             }
             if (args[1].equalsIgnoreCase("mark")) {
@@ -129,7 +129,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             }
             if (args[1].equalsIgnoreCase("unmark")) {
                 if (!block.hasMetadata("laboulangerie:placed")) {
-                    sender.sendMessage("§eLe bloc visé n'est pas un blocus impossible de le dé-marquer");
+                    sender.sendMessage("§eLe bloc visé n'est pas un blockus impossible de le dé-marquer");
                     return true;
                 }
                 block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
@@ -161,7 +161,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                     return Arrays.asList("10", "100", "1000");
             }
         }
-        if (args[0].equalsIgnoreCase("blockus")) return Arrays.asList("isBlockus", "mark", "unmark");
+        if (args[0].equalsIgnoreCase("blockus") && args.length == 2) return Arrays.asList("isBlockus", "mark", "unmark");
         return null;
     }
 }
