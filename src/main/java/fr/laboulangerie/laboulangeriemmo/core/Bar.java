@@ -24,7 +24,7 @@ public class Bar {
 			"§b"+talent.getDisplayName()
 			+ " §r: §e" + talent.getLevel(0.2)
 			+ " §5| §e" + (talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))
-			+ "§5/" + (
+			+ "§5/§e" + (
 				(int) Math.pow((talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) + 1)
 				/ LaBoulangerieMmo.XP_MULTIPLIER, 2) - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER)
 			),
