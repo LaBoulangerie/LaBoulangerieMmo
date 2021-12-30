@@ -12,6 +12,7 @@ import fr.laboulangerie.laboulangeriemmo.blockus.BlockusListener;
 import fr.laboulangerie.laboulangeriemmo.blockus.BlockusRestoration;
 import fr.laboulangerie.laboulangeriemmo.commands.MmoCommand;
 import fr.laboulangerie.laboulangeriemmo.commands.Stats;
+import fr.laboulangerie.laboulangeriemmo.core.Bar;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
 import fr.laboulangerie.laboulangeriemmo.listener.MmoListener;
 import fr.laboulangerie.laboulangeriemmo.listener.ServerListener;
@@ -29,6 +30,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
     private GsonSerializer serializer;
     private BlockusDataManager blockusDataManager;
     private MmoPlayerManager mmoPlayerManager;
+    public Bar bar;
 
     @Override
     public void onEnable() {
@@ -43,6 +45,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
         this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
         this.mmoPlayerManager = new MmoPlayerManager();
+        this.bar = new Bar(this);
 
         BlockusRestoration blockusRestoration = new BlockusRestoration();
         blockusRestoration.runTaskLater(this, 20);
@@ -75,7 +78,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 new MmoPlayerListener(),
                 new SkillListener(),
                 new AbilitiesManager(),
-                new MmoListener(),
+                new MmoListener(bar),
                 new BlockusListener()
         ).forEach(l -> this.getServer().getPluginManager().registerEvents(l, this));
     }
