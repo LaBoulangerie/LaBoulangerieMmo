@@ -11,6 +11,7 @@ import fr.laboulangerie.laboulangeriemmo.player.ability.thehunter.ExpInBottle;
 import fr.laboulangerie.laboulangeriemmo.player.ability.mining.MagneticField;
 import fr.laboulangerie.laboulangeriemmo.player.ability.woodcutting.BetterAppleDrop;
 import fr.laboulangerie.laboulangeriemmo.player.ability.woodcutting.DoubleDropLog;
+import fr.laboulangerie.laboulangeriemmo.player.ability.woodcutting.Timber;
 
 public enum Abilities {
 
@@ -21,6 +22,7 @@ public enum Abilities {
     MAGNETIC_FIELD(35, TimeUnit.MINUTES, 30, "mining", new MagneticField(), true),
     DOUBLE_DROP_LOG(0, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), true),
     BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false),
+    TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true),
     EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false);
 
     private int requiredLevel;
