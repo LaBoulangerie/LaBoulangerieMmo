@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import fr.laboulangerie.laboulangeriemmo.player.ability.mining.FastMine;
 import fr.laboulangerie.laboulangeriemmo.player.ability.mining.FastSmelt;
 import fr.laboulangerie.laboulangeriemmo.player.ability.mining.MinecraftExpMultiplier;
+import fr.laboulangerie.laboulangeriemmo.player.ability.thehunter.Dodging;
 import fr.laboulangerie.laboulangeriemmo.player.ability.thehunter.ExpInBottle;
 import fr.laboulangerie.laboulangeriemmo.player.ability.mining.MagneticField;
 import fr.laboulangerie.laboulangeriemmo.player.ability.woodcutting.BetterAppleDrop;
@@ -23,7 +24,8 @@ public enum Abilities {
     DOUBLE_DROP_LOG(0, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), true),
     BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false),
     TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true),
-    EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false);
+    EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false),
+    DODGING(1, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true);
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;

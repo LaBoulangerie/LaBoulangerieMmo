@@ -31,8 +31,11 @@ public class ExpInBottle extends AbilityExecutor {
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         Player player = event.getPlayer();
-        int lvlToSubtract = 10;
+        int lvlToSubtract = 10; //tier 1
         int playerCurrentLevel = player.getTotalExperience();
+
+        if (level >= 70) lvlToSubtract = 30; //tier 3
+        else if (level >= 50) lvlToSubtract = 20; //tier 2
         
         if (playerCurrentLevel >= lvlToSubtract) {
             player.setLevel(0); // this is a needed trick, it works, don't touch it :p
@@ -44,6 +47,8 @@ public class ExpInBottle extends AbilityExecutor {
             ItemMeta itemMeta = item.getItemMeta();
             itemMeta.lore(Arrays.asList(Component.text("Quantité: "+lvlToSubtract+" xp")));
             item.setItemMeta(itemMeta);
+            player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount()-1);
+
             if (player.getInventory().firstEmpty() != -1) {
                 player.getInventory().addItem(item);
             }else {
