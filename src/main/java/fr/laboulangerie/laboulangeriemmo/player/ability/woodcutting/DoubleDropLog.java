@@ -9,7 +9,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import fr.laboulangerie.laboulangeriemmo.core.ParticleEffect;
+import fr.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
@@ -47,7 +47,7 @@ public class DoubleDropLog extends AbilityExecutor {
         else if (find_nearest_int <= 10) shouldDouble = true;
 
         if (shouldDouble) {
-            new ParticleEffect().createHelix(player);
+            EffectRegistry.playEffect("default", player);
             block.getWorld().dropItemNaturally(block.getLocation(), item);
             player.sendMessage("§eVotre drop a été doublé.");
         }

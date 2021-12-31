@@ -13,6 +13,7 @@ import fr.laboulangerie.laboulangeriemmo.blockus.BlockusRestoration;
 import fr.laboulangerie.laboulangeriemmo.commands.MmoCommand;
 import fr.laboulangerie.laboulangeriemmo.commands.Stats;
 import fr.laboulangerie.laboulangeriemmo.core.Bar;
+import fr.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
 import fr.laboulangerie.laboulangeriemmo.listener.MmoListener;
 import fr.laboulangerie.laboulangeriemmo.listener.ServerListener;
@@ -53,6 +54,8 @@ public class LaBoulangerieMmo extends JavaPlugin {
         this.registerListeners();
         getCommand("stats").setExecutor(new Stats());
         getCommand("mmo").setExecutor(new MmoCommand());
+
+        EffectRegistry.registerParticlesEffects();
         getLogger().info("Plugin started");
     }
 
