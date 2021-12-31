@@ -25,7 +25,7 @@ public enum Abilities {
     BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false, "default"),
     TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true, "default"),
     EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false, "default"),
-    DODGING(1, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "default");
+    DODGING(1, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "trail");
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;

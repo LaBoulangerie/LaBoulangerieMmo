@@ -13,6 +13,7 @@ public class EffectRegistry {
     private static Map<String, Class<? extends Effect>> particles = new HashMap<String, Class<? extends Effect>>();
     public static void registerParticlesEffects() {
         particles.put("default", HelixEffect.class);
+        particles.put("trail", TrailEffect.class);
     }
 
     public static Effect getNewEffect(String effectName, Player player) throws IllegalArgumentException {
@@ -48,7 +49,7 @@ public class EffectRegistry {
         try {
             getNewEffect(effectName, player).startEffect();
         } catch (IllegalArgumentException e) {
-            LaBoulangerieMmo.PLUGIN.getLogger().severe("Tried to play invalid particle effect: " + effectName);
+            e.printStackTrace();
         }
     }
     
@@ -56,7 +57,7 @@ public class EffectRegistry {
         try {
             getNewEffect(effectName, location).startEffect();
         } catch (IllegalArgumentException e) {
-            LaBoulangerieMmo.PLUGIN.getLogger().severe("Tried to play invalid particle effect: " + effectName);
+            e.printStackTrace();
         }
     }
 }
