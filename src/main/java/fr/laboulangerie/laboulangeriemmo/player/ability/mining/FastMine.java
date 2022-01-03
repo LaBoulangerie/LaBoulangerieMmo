@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.laboulangerie.laboulangeriemmo.core.ParticleEffect;
+import fr.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
@@ -47,6 +47,6 @@ public class FastMine extends AbilityExecutor {
         }
         player.sendMessage("§eVous gagnez Haste " + (amplifier + 1) + " pendant " + duration + " secondes");
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration * 20, amplifier, true));
-        new ParticleEffect().createHelix(player);
+        EffectRegistry.playEffect("default", player);
     }
 }

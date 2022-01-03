@@ -12,7 +12,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import fr.laboulangerie.laboulangeriemmo.core.ParticleEffect;
+import fr.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 import fr.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializable;
@@ -59,11 +59,10 @@ public class MmoPlayer implements GsonSerializable {
         Player player = Bukkit.getPlayer(uniqueId);
 
         if (ability.shouldLog() == true) {
-            new ParticleEffect().createHelix(player);
+            EffectRegistry.playEffect(ability.getEffectName(), player);
             player.sendMessage("§eVous avez utilisé " + ability.toString() + ", cooldown de " + ability.getCooldown() + " " + ability.getCooldownUnit().toString().toLowerCase());
         }
     }
-
 
     public boolean canUseAbility(Abilities ability) {
         return cooldownsHolder.isCooldownElapsed(ability)
@@ -96,6 +95,5 @@ public class MmoPlayer implements GsonSerializable {
         if (oldLevel < newLevel) {
             Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
         }
-
     }
 }

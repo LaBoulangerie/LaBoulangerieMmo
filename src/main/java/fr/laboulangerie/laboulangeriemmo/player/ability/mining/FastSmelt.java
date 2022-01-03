@@ -15,7 +15,7 @@ import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
-import fr.laboulangerie.laboulangeriemmo.core.ParticleEffect;
+import fr.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
@@ -87,6 +87,6 @@ public class FastSmelt extends AbilityExecutor {
             newHand = new ItemStack(Material.AIR);
 
         bukkitPlayer.getInventory().setItemInMainHand(newHand);
-        new ParticleEffect().createHelix(bukkitPlayer);
+        EffectRegistry.playEffect("default", bukkitPlayer);
     }
 }

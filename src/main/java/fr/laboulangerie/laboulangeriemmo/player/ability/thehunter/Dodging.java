@@ -1,6 +1,8 @@
 package fr.laboulangerie.laboulangeriemmo.player.ability.thehunter;
 
+import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
@@ -8,7 +10,6 @@ import org.bukkit.util.Vector;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 import net.minecraft.util.MathHelper;
-import net.minecraft.world.entity.EntityLiving;
 import net.minecraft.world.entity.player.EntityHuman;
 
 public class Dodging extends AbilityExecutor {
@@ -26,8 +27,8 @@ public class Dodging extends AbilityExecutor {
     @Override
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-        EntityLiving entity = ((CraftPlayer) event.getPlayer()).getHandle();
-        EntityHuman human = (EntityHuman) entity;
+        Player player = event.getPlayer();
+        EntityHuman human = (EntityHuman) ((CraftPlayer) event.getPlayer()).getHandle();
         /**
          * See ItemTrident.java in craftbukkit or TridentItem.java in paper
          * Mapping:
@@ -48,7 +49,8 @@ public class Dodging extends AbilityExecutor {
         f3 *= f6 / f5;
         f4 *= f6 / f5;
         //human.i((double) f2, (double) f3, (double) f4); // = human.push doesn't work but next line replaced it maybe try again in 1.18
-        event.getPlayer().setVelocity(new Vector((double) f2, (double) f3, (double) f4));
+        player.setVelocity(new Vector((double) f2, (double) f3, (double) f4));
         human.s(20);
+        player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
     }
 }
