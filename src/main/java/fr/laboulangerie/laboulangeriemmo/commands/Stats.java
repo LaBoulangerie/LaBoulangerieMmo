@@ -30,10 +30,13 @@ public class Stats implements CommandExecutor, TabCompleter {
         if (args.length > 0) {
             if (args.length > 1 && args[0].equalsIgnoreCase("leaderboard") && "miningwoodcuttingthehunterbaking".contains(args[1])) {
                 File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
-                Double max = 0.0;
+                Integer maxLevel = 0;
+                Integer max2Level = 0;
+                Integer max3Level = 0;
+                Double maxExp = 0.0;
+                Double max2Exp = 0.0;
+                Double max3Exp = 0.0;
                 String name = null;
-                Double max2 = 0.0;
-                Double max3 = 0.0;
                 String name2 = null;
                 String name3 = null;
 
@@ -41,24 +44,35 @@ public class Stats implements CommandExecutor, TabCompleter {
                     OfflinePlayer player2 = Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0]));
                     MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player2);
                     Talent talent = mmoPlayer.getTalent(args[1]);
-                    if (talent.getXp() > max) {
-                        max = talent.getXp();
+                    if (talent.getXp() > maxExp && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= maxLevel) {
+                        maxLevel = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+                        maxExp = talent.getXp();
                         name = mmoPlayer.getName();
-                    } else if (talent.getXp() < max && talent.getXp() > max2) {
-                        max2 = talent.getXp();
+                    } else if (talent.getXp() < maxExp && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) == maxLevel) {
+                        max2Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
                         name2 = mmoPlayer.getName();
-                    } else if (talent.getXp() < max2 && talent.getXp() > max3) {
-                        max3 = talent.getXp();
+                        max2Exp = talent.getXp();
+                    } else if (talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) < maxLevel && talent.getXp() > max2Exp && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= max2Level) {
+                        max2Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+                        name2 = mmoPlayer.getName();
+                        max2Exp = talent.getXp();
+                    } else if (talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) < maxLevel && talent.getXp() < max2Exp && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) == max2Level) {
+                        max3Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
                         name3 = mmoPlayer.getName();
+                        max3Exp = talent.getXp();
+                    } else if (talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) < max2Level && talent.getXp() > max3Exp && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= max3Level) {
+                        max3Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+                        name3 = mmoPlayer.getName();
+                        max3Exp = talent.getXp();
                     }
                 }
                 if (name == null) {
                     sender.sendMessage("§cAucun joueur n'a d'exp en §a" + args[1]);
                 } else {
                     sender.sendMessage("§lClassement de §a" + args[1] + "§r :");
-                    sender.sendMessage("§e1. §a" + name + " " + max + "§r xp");
-                    sender.sendMessage("§62. §a" + name2 + " " + max2 + "§r xp");
-                    sender.sendMessage("§c3. §a" + name3 + " " + max3 + "§r xp");
+                    sender.sendMessage("§e1. §a" + name + " qui est niveau" + maxLevel +" avec "+ maxExp + "§r xp");
+                    sender.sendMessage("§62. §a" + name2 + " qui est niveau" + max2Level + " avec "+ max2Exp + "§r xp");
+                    sender.sendMessage("§c3. §a" + name3 + " qui est niveau" + max3Level + " avec "+ max3Exp + "§r xp");
                 }
                 return true;
             }
