@@ -98,10 +98,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+          <groupId>org.bukkit</groupId>
+          <artifactId>craftbukkit</artifactId>
+          <version>1.17.1-R0.1-SNAPSHOT</version>
+          <scope>system</scope>
+          <systemPath>${project.basedir}/libs/craftbukkit-1.17.1.jar</systemPath>
         </dependency>
     </dependencies>
 </project>

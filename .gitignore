@@ -21,7 +21,6 @@ out/
 *.class
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
