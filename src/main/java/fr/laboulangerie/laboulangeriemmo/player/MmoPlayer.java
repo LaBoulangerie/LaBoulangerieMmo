@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import com.google.common.base.Supplier;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+
+import com.google.common.base.Supplier;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
@@ -53,7 +53,18 @@ public class MmoPlayer implements GsonSerializable {
     public Talent getTalent(String talentName) {
         return talents.get(talentName);
     }
-
+    
+    public Integer getPalier(MmoPlayer player)
+    {
+    	
+    	Integer palier = 0;
+        palier = palier + player.getTalent("baking").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        palier = palier + player.getTalent("fishing").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        palier = palier + player.getTalent("mining").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        palier = palier + player.getTalent("woodcutting").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        palier = palier + player.getTalent("thehunter").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        return palier;
+    }
     public void useAbility(Abilities ability) {
         cooldownsHolder.startCooldown(ability);
         Player player = Bukkit.getPlayer(uniqueId);
@@ -94,6 +105,9 @@ public class MmoPlayer implements GsonSerializable {
         int newLevel = getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
         if (oldLevel < newLevel) {
             Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
+            /*if (getPalier(this) == ???) {
+            	do some stuff
+            }*/
         }
     }
 }
