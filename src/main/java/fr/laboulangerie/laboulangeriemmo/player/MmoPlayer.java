@@ -4,15 +4,12 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import javax.management.loading.PrivateClassLoader;
-
-import com.google.common.base.Supplier;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.libs.org.apache.commons.codec.language.bm.Languages.SomeLanguages;
 import org.bukkit.entity.Player;
+
+import com.google.common.base.Supplier;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
