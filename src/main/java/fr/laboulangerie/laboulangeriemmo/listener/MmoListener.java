@@ -35,7 +35,7 @@ public class MmoListener implements Listener {
     @EventHandler
     public void onCountDownFinished(XpCountDownFinishedEvent event) {
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
-        bar.createbar(event.getTalent(), event.getPlayer());
+        bar.displayBar(event.getTalent(), event.getPlayer());
         player.sendMessage(Component.text(
                 "§aVous avez gagné §e" + event.getAmount() + "§axp en §e"
                         + event.getTalent().getDisplayName()));

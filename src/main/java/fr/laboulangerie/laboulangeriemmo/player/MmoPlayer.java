@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import com.google.common.base.Supplier;
@@ -18,8 +19,10 @@ import fr.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 import fr.laboulangerie.laboulangeriemmo.player.ability.Abilities;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 
 public class MmoPlayer implements GsonSerializable {
+    private FileConfiguration config;
 
     private UUID uniqueId;
     private String name;
@@ -29,6 +32,8 @@ public class MmoPlayer implements GsonSerializable {
     private transient XpCountDown xpCountdown;
 
     public MmoPlayer(OfflinePlayer player) {
+        this.config = LaBoulangerieMmo.PLUGIN.getConfig();
+
         this.uniqueId = player.getUniqueId();
         this.name = player.getName();
 
@@ -71,7 +76,16 @@ public class MmoPlayer implements GsonSerializable {
 
         if (ability.shouldLog() == true) {
             EffectRegistry.playEffect(ability.getEffectName(), player);
-            player.sendMessage("§eVous avez utilisé " + ability.toString() + ", cooldown de " + ability.getCooldown() + " " + ability.getCooldownUnit().toString().toLowerCase());
+
+            HashMap<String, String> placeholders = new HashMap<>();
+            placeholders.put("ability", ability.toString());
+            placeholders.put("cooldown", Integer.toString(ability.getCooldown()));
+            placeholders.put("unit", ability.getCooldownUnit().toString().toLowerCase());
+
+            player.sendMessage(
+                MiniMessage.get().parse(this.config.getString("lang.prefix"))
+                .append(MiniMessage.get().parse(this.config.getString("lang.messages.ability_log"), placeholders))
+            );
         }
     }
 
