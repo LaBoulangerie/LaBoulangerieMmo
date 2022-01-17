@@ -46,7 +46,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
         this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
         this.mmoPlayerManager = new MmoPlayerManager();
-        this.bar = new Bar(this);
+        this.bar = new Bar();
 
         BlockusRestoration blockusRestoration = new BlockusRestoration();
         blockusRestoration.runTaskLater(this, 20);

@@ -1,46 +1,45 @@
 package fr.laboulangerie.laboulangeriemmo.core;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+
 public class Bar {
+    private FileConfiguration config;
+	private BossBar bossbar;
 	
-	private final LaBoulangerieMmo plugin;
-	public BossBar bossbar;
-	public Bar bar;
-	
-	public Bar (LaBoulangerieMmo plugin) {
-		this.plugin = plugin;
+	public Bar () {
+        this.config = LaBoulangerieMmo.PLUGIN.getConfig();
 	}
-	
-	public void createbar(Talent talent, MmoPlayer mmoPlayer) {
-		bossbar = Bukkit.createBossBar(
-			"§b"+talent.getDisplayName()
-			+ " §r: §e" + talent.getLevel(0.2)
-			+ " §5| §e" + (talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))
-			+ "§5/§e" + (
-				(int) Math.pow((talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) + 1)
-				/ LaBoulangerieMmo.XP_MULTIPLIER, 2) - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER)
-			),
-			BarColor.GREEN, BarStyle.SOLID
+
+	public void displayBar(Talent talent, MmoPlayer mmoPlayer) {
+        HashMap<String, String> placeholders = new HashMap<>();
+        placeholders.put("talent", talent.getDisplayName());
+        placeholders.put("level", Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)));
+        placeholders.put("xp", Double.toString(talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER)));
+        placeholders.put("max_xp", Integer.toString(talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER)));
+
+		bossbar = BossBar.bossBar(
+            MiniMessage.get().parse(config.getString("lang.bar.format"), placeholders),
+            (float) ((talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER) / talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER))/100),
+            BossBar.Color.valueOf(config.getString("lang.bar.color")),
+            BossBar.Overlay.valueOf(config.getString("lang.bar.style"))
 		);
-		bossbar.addPlayer(Bukkit.getPlayer(mmoPlayer.getUniqueId()));
-		Double progress = (talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))/((int) Math.pow((talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) + 1) / LaBoulangerieMmo.XP_MULTIPLIER, 2) - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER));
-		bossbar.setProgress(progress);
-		bossbar.setVisible(true);
-		Bukkit.getScheduler().runTaskLater(plugin, () -> {
-			bossbar.setVisible(false);
-		}, 200L);
+
+        Player player = Bukkit.getPlayer(mmoPlayer.getUniqueId());
+        player.showBossBar(bossbar);
+
+		Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, () -> {
+            player.hideBossBar(bossbar);
+		}, config.getLong("lang.bar.delay"));
 	}
-	
-	public BossBar getBar() {
-		return bossbar;
-	}
-	
 }
