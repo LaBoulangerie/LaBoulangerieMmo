@@ -39,6 +39,10 @@ public class Talent {
         return (int) Math.pow(getLevel(multiplier) / multiplier, 2);
     }
 
+    public int getXpToNextLevel(double multiplier) {
+        return (int) Math.pow((getLevel(multiplier) + 1) / multiplier, 2) - getLevelXp(multiplier);
+    }
+
     public String getTalentId() {
         return talentId;
     }
