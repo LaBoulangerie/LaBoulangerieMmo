@@ -31,7 +31,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
     private GsonSerializer serializer;
     private BlockusDataManager blockusDataManager;
     private MmoPlayerManager mmoPlayerManager;
-    public Bar bar;
+    private Bar bar;
 
     @Override
     public void onEnable() {
