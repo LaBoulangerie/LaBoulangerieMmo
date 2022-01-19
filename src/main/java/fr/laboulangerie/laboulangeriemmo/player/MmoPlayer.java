@@ -22,7 +22,7 @@ import fr.laboulangerie.laboulangeriemmo.player.talent.Talent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 public class MmoPlayer implements GsonSerializable {
-    private FileConfiguration config;
+    private transient FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
     private UUID uniqueId;
     private String name;
@@ -32,8 +32,6 @@ public class MmoPlayer implements GsonSerializable {
     private transient XpCountDown xpCountdown;
 
     public MmoPlayer(OfflinePlayer player) {
-        this.config = LaBoulangerieMmo.PLUGIN.getConfig();
-
         this.uniqueId = player.getUniqueId();
         this.name = player.getName();
 
@@ -52,16 +50,13 @@ public class MmoPlayer implements GsonSerializable {
     public MmoPlayer() {
         xpCountdown = new XpCountDown(this);
         xpCountdown.start();
-
     }
 
     public Talent getTalent(String talentName) {
         return talents.get(talentName);
     }
     
-    public Integer getPalier(MmoPlayer player)
-    {
-    	
+    public Integer getPalier(MmoPlayer player) {
     	Integer palier = 0;
         palier = palier + player.getTalent("baking").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
         palier = palier + player.getTalent("fishing").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
