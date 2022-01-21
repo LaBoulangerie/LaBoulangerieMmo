@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import fr.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import fr.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 
 public class AbilitiesManager implements Listener {
@@ -152,5 +153,20 @@ public class AbilitiesManager implements Listener {
                         player.useAbility(x);
                     });
         }
+    }
+
+    @EventHandler
+    public void onComboCompleted(ComboCompletedEvent event) {
+        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
+        Abilities.supplier().get()
+            .filter(x ->
+                x.getExecutor().getAbilityTrigger() == AbilityTrigger.COMBO
+                    && player.canUseAbility(x)
+                    && x.getExecutor().shouldTrigger(event)
+            )
+            .forEach(x -> {
+                x.getExecutor().trigger(event, player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                player.useAbility(x);
+            });
     }
 }

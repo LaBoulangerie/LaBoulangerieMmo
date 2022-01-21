@@ -1,15 +1,16 @@
 package fr.laboulangerie.laboulangeriemmo.player.ability.mining;
 
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import fr.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
+import fr.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import fr.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
+import fr.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import fr.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
@@ -17,21 +18,21 @@ public class FastMine extends AbilityExecutor {
 
     @Override
     public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.LEFT_CLICK_BLOCK;
+        return AbilityTrigger.COMBO;
     }
 
     @Override
     public boolean shouldTrigger(Event baseEvent) {
-        PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-        ItemStack item = event.getItem();
+        ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
+        ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
         return item != null
-                && (item.getType() == Material.NETHERITE_PICKAXE || item.getType() == Material.DIAMOND_PICKAXE || item.getType() == Material.IRON_PICKAXE)
-                && Tag.BASE_STONE_OVERWORLD.isTagged(event.getClickedBlock().getType());
+            && (item.getType() == Material.NETHERITE_PICKAXE || item.getType() == Material.DIAMOND_PICKAXE || item.getType() == Material.IRON_PICKAXE)
+            && event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.LEFT));
     }
 
     @Override
     public void trigger(Event baseEvent, int level) {
-        PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
+        ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
         Player player = event.getPlayer();
         int duration = 0;
         int amplifier = 0;

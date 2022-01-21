@@ -1,8 +1,6 @@
 package fr.laboulangerie.laboulangeriemmo.player.ability;
 
 public enum AbilityTrigger {
-
-
     LEFT_CLICK_AIR,
     RIGHT_CLICK_AIR,
 
@@ -14,6 +12,6 @@ public enum AbilityTrigger {
 
     PLACE,
     BREAK,
-
     EAT,
+    COMBO
 }
