@@ -55,16 +55,17 @@ public class MmoPlayer implements GsonSerializable {
     public Talent getTalent(String talentName) {
         return talents.get(talentName);
     }
-    
-    public Integer getPalier(MmoPlayer player) {
-    	Integer palier = 0;
-        palier = palier + player.getTalent("baking").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-        palier = palier + player.getTalent("fishing").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-        palier = palier + player.getTalent("mining").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-        palier = palier + player.getTalent("woodcutting").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-        palier = palier + player.getTalent("thehunter").getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+
+    public Integer getPalier() {
+        Integer palier = 0;
+
+        for (String key : this.talents.keySet()) {
+            palier += this.getTalent(key).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        }
+
         return palier;
     }
+
     public void useAbility(Abilities ability) {
         cooldownsHolder.startCooldown(ability);
         Player player = Bukkit.getPlayer(uniqueId);
@@ -78,15 +79,16 @@ public class MmoPlayer implements GsonSerializable {
             placeholders.put("unit", ability.getCooldownUnit().toString().toLowerCase());
 
             player.sendMessage(
-                MiniMessage.get().parse(this.config.getString("lang.prefix"))
-                .append(MiniMessage.get().parse(this.config.getString("lang.messages.ability_log"), placeholders))
-            );
+                    MiniMessage.get().parse(this.config.getString("lang.prefix"))
+                            .append(MiniMessage.get().parse(this.config.getString("lang.messages.ability_log"),
+                                    placeholders)));
         }
     }
 
     public boolean canUseAbility(Abilities ability) {
         return cooldownsHolder.isCooldownElapsed(ability)
-                && talents.get(ability.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability.getRequiredLevel()
+                && talents.get(ability.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability
+                        .getRequiredLevel()
                 && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 
@@ -114,9 +116,11 @@ public class MmoPlayer implements GsonSerializable {
         int newLevel = getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
         if (oldLevel < newLevel) {
             Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
-            /*if (getPalier(this) == ???) {
-            	do some stuff
-            }*/
+            /*
+             * if (getPalier(this) == ???) {
+             * do some stuff
+             * }
+             */
         }
     }
 }

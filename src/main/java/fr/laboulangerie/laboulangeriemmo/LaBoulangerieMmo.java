@@ -14,6 +14,7 @@ import fr.laboulangerie.laboulangeriemmo.commands.MmoCommand;
 import fr.laboulangerie.laboulangeriemmo.commands.Stats;
 import fr.laboulangerie.laboulangeriemmo.core.Bar;
 import fr.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
+import fr.laboulangerie.laboulangeriemmo.expansions.MmoExpansion;
 import fr.laboulangerie.laboulangeriemmo.json.GsonSerializer;
 import fr.laboulangerie.laboulangeriemmo.listener.MmoListener;
 import fr.laboulangerie.laboulangeriemmo.listener.ServerListener;
@@ -42,6 +43,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
+
         this.serializer = new GsonSerializer();
 
         this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
@@ -56,6 +58,11 @@ public class LaBoulangerieMmo extends JavaPlugin {
         getCommand("mmo").setExecutor(new MmoCommand());
 
         EffectRegistry.registerParticlesEffects();
+
+        if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new MmoExpansion().register();
+        }
+
         getLogger().info("Plugin started");
     }
 
@@ -74,7 +81,6 @@ public class LaBoulangerieMmo extends JavaPlugin {
         return serializer;
     }
 
-
     private void registerListeners() {
         Arrays.asList(
                 new ServerListener(),
@@ -82,8 +88,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 new SkillListener(),
                 new AbilitiesManager(),
                 new MmoListener(bar),
-                new BlockusListener()
-        ).forEach(l -> this.getServer().getPluginManager().registerEvents(l, this));
+                new BlockusListener()).forEach(l -> this.getServer().getPluginManager().registerEvents(l, this));
     }
 
     public MmoPlayerManager getMmoPlayerManager() {
@@ -95,7 +100,8 @@ public class LaBoulangerieMmo extends JavaPlugin {
     }
 
     private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) return false;
+        if (getServer().getPluginManager().getPlugin("Vault") == null)
+            return false;
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;

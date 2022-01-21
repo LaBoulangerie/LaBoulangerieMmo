@@ -2,27 +2,28 @@ name: LaBoulangerieMmo
 version: ${project.version}
 main: fr.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
 api-version: 1.17
-authors: [ TheHunter365, Grooble_, Pikachuz3, PainOchoco ]
-depend: [ ProtocolLib, Vault ]
+authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco]
+depend: [ProtocolLib, Vault]
+softdepend: [PlaceholderAPI]
 commands:
-  stats:
-    permission: laboulangeriemmo.stats
-    description: See your level and other information
-    usage: /stats <player>|[leaderboard] <talent>
-  mmo:
-    permission: laboulangeriemmo.mmo
-    description: Admin command
-    usage: /mmo [xp|reload|blockus] <player>|[isBlockus|mark|unmark] [see|add|subtract] <talent> ?[amount]
+    stats:
+        permission: laboulangeriemmo.stats
+        description: See your level and other information
+        usage: /stats <player>|[leaderboard] <talent>
+    mmo:
+        permission: laboulangeriemmo.mmo
+        description: Admin command
+        usage: /mmo [xp|reload|blockus] <player>|[isBlockus|mark|unmark] [see|add|subtract] <talent> ?[amount]
 permissions:
-  laboulangeriemmo.stats:
-    default: true
-  laboulangeriemmo.stats.see:
-    default: op
-  laboulangeriemmo.mmo:
-    default: op
-  laboulangeriemmo.*:
-    default: op
-    children:
-      laboulangeriemmo.stats: true
-      laboulangeriemmo.stats.see: true
-      laboulangeriemmo.mmo: true
+    laboulangeriemmo.stats:
+        default: true
+    laboulangeriemmo.stats.see:
+        default: op
+    laboulangeriemmo.mmo:
+        default: op
+    laboulangeriemmo.*:
+        default: op
+        children:
+            laboulangeriemmo.stats: true
+            laboulangeriemmo.stats.see: true
+            laboulangeriemmo.mmo: true
