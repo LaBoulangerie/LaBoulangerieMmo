@@ -30,7 +30,7 @@ public class Bar {
 
 		bossbar = BossBar.bossBar(
             MiniMessage.get().parse(config.getString("lang.bar.format"), placeholders),
-            (float) ((talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER) / talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER))/100),
+            (float) (((talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER)) / talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER))),
             BossBar.Color.valueOf(config.getString("lang.bar.color")),
             BossBar.Overlay.valueOf(config.getString("lang.bar.style"))
 		);
