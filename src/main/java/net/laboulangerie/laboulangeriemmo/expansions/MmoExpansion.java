@@ -44,34 +44,31 @@ public class MmoExpansion extends PlaceholderExpansion {
             return Integer.toString(mmoPlayer.getPalier());
         }
 
-        // TODO Temporaire, trouver un moyen de synchroniser les talents dans tout le
-        // plugin (config ?)
-        String[] talents = new String[] { "baking", "fishing", "mining", "woodcutting", "thehunter" };
+        String talentId = params.split("_")[0];
+        Talent talent = mmoPlayer.getTalent(talentId);
 
-        for (String talentId : talents) {
-            if (params.startsWith(talentId + "_")) {
-                Talent talent = mmoPlayer.getTalent(talentId);
+        if (talent == null) {
+            return null;
+        }
 
-                if (params.endsWith("xp")) {
-                    return Double.toString(talent.getXp());
-                }
+        if (params.equals(talentId + "_xp")) {
+            return Double.toString(talent.getXp());
+        }
 
-                if (params.endsWith("level")) {
-                    return Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                }
+        if (params.equals(talentId + "_level")) {
+            return Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+        }
 
-                if (params.endsWith("level_xp")) {
-                    return Integer.toString(talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER));
-                }
+        if (params.equals(talentId + "_xp_in_level")) {
+            return Double.toString(talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER));
+        }
 
-                if (params.endsWith("xp_to_next_lvl")) {
-                    return Double.toString(talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                }
+        if (params.equals(talentId + "_xp_to_next_lvl")) {
+            return Double.toString(talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+        }
 
-                if (params.endsWith("name")) {
-                    return talent.getDisplayName();
-                }
-            }
+        if (params.equals(talentId + "_name")) {
+            return talent.getDisplayName();
         }
 
         return null; // Placeholder is unknown by the Expansion
