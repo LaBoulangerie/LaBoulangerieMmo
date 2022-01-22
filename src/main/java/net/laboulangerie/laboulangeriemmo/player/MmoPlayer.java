@@ -37,7 +37,7 @@ public class MmoPlayer implements GsonSerializable {
 
         talents = new HashMap<String, Talent>();
         talents.put("baking", new Talent("baking", "Boulanger"));
-        talents.put("fishing", new Talent("fishing", "Pêcheur"));
+        talents.put("farmer", new Talent("farmer", "Fermier"));
         talents.put("mining", new Talent("mining", "Mineur"));
         talents.put("woodcutting", new Talent("woodcutting", "Bûcheron"));
         talents.put("thehunter", new Talent("thehunter", "Chasseur"));
