@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusDataManager;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusListener;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusRestoration;
+import net.laboulangerie.laboulangeriemmo.commands.Combo;
 import net.laboulangerie.laboulangeriemmo.commands.MmoCommand;
 import net.laboulangerie.laboulangeriemmo.commands.Stats;
 import net.laboulangerie.laboulangeriemmo.core.Bar;
@@ -57,6 +58,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         this.registerListeners();
         getCommand("stats").setExecutor(new Stats());
         getCommand("mmo").setExecutor(new MmoCommand());
+        getCommand("combo").setExecutor(new Combo());
 
         EffectRegistry.registerParticlesEffects();
 

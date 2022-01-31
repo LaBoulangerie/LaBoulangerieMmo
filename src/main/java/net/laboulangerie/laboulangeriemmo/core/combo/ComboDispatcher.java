@@ -37,6 +37,8 @@ public class ComboDispatcher implements Listener {
     }
 
     private void handleKey(Player player, ComboKey key) {
+        if (!LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).hasEnabledCombo()) return;
+        
         KeyStreak streak = comboStreaks.get(player);
         if (streak == null) {
             streak = new KeyStreak();

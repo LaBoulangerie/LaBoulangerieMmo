@@ -9,6 +9,7 @@ lang:
         ability_log: <yellow>Vous avez utilisé <aqua><ability></aqua>, cooldown de <aqua><cooldown> <unit></aqua>
         level_up: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> ! Vous gagnez <aqua><reward></aqua>
         xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
+        combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
 
 talent-grinding:
     mining:
