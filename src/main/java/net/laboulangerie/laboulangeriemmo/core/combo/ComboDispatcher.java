@@ -1,25 +1,37 @@
 package net.laboulangerie.laboulangeriemmo.core.combo;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import net.kyori.adventure.text.Component;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
-import net.kyori.adventure.text.Component;
 
 public class ComboDispatcher implements Listener {
     private Map<Player, KeyStreak> comboStreaks = new HashMap<Player, KeyStreak>();
+    /**
+     * Used to skip combo keys, when other items are in hand
+     */
+    private List<String> authorizedTools = Arrays.asList("PICKAXE", "SWORD", "HOE", "AXE");
 
     @EventHandler
     public void onComboKeyPress(PlayerInteractEvent event) {
+        if (event.getItem() == null || event.getPlayer().getGameMode() == GameMode.CREATIVE) return;
+
+        String[] bits = event.getItem().getType().toString().split("_");
+        if (!authorizedTools.contains(bits[bits.length - 1])) return;
+
         ComboKey key = null;
         switch (event.getAction()) {
             case LEFT_CLICK_AIR:
@@ -52,7 +64,7 @@ public class ComboDispatcher implements Listener {
             }
         };
         timer.runTaskLaterAsynchronously(LaBoulangerieMmo.PLUGIN, 10);
-        boolean isFull = streak.addKey(key, timer);
+        boolean isFull = streak.addKey(key, timer); //A streak is full when there is 3 keys in it
 
         player.sendActionBar(Component.text(
                 "§6" + streak.getKeyQueue().stream().map(Object::toString)
