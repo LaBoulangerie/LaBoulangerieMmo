@@ -35,6 +35,8 @@ jobs:
           name: laboulangeriemmo
       - name: Clone Plugins Project
         run: |
+          git config --global user.email "${{ secrets.GH_EMAIL }}"
+          git config --global user.name "${{ secrets.GH_USER }}"
           git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/LaBoulangerie/Plugins.git
           cp [!original-]**.jar Plugins/
           cd Plugins/
