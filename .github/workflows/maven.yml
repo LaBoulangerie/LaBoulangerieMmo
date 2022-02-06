@@ -25,9 +25,9 @@ jobs:
     steps:
       - name: Clone Plugins Project
         run: |
-          git clone https://$GH_USER:$GH_TOKEN@github.com/LaBoulangerie/Plugins.git &> /dev/null
+          git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git &> /dev/null
           cp ./target/*.jar Plugins/
           cd Plugins/
           git add .
-          git commit -m "${{ github.job }} from ${{ github.repository }}
+          git commit -m "$GITHUB_JOB from $GITHUB_REPOSITORY
           git push
