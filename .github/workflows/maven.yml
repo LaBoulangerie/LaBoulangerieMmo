@@ -41,5 +41,5 @@ jobs:
           cp [!original-]**.jar Plugins/
           cd Plugins/
           git add .
-          git commit -m "$GITHUB_JOB from $GITHUB_REPOSITORY"
+          git commit -m "workflow $GITHUB_RUN_ID from $GITHUB_REPOSITORY"
           git push https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/LaBoulangerie/Plugins.git HEAD:master
