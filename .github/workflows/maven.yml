@@ -15,7 +15,7 @@ jobs:
           cache-name: cache-m2-repository
         with:
           path: ~/.m2
-          key: ${{ github.repository }}-build-${{ env.cache-name }}-${{ ${{ hashFiles('pom.xml') }} }}
+          key: ${{ github.repository }}-build-${{ env.cache-name }}-${{ hashFiles('pom.xml') }}
       - name: JDk 1.16 setup
         uses: actions/setup-java@v1
         with:
