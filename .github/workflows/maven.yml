@@ -25,9 +25,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: laboulangeriemmo
-          path: |
-            target/**.jar
-            !target/original-*.jar
+          path: target
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
@@ -38,8 +36,7 @@ jobs:
       - name: Clone Plugins Project
         run: |
           git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/LaBoulangerie/Plugins.git
-          ls
-          cp **.jar Plugins/
+          cp target/[!original-]**.jar Plugins/
           cd Plugins/
           git add .
           git commit -m "$GITHUB_JOB from $GITHUB_REPOSITORY
