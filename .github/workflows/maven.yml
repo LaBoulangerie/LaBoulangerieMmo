@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,3 +19,15 @@ jobs:
         with:
           name: laboulangeriemmo
           path: target
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Clone Plugins Project
+        run: |
+          git clone https://$GH_USER:$GH_TOKEN@github.com/LaBoulangerie/Plugins.git &> /dev/null
+          cp ./target/*.jar Plugins/
+          cd Plugins/
+          git add .
+          git commit -m "${{ github.job }} from ${{ github.repository }}
+          git push
