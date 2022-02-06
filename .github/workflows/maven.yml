@@ -9,6 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Cache m2 repository
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-m2-repository
+        with:
+          path: ~/.m2
+          key: ${{ github.repository }}-build-${{ env.cache-name }}-${{ ${{ hashFiles('pom.xml') }} }}
       - name: JDk 1.16 setup
         uses: actions/setup-java@v1
         with:
@@ -25,9 +32,9 @@ jobs:
     steps:
       - name: Clone Plugins Project
         run: |
-          git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git &> /dev/null
+          git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git
           cp ./target/*.jar Plugins/
           cd Plugins/
           git add .
           git commit -m "$GITHUB_JOB from $GITHUB_REPOSITORY
-          git push
+          git push https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY.git -u origin master
