@@ -35,7 +35,7 @@ jobs:
           name: laboulangeriemmo
       - name: Clone Plugins Project
         run: |
-          git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/LaBoulangerieMmmo/Plugins.git
+          git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/LaBoulangerie/Plugins.git
           cp ./target/*.jar Plugins/
           cd Plugins/
           git add .
