@@ -25,7 +25,9 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: laboulangeriemmo
-          path: target/[!original-]*.jar
+          path: |
+            target/*.jar
+            !target/original-*.jar
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
