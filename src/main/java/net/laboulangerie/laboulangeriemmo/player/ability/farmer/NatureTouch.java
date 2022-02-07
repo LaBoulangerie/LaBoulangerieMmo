@@ -2,6 +2,7 @@ package net.laboulangerie.laboulangeriemmo.player.ability.farmer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -39,6 +40,8 @@ public class NatureTouch extends AbilityExecutor {
             cropBlockType = Material.CARROTS;
         } else if (block.getType() == Material.NETHER_WART) {
             cropBlockType = Material.NETHER_WART;
+        } else if (block.getType() == Material.BEETROOT_SEEDS || block.getType() == Material.BEETROOT) {
+            cropBlockType = Material.BEETROOTS;
         } else
             return;
 
@@ -53,6 +56,7 @@ public class NatureTouch extends AbilityExecutor {
             Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
                 public void run() {
                     block.setType(finalCropBlockType);
+                    block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 100);
                 }
             }, 1L);
         }
