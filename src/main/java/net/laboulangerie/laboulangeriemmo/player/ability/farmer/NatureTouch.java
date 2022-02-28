@@ -1,5 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.player.ability.farmer;
 
+import java.util.Random;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -47,19 +49,57 @@ public class NatureTouch extends AbilityExecutor {
 
         Ageable ageable = (Ageable) block.getBlockData();
 
-        if (ageable.getAge() == 0) {
-            block.getDrops().clear();
-            event.setCancelled(true);
-        } else {
+        int max_number = 100;
+        int min_number = 1;
+        Random random_chance = new Random();
+        int find_nearest_int = min_number + random_chance.nextInt(max_number);
+        if (level >= 60) {
+            if (ageable.getAge() == 0) {
+                block.getDrops().clear();
+                event.setCancelled(true);
+            } else {
 
-            final Material finalCropBlockType = cropBlockType;
-            Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
-                public void run() {
-                    block.setType(finalCropBlockType);
-                    block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 100);
-                }
-            }, 1L);
+                final Material finalCropBlockType = cropBlockType;
+                Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
+                    public void run() {
+                        block.setType(finalCropBlockType);
+                        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 100);
+                    }
+                }, 1L);
+            }
+            event.setCancelled(false);
         }
-        event.setCancelled(false);
+        else if (level >= 40 && find_nearest_int <= 40) {
+            if (ageable.getAge() == 0) {
+                block.getDrops().clear();
+                event.setCancelled(true);
+            } else {
+
+                final Material finalCropBlockType = cropBlockType;
+                Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
+                    public void run() {
+                        block.setType(finalCropBlockType);
+                        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 100);
+                    }
+                }, 1L);
+            }
+            event.setCancelled(false);
+        }
+        else if (find_nearest_int <= 10) {
+            if (ageable.getAge() == 0) {
+                block.getDrops().clear();
+                event.setCancelled(true);
+            } else {
+
+                final Material finalCropBlockType = cropBlockType;
+                Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
+                    public void run() {
+                        block.setType(finalCropBlockType);
+                        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 100);
+                    }
+                }, 1L);
+            }
+            event.setCancelled(false);
+        }
     }
 }
