@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +16,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.core.MarkedBlocksManager;
+import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 
 public class ServerListener implements Listener {
     public ServerListener() {
@@ -50,6 +52,13 @@ public class ServerListener implements Listener {
             int lvl = Integer.parseInt(PlainTextComponentSerializer.plainText()
                     .serialize(meta.lore().get(0)).split("Quantité: ")[1].split(" ")[0]);
             event.setExperience(lvl);
+        }
+    }
+
+    @EventHandler
+    public void onShootArrow(EntityShootBowEvent event) {
+        if (event.getProjectile().getFireTicks() > 0) {
+            EffectRegistry.playEffect("arrow", event.getProjectile());
         }
     }
 }
