@@ -2,13 +2,13 @@ package net.laboulangerie.laboulangeriemmo.core.particles;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public abstract class Effect extends BukkitRunnable {
-    protected Player player = null;
+    protected Entity entity = null;
     protected Location location;
     protected World world;
     /**
@@ -17,10 +17,10 @@ public abstract class Effect extends BukkitRunnable {
      */
     protected int period = 1;
 
-    public Effect(Player player) {
+    public Effect(Entity entity) {
         super();
-        this.player = player;
-        location = player.getLocation();
+        this.entity = entity;
+        location = entity.getLocation();
         world = location.getWorld();
     }
 
