@@ -27,8 +27,8 @@ public enum Abilities {
     TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true, "default"),
     EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false, "default"),
     DODGING(1, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "trail"),
-	NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), true, "trail"),
-	BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "trail");
+	NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), false, "default"),
+	BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "default");
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;
