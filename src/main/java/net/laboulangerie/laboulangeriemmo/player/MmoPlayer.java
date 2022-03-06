@@ -130,4 +130,7 @@ public class MmoPlayer implements GsonSerializable {
     public void setEnableCombo(boolean enabled) {
         hasEnabledCombo = enabled;
     }
+    public CooldownsHolder getCooldowns() {
+        return cooldownsHolder;
+    }
 }

@@ -26,4 +26,8 @@ public class CooldownsHolder {
     public void startCooldown(Abilities ability) {
         cooldowns.put(ability, new Date());
     }
+
+    public boolean hasUsed(Abilities ability) {
+        return cooldowns.get(ability) != null;
+    }
 }
