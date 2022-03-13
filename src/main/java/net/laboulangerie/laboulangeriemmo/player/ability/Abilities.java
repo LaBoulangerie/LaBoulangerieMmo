@@ -30,7 +30,7 @@ public enum Abilities {
     DODGING(1, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "trail"),
 	NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), false, "default"),
 	BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "default"),
-	ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(), true, "default");
+	ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(), false, "default");
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;
