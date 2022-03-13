@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -151,6 +152,19 @@ public class AbilitiesManager implements Listener {
         MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
         Abilities.supplier().get()
                 .filter(x -> x.getExecutor().getAbilityTrigger() == AbilityTrigger.COMBO
+                        && player.canUseAbility(x)
+                        && x.getExecutor().shouldTrigger(event))
+                .forEach(x -> {
+                    x.getExecutor().trigger(event,
+                            player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                    player.useAbility(x);
+                });
+    }
+    @EventHandler
+    public void onEntityBreed(EntityBreedEvent event) {
+        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) event.getBreeder());
+        Abilities.supplier().get()
+                .filter(x -> x.getExecutor().getAbilityTrigger() == AbilityTrigger.BREED
                         && player.canUseAbility(x)
                         && x.getExecutor().shouldTrigger(event))
                 .forEach(x -> {
