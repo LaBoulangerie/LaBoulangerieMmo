@@ -36,21 +36,18 @@ public class ThickTree extends AbilityExecutor{
         Player player = event.getPlayer();
 		World world = player.getWorld();
 		TreeType treeType = null;
-		
-		if (block.getType() == Material.SPRUCE_SAPLING) {
-			treeType = TreeType.MEGA_REDWOOD;
-		}
-		else if (block.getType() == Material.JUNGLE_SAPLING) {
-			treeType = TreeType.JUNGLE;
-		}
-		else if (block.getType() == Material.DARK_OAK_SAPLING) {
-			treeType = TreeType.DARK_OAK;
-		}
-		else if (block.getType() == Material.OAK_SAPLING) {
-			treeType = TreeType.BIG_TREE;
-		}
-		else if (block.getType() == Material.BIRCH_SAPLING) {
-			treeType = TreeType.TALL_BIRCH;
+
+		switch (block.getType()) {
+			case SPRUCE_SAPLING:
+				treeType = TreeType.MEGA_REDWOOD;
+			case JUNGLE_SAPLING:
+				treeType = TreeType.JUNGLE;
+			case DARK_OAK_SAPLING:
+				treeType = TreeType.DARK_OAK;
+			case OAK_SAPLING:
+				treeType = TreeType.BIG_TREE;
+			case BIRCH_SAPLING:
+				treeType = TreeType.TALL_BIRCH;
 		}
 		
 		world.generateTree(block.getLocation(), treeType);
