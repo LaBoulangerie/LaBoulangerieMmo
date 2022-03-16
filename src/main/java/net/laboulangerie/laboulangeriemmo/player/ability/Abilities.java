@@ -13,6 +13,7 @@ import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.Dodging;
 import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.ExpInBottle;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.BetterAppleDrop;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.DoubleDropLog;
+import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.ThickTree;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.Timber;
 
 public enum Abilities {
@@ -24,6 +25,7 @@ public enum Abilities {
     DOUBLE_DROP_LOG(0, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), true, "default"),
     BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false, "default"),
     TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true, "default"),
+	THICK_TREE(1, TimeUnit.SECONDS, 0, "woodcutting", new ThickTree(), false, "default"),
     EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false, "default"),
     DODGING(1, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "trail"),
 	NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), true, "trail");
