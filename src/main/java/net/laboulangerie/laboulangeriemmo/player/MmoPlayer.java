@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import com.google.common.base.Supplier;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-
-import com.google.common.base.Supplier;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
@@ -23,13 +23,14 @@ import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
 public class MmoPlayer implements GsonSerializable {
     private transient FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+    private transient XpCountDown xpCountdown;
 
     private UUID uniqueId;
     private String name;
 
     private HashMap<String, Talent> talents;
     private CooldownsHolder cooldownsHolder;
-    private transient XpCountDown xpCountdown;
+    private boolean hasEnabledCombo = true;
 
     public MmoPlayer(OfflinePlayer player) {
         this.uniqueId = player.getUniqueId();
@@ -79,17 +80,17 @@ public class MmoPlayer implements GsonSerializable {
             placeholders.put("unit", ability.getCooldownUnit().toString().toLowerCase());
 
             player.sendMessage(
-                    MiniMessage.get().parse(this.config.getString("lang.prefix"))
-                            .append(MiniMessage.get().parse(this.config.getString("lang.messages.ability_log"),
-                                    placeholders)));
+                MiniMessage.get().parse(this.config.getString("lang.prefix"))
+                    .append(MiniMessage.get().parse(this.config.getString("lang.messages.ability_log"),
+                        placeholders)));
         }
     }
 
     public boolean canUseAbility(Abilities ability) {
         return cooldownsHolder.isCooldownElapsed(ability)
-                && talents.get(ability.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability
-                        .getRequiredLevel()
-                && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
+            && talents.get(ability.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability
+                .getRequiredLevel()
+            && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 
     public String getName() {
@@ -122,5 +123,14 @@ public class MmoPlayer implements GsonSerializable {
              * }
              */
         }
+    }
+    public boolean hasEnabledCombo() {
+        return hasEnabledCombo;
+    }
+    public void setEnableCombo(boolean enabled) {
+        hasEnabledCombo = enabled;
+    }
+    public CooldownsHolder getCooldowns() {
+        return cooldownsHolder;
     }
 }

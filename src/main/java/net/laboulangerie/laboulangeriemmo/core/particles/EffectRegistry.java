@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
@@ -15,15 +15,16 @@ public class EffectRegistry {
     public static void registerParticlesEffects() {
         particles.put("default", HelixEffect.class);
         particles.put("trail", TrailEffect.class);
+        particles.put("arrow", ArrowEffect.class);
     }
 
-    public static Effect getNewEffect(String effectName, Player player) throws IllegalArgumentException {
+    public static Effect getNewEffect(String effectName, Entity entity) throws IllegalArgumentException {
         Class<? extends Effect> effectAsClass = particles.get(effectName);
         if (effectAsClass == null)
             throw new IllegalArgumentException("Effect " + effectName + "doesn't exists!");
 
         try {
-            return effectAsClass.getConstructor(Player.class).newInstance(player);
+            return effectAsClass.getConstructor(Entity.class).newInstance(entity);
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {
             LaBoulangerieMmo.PLUGIN.getLogger()
@@ -49,9 +50,9 @@ public class EffectRegistry {
         }
     }
 
-    public static void playEffect(String effectName, Player player) {
+    public static void playEffect(String effectName, Entity entity) {
         try {
-            getNewEffect(effectName, player).startEffect();
+            getNewEffect(effectName, entity).startEffect();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }

@@ -1,11 +1,14 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
 import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -15,6 +18,10 @@ import org.bukkit.metadata.FixedMetadataValue;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.core.MarkedBlocksManager;
+import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
+import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.player.ability.Abilities;
+import net.laboulangerie.laboulangeriemmo.utils.Utils;
 
 public class ServerListener implements Listener {
     public ServerListener() {
@@ -51,5 +58,41 @@ public class ServerListener implements Listener {
                     .serialize(meta.lore().get(0)).split("Quantité: ")[1].split(" ")[0]);
             event.setExperience(lvl);
         }
+    }
+
+    @EventHandler
+    public void onShootArrow(EntityShootBowEvent event) {
+        if (event.getProjectile().getFireTicks() > 0) {
+            EffectRegistry.playEffect("arrow", event.getProjectile());
+        }
+    }
+
+    /**
+     * Apply knockback and damages when hitting an entity withe the DODGE ability
+     * @param event
+     */
+    @EventHandler
+    public void onRiptideHit(EntityDamageByEntityEvent event) {
+        if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity))
+            return;
+        Player player = (Player) event.getDamager();
+
+        if (!player.isRiptiding())
+            return;
+
+        MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player);
+
+        if (mmoPlayer == null) { //Shouldn't be possible but why not
+            LaBoulangerieMmo.PLUGIN.getLogger().warning("Player : " + player.getName() + " doesn't have a MmoPlayer instance!");
+            return;
+        }
+
+        if (!mmoPlayer.getCooldowns().hasUsed(Abilities.DODGING) || mmoPlayer.getCooldowns().getCooldown(Abilities.DODGING) >= 1) // 1 is the duration of the spin attack TODO: Change when real cooldown is set
+            return;
+
+        if (Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) > 0)
+            event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()));
+
+        ((LivingEntity) event.getEntity()).setVelocity(player.getLocation().getDirection().multiply(1));
     }
 }

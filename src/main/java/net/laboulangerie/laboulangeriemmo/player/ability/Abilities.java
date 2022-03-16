@@ -4,6 +4,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import net.laboulangerie.laboulangeriemmo.player.ability.farmer.AnimalTwins;
+import net.laboulangerie.laboulangeriemmo.player.ability.farmer.BetterBonemeal;
 import net.laboulangerie.laboulangeriemmo.player.ability.farmer.NatureTouch;
 import net.laboulangerie.laboulangeriemmo.player.ability.mining.FastMine;
 import net.laboulangerie.laboulangeriemmo.player.ability.mining.FastSmelt;
@@ -13,7 +15,6 @@ import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.Dodging;
 import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.ExpInBottle;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.BetterAppleDrop;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.DoubleDropLog;
-import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.ThickTree;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.Timber;
 
 public enum Abilities {
@@ -25,10 +26,11 @@ public enum Abilities {
     DOUBLE_DROP_LOG(0, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), true, "default"),
     BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false, "default"),
     TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true, "default"),
-	THICK_TREE(1, TimeUnit.SECONDS, 0, "woodcutting", new ThickTree(), false, "default"),
     EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false, "default"),
     DODGING(1, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "trail"),
-	NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), true, "trail");
+	NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), false, "default"),
+	BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "default"),
+	ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(), false, "default");
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;

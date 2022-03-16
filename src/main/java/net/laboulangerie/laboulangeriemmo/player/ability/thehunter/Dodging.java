@@ -4,9 +4,11 @@ import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
+import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
+import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
+import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 import net.minecraft.util.MathHelper;
@@ -16,17 +18,18 @@ public class Dodging extends AbilityExecutor {
 
     @Override
     public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.LEFT_CLICK_AIR;
+        return AbilityTrigger.COMBO;
     }
 
     @Override
     public boolean shouldTrigger(Event baseEvent) {
-        return true;
+        ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
+        return event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.RIGHT));
     }
 
     @Override
     public void trigger(Event baseEvent, int level) {
-        PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
+        ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
         Player player = event.getPlayer();
         EntityHuman human = (EntityHuman) ((CraftPlayer) event.getPlayer()).getHandle();
         /**

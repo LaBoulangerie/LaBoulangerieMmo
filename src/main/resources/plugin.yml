@@ -14,8 +14,14 @@ commands:
         permission: laboulangeriemmo.mmo
         description: Admin command
         usage: /mmo [xp|reload|blockus] <player>|[isBlockus|mark|unmark] [see|add|subtract] <talent> ?[amount]
+    combo:
+        permission: laboulangeriemmo.combo
+        description: Toggle on/off the combo system
+        usage: /mmo ?[on|off|toggle]
 permissions:
     laboulangeriemmo.stats:
+        default: true
+    laboulangeriemmo.combo:
         default: true
     laboulangeriemmo.stats.see:
         default: op
@@ -27,3 +33,4 @@ permissions:
             laboulangeriemmo.stats: true
             laboulangeriemmo.stats.see: true
             laboulangeriemmo.mmo: true
+            laboulangeriemmo.combo: true
