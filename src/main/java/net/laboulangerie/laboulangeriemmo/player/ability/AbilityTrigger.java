@@ -13,5 +13,6 @@ public enum AbilityTrigger {
     PLACE,
     BREAK,
     EAT,
-    COMBO
+    COMBO,
+    BREED
 }
