@@ -13,7 +13,7 @@ jobs:
         with:
          gradle-version: "7.4.1"
          arguments: assemble
-         build-root-directory: "."
+         build-root-directory: "../"
       - uses: actions/upload-artifact@v1
         with:
           name: laboulangeriemmo
