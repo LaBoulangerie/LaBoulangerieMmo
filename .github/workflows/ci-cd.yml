@@ -22,7 +22,7 @@ jobs:
           java-version: 1.17
       - name: Gradle build
         run: |
-          chmod +x
+          chmod +x ./gradlew
           ./gradlew assemble
       - uses: actions/upload-artifact@v1
         with:
