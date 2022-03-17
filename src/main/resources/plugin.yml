@@ -1,7 +1,7 @@
 name: LaBoulangerieMmo
-version: ${project.version}
+version: 1.1.0
 main: net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
-api-version: 1.17
+api-version: 1.18
 authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco]
 depend: [ProtocolLib, Vault]
 softdepend: [PlaceholderAPI]
