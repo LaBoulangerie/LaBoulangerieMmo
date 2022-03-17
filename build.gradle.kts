@@ -44,7 +44,6 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
-    compileOnly("org.bukkit:craftbukkit:1.18.2-R0.1-SNAPSHOT")
     compileOnly("me.clip:placeholderapi:2.11.1")
 }
 
