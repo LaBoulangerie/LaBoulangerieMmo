@@ -8,12 +8,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: debug
+        run: ls
       - name: Gradle Build Action
         uses: gradle/gradle-build-action@v2.1.3
         with:
          gradle-version: "7.4.1"
          arguments: assemble
-         build-root-directory: "../"
       - uses: actions/upload-artifact@v1
         with:
           name: laboulangeriemmo
