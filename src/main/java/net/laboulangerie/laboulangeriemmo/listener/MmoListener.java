@@ -1,6 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -10,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.core.Bar;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
@@ -32,13 +35,14 @@ public class MmoListener implements Listener {
         Talent talent = event.getTalent();
         LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, 1_000);
 
-        HashMap<String, String> placeholders = new HashMap<>();
-        placeholders.put("level", Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)));
-        placeholders.put("talent", talent.getDisplayName());
-        placeholders.put("reward", "1000$"); // TODO Changer "1000$"
-
-        player.sendMessage(MiniMessage.get().parse(config.getString("lang.prefix"))
-                .append(MiniMessage.get().parse(config.getString("lang.messages.level_up"), placeholders)));
+        List<TagResolver.Single> placeholders = Arrays.asList(
+            Placeholder.parsed("level", Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER))),
+            Placeholder.parsed("talent", talent.getDisplayName()),
+            Placeholder.parsed("reward", "1000$") // TODO Changer "1000$"
+        );
+        
+        player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
+                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level_up"), TagResolver.resolver(placeholders))));
     }
 
     @EventHandler
@@ -46,11 +50,12 @@ public class MmoListener implements Listener {
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
         bar.displayBar(event.getTalent(), event.getPlayer());
 
-        HashMap<String, String> placeholders = new HashMap<>();
-        placeholders.put("xp", Double.toString(event.getAmount()));
-        placeholders.put("talent", event.getTalent().getDisplayName());
+        List<TagResolver.Single> placeholders = Arrays.asList(
+            Placeholder.parsed("xp", Double.toString(event.getAmount())),
+            Placeholder.parsed("talent", event.getTalent().getDisplayName())
+        );
 
-        player.sendMessage(MiniMessage.get().parse(config.getString("lang.prefix"))
-                .append(MiniMessage.get().parse(config.getString("lang.messages.xp_up"), placeholders)));
+        player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
+                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.xp_up"), TagResolver.resolver(placeholders))));
     }
 }

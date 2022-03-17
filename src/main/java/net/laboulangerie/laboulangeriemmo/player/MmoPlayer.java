@@ -1,6 +1,8 @@
 package net.laboulangerie.laboulangeriemmo.player;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -13,6 +15,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
@@ -74,15 +78,16 @@ public class MmoPlayer implements GsonSerializable {
         if (ability.shouldLog() == true) {
             EffectRegistry.playEffect(ability.getEffectName(), player);
 
-            HashMap<String, String> placeholders = new HashMap<>();
-            placeholders.put("ability", ability.toString());
-            placeholders.put("cooldown", Integer.toString(ability.getCooldown()));
-            placeholders.put("unit", ability.getCooldownUnit().toString().toLowerCase());
+            List<TagResolver.Single> placeholders = Arrays.asList(
+                Placeholder.parsed("ability", ability.toString()),
+                Placeholder.parsed("cooldown", Integer.toString(ability.getCooldown())),
+                Placeholder.parsed("unit", ability.getCooldownUnit().toString().toLowerCase())
+            );
 
             player.sendMessage(
-                MiniMessage.get().parse(this.config.getString("lang.prefix"))
-                    .append(MiniMessage.get().parse(this.config.getString("lang.messages.ability_log"),
-                        placeholders)));
+                MiniMessage.miniMessage().deserialize(this.config.getString("lang.prefix"))
+                    .append(MiniMessage.miniMessage().deserialize(this.config.getString("lang.messages.ability_log"),
+                    TagResolver.resolver(placeholders))));
         }
     }
 

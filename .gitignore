@@ -7,6 +7,9 @@
 build.bat
 bin/
 target/
+gradle/
+.gradle/
+build/
 
 # IntelliJ
 out/

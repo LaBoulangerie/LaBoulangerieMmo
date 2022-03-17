@@ -1,7 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.player.ability.thehunter;
 
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
@@ -11,8 +11,7 @@ import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.entity.player.EntityHuman;
+import net.minecraft.util.Mth;
 
 public class Dodging extends AbilityExecutor {
 
@@ -31,7 +30,7 @@ public class Dodging extends AbilityExecutor {
     public void trigger(Event baseEvent, int level) {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
         Player player = event.getPlayer();
-        EntityHuman human = (EntityHuman) ((CraftPlayer) event.getPlayer()).getHandle();
+        net.minecraft.world.entity.player.Player human = (net.minecraft.world.entity.player.Player) ((CraftPlayer) event.getPlayer()).getHandle();
         /**
          * See ItemTrident.java in craftbukkit or TridentItem.java in paper
          * Mapping:
@@ -42,10 +41,10 @@ public class Dodging extends AbilityExecutor {
         float power = 1;
         float yRot = human.getYRot();
         float xRot = human.getXRot();
-        float f2 = -MathHelper.sin(yRot * 0.017453292F) * MathHelper.cos(xRot * 0.017453292F);
-        float f3 = -MathHelper.sin(xRot * 0.017453292F);
-        float f4 = MathHelper.cos(yRot * 0.017453292F) * MathHelper.cos(xRot * 0.017453292F);
-        float f5 = MathHelper.c(f2 * f2 + f3 * f3 + f4 * f4);
+        float f2 = -Mth.sin(yRot * 0.017453292F) * Mth.cos(xRot * 0.017453292F);
+        float f3 = -Mth.sin(xRot * 0.017453292F);
+        float f4 = Mth.cos(yRot * 0.017453292F) * Mth.cos(xRot * 0.017453292F);
+        float f5 = Mth.sqrt(f2 * f2 + f3 * f3 + f4 * f4);
         float f6 = 3.0F * ((1.0F + power) / 4.0F);
 
         f2 *= f6 / f5;
@@ -54,7 +53,7 @@ public class Dodging extends AbilityExecutor {
         // human.i((double) f2, (double) f3, (double) f4); // = human.push doesn't work
         // but next line replaced it maybe try again in 1.18
         player.setVelocity(new Vector((double) f2, (double) f3, (double) f4));
-        human.s(20);
+        human.startAutoSpinAttack(20);
         player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
     }
 }

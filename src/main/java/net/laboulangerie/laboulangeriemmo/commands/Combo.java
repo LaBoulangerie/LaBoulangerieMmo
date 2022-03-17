@@ -1,7 +1,6 @@
 package net.laboulangerie.laboulangeriemmo.commands;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -13,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 
@@ -45,11 +45,8 @@ public class Combo implements CommandExecutor, TabCompleter {
         state = args[0].equals("on") ? true : args[0].equals("off") ? false : !mmoPlayer.hasEnabledCombo();
         mmoPlayer.setEnableCombo(state);
 
-        HashMap<String, String> placeholders = new HashMap<>();
-        placeholders.put("state", state == true ? "activé" : "désactivé");
-
-        sender.sendMessage(MiniMessage.get().parse(LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.prefix"))
-                .append(MiniMessage.get().parse(LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.messages.combo_toggle"), placeholders)));
+        sender.sendMessage(MiniMessage.miniMessage().deserialize(LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.prefix"))
+                .append(MiniMessage.miniMessage().deserialize(LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.messages.combo_toggle"), Placeholder.parsed("state", state == true ? "activé" : "désactivé"))));
         return true;
     } 
 }
