@@ -46,6 +46,14 @@ public class MmoExpansion extends PlaceholderExpansion {
 
         String talentId = params.split("_")[0];
         Talent talent = mmoPlayer.getTalent(talentId);
+        
+        if (params.equals("town_total_level")) {
+            return Integer.toString(MmoPlayer.getTownTotalLevel(mmoPlayer.getTown()));
+        }
+        
+        if (params.equals("nation_total_level")) {
+            return Integer.toString(MmoPlayer.getNationTotalLevel(mmoPlayer.getNation()));
+        }
 
         if (talent == null) {
             return null;
@@ -71,13 +79,7 @@ public class MmoExpansion extends PlaceholderExpansion {
             return talent.getDisplayName();
         }
         
-        if (params.equals("town_total_level")) {
-            return Integer.toString(MmoPlayer.getTownTotalLevel(mmoPlayer.getTown()));
-        }
-        
-        if (params.equals("nation_total_level")) {
-            return Integer.toString(MmoPlayer.getNationTotalLevel(mmoPlayer.getNation()));
-        }
+
         return null; // Placeholder is unknown by the Expansion
     }
 }
