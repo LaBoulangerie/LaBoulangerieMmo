@@ -8,8 +8,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: debug
-        run: ls && pwd
       - uses: actions/checkout@v2
       - name: Gradle Build Action
         uses: gradle/gradle-build-action@v2.1.3
