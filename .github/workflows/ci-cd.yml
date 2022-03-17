@@ -21,7 +21,9 @@ jobs:
         with:
           java-version: 1.17
       - name: Gradle build
-        run: gradlew assemble
+        run: |
+          chmod +x
+          ./gradlew assemble
       - uses: actions/upload-artifact@v1
         with:
           name: laboulangeriemmo
