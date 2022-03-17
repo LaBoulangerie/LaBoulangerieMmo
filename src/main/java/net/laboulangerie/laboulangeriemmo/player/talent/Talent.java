@@ -1,5 +1,16 @@
 package net.laboulangerie.laboulangeriemmo.player.talent;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+
+import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
+
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
+
 public class Talent {
     private double xp = 0;
     private String talentId;
@@ -49,5 +60,35 @@ public class Talent {
 
     public String getDisplayName() {
         return displayName;
+    }
+    
+    public Integer getNationTotalLevel (Nation nation) {
+		int total = 0;
+		int totalville = 0;
+    	for (Town town :  nation.getTowns()) {
+			totalville = 0;
+        	for (Resident resident :  town.getResidents()) {
+        		if (resident != null) {
+        		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
+        		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
+        		totalville = totalville + mmoPlayer.getPalier();
+        		}
+            	}
+        	total = total + totalville;
+        	}
+    	return total;
+    }
+    
+    public Integer getTownTotalLevel (Town town) {
+		int total = 0;
+			total = 0;
+        	for (Resident resident :  town.getResidents()) {
+        		if (resident != null) {
+        		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID()); 
+        		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
+        		total = total + mmoPlayer.getPalier();
+        		}
+            	}
+        	return (int) total;
     }
 }

@@ -5,6 +5,11 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import com.google.common.base.Supplier;
+import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.exceptions.NotRegisteredException;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -132,5 +137,15 @@ public class MmoPlayer implements GsonSerializable {
     }
     public CooldownsHolder getCooldowns() {
         return cooldownsHolder;
+    }
+    
+    public Town getTown() {
+    	Resident resident = TownyUniverse.getInstance().getResident(uniqueId);
+    	return resident.getTownOrNull();
+    }
+    
+    public Nation getNation() {
+    	Resident resident = TownyUniverse.getInstance().getResident(uniqueId);
+    	return resident.getNationOrNull();
     }
 }
