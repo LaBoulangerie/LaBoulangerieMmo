@@ -3,8 +3,6 @@ package net.laboulangerie.laboulangeriemmo.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,12 +12,9 @@ import org.jetbrains.annotations.Nullable;
 
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
 
-import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
 public class TownyMmo implements CommandExecutor, TabCompleter{
 
