@@ -13,6 +13,7 @@ import net.laboulangerie.laboulangeriemmo.blockus.BlockusRestoration;
 import net.laboulangerie.laboulangeriemmo.commands.Combo;
 import net.laboulangerie.laboulangeriemmo.commands.MmoCommand;
 import net.laboulangerie.laboulangeriemmo.commands.Stats;
+import net.laboulangerie.laboulangeriemmo.commands.TownyMmo;
 import net.laboulangerie.laboulangeriemmo.core.Bar;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboDispatcher;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
@@ -64,6 +65,9 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new MmoExpansion().register();
+        }
+        if (getServer().getPluginManager().getPlugin("Towny") != null) {
+            getCommand("townymmo").setExecutor(new TownyMmo());
         }
 
         getLogger().info("Plugin started");

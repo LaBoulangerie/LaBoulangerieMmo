@@ -30,7 +30,7 @@ public class Stats implements CommandExecutor, TabCompleter {
         OfflinePlayer bukkitPlayer = (OfflinePlayer) sender;
         if (args.length > 0) {
             if (args.length > 1 && args[0].equalsIgnoreCase("leaderboard")
-                    && "miningwoodcuttingthehunterbaking".contains(args[1])) {
+                    && "miningwoodcuttingthehunterfarmer".contains(args[1])) {
                 File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
                 Integer maxLevel = 0;
                 Integer max2Level = 0;
@@ -47,15 +47,27 @@ public class Stats implements CommandExecutor, TabCompleter {
                     MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player2);
                     Talent talent = mmoPlayer.getTalent(args[1]);
                     if (talent.getXp() > maxExp && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= maxLevel) {
+                    	max3Level = max2Level;
+                    	max3Exp = max2Exp;
+                    	name3 = name2;
+                    	max2Level = maxLevel;
+                    	max2Exp = maxExp;
+                    	name2 = name;
                         maxLevel = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
                         maxExp = talent.getXp();
                         name = mmoPlayer.getName();
                     } else if (talent.getXp() < maxExp && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) == maxLevel) {
+                    	max3Level = max2Level;
+                    	max3Exp = max2Exp;
+                    	name3 = name2;
                         max2Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
                         name2 = mmoPlayer.getName();
                         max2Exp = talent.getXp();
                     } else if (talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) < maxLevel && talent.getXp() > max2Exp
                             && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= max2Level) {
+                    	max3Level = max2Level;
+                    	max3Exp = max2Exp;
+                    	name3 = name2;
                         max2Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
                         name2 = mmoPlayer.getName();
                         max2Exp = talent.getXp();
@@ -75,11 +87,11 @@ public class Stats implements CommandExecutor, TabCompleter {
                     sender.sendMessage("§cAucun joueur n'a d'exp en §a" + args[1]);
                 } else {
                     sender.sendMessage("§lClassement de §a" + args[1] + "§r :");
-                    sender.sendMessage("§e1. §a" + name + " qui est niveau" + maxLevel + " avec " + maxExp + "§r xp");
+                    sender.sendMessage("§e1. §a" + name + " qui est niveau " + maxLevel + " avec " + maxExp + "§r xp");
                     sender.sendMessage(
-                            "§62. §a" + name2 + " qui est niveau" + max2Level + " avec " + max2Exp + "§r xp");
+                            "§62. §a" + name2 + " qui est niveau " + max2Level + " avec " + max2Exp + "§r xp");
                     sender.sendMessage(
-                            "§c3. §a" + name3 + " qui est niveau" + max3Level + " avec " + max3Exp + "§r xp");
+                            "§c3. §a" + name3 + " qui est niveau " + max3Level + " avec " + max3Exp + "§r xp");
                 }
                 return true;
             }
@@ -127,7 +139,7 @@ public class Stats implements CommandExecutor, TabCompleter {
         if (args[0].equalsIgnoreCase("leaderboard")) {
             switch (args.length) {
                 case 2:
-                    return Arrays.asList("mining", "woodcutting", "thehunter", "baking"); // Lists players
+                    return Arrays.asList("mining", "woodcutting", "thehunter", "farmer"); // Lists players
                 default:
                     return Arrays.asList("");
             }
