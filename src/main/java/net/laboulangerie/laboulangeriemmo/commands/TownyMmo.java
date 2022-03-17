@@ -19,6 +19,7 @@ import com.palmergames.bukkit.towny.object.Town;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
 public class TownyMmo implements CommandExecutor, TabCompleter{
 
@@ -74,12 +75,7 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
 					
         	for (Town town :  TownyUniverse.getInstance().getTowns()) {
     			total = 0;
-            	for (Resident resident :  town.getResidents()) {
-            		if (resident != null) {
-            		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
-            		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
-            		total = total + mmoPlayer.getPalier();
-            		}
+	    		total = MmoPlayer.getTownTotalLevel(town);
                 	if (total > villeUn) {
                 		if (villeUn != 0) {
                 			if (villeUn > villeDeux) {
@@ -93,7 +89,7 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
                 		villeDeux = total;
                 		villeDeuxName = town.getName();
                 		}
-                	}
+                	
             	}
         	sender.sendMessage("La ville avec le plus gros total de pallier est : " + villeUnName + " avec ce nombre de palliers : " + villeUn);
         	sender.sendMessage("La ville avec le deuxième plus gros total de pallier est : " + villeDeuxName + " avec ce nombre de palliers : " + villeDeux);
@@ -107,12 +103,7 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
 							
 		        	for (Town town :  TownyUniverse.getInstance().getTowns()) {
 		    			total = 0;
-		            	for (Resident resident :  town.getResidents()) {
-		            		if (resident != null) {
-		            		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());	 
-		            		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
-		            		total = total + mmoPlayer.getTalent(args[2]).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-		            		}
+			    		total = MmoPlayer.getTownTalentLevel(town, args[2]);
 		                	if (total > villeUn) {
 		                		if (villeUn != 0) {
 		                			if (villeUn > villeDeux) {
@@ -127,7 +118,7 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
 		                		villeDeux = total;
 		                		villeDeuxName = town.getName();
 		                		}
-		                	}
+		                	
 		            	}
 		        	sender.sendMessage("La ville avec le plus gros total de niveaux de " + args[2] +" est : " + villeUnName + " avec ce nombre de palliers : " + villeUn);
 		        	sender.sendMessage("La ville avec le deuxième plus gros total de pallier est : " + villeDeuxName + " avec ce nombre de palliers : " + villeDeux);
@@ -138,28 +129,14 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
 					int total = 0;
 					Town town = TownyUniverse.getInstance().getTown(args[3]);
 					String villeUnName = town.getName();
-		    			total = 0;
-		            	for (Resident resident :  town.getResidents()) {
-		            		if (resident != null) {
-		            		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID()); 
-		            		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
-		            		total = total + mmoPlayer.getPalier();
-		            		}
-		                	}	
+		    		total = MmoPlayer.getTownTotalLevel(town);	
 		        	sender.sendMessage("La ville de " + villeUnName + " a un pallier total de : " + total);
 				}
 				if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer") || args[2].equalsIgnoreCase("woodcutting") || args[2].equalsIgnoreCase("thehunter")) {
 					int total = 0;
 					Town town = TownyUniverse.getInstance().getTown(args[3]);
 					String villeUnName = town.getName();
-		    			total = 0;
-		            	for (Resident resident :  town.getResidents()) {
-		            		if (resident != null) {
-		            		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());	 
-		            		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
-		            		total = total + mmoPlayer.getTalent(args[2]).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-		            		}
-		                	}	
+		    		total = MmoPlayer.getTownTalentLevel(town, args[2]);
 		        	sender.sendMessage("Le niveau total de " + villeUnName + "dans le métier " + args[2] + " est de : " + total);
 				} 
 			}
@@ -168,26 +145,13 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
 			if (args[1].equalsIgnoreCase("leaderboard")) {
 				if (args[2].equalsIgnoreCase("total")) {
 			int total = 0;
-			int totalville = 0;
 			int nationUn = 0;
 			String nationUnName = null;
 			String nationDeuxName = null;
 			int nationDeux = 0;
 				
 			for (Nation nation : TownyUniverse.getInstance().getNations()) {
-    			total = 0;
-
-        	for (Town town :  nation.getTowns()) {
-    			totalville = 0;
-            	for (Resident resident :  town.getResidents()) {
-            		if (resident != null) {
-            		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID()); 
-            		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
-            		totalville = totalville + mmoPlayer.getPalier();
-            		}
-                	}
-            	total = total + totalville;
-            	}
+    			total = MmoPlayer.getNationTotalLevel(nation);
         	if (total > nationUn) {
         		if (nationUn != 0) {
         			if (nationUn > nationDeux) {
@@ -208,26 +172,13 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
         	}
 				if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer") || args[2].equalsIgnoreCase("woodcutting") || args[2].equalsIgnoreCase("thehunter")) {
 					int total = 0;
-					int totalville = 0;
 					int nationUn = 0;
 					String nationUnName = null;
 					String nationDeuxName = null;
 					int nationDeux = 0;
 						
 					for (Nation nation : TownyUniverse.getInstance().getNations()) {
-		    			total = 0;
-
-		        	for (Town town :  nation.getTowns()) {
-		    			totalville = 0;
-		            	for (Resident resident :  town.getResidents()) {
-		            		if (resident != null) {
-		            		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
-		            		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
-		            		totalville = totalville + mmoPlayer.getTalent(args[2]).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-		            		}
-		                	}
-		            	total = total + totalville;
-		            	}
+		    			total = MmoPlayer.getNationTalentLevel(nation, args[2]);
 		        	if (total > nationUn) {
 		        		if (nationUn != 0) {
 		        			if (nationUn > nationDeux) {
@@ -249,41 +200,16 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
 			if (args[1].equalsIgnoreCase("see")) {
 				if (args[2].equalsIgnoreCase("total")) {
 					int total = 0;
-					int totalville = 0;
 					Nation nation = TownyUniverse.getInstance().getNation(args[3]);
 					String nationUnName = nation.getName();
-		        	for (Town town :  nation.getTowns()) {
-		    			totalville = 0;
-		            	for (Resident resident :  town.getResidents()) {
-		            		if (resident != null) {
-		            		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
-		            		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
-		            		totalville = totalville + mmoPlayer.getPalier();
-
-		            		}
-		                	}
-		            	total = total + totalville;
-		            	}
-					
+					total = MmoPlayer.getNationTotalLevel(nation);
 		        	sender.sendMessage("La ville de " + nationUnName + " a un pallier total de : " + total);
 				}
 				if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer") || args[2].equalsIgnoreCase("woodcutting") || args[2].equalsIgnoreCase("thehunter")) {
 					int total = 0;
-					int totalville = 0;
 					Nation nation = TownyUniverse.getInstance().getNation(args[3]);
 					String nationUnName = nation.getName();
-		        	for (Town town :  nation.getTowns()) {
-		    			totalville = 0;
-		            	for (Resident resident :  town.getResidents()) {
-		            		if (resident != null) {
-		            		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
-		            		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
-		            		totalville = totalville + mmoPlayer.getTalent(args[2]).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-		            		}
-		                	}
-		            	total = total + totalville;
-		            	}
-					
+					total = MmoPlayer.getNationTalentLevel(nation, args[2]);
 		        	sender.sendMessage("Le niveau total de " + nationUnName + "dans le métier " + args[2] + " est de : " + total);
 				} 
 			}

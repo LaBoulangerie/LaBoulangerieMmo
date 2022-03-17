@@ -148,4 +148,48 @@ public class MmoPlayer implements GsonSerializable {
     	Resident resident = TownyUniverse.getInstance().getResident(uniqueId);
     	return resident.getNationOrNull();
     }
+    
+
+    
+    public static Integer getTownTotalLevel (Town town) {
+		int totalville = 0;
+        	for (Resident resident :  town.getResidents()) {
+        		if (resident != null) {
+        		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID()); 
+        		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
+        		totalville = totalville + mmoPlayer.getPalier();
+        		}
+            	}
+        	return totalville;
+    }
+    public static Integer getTownTalentLevel (Town town, String talentName) {
+		int totalville = 0;
+        	for (Resident resident :  town.getResidents()) {
+        		if (resident != null) {
+            	OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
+            	MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
+            	Talent talent = mmoPlayer.getTalent(talentName);
+        		totalville = totalville + talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        		}
+            	}
+        	return totalville;
+    }
+    public static Integer getNationTotalLevel (Nation nation) {
+		int total = 0;
+		int totalville = 0;
+    	for (Town town :  nation.getTowns()) {
+			totalville = MmoPlayer.getTownTotalLevel(town);	
+        	total = total + totalville;
+        	}
+    	return total;
+    }
+    public static Integer getNationTalentLevel (Nation nation, String talentName) {
+		int total = 0;
+		int totalville = 0;
+    	for (Town town :  nation.getTowns()) {
+			totalville = MmoPlayer.getTownTalentLevel(town, talentName);	
+        	total = total + totalville;
+        	}
+    	return total;
+    }
 }
