@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     java
     `maven-publish`
@@ -74,6 +76,6 @@ tasks.withType<JavaCompile>() {
     options.encoding = "UTF-8"
 }
 
-tasks.jar {
-    archiveFileName.set("${project.name}.jar")
+tasks.withType(ShadowJar::class.java) {
+    archiveFileName.set("LaBoulangerieMmo.jar")
 }
