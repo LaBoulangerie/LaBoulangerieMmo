@@ -2,12 +2,12 @@ package net.laboulangerie.laboulangeriemmo.core.particles;
 
 import org.bukkit.Color;
 import org.bukkit.Particle;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 
 public class HelixEffect extends Effect {
 
-    public HelixEffect(Player player) {
-        super(player);
+    public HelixEffect(Entity entity) {
+        super(entity);
     }
 
     private int radius = 2;
