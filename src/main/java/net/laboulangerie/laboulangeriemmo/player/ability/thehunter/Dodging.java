@@ -2,7 +2,7 @@ package net.laboulangerie.laboulangeriemmo.player.ability.thehunter;
 
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
-import org.bukkit.entity.Player;
+import net.minecraft.world.entity.player.Player;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
@@ -29,8 +29,8 @@ public class Dodging extends AbilityExecutor {
     @Override
     public void trigger(Event baseEvent, int level) {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
-        Player player = event.getPlayer();
-        net.minecraft.world.entity.player.Player human = (net.minecraft.world.entity.player.Player) ((CraftPlayer) event.getPlayer()).getHandle();
+        org.bukkit.entity.Player player = event.getPlayer();
+        Player human = (Player) ((CraftPlayer) event.getPlayer()).getHandle();
         /**
          * See ItemTrident.java in craftbukkit or TridentItem.java in paper
          * Mapping:
@@ -50,8 +50,7 @@ public class Dodging extends AbilityExecutor {
         f2 *= f6 / f5;
         f3 *= f6 / f5;
         f4 *= f6 / f5;
-        // human.i((double) f2, (double) f3, (double) f4); // = human.push doesn't work
-        // but next line replaced it maybe try again in 1.18
+
         player.setVelocity(new Vector((double) f2, (double) f3, (double) f4));
         human.startAutoSpinAttack(20);
         player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
