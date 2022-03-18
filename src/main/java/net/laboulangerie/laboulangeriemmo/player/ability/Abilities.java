@@ -15,6 +15,7 @@ import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.Dodging;
 import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.ExpInBottle;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.BetterAppleDrop;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.DoubleDropLog;
+import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.ThickTree;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.Timber;
 
 public enum Abilities {
@@ -23,11 +24,15 @@ public enum Abilities {
     FAST_MINE(15, TimeUnit.MINUTES, 15, "mining", new FastMine(), false, "default"),
     FAST_SMELT(85, TimeUnit.HOURS, 1, "mining", new FastSmelt(), true, "default"),
     MAGNETIC_FIELD(35, TimeUnit.MINUTES, 30, "mining", new MagneticField(), true, "default"),
+
     DOUBLE_DROP_LOG(0, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), true, "default"),
     BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false, "default"),
     TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true, "default"),
+    THICK_TREE(0, TimeUnit.SECONDS, 0, "woodcutting", new ThickTree(), true, "default"),
+
     EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false, "default"),
     DODGING(1, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "trail"),
+
 	NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), false, "default"),
 	BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "default"),
 	ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(), false, "default");
