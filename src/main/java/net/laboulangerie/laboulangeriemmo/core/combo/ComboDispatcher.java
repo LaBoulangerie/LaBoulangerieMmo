@@ -26,7 +26,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import net.kyori.adventure.text.Component;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
-import net.minecraft.world.inventory.InventoryClickType;
+import net.minecraft.world.inventory.ClickType;
 
 public class ComboDispatcher implements Listener {
     private Map<Player, KeyStreak> comboStreaks = new HashMap<Player, KeyStreak>();
@@ -65,9 +65,8 @@ public class ComboDispatcher implements Listener {
                 PacketContainer packet = event.getPacket();
                 /*
                  * See https://wiki.vg/Protocol#Click_Window if "mode" is throw
-                 * (InventoryClickType.e),
                  * an item or a full stack of item have been dropped from the inventory window.
-                 * UPDATE SENSITIVE
+                 * UPDATE SENSITIVE, NMS
                  */
 
                 Integer button = packet.getIntegers().read(2); // the button field as defined in the protocol specification, -999 = outside the window
@@ -75,8 +74,8 @@ public class ComboDispatcher implements Listener {
                 /*We have to handle a special case for some obscures reasons whe you click outside the window with an empty cursor,
                   the action is labeled as drop but nothing is dropped but when you right or left click outside a window and you
                   actually drop an item, the action is labeled as pickup*/
-                if ((packet.getEnumModifier(InventoryClickType.class, InventoryClickType.class).getValues().get(0) == InventoryClickType.e && button != -999)
-                        || (button == -999 && packet.getEnumModifier(InventoryClickType.class, InventoryClickType.class).getValues().get(0) == InventoryClickType.a)) {
+                if ((packet.getEnumModifier(ClickType.class, ClickType.class).getValues().get(0) == ClickType.THROW && button != -999)
+                        || (button == -999 && packet.getEnumModifier(ClickType.class, ClickType.class).getValues().get(0) == ClickType.PICKUP)) {
                     shouldCancelNextArmAnimation.put(event.getPlayer().getUniqueId(), true);
                 }
             }

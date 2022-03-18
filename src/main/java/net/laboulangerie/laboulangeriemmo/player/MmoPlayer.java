@@ -1,6 +1,8 @@
 package net.laboulangerie.laboulangeriemmo.player;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -17,6 +19,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
@@ -78,15 +82,16 @@ public class MmoPlayer implements GsonSerializable {
         if (ability.shouldLog() == true) {
             EffectRegistry.playEffect(ability.getEffectName(), player);
 
-            HashMap<String, String> placeholders = new HashMap<>();
-            placeholders.put("ability", ability.toString());
-            placeholders.put("cooldown", Integer.toString(ability.getCooldown()));
-            placeholders.put("unit", ability.getCooldownUnit().toString().toLowerCase());
+            List<TagResolver.Single> placeholders = Arrays.asList(
+                Placeholder.parsed("ability", ability.toString()),
+                Placeholder.parsed("cooldown", Integer.toString(ability.getCooldown())),
+                Placeholder.parsed("unit", ability.getCooldownUnit().toString().toLowerCase())
+            );
 
             player.sendMessage(
-                MiniMessage.get().parse(this.config.getString("lang.prefix"))
-                    .append(MiniMessage.get().parse(this.config.getString("lang.messages.ability_log"),
-                        placeholders)));
+                MiniMessage.miniMessage().deserialize(this.config.getString("lang.prefix"))
+                    .append(MiniMessage.miniMessage().deserialize(this.config.getString("lang.messages.ability_log"),
+                    TagResolver.resolver(placeholders))));
         }
     }
 
@@ -148,47 +153,41 @@ public class MmoPlayer implements GsonSerializable {
     	return resident.getNationOrNull();
     }
     
-
-    
     public static Integer getTownTotalLevel (Town town) {
-		int totalville = 0;
-        	for (Resident resident :  town.getResidents()) {
-        		if (resident != null) {
-        		OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID()); 
-        		MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
-        		totalville = totalville + mmoPlayer.getPalier();
-        		}
-            	}
-        	return totalville;
+		int townTotal = 0;
+        for (Resident resident :  town.getResidents()) {
+            if (resident != null) {
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID()); 
+                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
+                townTotal += mmoPlayer.getPalier();
+            }
+        }
+        return townTotal;
     }
     public static Integer getTownTalentLevel (Town town, String talentName) {
-		int totalville = 0;
-        	for (Resident resident :  town.getResidents()) {
-        		if (resident != null) {
-            	OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
-            	MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
-            	Talent talent = mmoPlayer.getTalent(talentName);
-        		totalville = totalville + talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-        		}
-            	}
-        	return totalville;
+		int townTotal = 0;
+        for (Resident resident : town.getResidents()) {
+            if (resident != null) {
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
+                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
+                Talent talent = mmoPlayer.getTalent(talentName);
+                townTotal += talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+            }
+        }
+        return townTotal;
     }
     public static Integer getNationTotalLevel (Nation nation) {
 		int total = 0;
-		int totalville = 0;
-    	for (Town town :  nation.getTowns()) {
-			totalville = MmoPlayer.getTownTotalLevel(town);	
-        	total = total + totalville;
-        	}
+    	for (Town town :  nation.getTowns())
+        	total += MmoPlayer.getTownTotalLevel(town);
+
     	return total;
     }
     public static Integer getNationTalentLevel (Nation nation, String talentName) {
 		int total = 0;
-		int totalville = 0;
-    	for (Town town :  nation.getTowns()) {
-			totalville = MmoPlayer.getTownTalentLevel(town, talentName);	
-        	total = total + totalville;
-        	}
+    	for (Town town :  nation.getTowns())
+        	total += MmoPlayer.getTownTalentLevel(town, talentName);
+
     	return total;
     }
 }
