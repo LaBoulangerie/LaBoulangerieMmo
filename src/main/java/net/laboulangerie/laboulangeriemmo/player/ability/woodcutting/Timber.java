@@ -1,6 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.player.ability.woodcutting;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
@@ -41,6 +42,11 @@ public class Timber extends AbilityExecutor {
             { -1, -1, -1 }
     };
 
+    private int range = 5;
+
+    private Material initType;
+    private Location initLocation;
+
     @Override
     public AbilityTrigger getAbilityTrigger() {
         return AbilityTrigger.BREAK;
@@ -57,8 +63,10 @@ public class Timber extends AbilityExecutor {
     @Override
     public void trigger(Event baseEvent, int level) {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
-        Block block = event.getBlock();
-        breakNeighbours(block);
+        Block initBlock = event.getBlock();
+        initType = initBlock.getType();
+        initLocation = initBlock.getLocation();
+        breakNeighbours(initBlock);
     }
 
     private void breakNeighbours(Block block) {
@@ -71,7 +79,10 @@ public class Timber extends AbilityExecutor {
                     Location neighbourLoc = loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
                     Block neighbour = neighbourLoc.getBlock();
 
-                    if (Tag.LOGS.isTagged(neighbour.getType())) {
+                    if (neighbour.getType() == initType
+                            && neighbour.getY() >= initLocation.getBlockY()
+                            && Math.abs(neighbour.getX() - initLocation.getBlockX()) <= range
+                            && Math.abs(neighbour.getZ() - initLocation.getBlockZ()) <= range) {
                         // Drop the item and spawn block particles
                         neighbour.breakNaturally(null, true);
                         // Break neighbours of neighbour recursively
