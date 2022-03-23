@@ -1,15 +1,20 @@
 package net.laboulangerie.laboulangeriemmo.player.ability.thehunter;
 
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
+import net.laboulangerie.laboulangeriemmo.core.hiding.ArmorHider;
+import net.laboulangerie.laboulangeriemmo.core.hiding.InvisiblePlayer;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
+import org.apache.logging.log4j.core.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Constructor;
 
@@ -34,77 +39,40 @@ public class Hiding extends AbilityExecutor {
         final Player player = event.getPlayer();
 
         // Same as the combo I used random level so edit and delete this comment
-        if (level >= 70)
-            tier3(player);
-        else if (level >= 50)
-            tier2(player);
-        else if (level >= 10)
-            tier1(player);
+        if (level >= 70) {
+            totalInvisibility(new InvisiblePlayer(player, 3), 12000);
+        } else if (level >= 50) {
+            totalInvisibility(new InvisiblePlayer(player, 2), 6000);
+        } else if (level >= 10) {
+            basicInvisibility(new InvisiblePlayer(player, 1));
+        }
     }
 
-    private void tier3(Player player) {
+    private void totalInvisibility(InvisiblePlayer invisiblePlayer, int duration) {
+        invisiblePlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, duration, 0, false, false));
+        InvisiblePlayer.invisiblePlayer.add(invisiblePlayer);
+
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.getUniqueId().equals(player.getUniqueId())) continue;
-            hideArmor(p, player);
+            if (p.getUniqueId().equals(invisiblePlayer.getPlayer().getUniqueId())) continue;
+            ArmorHider.hideArmor(p, invisiblePlayer.getPlayer());
         }
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 12000, 0, false, false));
+        endScheduler(invisiblePlayer, duration);
     }
 
-    private void tier2(Player player) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.getUniqueId().equals(player.getUniqueId())) continue;
-            hideArmor(p, player);
-        }
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 6000, 0, false, false));
+    private void basicInvisibility(InvisiblePlayer invisiblePlayer) {
+        invisiblePlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 2400, 0, false, false));
+        InvisiblePlayer.invisiblePlayer.add(invisiblePlayer);
+        endScheduler(invisiblePlayer, 2400);
     }
 
-    private void tier1(Player player) {
-        player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 2400, 0, false, false));
+    private void endScheduler(InvisiblePlayer invisiblePlayer, int duration) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!invisiblePlayer.abilityCancelled)
+                    InvisiblePlayer.invisiblePlayer.remove(invisiblePlayer);
+            }
+        }.runTaskLater(LaBoulangerieMmo.PLUGIN, duration);
     }
 
-    private enum EquipmentSlot {
-        MAIN_HAND,
-        OFF_HAND,
-        BOOTS,
-        LEGGINGS,
-        CHESTPLATE,
-        HELMET
-    }
-
-    private Class<?> getClass(String name) {
-        try {
-            return Class.forName("net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3] + "." + name);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private void hideArmor(Player other, Player self) {
-        sendPacket(other, self.getEntityId(), 0, EquipmentSlot.HELMET);
-        sendPacket(other, self.getEntityId(), 0, EquipmentSlot.CHESTPLATE);
-        sendPacket(other, self.getEntityId(), 0, EquipmentSlot.LEGGINGS);
-        sendPacket(other, self.getEntityId(), 0, EquipmentSlot.BOOTS);
-    }
-
-    private void sendPacket(Player player, int entityID, int itemID, EquipmentSlot slot) {
-        try {
-            final Class<?> packetClass = getClass("PacketPlayOutEntityEquipment");
-            final Class<?> itemClass = getClass("Item");
-            final Class<?> itemStackClass = getClass("ItemStack");
-
-            final Constructor<?> packetConstructor = packetClass.getConstructor(int.class, int.class, itemStackClass);
-            final Constructor<?> itemStackConstructor = itemStackClass.getConstructor(itemClass);
-
-            final Object itemStack = itemStackConstructor.newInstance(itemClass.getMethod("getById", int.class).invoke(null, itemID));
-            final Object packet = packetConstructor.newInstance(entityID, slot.ordinal(), itemStack);
-
-            final Object handle = player.getClass().getMethod("getHandle").invoke(player);
-            final Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
-
-            playerConnection.getClass().getMethod("sendPacket", getClass("Packet")).invoke(playerConnection, packet);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
