@@ -69,8 +69,6 @@ public class ArmorHider {
     public static void reloadArmor(Player player, Player invisiblePlayer, EquipmentSlot slot) {
         try {
             final Class<?> packetClass = getClass("net.minecraft.network.protocol.game", "PacketPlayOutEntityEquipment");
-            final Class<?> itemStackClass = getClass("net.minecraft.world.item", "ItemStack");
-            final Class<?> iMaterialClass = getClass("net.minecraft.world.level", "IMaterial");
             final Class<?> pairClass = getClass("com.mojang.datafixers.util", "Pair");
             final Class enumClass = getClass("net.minecraft.world.entity", "EnumItemSlot");
 
@@ -78,13 +76,11 @@ public class ArmorHider {
 
             final Constructor<?> pairConstructor = pairClass.getConstructor(Object.class, Object.class);
             final Constructor<?> packetConstructor = packetClass.getConstructor(int.class, List.class);
-            final Constructor<?> itemStackConstructor = itemStackClass.getConstructor(iMaterialClass);
 
             final Object playerObject = invisiblePlayer.getClass().getMethod("getHandle").invoke(invisiblePlayer);
             final Object inventory = playerObject.getClass().getMethod("fr").invoke(playerObject);
             final Object armorPiece = inventory.getClass().getMethod("e", int.class).invoke(inventory, slot.ordinal() - 2);
-            final Object itemStack = itemStackConstructor.newInstance(armorPiece.getClass().getMethod("c").invoke(armorPiece));
-            final Object pair = pairConstructor.newInstance(enumSlot, itemStack);
+            final Object pair = pairConstructor.newInstance(enumSlot, armorPiece);
 
             final List<Object> equipmentSlots = new ArrayList<>();
             equipmentSlots.add(pair);
