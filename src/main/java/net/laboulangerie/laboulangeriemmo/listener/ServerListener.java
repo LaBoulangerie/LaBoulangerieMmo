@@ -1,5 +1,8 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
+import net.laboulangerie.laboulangeriemmo.core.hiding.ArmorHider;
+import net.laboulangerie.laboulangeriemmo.core.hiding.InvisibleParticles;
+import net.laboulangerie.laboulangeriemmo.core.hiding.InvisiblePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -8,9 +11,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -94,5 +100,21 @@ public class ServerListener implements Listener {
             event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()));
 
         ((LivingEntity) event.getEntity()).setVelocity(player.getLocation().getDirection().multiply(1));
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        InvisibleParticles.renderParticles(event.getPlayer());
+        InvisiblePlayer.hidePlayerArmor(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        InvisiblePlayer.onJoin(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent event) {
+        InvisiblePlayer.onDamage(event.getEntity());
     }
 }
