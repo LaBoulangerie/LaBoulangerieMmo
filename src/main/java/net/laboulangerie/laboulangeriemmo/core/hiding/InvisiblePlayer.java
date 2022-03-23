@@ -1,6 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.core.hiding;
 
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +10,7 @@ public class InvisiblePlayer {
 
     public static final Set<InvisiblePlayer> invisiblePlayer = new HashSet<>();
 
-    private final Player player;
+    private Player player;
 
     private final int abilityLevel;
 
@@ -29,11 +30,45 @@ public class InvisiblePlayer {
         return abilityLevel;
     }
 
+    private void setPlayer(Player player) {
+        this.player = player;
+    }
+
     public static InvisiblePlayer getInvisiblePlayer(Player player) {
         for (InvisiblePlayer p : invisiblePlayer) {
             if (p.getPlayer().getUniqueId().equals(player.getUniqueId()))
                 return (p);
         }
         return (null);
+    }
+
+    public void cancelAbility() {
+        invisiblePlayer.remove(this);
+
+        Player player = this.getPlayer();
+        if (player == null) return;
+        player.removePotionEffect(PotionEffectType.INVISIBILITY);
+    }
+
+    public static void onJoin(Player player) {
+        restoreInvisiblePlayer(player);
+        hidePlayerArmorOnLog(player);
+    }
+
+    private static void restoreInvisiblePlayer(Player player) {
+        for (InvisiblePlayer ip : InvisiblePlayer.invisiblePlayer) {
+            if (player.getUniqueId().equals(ip.getPlayer().getUniqueId())) {
+                ip.setPlayer(player);
+            }
+        }
+    }
+
+    private static void hidePlayerArmorOnLog(Player player) {
+        for (InvisiblePlayer ip : InvisiblePlayer.invisiblePlayer) {
+            if (ip.getAbilityLevel() > 1 && !ip.abilityCancelled &&
+                !player.getUniqueId().equals(ip.getPlayer().getUniqueId())) {
+                ArmorHider.hideArmor(player, ip.getPlayer());
+            }
+        }
     }
 }

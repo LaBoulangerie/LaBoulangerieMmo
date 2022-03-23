@@ -1,6 +1,8 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
+import net.laboulangerie.laboulangeriemmo.core.hiding.ArmorHider;
 import net.laboulangerie.laboulangeriemmo.core.hiding.InvisibleParticles;
+import net.laboulangerie.laboulangeriemmo.core.hiding.InvisiblePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -12,6 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -101,5 +104,10 @@ public class ServerListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         InvisibleParticles.renderParticles(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        InvisiblePlayer.onJoin(event.getPlayer());
     }
 }

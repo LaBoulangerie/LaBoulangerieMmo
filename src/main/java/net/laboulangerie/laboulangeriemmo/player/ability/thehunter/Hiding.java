@@ -69,8 +69,7 @@ public class Hiding extends AbilityExecutor {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!invisiblePlayer.abilityCancelled)
-                    InvisiblePlayer.invisiblePlayer.remove(invisiblePlayer);
+                invisiblePlayer.cancelAbility();
             }
         }.runTaskLater(LaBoulangerieMmo.PLUGIN, duration);
     }
