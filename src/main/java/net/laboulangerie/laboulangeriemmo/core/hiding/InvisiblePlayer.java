@@ -63,7 +63,6 @@ public class InvisiblePlayer {
 
     public static void onJoin(Player player) {
         restoreInvisiblePlayer(player);
-        hidePlayerArmorOnLog(player);
     }
 
     private static void restoreInvisiblePlayer(Player player) {
@@ -83,7 +82,7 @@ public class InvisiblePlayer {
         }
     }
 
-    private static void hidePlayerArmorOnLog(Player player) {
+    public static void hidePlayerArmor(Player player) {
         for (InvisiblePlayer ip : InvisiblePlayer.invisiblePlayer) {
             if (ip.getAbilityLevel() > 1 && !ip.abilityCancelled &&
                 !player.getUniqueId().equals(ip.getPlayer().getUniqueId())) {

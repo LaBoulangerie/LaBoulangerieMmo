@@ -105,11 +105,12 @@ public class ServerListener implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
         InvisibleParticles.renderParticles(event.getPlayer());
+        InvisiblePlayer.hidePlayerArmor(event.getPlayer());
     }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        InvisiblePlayer.onJoin(event.getPlayer());
+        InvisiblePlayer.hidePlayerArmor(event.getPlayer());
     }
 
     @EventHandler
