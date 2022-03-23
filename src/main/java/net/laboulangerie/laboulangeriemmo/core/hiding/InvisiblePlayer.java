@@ -1,5 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.core.hiding;
 
+import org.apache.logging.log4j.core.Core;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
@@ -60,6 +62,14 @@ public class InvisiblePlayer {
         final Player player = this.getPlayer();
         if (player == null) return;
         player.removePotionEffect(PotionEffectType.INVISIBILITY);
+
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (p.getUniqueId().equals(player.getUniqueId())) continue;
+            ArmorHider.reloadArmor(p, player, ArmorHider.EquipmentSlot.HEAD);
+            ArmorHider.reloadArmor(p, player, ArmorHider.EquipmentSlot.CHEST);
+            ArmorHider.reloadArmor(p, player, ArmorHider.EquipmentSlot.LEGS);
+            ArmorHider.reloadArmor(p, player, ArmorHider.EquipmentSlot.FEET);
+        }
     }
 
     public static void onJoin(Player player) {
