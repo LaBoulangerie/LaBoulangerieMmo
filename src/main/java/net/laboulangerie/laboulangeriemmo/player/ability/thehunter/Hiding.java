@@ -15,6 +15,7 @@ import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.lang.reflect.Constructor;
 
@@ -66,12 +67,12 @@ public class Hiding extends AbilityExecutor {
     }
 
     private void endScheduler(InvisiblePlayer invisiblePlayer, int duration) {
-        new BukkitRunnable() {
+        invisiblePlayer.setScheduler(new BukkitRunnable() {
             @Override
             public void run() {
                 invisiblePlayer.cancelAbility();
             }
-        }.runTaskLater(LaBoulangerieMmo.PLUGIN, duration);
+        }.runTaskLater(LaBoulangerieMmo.PLUGIN, duration));
     }
 
 }

@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -109,5 +110,10 @@ public class ServerListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         InvisiblePlayer.onJoin(event.getPlayer());
+    }
+
+    @EventHandler
+    public void onDamage(EntityDamageEvent event) {
+        InvisiblePlayer.onDamage(event.getEntity());
     }
 }

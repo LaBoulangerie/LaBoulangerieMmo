@@ -1,7 +1,9 @@
 package net.laboulangerie.laboulangeriemmo.core.hiding;
 
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +15,7 @@ public class InvisiblePlayer {
     private Player player;
 
     private final int abilityLevel;
+    private BukkitTask scheduler;
 
     public boolean abilityCancelled;
 
@@ -20,6 +23,10 @@ public class InvisiblePlayer {
         this.player = player;
         this.abilityLevel = abilityLevel;
         this.abilityCancelled = false;
+    }
+
+    public void setScheduler(BukkitTask scheduler) {
+        this.scheduler = scheduler;
     }
 
     public Player getPlayer() {
@@ -45,7 +52,11 @@ public class InvisiblePlayer {
     public void cancelAbility() {
         invisiblePlayer.remove(this);
 
-        Player player = this.getPlayer();
+        if (scheduler != null) {
+            scheduler.cancel();
+        }
+
+        final Player player = this.getPlayer();
         if (player == null) return;
         player.removePotionEffect(PotionEffectType.INVISIBILITY);
     }
@@ -60,6 +71,15 @@ public class InvisiblePlayer {
             if (player.getUniqueId().equals(ip.getPlayer().getUniqueId())) {
                 ip.setPlayer(player);
             }
+        }
+    }
+
+    public static void onDamage(Entity entity) {
+        if (entity instanceof final Player player) {
+           final InvisiblePlayer invisiblePlayer = InvisiblePlayer.getInvisiblePlayer(player);
+           if (invisiblePlayer == null) return;
+
+           invisiblePlayer.cancelAbility();
         }
     }
 
