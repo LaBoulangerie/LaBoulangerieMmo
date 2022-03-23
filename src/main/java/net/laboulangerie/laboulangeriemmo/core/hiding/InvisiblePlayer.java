@@ -50,6 +50,7 @@ public class InvisiblePlayer {
     }
 
     public void cancelAbility() {
+        this.abilityCancelled = true;
         invisiblePlayer.remove(this);
 
         if (scheduler != null) {
@@ -63,6 +64,7 @@ public class InvisiblePlayer {
 
     public static void onJoin(Player player) {
         restoreInvisiblePlayer(player);
+        hidePlayerArmor(player);
     }
 
     private static void restoreInvisiblePlayer(Player player) {

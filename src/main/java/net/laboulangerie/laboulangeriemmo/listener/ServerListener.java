@@ -110,7 +110,7 @@ public class ServerListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        InvisiblePlayer.hidePlayerArmor(event.getPlayer());
+        InvisiblePlayer.onJoin(event.getPlayer());
     }
 
     @EventHandler
