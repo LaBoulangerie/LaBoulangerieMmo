@@ -13,6 +13,7 @@ import net.laboulangerie.laboulangeriemmo.player.ability.mining.MagneticField;
 import net.laboulangerie.laboulangeriemmo.player.ability.mining.MinecraftExpMultiplier;
 import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.Dodging;
 import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.ExpInBottle;
+import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.FireBow;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.BetterAppleDrop;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.DoubleDropLog;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.ThickTree;
@@ -30,8 +31,9 @@ public enum Abilities {
     TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true, "default"),
     THICK_TREE(0, TimeUnit.SECONDS, 0, "woodcutting", new ThickTree(), true, "default"),
 
-    EXP_IN_BOTTLE(1, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false, "default"),
-    DODGING(1, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "trail"),
+    EXP_IN_BOTTLE(0, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false, "default"),
+    DODGING(0, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "trail"),
+    FIRE_BOW(0, TimeUnit.SECONDS, 0, "thehunter", new FireBow(), true, "default"),
 
 	NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), false, "default"),
 	BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "default"),
