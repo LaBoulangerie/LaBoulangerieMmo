@@ -1,6 +1,5 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
-import net.laboulangerie.laboulangeriemmo.core.hiding.ArmorHider;
 import net.laboulangerie.laboulangeriemmo.core.hiding.InvisibleParticles;
 import net.laboulangerie.laboulangeriemmo.core.hiding.InvisiblePlayer;
 import org.bukkit.block.Block;

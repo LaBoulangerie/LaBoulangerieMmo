@@ -8,16 +8,12 @@ import net.laboulangerie.laboulangeriemmo.core.hiding.InvisiblePlayer;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
-import org.apache.logging.log4j.core.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
-
-import java.lang.reflect.Constructor;
 
 public class Hiding extends AbilityExecutor {
     @Override

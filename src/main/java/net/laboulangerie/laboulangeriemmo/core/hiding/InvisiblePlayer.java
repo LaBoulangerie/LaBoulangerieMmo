@@ -1,6 +1,5 @@
 package net.laboulangerie.laboulangeriemmo.core.hiding;
 
-import org.apache.logging.log4j.core.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
