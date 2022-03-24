@@ -28,13 +28,13 @@ public class ArmorHider {
     }
 
     public static void hideArmor(Player other, Player self) {
-        sendPacket(other, self.getEntityId(), 0, EquipmentSlot.HEAD);
-        sendPacket(other, self.getEntityId(), 0, EquipmentSlot.CHEST);
-        sendPacket(other, self.getEntityId(), 0, EquipmentSlot.LEGS);
-        sendPacket(other, self.getEntityId(), 0, EquipmentSlot.FEET);
+        sendPacket(other, self.getEntityId(), EquipmentSlot.HEAD);
+        sendPacket(other, self.getEntityId(), EquipmentSlot.CHEST);
+        sendPacket(other, self.getEntityId(), EquipmentSlot.LEGS);
+        sendPacket(other, self.getEntityId(), EquipmentSlot.FEET);
     }
 
-    private static void sendPacket(Player player, int entityID, int itemID, EquipmentSlot slot) {
+    private static void sendPacket(Player player, int entityID, EquipmentSlot slot) {
         try {
             final Class<?> packetClass = getClass("net.minecraft.network.protocol.game", "PacketPlayOutEntityEquipment");
             final Class<?> itemClass = getClass("net.minecraft.world.item", "Item");
@@ -49,7 +49,7 @@ public class ArmorHider {
             final Constructor<?> packetConstructor = packetClass.getConstructor(int.class, List.class);
             final Constructor<?> itemStackConstructor = itemStackClass.getConstructor(iMaterialClass);
 
-            final Object itemStack = itemStackConstructor.newInstance(itemClass.getMethod("b", int.class).invoke(null, itemID));
+            final Object itemStack = itemStackConstructor.newInstance(itemClass.getMethod("b", int.class).invoke(null, 0));
             final Object pair = pairConstructor.newInstance(enumSlot, itemStack);
 
             final List<Object> equipmentSlots = new ArrayList<>();
