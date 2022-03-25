@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.core.hiding;
+package net.laboulangerie.laboulangeriemmo.core.thehunter.hiding;
 
 import org.bukkit.entity.Player;
 

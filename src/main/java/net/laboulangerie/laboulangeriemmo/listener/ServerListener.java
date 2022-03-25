@@ -1,18 +1,18 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
-import net.laboulangerie.laboulangeriemmo.core.hiding.InvisibleParticles;
-import net.laboulangerie.laboulangeriemmo.core.hiding.InvisiblePlayer;
+import net.laboulangerie.laboulangeriemmo.core.thehunter.firebow.FireArrow;
+import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisibleParticles;
+import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisiblePlayer;
+import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.FireBow;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.ExpBottleEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -98,7 +98,7 @@ public class ServerListener implements Listener {
         if (Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) > 0)
             event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()));
 
-        ((LivingEntity) event.getEntity()).setVelocity(player.getLocation().getDirection().multiply(1));
+        event.getEntity().setVelocity(player.getLocation().getDirection().multiply(1));
     }
 
     @EventHandler
@@ -115,5 +115,19 @@ public class ServerListener implements Listener {
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
         InvisiblePlayer.onDamage(event.getEntity());
+    }
+
+    @EventHandler
+    public void onProjectileShoot(EntityShootBowEvent event) {
+        if (event.getEntity() instanceof Player player &&
+                event.getProjectile() instanceof Arrow arrow)
+            FireArrow.shoot(player, arrow);
+    }
+
+    @EventHandler
+    public void onProjectileHit(ProjectileHitEvent event) {
+        if (event.getEntity() instanceof Arrow arrow && arrow.getShooter() instanceof Player player) {
+            FireBow.onArrowHit(player, arrow, event.getHitBlock(), event.getHitEntity());
+        }
     }
 }
