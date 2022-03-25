@@ -18,6 +18,8 @@ import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
+import java.util.Random;
+
 public class FireBow extends AbilityExecutor {
 
     @Override
@@ -91,11 +93,12 @@ public class FireBow extends AbilityExecutor {
 
     private static void putFire(Location location) {
         final World world = location.getWorld();
+        final Random RNG = new Random();
 
         for (int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
             for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
                 for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {
-                    if (world.getBlockAt(x, y, z).getType().equals(Material.AIR)) {
+                    if (world.getBlockAt(x, y, z).getType().equals(Material.AIR) && RNG.nextInt(4) < 3) {
                         world.getBlockAt(x, y, z).setType(Material.FIRE);
                     }
                 }
