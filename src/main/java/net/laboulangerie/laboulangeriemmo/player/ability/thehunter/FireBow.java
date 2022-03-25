@@ -75,7 +75,7 @@ public class FireBow extends AbilityExecutor {
     private static void onEntityHit(FireArrow fireArrow, Entity entity) {
         final int level = fireArrow.getAbilityLevel();
 
-        if (level == 1) return;
+        if (level == 1) putFire(entity.getLocation());
         if (level == 2) explosion(fireArrow.getShooter(), entity.getLocation(), 2);
         if (level == 3) explosion(fireArrow.getShooter(), entity.getLocation(), 3);
     }
@@ -83,21 +83,24 @@ public class FireBow extends AbilityExecutor {
     private static void onBlockHit(FireArrow fireArrow, Block block) {
         final int level = fireArrow.getAbilityLevel();
 
-        final World world = block.getWorld();
 
-        if (level == 1) {
-            for (int x = block.getX() - 1; x <= block.getX() + 1; x++) {
-                for (int y = block.getY() - 1; y <= block.getY() + 1; y++) {
-                    for (int z = block.getZ() - 1; z <= block.getZ() + 1; z++) {
-                        if (world.getBlockAt(x, y, z).getType().equals(Material.AIR)) {
-                            world.getBlockAt(x, y, z).setType(Material.FIRE);
-                        }
+        if (level == 1) putFire(block.getLocation());
+        if (level == 2) explosion(fireArrow.getShooter(), block.getLocation(), 2);
+        if (level == 3) explosion(fireArrow.getShooter(), block.getLocation(), 3);
+    }
+
+    private static void putFire(Location location) {
+        final World world = location.getWorld();
+
+        for (int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
+            for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
+                for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {
+                    if (world.getBlockAt(x, y, z).getType().equals(Material.AIR)) {
+                        world.getBlockAt(x, y, z).setType(Material.FIRE);
                     }
                 }
             }
         }
-        if (level == 2) explosion(fireArrow.getShooter(), block.getLocation(), 2);
-        if (level == 3) explosion(fireArrow.getShooter(), block.getLocation(), 3);
     }
 
     private static void explosion(Player shooter, Location location, int power) {
