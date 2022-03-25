@@ -22,6 +22,10 @@ import java.util.Random;
 
 public class FireBow extends AbilityExecutor {
 
+    private static final int SMALL_EXPLOSION_POWER = 2;
+    private static final int LARGE_EXPLOSION_POWER = 3;
+
+
     @Override
     public AbilityTrigger getAbilityTrigger() {
         return AbilityTrigger.COMBO;
@@ -78,8 +82,8 @@ public class FireBow extends AbilityExecutor {
         final int level = fireArrow.getAbilityLevel();
 
         if (level == 1) putFire(entity.getLocation());
-        if (level == 2) explosion(fireArrow.getShooter(), entity.getLocation(), 2);
-        if (level == 3) explosion(fireArrow.getShooter(), entity.getLocation(), 3);
+        if (level == 2) explosion(fireArrow.getShooter(), entity.getLocation(), SMALL_EXPLOSION_POWER);
+        if (level == 3) explosion(fireArrow.getShooter(), entity.getLocation(), LARGE_EXPLOSION_POWER);
     }
 
     private static void onBlockHit(FireArrow fireArrow, Block block) {
@@ -87,8 +91,8 @@ public class FireBow extends AbilityExecutor {
 
 
         if (level == 1) putFire(block.getLocation());
-        if (level == 2) explosion(fireArrow.getShooter(), block.getLocation(), 2);
-        if (level == 3) explosion(fireArrow.getShooter(), block.getLocation(), 3);
+        if (level == 2) explosion(fireArrow.getShooter(), block.getLocation(), SMALL_EXPLOSION_POWER);
+        if (level == 3) explosion(fireArrow.getShooter(), block.getLocation(), LARGE_EXPLOSION_POWER);
     }
 
     private static void putFire(Location location) {
