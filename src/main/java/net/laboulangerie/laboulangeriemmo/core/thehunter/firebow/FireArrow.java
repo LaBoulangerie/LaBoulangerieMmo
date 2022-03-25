@@ -1,6 +1,5 @@
 package net.laboulangerie.laboulangeriemmo.core.thehunter.firebow;
 
-import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisiblePlayer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 
