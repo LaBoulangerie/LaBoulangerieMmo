@@ -16,7 +16,7 @@ public class ArrowEffect extends Effect {
             throw new IllegalArgumentException("This animation can only work on arrows");
     }
 
-    private int helixAngle = 0;
+    private float helixAngle = 0;
 
     private FireArrow fireArrow = null;
 
@@ -29,12 +29,13 @@ public class ArrowEffect extends Effect {
         }
 
         if (fireArrow != null && fireArrow.getAbilityLevel() == 3) {
-            world.spawnParticle(Particle.FIREWORKS_SPARK, entity.getLocation(), 0, 0, 0, 0, 8);
-            createHelix(fireArrow.getArrow().getLocation(), 3, 0.4f);
+            world.spawnParticle(Particle.LAVA, entity.getLocation(), 0, 0, 0, 0, 8);
+            createHelix(fireArrow.getArrow().getLocation(), 3, 0.5f);
         }
 
         if (fireArrow != null && fireArrow.getAbilityLevel() == 2) {
-            createHelix(fireArrow.getArrow().getLocation(), 2, 0.3f);
+            world.spawnParticle(Particle.FIREWORKS_SPARK, entity.getLocation(), 0, 0, 0, 0, 8);
+            createHelix(fireArrow.getArrow().getLocation(), 2, 0.5f);
         }
 
         if (fireArrow == null || fireArrow.getAbilityLevel() == 1)
@@ -44,24 +45,19 @@ public class ArrowEffect extends Effect {
     }
 
     private void createHelix(Location location, int branches, float radius) {
-        Location tmpLocation = location.clone();
+        helixAngle += 0.3f;
+        for (int i = branches; i > 0; i--) {
 
-        for (int i = 0; i < 3; i++) {
-            for (int j = branches; j > 0; j--) {
-                helixAngle += 5;
+            final double angle = (2 * Math.PI * i / branches) + helixAngle;
+            final double x = Math.cos(angle) * radius;
+            final double y = Math.sin(angle) * radius;
 
-                final double angle = (2 * Math.PI * j / branches) + helixAngle;
-                final double x = Math.cos(angle) * radius;
-                final double y = Math.sin(angle) * radius;
+            Vector v = rotateAroundAxisX(new Vector(x, y, 0), location.getPitch());
+            v = rotateAroundAxisY(v, location.getYaw());
 
-                Vector v = rotateAroundAxisX(new Vector(x, y, 0), tmpLocation.getPitch());
-                v = rotateAroundAxisY(v, tmpLocation.getYaw());
+            final Location temp = location.clone().add(v);
 
-                final Location temp = tmpLocation.clone().add(v);
-
-                tmpLocation.getWorld().spawnParticle(Particle.FLAME, (float) temp.getX(), (float) temp.getY(), (float) temp.getZ(), 0);
-            }
-            tmpLocation = tmpLocation.subtract(tmpLocation.getDirection());
+            location.getWorld().spawnParticle(Particle.FLAME, (float) temp.getX(), (float) temp.getY(), (float) temp.getZ(), 0);
         }
     }
 
