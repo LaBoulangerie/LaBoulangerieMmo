@@ -1,7 +1,6 @@
 package net.laboulangerie.laboulangeriemmo.player.ability.woodcutting;
 
 import org.bukkit.Material;
-import org.bukkit.Tag;
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -26,7 +25,7 @@ public class ThickTree extends AbilityExecutor{
 
         Block block = event.getPlayer().getTargetBlock(5);
         return new KeyStreak(ComboKey.RIGHT, ComboKey.RIGHT, ComboKey.LEFT).match(event.getKeyStreak())
-                && block.getType() != null && Tag.SAPLINGS.isTagged(block.getType());
+                && block.getType() != null && block.getType() == Material.JUNGLE_SAPLING || block.getType() == Material.BIRCH_SAPLING || block.getType() == Material.SPRUCE_SAPLING;
     }
 
     @Override
@@ -35,23 +34,28 @@ public class ThickTree extends AbilityExecutor{
         Block block = event.getPlayer().getTargetBlock(5);
         World world = block.getWorld();
         TreeType treeType = null;
-        if (block.getType() == Material.SPRUCE_SAPLING) {
-            block.setType(Material.AIR);
-            treeType = TreeType.MEGA_REDWOOD;
-            world.generateTree(block.getLocation(), treeType);
-        }
-        else if (block.getType() == Material.JUNGLE_SAPLING) {
-            block.setType(Material.AIR);
-            treeType = TreeType.JUNGLE;
-            world.generateTree(block.getLocation(), treeType);
-        }
-        else if (block.getType() == Material.BIRCH_SAPLING) {
-            block.setType(Material.AIR);
-            treeType = TreeType.TALL_BIRCH;
-            world.generateTree(block.getLocation(), treeType);
-        }
-        else {
-            event.getPlayer().sendMessage("Ceci n'est pas un sapling valable");
+        switch (block.getType()) {
+
+
+            case SPRUCE_SAPLING :
+                block.setType(Material.AIR);
+                treeType = TreeType.MEGA_REDWOOD;
+                world.generateTree(block.getLocation(), treeType);
+                break;
+
+            case JUNGLE_SAPLING:
+                block.setType(Material.AIR);
+                treeType = TreeType.JUNGLE;
+                world.generateTree(block.getLocation(), treeType);
+                break;
+            case BIRCH_SAPLING :
+                block.setType(Material.AIR);
+                treeType = TreeType.TALL_BIRCH;
+                world.generateTree(block.getLocation(), treeType);
+                break;
+            default :
+                event.getPlayer().sendMessage("Ceci n'est pas un sapling valable");
+
         }
     }
 
