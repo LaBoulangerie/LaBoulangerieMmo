@@ -22,7 +22,6 @@ public class ThickTree extends AbilityExecutor{
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
-
         Block block = event.getPlayer().getTargetBlock(5);
         return new KeyStreak(ComboKey.RIGHT, ComboKey.RIGHT, ComboKey.LEFT).match(event.getKeyStreak())
                 && block.getType() != null && block.getType() == Material.JUNGLE_SAPLING || block.getType() == Material.BIRCH_SAPLING || block.getType() == Material.SPRUCE_SAPLING;
@@ -39,7 +38,6 @@ public class ThickTree extends AbilityExecutor{
             case SPRUCE_SAPLING :
                 treeType = TreeType.MEGA_REDWOOD;
                 break;
-
             case JUNGLE_SAPLING:
                 treeType = TreeType.JUNGLE;
                 break;
@@ -48,7 +46,7 @@ public class ThickTree extends AbilityExecutor{
                 break;
             default :
                 event.getPlayer().sendMessage("Ceci n'est pas un sapling valable");
-
+                return;
         }
         world.generateTree(block.getLocation(), treeType);
     }
