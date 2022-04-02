@@ -1,24 +1,25 @@
 package net.laboulangerie.laboulangeriemmo.player.ability.thehunter;
 
-import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.firebow.FireArrow;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
+import java.util.Random;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.Event;
 
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
+import net.laboulangerie.laboulangeriemmo.core.thehunter.firebow.FireArrow;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
-
-import java.util.Random;
 
 public class FireBow extends AbilityExecutor {
 
