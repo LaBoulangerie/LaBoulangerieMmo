@@ -15,56 +15,56 @@ import net.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
 public class BetterBonemeal extends AbilityExecutor{
 
-	@Override
-	public AbilityTrigger getAbilityTrigger() {
-		return AbilityTrigger.RIGHT_CLICK_BLOCK;
-	}
+    @Override
+    public AbilityTrigger getAbilityTrigger() {
+        return AbilityTrigger.RIGHT_CLICK_BLOCK;
+    }
 
-	@Override
-	public boolean shouldTrigger(Event baseEvent) {
-		PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
+    @Override
+    public boolean shouldTrigger(Event baseEvent) {
+        PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         ItemStack item = event.getItem();
         return event.getPlayer().isSneaking() && item != null && item.getType() == Material.BONE_MEAL;
-	}
+    }
 
-	@Override
-	public void trigger(Event baseEvent, int level) {
-		PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-		if (level < 30) {
-			ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 5);
-			for (Block block : blocks) {
-				block.applyBoneMeal(BlockFace.UP);
-			}
-		}
-		if (level >= 30 && level < 45) {
-			ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 10);
-			for (Block block : blocks) {
-				block.applyBoneMeal(BlockFace.UP);
-				block.applyBoneMeal(BlockFace.UP);
-			}
-		}
-		if (level >= 45 && level < 60) {
-			ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 30);
-			for (Block block : blocks) {
-				block.applyBoneMeal(BlockFace.UP);
-				block.applyBoneMeal(BlockFace.UP);
-				block.applyBoneMeal(BlockFace.UP);
-			}
-		}
-	}
-	public static ArrayList<Block> getBlocksAroundCenter(Location loc, int radius) {
-	    ArrayList<Block> blocks = new ArrayList<Block>();
-	   
-	    for (int x = (loc.getBlockX()-radius); x <= (loc.getBlockX()+radius); x++) {
-	        for (int y = (loc.getBlockY()-radius); y <= (loc.getBlockY()+radius); y++) {
-	            for (int z = (loc.getBlockZ()-radius); z <= (loc.getBlockZ()+radius); z++) {
-	                Location l = new Location(loc.getWorld(), x, y, z);
-	                if (l.distance(loc) <= radius) {
-	                    blocks.add(l.getBlock());
-	                }
-	            }
-	        }
-	    }
-	    return blocks;
-	}
+    @Override
+    public void trigger(Event baseEvent, int level) {
+        PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
+        if (level < 30) {
+            ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 5);
+            for (Block block : blocks) {
+                block.applyBoneMeal(BlockFace.UP);
+            }
+        }
+        if (level >= 30 && level < 45) {
+            ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 10);
+            for (Block block : blocks) {
+                block.applyBoneMeal(BlockFace.UP);
+                block.applyBoneMeal(BlockFace.UP);
+            }
+        }
+        if (level >= 45) {
+            ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 30);
+            for (Block block : blocks) {
+                block.applyBoneMeal(BlockFace.UP);
+                block.applyBoneMeal(BlockFace.UP);
+                block.applyBoneMeal(BlockFace.UP);
+            }
+        }
+    }
+    public static ArrayList<Block> getBlocksAroundCenter(Location loc, int radius) {
+        ArrayList<Block> blocks = new ArrayList<Block>();
+
+        for (int x = (loc.getBlockX()-radius); x <= (loc.getBlockX()+radius); x++) {
+            for (int y = (loc.getBlockY()-radius); y <= (loc.getBlockY()+radius); y++) {
+                for (int z = (loc.getBlockZ()-radius); z <= (loc.getBlockZ()+radius); z++) {
+                    Location l = new Location(loc.getWorld(), x, y, z);
+                    if (l.distance(loc) <= radius) {
+                        blocks.add(l.getBlock());
+                    }
+                }
+            }
+        }
+        return blocks;
+    }
 }
