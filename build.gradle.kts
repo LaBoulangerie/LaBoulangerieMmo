@@ -86,3 +86,21 @@ tasks {
 tasks.withType<JavaCompile>() {
     options.encoding = "UTF-8"
 }
+publishing {
+    publications {
+        create<MavenPublication>("default") {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/LaBoulangerie/LaBoulangerieMmo")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
