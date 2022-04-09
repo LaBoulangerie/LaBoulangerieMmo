@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - master
+    paths-ignore:
+      - 'README.MD'
+      - '.gitignore'
+      - '.github/workflows/maven-publish.yml'
+
 jobs:
   build:
     runs-on: ubuntu-latest
