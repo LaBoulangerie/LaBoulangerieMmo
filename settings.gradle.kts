@@ -5,4 +5,4 @@ pluginManagement {
   }
 }
 
-rootProject.name = "laboulangeriemmo"
+rootProject.name = "LaBoulangerieMmo"
