@@ -88,8 +88,8 @@ tasks.withType<JavaCompile>() {
 }
 publishing {
     publications {
-        artifactId = "laboulangeriemmo"
         create<MavenPublication>("default") {
+            setArtifactId("laboulangeriemmo")
             from(components["java"])
         }
     }
