@@ -41,6 +41,14 @@ repositories {
     maven {
         url = uri("https://repo.glaremasters.me/repository/towny/")
     }
+
+    maven {
+        url = uri("https://betonquest.org/nexus/repository/betonquest/")
+    }
+
+    maven {
+        url = uri("https://repo.codemc.io/repository/maven-public/")
+    }
 }
 
 dependencies {
@@ -52,6 +60,7 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
     compileOnly("me.clip:placeholderapi:2.11.1")
     compileOnly("com.palmergames.bukkit.towny:towny:0.98.0.0")
+    compileOnly("pl.betoncraft:betonquest:1.12.8")
 }
 
 group = "net.laboulangerie"
