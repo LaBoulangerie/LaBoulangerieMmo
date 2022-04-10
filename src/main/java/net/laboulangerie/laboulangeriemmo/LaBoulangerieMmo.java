@@ -7,6 +7,8 @@ import java.util.logging.Level;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.laboulangerie.laboulangeriemmo.betonquest.LevelCondition;
+import net.laboulangerie.laboulangeriemmo.betonquest.XpEvent;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusDataManager;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusListener;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusRestoration;
@@ -26,6 +28,7 @@ import net.laboulangerie.laboulangeriemmo.player.MmoPlayerManager;
 import net.laboulangerie.laboulangeriemmo.player.SkillListener;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilitiesManager;
 import net.milkbowl.vault.economy.Economy;
+import pl.betoncraft.betonquest.BetonQuest;
 
 public class LaBoulangerieMmo extends JavaPlugin {
     public static LaBoulangerieMmo PLUGIN;
@@ -68,6 +71,12 @@ public class LaBoulangerieMmo extends JavaPlugin {
         }
         if (getServer().getPluginManager().getPlugin("Towny") != null) {
             getCommand("townymmo").setExecutor(new TownyMmo());
+        }
+
+        if (getServer().getPluginManager().getPlugin("BetonQuest") != null) {
+            BetonQuest.getInstance().registerConditions("lbmmo_level", LevelCondition.class);
+            BetonQuest.getInstance().registerEvents("lbmmo_xp", XpEvent.class);
+            getLogger().info("Hooked in BetonQuest!"); 
         }
 
         getLogger().info("Plugin started");
