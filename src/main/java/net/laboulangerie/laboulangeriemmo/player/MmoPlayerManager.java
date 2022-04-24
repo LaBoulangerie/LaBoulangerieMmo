@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import com.google.gson.JsonSyntaxException;
 
@@ -85,5 +86,9 @@ public class MmoPlayerManager {
 
     public void savePlayersData() {
         Bukkit.getOnlinePlayers().stream().forEach(p -> savePlayerData(p));
+    }
+
+    public Stream<MmoPlayer> stream() {
+        return playersMap.values().stream();
     }
 }
