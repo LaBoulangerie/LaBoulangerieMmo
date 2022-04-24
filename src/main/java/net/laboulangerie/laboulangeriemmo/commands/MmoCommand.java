@@ -3,6 +3,7 @@ package net.laboulangerie.laboulangeriemmo.commands;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
@@ -158,7 +159,9 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 case 3:
                     return Arrays.asList("add", "subtract", "see", "set");
                 case 4:
-                    OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
+                    UUID uuid = Bukkit.getPlayerUniqueId(args[1]);
+                    if (uuid == null) break;
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
                     MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
 
                     return mmoPlayer.streamTalents().get().map(talent -> talent.getTalentId())
