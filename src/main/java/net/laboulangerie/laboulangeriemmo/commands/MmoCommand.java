@@ -1,7 +1,9 @@
 package net.laboulangerie.laboulangeriemmo.commands;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -21,6 +23,8 @@ import org.jetbrains.annotations.Nullable;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.blockus.Blockus;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusDataHolder;
+import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
+import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardRenderer;
 import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
@@ -143,6 +147,44 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 dataHolder.removeBlockus(dataHolder.getBlockus(block));
             }
         }
+        if (args[0].equalsIgnoreCase("leaderboards")) {
+            if (args.length > 1 && args[1].equalsIgnoreCase("freeAllMaps")) {
+                try {
+                    LeaderBoardManager.getInstance().freeAllMaps();
+                } catch (IOException e) {
+                    LaBoulangerieMmo.PLUGIN.getLogger().severe("Unable to free the maps :" + e.getMessage());
+                }
+                return true;
+            }
+
+            if (args.length > 3 && args[1].equalsIgnoreCase("updateMap")) {
+                Integer id = 0;
+                try {
+                    id = Integer.valueOf(args[2]);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage("§4The id: " + args[2]+" cannot be converted to an integer!");
+                    return true;
+                }
+                HashMap<String, Double> toSort = getLeaderBoardPretenders(sender, args[3]);
+                if (toSort == null) return true;
+                LeaderBoardManager.getInstance().updateMap(id, toSort);
+                return true;
+            }
+
+            if (args[1].equalsIgnoreCase("create")) {
+                HashMap<String, Double> toSort = getLeaderBoardPretenders(sender, args[2]);
+                if (toSort == null) return true;
+                try {
+                    List<Integer> maps = LeaderBoardManager.getInstance().createLeaderBoard(
+                        new LeaderBoardRenderer(toSort, "§16;Classement des joueurs :", "xp"),
+                        1, 1, (Player) sender);
+                    LeaderBoardManager.getInstance().getMapItem(maps.get(0));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        }
         return false;
     }
 
@@ -150,7 +192,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd,
             @NotNull String alias, @NotNull String[] args) {
         if (args.length == 1)
-            return Arrays.asList("xp", "reload", "rl", "blockus");
+            return Arrays.asList("xp", "reload", "rl", "blockus", "leaderboards");
         if (args[0].equalsIgnoreCase("xp")) {
             switch (args.length) {
                 default:
@@ -175,7 +217,30 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         }
         if (args[0].equalsIgnoreCase("blockus") && args.length == 2)
             return Arrays.asList("isBlockus", "mark", "unmark");
+        if (args[0].equalsIgnoreCase("leaderboards") && args.length == 2)
+            return Arrays.asList("updateMap", "freeAllMaps", "create");
+        if (args.length == 3 && args[0].equalsIgnoreCase("leaderboards") && args[1].equalsIgnoreCase("create"))
+            return Arrays.asList("mining", "thehunter", "woodcutting", "farmer");
 
         return Arrays.asList("");
+    }
+
+    private boolean isValidLeaderBoards(String name) {
+        return Arrays.asList("mining", "thehunter", "woodcutting", "farmer").contains(name);
+    }
+
+    private HashMap<String, Double> getLeaderBoardPretenders(CommandSender sender, String leaderboardName) {
+        if (!isValidLeaderBoards(leaderboardName)) {
+            sender.sendMessage("§4Invalid leader board: " + leaderboardName);
+            return null;
+        }
+
+        File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
+
+        for (File file : folder.listFiles()) // Load all players
+            LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])));
+
+        return (HashMap<String, Double>) LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().stream()
+            .collect(Collectors.toMap((p) -> p.getName(), (p) -> p.getTalent(leaderboardName).getXp()));
     }
 }
