@@ -154,6 +154,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         if (args[0].equalsIgnoreCase("xp")) {
             switch (args.length) {
                 default:
+                    return Arrays.asList("");
                 case 2:
                     return null; // Lists players
                 case 3:
@@ -174,6 +175,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         }
         if (args[0].equalsIgnoreCase("blockus") && args.length == 2)
             return Arrays.asList("isBlockus", "mark", "unmark");
-        return null;
+
+        return Arrays.asList("");
     }
 }
