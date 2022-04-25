@@ -24,7 +24,6 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.blockus.Blockus;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusDataHolder;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
-import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardRenderer;
 import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
@@ -172,13 +171,20 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             }
 
             if (args[1].equalsIgnoreCase("create")) {
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage("§4You need to be in game to use this command!");
+                    return true;
+                }
+                Player player = (Player) sender;
                 HashMap<String, Double> toSort = getLeaderBoardPretenders(sender, args[2]);
                 if (toSort == null) return true;
                 try {
-                    List<Integer> maps = LeaderBoardManager.getInstance().createLeaderBoard(
-                        new LeaderBoardRenderer(toSort, "§16;Classement des joueurs :", "xp"),
-                        1, 1, (Player) sender);
-                    LeaderBoardManager.getInstance().getMapItem(maps.get(0));
+                    LeaderBoardManager.getInstance().createLeaderBoard(
+                        toSort,
+                        "           §16;Classement du metier " + args[2] +":", "xp",
+                        2, 2
+                    )
+                    .stream().forEach(id -> player.getInventory().addItem(LeaderBoardManager.getInstance().getMapItem(id)));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -1,8 +1,9 @@
 package net.laboulangerie.laboulangeriemmo.core.mapleaderboard;
 
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -18,43 +19,104 @@ public class LeaderBoardRenderer extends MapRenderer {
     private HashMap<String, Double> elements;
     private String title;
     private String suffix;
+    private byte x;
+    private byte y;
     /**
      * 
      * @param elements Map of the elements to sort, {@code value} will be rounded when displayed
      * @param title First line of the map
      * @param suffix Unit of the {@code value}, will be displayed behind the {@code value}
+     * @param x Coordinate of the map in the map combination
+     * @param y Coordinate of the map in the map combination
      */
-    public LeaderBoardRenderer(HashMap<String, Double> elements, String title, String suffix) {
+    public LeaderBoardRenderer(HashMap<String, Double> elements, String title, String suffix, byte x, byte y) {
         this.elements = elements;
         this.title = title;
         this.suffix = suffix;
+        this.x = x;
+        this.y = y;
     }
 
     @Override
     public void render(@NotNull MapView mapView, @NotNull MapCanvas canvas, @NotNull Player player) {
-        if (done) return;
+        if (done) return; //Avoid rendering each tick
         done = true;
         for (int x = 0; x < 128; ++x) //clear the canvas
             for (int y = 0; y < 128; ++y)
                 canvas.setPixel(x, y, (byte) 0);
     
-        HashMap<String, Double> sortedElmt = elements.entrySet().stream() // Sort by value
+        HashMap<String, Double> sortedElmts = elements.entrySet().stream() // Sort by value
             .sorted(Entry.comparingByValue((a, b) -> Double.compare(b, a)))
             .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        List<String> formattedLines = sortedElmts.entrySet().stream().map(entry -> "§32;" + entry.getKey() + " §92;-§120; " + String.valueOf(Math.round(entry.getValue())) + " §92;" + suffix).collect(Collectors.toList());
 
-        canvas.drawText(0, 0, MinecraftFont.Font, title);
+        int i = 0;
+        if (y == 0) {
+            canvas.drawText(0, 0, MinecraftFont.Font, splitPart(title, x));
+            i = 1; //Avoid writing in top of the title later
+        }
 
-        int i = 1;
-        for (Iterator<Entry<String, Double>> iterator = sortedElmt.entrySet().iterator(); iterator.hasNext();) {
-            Entry<String, Double> entry = iterator.next();
-            canvas.drawText(0, i*16, MinecraftFont.Font, "§32;" + entry.getKey() + " §92;-§120; " + String.valueOf(Math.round(entry.getValue())) + " §92;" + suffix);
+        for (String line : getMapPartText(formattedLines, x, y)) {
+            if (!line.equals("")) canvas.drawText(0, i*16, MinecraftFont.Font, line);
             i++;
-            if (i > 7) break;
+            if (i > 7) break; //Max number of line in a map, shouldn't be called getPartText should handle this
         }
     }
 
     public void update(HashMap<String, Double> elements) {
         this.elements = elements;
-        done = false;
+        done = false; //Render will be done next tick
+    }
+
+    private List<String> getMapPartText(List<String> lines, byte x, byte y) { //TODO verify if last line is well displayed due to some maps having a title or not
+        if (lines.size() <= y*8) return Arrays.asList(""); //Nothing to display in this zone
+
+        List<String> subLines = lines.subList(y*7, (y*7 + 7 > lines.size() ? lines.size() : y*7 + 7));
+        subLines = subLines.stream().map(line -> splitPart(line, x)).collect(Collectors.toList());
+
+        return subLines;
+    }
+    /**
+     * TODO: Keep last color in the new section
+     * @param line
+     * @param x
+     * @return
+     */
+    private String splitPart(String line, byte x) {
+        int totalIndex = 0;
+        String text = "";
+        String lastColor = "";
+        boolean inColorCode = false;
+
+        while (inColorCode || (MinecraftFont.Font.getWidth(text) < x * 127 && totalIndex < line.length())) {
+            String chr = line.substring(totalIndex, totalIndex+1);
+            if (chr.equals("§")) {
+                inColorCode = true;
+                lastColor = chr;
+            }else if (inColorCode && chr.equals(";")) {
+                inColorCode = false;
+                lastColor += chr;
+            }else if (inColorCode) {
+                lastColor += chr;
+            }
+            text += chr;
+            totalIndex++;
+        }
+        if (MinecraftFont.Font.getWidth(text) < x*127) return ""; //The line is too short to reach the researched section
+
+        int totalIndexEnd = totalIndex;
+        text = "";
+
+        while (inColorCode || (MinecraftFont.Font.getWidth(text) <= 127 && totalIndexEnd < line.length())) {
+            String chr = line.substring(totalIndexEnd, totalIndexEnd+1);
+            if (chr.equals("§")) {
+                inColorCode = true;
+            }else if (inColorCode && chr.equals(";")) {
+                inColorCode = false;
+            }
+            text += chr;
+            totalIndexEnd++;
+        }
+        return lastColor +text;
     }
 }
