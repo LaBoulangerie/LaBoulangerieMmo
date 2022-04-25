@@ -22,7 +22,6 @@ public class LeaderBoardRenderer extends MapRenderer {
     private byte x;
     private byte y;
     /**
-     * 
      * @param elements Map of the elements to sort, {@code value} will be rounded when displayed
      * @param title First line of the map
      * @param suffix Unit of the {@code value}, will be displayed behind the {@code value}
@@ -77,17 +76,19 @@ public class LeaderBoardRenderer extends MapRenderer {
         return subLines;
     }
     /**
-     * TODO: Keep last color in the new section
      * @param line
      * @param x
-     * @return
+     * @return part of line that will be rendered in this map
      */
-    private String splitPart(String line, byte x) {
-        int totalIndex = 0;
+    private String splitPart(String line, byte x) { //TODO can probably be simplified, story for another time
+        int totalIndex = 0; //Will store the start of the text to display in this map
         String text = "";
-        String lastColor = "";
+        String lastColor = ""; //Used to remember text's color between maps
         boolean inColorCode = false;
 
+        //We face extra headaches because all letter doesn't have the same width and we have to consider that color codes won't be rendered
+        //MinecraftFont.Font.getWidth(text) returns the pixels taken by "text", but seems to
+        //not be very precise (missing one or two pixels, need too look in more depth later)
         while (inColorCode || (MinecraftFont.Font.getWidth(text) < x * 127 && totalIndex < line.length())) {
             String chr = line.substring(totalIndex, totalIndex+1);
             if (chr.equals("§")) {
@@ -117,6 +118,6 @@ public class LeaderBoardRenderer extends MapRenderer {
             text += chr;
             totalIndexEnd++;
         }
-        return lastColor +text;
+        return lastColor + text;
     }
 }
