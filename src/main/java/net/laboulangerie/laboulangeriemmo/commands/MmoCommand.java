@@ -170,7 +170,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            if (args[1].equalsIgnoreCase("create")) {
+            if (args.length > 2 && args[1].equalsIgnoreCase("create")) {
                 if (!(sender instanceof Player)) {
                     sender.sendMessage("§4You need to be in game to use this command!");
                     return true;
