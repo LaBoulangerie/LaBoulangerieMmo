@@ -3,7 +3,6 @@ package net.laboulangerie.laboulangeriemmo.core.mapleaderboard;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,7 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapRenderer;
@@ -43,30 +41,36 @@ public class LeaderBoardManager {
         return instance;
     }
 
-    public List<Integer> createLeaderBoard(LeaderBoardRenderer renderer, int width, int height, Player player) throws IOException {
+    public List<Integer> createLeaderBoard(HashMap<String, Double> elements, String title, String suffix, int width, int height) throws IOException {
         if (width <= 0 || height <= 0)
             throw new IllegalArgumentException("Dimensions cannot be negative or null");
         if (width > 10 || height > 10)
             throw new IllegalArgumentException("Dimensions cannot be greater than 10");
+        List<Integer> createdMaps = new ArrayList<>();
 
-        MapView mapView = null;
-        if (unusedMaps.size() > 0) {// Maps are in limited amount so we reuse maps has much has possible
-            mapView = Bukkit.getMap(unusedMaps.get(0));
-            unusedMaps.remove(0);
-        }else {
-            mapView = Bukkit.createMap(player.getWorld());
+        for (byte x = 0; x < width; x++) {
+            for (byte y = 0; y < height; y++) {
+                MapView mapView = null;
+                if (unusedMaps.size() > 0) {// Maps are in limited amount so we reuse maps has much has possible
+                    mapView = Bukkit.getMap(unusedMaps.get(0));
+                    unusedMaps.remove(0);
+                }else {
+                    mapView = Bukkit.createMap(Bukkit.getWorlds().get(0));
+                }
+        
+                for (MapRenderer defaultRenderer : mapView.getRenderers())//Clean potential ancient Renderers
+                    mapView.removeRenderer(defaultRenderer);
+        
+                mapView.addRenderer(new LeaderBoardRenderer(elements, title, suffix, x, y));
+                mapView.setScale(Scale.FARTHEST);
+                mapView.setTrackingPosition(false);
+        
+                createdMaps.add(mapView.getId());
+            }
         }
-
-        for (MapRenderer defaultRenderer : mapView.getRenderers())//Clean potential ancient Renderers
-            mapView.removeRenderer(defaultRenderer);
-
-        mapView.addRenderer(renderer);
-        mapView.setScale(Scale.FARTHEST);
-        mapView.setTrackingPosition(false);
-
-        saveMap(mapView.getId());
-
-        return Arrays.asList(mapView.getId());
+        usedMaps.addAll(createdMaps);
+        saveData();
+        return createdMaps;
     }
 
     /**
@@ -114,11 +118,6 @@ public class LeaderBoardManager {
     public void freeAllMaps() throws IOException {
         unusedMaps.addAll(usedMaps);
         usedMaps.clear();
-        saveData();
-    }
-
-    public void saveMap(Integer id) throws IOException {
-        usedMaps.add(id);
         saveData();
     }
 
