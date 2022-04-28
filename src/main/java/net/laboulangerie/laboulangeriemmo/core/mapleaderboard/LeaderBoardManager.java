@@ -10,6 +10,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 import org.bukkit.map.MapRenderer;
@@ -18,16 +21,17 @@ import org.bukkit.map.MapView.Scale;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
-public class LeaderBoardManager {
-
+public class LeaderBoardManager implements Listener {
     private static LeaderBoardManager instance = null;
+    private RendererProvider rendererProvider;
     private MapDataSave dataFile;
     private List<Integer> usedMaps;
     private List<Integer> unusedMaps;
 
-    public LeaderBoardManager() {
+    public LeaderBoardManager(File dataFolder) {
+        rendererProvider = new RendererProvider(dataFolder);
         try {
-            dataFile = new MapDataSave("mapdata.yml");
+            dataFile = new MapDataSave(dataFolder.getPath() + "/mapdata.yml");
         } catch (IOException e) {
             LaBoulangerieMmo.PLUGIN.getLogger().severe("Unable to load save data of the leaderboard maps: " + e.getMessage());
             return;
@@ -37,7 +41,7 @@ public class LeaderBoardManager {
 
     public static LeaderBoardManager getInstance() {
         if (instance == null)
-            instance = new LeaderBoardManager();
+            instance = new LeaderBoardManager(new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "/maps/"));
         return instance;
     }
 
@@ -66,6 +70,7 @@ public class LeaderBoardManager {
                 mapView.setTrackingPosition(false);
         
                 createdMaps.add(mapView.getId());
+                rendererProvider.store(mapView.getId(), (LeaderBoardRenderer) mapView.getRenderers().get(0)); //Store the rendered to restore it on restart
             }
         }
         usedMaps.addAll(createdMaps);
@@ -82,6 +87,7 @@ public class LeaderBoardManager {
         if (!usedMaps.contains(id)) throw new IllegalArgumentException("No map with id: " + id);
         usedMaps.remove(id);
         unusedMaps.add(id);
+        rendererProvider.remove(id);
         saveData();
     }
 
@@ -117,6 +123,7 @@ public class LeaderBoardManager {
      */
     public void freeAllMaps() throws IOException {
         unusedMaps.addAll(usedMaps);
+        usedMaps.forEach(rendererProvider::remove);
         usedMaps.clear();
         saveData();
     }
@@ -147,6 +154,15 @@ public class LeaderBoardManager {
         dataFile.save();
     }
 
+    @EventHandler
+    public void onMapInit(MapInitializeEvent event) {
+        if (usedMaps.contains(event.getMap().getId())) {
+            for (MapRenderer defaultRenderer : event.getMap().getRenderers())//Clean potential ancient Renderers
+                event.getMap().removeRenderer(defaultRenderer);
+            event.getMap().addRenderer(rendererProvider.provide(event.getMap().getId()));
+        }
+    }
+
     class MapDataSave {
         private FileConfiguration dataYAML;
         private File dataFile;
@@ -159,7 +175,7 @@ public class LeaderBoardManager {
         }
 
         private void ensureFileExists() throws IOException {
-            dataFile = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), name);
+            dataFile = new File(name);
             if (!dataFile.exists())
                 dataFile.createNewFile();
         }

@@ -14,8 +14,10 @@ import org.bukkit.map.MapView;
 import org.bukkit.map.MinecraftFont;
 import org.jetbrains.annotations.NotNull;
 
-public class LeaderBoardRenderer extends MapRenderer {
-    private boolean done = false;
+import net.laboulangerie.laboulangeriemmo.json.GsonSerializable;
+
+public class LeaderBoardRenderer extends MapRenderer implements GsonSerializable {
+    private transient boolean done = false;
     private HashMap<String, Double> elements;
     private String title;
     private String suffix;

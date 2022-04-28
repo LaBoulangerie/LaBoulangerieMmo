@@ -18,6 +18,7 @@ import net.laboulangerie.laboulangeriemmo.commands.Stats;
 import net.laboulangerie.laboulangeriemmo.commands.TownyMmo;
 import net.laboulangerie.laboulangeriemmo.core.Bar;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboDispatcher;
+import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.expansions.MmoExpansion;
 import net.laboulangerie.laboulangeriemmo.json.GsonSerializer;
@@ -105,6 +106,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 new AbilitiesManager(),
                 new MmoListener(bar),
                 new BlockusListener(),
+                LeaderBoardManager.getInstance(),
                 new ComboDispatcher()).forEach(l -> this.getServer().getPluginManager().registerEvents(l, this));
     }
 
