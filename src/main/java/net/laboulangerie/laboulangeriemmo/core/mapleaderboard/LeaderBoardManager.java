@@ -29,6 +29,7 @@ public class LeaderBoardManager implements Listener {
     private List<Integer> unusedMaps;
 
     public LeaderBoardManager(File dataFolder) {
+        if (!dataFolder.exists()) dataFolder.mkdir();
         rendererProvider = new RendererProvider(dataFolder);
         try {
             dataFile = new MapDataSave(dataFolder.getPath() + "/mapdata.yml");
