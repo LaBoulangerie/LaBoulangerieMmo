@@ -46,7 +46,7 @@ public class LeaderBoardManager implements Listener {
         return instance;
     }
 
-    public List<Integer> createLeaderBoard(HashMap<String, Double> elements, String title, String suffix, int width, int height) throws IOException {
+    public List<Integer> createLeaderBoard(HashMap<String, Double> pretenders, String title, String unit, int width, int height) throws IOException {
         if (width <= 0 || height <= 0)
             throw new IllegalArgumentException("Dimensions cannot be negative or null");
         if (width > 10 || height > 10)
@@ -66,7 +66,7 @@ public class LeaderBoardManager implements Listener {
                 for (MapRenderer defaultRenderer : mapView.getRenderers())//Clean potential ancient Renderers
                     mapView.removeRenderer(defaultRenderer);
         
-                mapView.addRenderer(new LeaderBoardRenderer(elements, title, suffix, x, y));
+                mapView.addRenderer(new LeaderBoardRenderer(pretenders, title, unit, x, y));
                 mapView.setScale(Scale.FARTHEST);
                 mapView.setTrackingPosition(false);
         
@@ -97,12 +97,12 @@ public class LeaderBoardManager implements Listener {
      * @param id
      * @throws IllegalArgumentException if {@code id} is invalid
      */
-    public void updateMap(Integer id, HashMap<String, Double> elements) throws IllegalArgumentException {
+    public void updateMap(Integer id, HashMap<String, Double> pretenders) throws IllegalArgumentException {
         if (!usedMaps.contains(id)) throw new IllegalArgumentException("No map with id: " + id);
 
         for (MapRenderer renderer : Bukkit.getMap(id).getRenderers()) {            
             if (renderer instanceof LeaderBoardRenderer) {
-                ((LeaderBoardRenderer) renderer).update(elements);
+                ((LeaderBoardRenderer) renderer).update(pretenders);
                 break;
             }
         }
