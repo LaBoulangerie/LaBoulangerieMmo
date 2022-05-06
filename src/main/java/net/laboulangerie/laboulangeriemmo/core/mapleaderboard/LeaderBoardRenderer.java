@@ -91,7 +91,7 @@ public class LeaderBoardRenderer extends MapRenderer implements GsonSerializable
         //We face extra headaches because all letter doesn't have the same width and we have to consider that color codes won't be rendered
         //MinecraftFont.Font.getWidth(text) returns the pixels taken by "text", but seems to
         //not be very precise (missing one or two pixels, need too look in more depth later)
-        while (inColorCode || (MinecraftFont.Font.getWidth(text) < x * 127 && totalIndex < line.length())) {
+        while (inColorCode || (MinecraftFont.Font.getWidth(text) <= x * 128 && totalIndex < line.length())) {
             String chr = line.substring(totalIndex, totalIndex+1);
             if (chr.equals("§")) {
                 inColorCode = true;
@@ -105,12 +105,12 @@ public class LeaderBoardRenderer extends MapRenderer implements GsonSerializable
             text += chr;
             totalIndex++;
         }
-        if (MinecraftFont.Font.getWidth(text) < x*127) return ""; //The line is too short to reach the researched section
+        if (MinecraftFont.Font.getWidth(text) < x*128) return ""; //The line is too short to reach the researched section
 
         int totalIndexEnd = totalIndex;
         text = "";
 
-        while (inColorCode || (MinecraftFont.Font.getWidth(text) <= 127 && totalIndexEnd < line.length())) {
+        while (inColorCode || (MinecraftFont.Font.getWidth(text) < 128 && totalIndexEnd < line.length())) {
             String chr = line.substring(totalIndexEnd, totalIndexEnd+1);
             if (chr.equals("§")) {
                 inColorCode = true;
