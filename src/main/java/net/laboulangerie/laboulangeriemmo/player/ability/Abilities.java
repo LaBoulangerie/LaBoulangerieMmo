@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import net.laboulangerie.laboulangeriemmo.player.ability.farmer.AnimalTwins;
 import net.laboulangerie.laboulangeriemmo.player.ability.farmer.BetterBonemeal;
 import net.laboulangerie.laboulangeriemmo.player.ability.farmer.NatureTouch;
+import net.laboulangerie.laboulangeriemmo.player.ability.farmer.TastyBread;
 import net.laboulangerie.laboulangeriemmo.player.ability.mining.FastMine;
 import net.laboulangerie.laboulangeriemmo.player.ability.mining.FastSmelt;
 import net.laboulangerie.laboulangeriemmo.player.ability.mining.MagneticField;
@@ -41,7 +42,8 @@ public enum Abilities {
 
     NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), false, "default"),
     BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "default"),
-    ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(), false, "default");
+    ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(), false, "default"),
+    TASTY_BREAD(0, TimeUnit.SECONDS, 0, "farmer", new TastyBread(), false, "default");
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;

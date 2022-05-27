@@ -14,5 +14,6 @@ public enum AbilityTrigger {
     BREAK,
     EAT,
     COMBO,
+    HOLD_ITEM,
     BREED
 }
