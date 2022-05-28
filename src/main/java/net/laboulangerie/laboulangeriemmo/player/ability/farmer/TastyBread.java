@@ -6,6 +6,7 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.WaterMob;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
@@ -41,7 +42,7 @@ public class TastyBread extends AbilityExecutor{
                 }
             }
             if (level >= 45) {
-                if (en instanceof Breedable) {
+                if (en instanceof Breedable || en instanceof WaterMob) {
                     Creature animal = (Creature) en;
                     animal.getPathfinder().moveTo(player, 1);
                 }
