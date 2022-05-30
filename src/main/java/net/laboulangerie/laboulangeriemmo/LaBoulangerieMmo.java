@@ -77,7 +77,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         if (getServer().getPluginManager().getPlugin("BetonQuest") != null) {
             BetonQuest.getInstance().registerConditions("lbmmo_level", LevelCondition.class);
             BetonQuest.getInstance().registerEvents("lbmmo_xp", XpEvent.class);
-            getLogger().info("Hooked in BetonQuest!"); 
+            getLogger().info("Hooked in BetonQuest!");
         }
 
         getLogger().info("Plugin started");
