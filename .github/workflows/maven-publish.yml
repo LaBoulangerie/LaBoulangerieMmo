@@ -20,5 +20,4 @@ jobs:
         run: |
           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
           chmod +x ./gradlew
-          rm /build/libs/LaBoulangerie-*-dev*.jar
           ./gradlew -Pversion=${NEW_VERSION} publish
