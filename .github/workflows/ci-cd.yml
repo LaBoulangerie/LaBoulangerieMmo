@@ -27,8 +27,8 @@ jobs:
         with:
           name: laboulangeriemmo
           path: |
-            build/libs/LaBoulangerieMmo-*.jar
             !build/libs/LaBoulangerieMmo-*-dev*.jar
+            build/libs/LaBoulangerieMmo-*.jar
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
