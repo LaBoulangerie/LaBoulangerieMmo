@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import net.laboulangerie.laboulangeriemmo.player.ability.farmer.AnimalTwins;
 import net.laboulangerie.laboulangeriemmo.player.ability.farmer.BetterBonemeal;
 import net.laboulangerie.laboulangeriemmo.player.ability.farmer.NatureTouch;
+import net.laboulangerie.laboulangeriemmo.player.ability.farmer.TastyBread;
 import net.laboulangerie.laboulangeriemmo.player.ability.mining.FastMine;
 import net.laboulangerie.laboulangeriemmo.player.ability.mining.FastSmelt;
 import net.laboulangerie.laboulangeriemmo.player.ability.mining.MagneticField;
@@ -17,6 +18,7 @@ import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.FireBow;
 import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.Hiding;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.BetterAppleDrop;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.DoubleDropLog;
+import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.Strip;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.ThickTree;
 import net.laboulangerie.laboulangeriemmo.player.ability.woodcutting.Timber;
 
@@ -30,6 +32,7 @@ public enum Abilities {
     DOUBLE_DROP_LOG(0, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), true, "default"),
     BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false, "default"),
     TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true, "default"),
+    STRIP(0, TimeUnit.SECONDS, 1, "woodcutting", new Strip(), true, "default"),
     THICK_TREE(0, TimeUnit.SECONDS, 0, "woodcutting", new ThickTree(), true, "default"),
 
     EXP_IN_BOTTLE(0, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false, "default"),
@@ -37,9 +40,10 @@ public enum Abilities {
     FIRE_BOW(0, TimeUnit.SECONDS, 0, "thehunter", new FireBow(), true, "default"),
     HIDING(1, TimeUnit.SECONDS, 0, "thehunter", new Hiding(), true, "default"),
 
-	NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), false, "default"),
-	BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "default"),
-	ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(), false, "default");
+    NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), false, "default"),
+    BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "default"),
+    ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(), false, "default"),
+    TASTY_BREAD(0, TimeUnit.SECONDS, 0, "farmer", new TastyBread(), false, "default");
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;

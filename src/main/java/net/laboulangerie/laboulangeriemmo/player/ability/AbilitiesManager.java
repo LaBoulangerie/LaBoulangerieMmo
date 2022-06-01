@@ -1,5 +1,6 @@
 package net.laboulangerie.laboulangeriemmo.player.ability;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -11,9 +12,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
+import net.laboulangerie.laboulangeriemmo.events.MmoPlayerUseAbilityEvent;
 import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 
 public class AbilitiesManager implements Listener {
@@ -78,15 +81,22 @@ public class AbilitiesManager implements Listener {
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) event.getBreeder()), event, AbilityTrigger.BREED);
     }
 
+    @EventHandler
+    public void onItemHeld(PlayerItemHeldEvent event) {
+        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event, AbilityTrigger.HOLD_ITEM);
+    }
+
     private void triggerAbility(MmoPlayer player, Event event, AbilityTrigger trigger) {
         Abilities.supplier().get()
         .filter(x -> x.getExecutor().getAbilityTrigger() == trigger
-                && player.canUseAbility(x)
-                && x.getExecutor().shouldTrigger(event))
+        && player.canUseAbility(x)
+        && x.getExecutor().shouldTrigger(event))
         .forEach(x -> {
             x.getExecutor().trigger(event,
-                    player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                    player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
+            );
             player.useAbility(x);
+            Bukkit.getPluginManager().callEvent(new MmoPlayerUseAbilityEvent(player, x, event));
         });
     }
 }
