@@ -64,7 +64,7 @@ dependencies {
 }
 
 group = "net.laboulangerie"
-version = "1.3.1"
+version = "1.3.2-SNAPSHOT"
 description = "LaBoulangerieMmo"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
@@ -73,7 +73,9 @@ tasks {
   assemble {
     dependsOn(reobfJar)
   }
-
+  jar {
+    dependsOn(reobfJar)
+  }
   compileJava {
     options.encoding = Charsets.UTF_8.name()
     options.release.set(17)
@@ -85,7 +87,7 @@ tasks {
     filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
   }
   shadowJar {
-      fun reloc(pkg: String) = relocate(pkg, "net.laboulangerie.dependency.$pkg")
+    fun reloc(pkg: String) = relocate(pkg, "net.laboulangerie.dependency.$pkg")
   }
 }
 
