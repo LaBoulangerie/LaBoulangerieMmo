@@ -84,9 +84,6 @@ tasks {
   processResources {
     filteringCharset = Charsets.UTF_8.name() // We want UTF-8 for everything
   }
-  reobfJar {
-    outputJar.set(layout.buildDirectory.file("libs/${project.name}.jar"))
-  }
   shadowJar {
       fun reloc(pkg: String) = relocate(pkg, "net.laboulangerie.dependency.$pkg")
   }
