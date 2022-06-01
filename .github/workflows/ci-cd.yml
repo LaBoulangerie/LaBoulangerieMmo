@@ -23,9 +23,9 @@ jobs:
         with:
          gradle-version: "7.4.1"
          arguments: assemble
-      - uses: actions/upload-artifact@v1
       - name: Clean build outputs
         run: rm build/libs/LaBoulangerieMmo-*dev*.jar
+      - uses: actions/upload-artifact@v1
         with:
           name: laboulangeriemmo
           path: build/libs/LaBoulangerieMmo-*.jar
