@@ -26,9 +26,7 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: laboulangeriemmo
-          path: |
-            !build/libs/LaBoulangerieMmo-*-dev*.jar
-            build/libs/LaBoulangerieMmo-*.jar
+          path: build/libs/LaBoulangerieMmo-[0-9].[0-9].[0-9].jar
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
