@@ -86,7 +86,7 @@ public class AbilitiesManager implements Listener {
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event, AbilityTrigger.HOLD_ITEM);
     }
 
-    private void triggerAbility(MmoPlayer player, Event event, AbilityTrigger trigger) {
+    public void triggerAbility(MmoPlayer player, Event event, AbilityTrigger trigger) {
         Abilities.supplier().get()
         .filter(x -> x.getExecutor().getAbilityTrigger() == trigger
         && player.canUseAbility(x)
