@@ -1,5 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.events;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
@@ -8,6 +10,9 @@ import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.player.ability.Abilities;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
 
+/**
+ * Called just after a player used an ability
+ */
 public class MmoPlayerUseAbilityEvent extends Event{
 
     private static final HandlerList handlers = new HandlerList();
@@ -29,6 +34,10 @@ public class MmoPlayerUseAbilityEvent extends Event{
     public MmoPlayer getMmoPlayer() { return mmoPlayer; }
     public AbilityTrigger getAbilityTrigger() { return trigger; }
     public Abilities getAbility() { return ability; }
+    /**
+     * The event that triggered the ability can be cast according to the {@code AbilityTrigger} used
+     * @return the event that triggered the ability
+     */
     public Event getTriggerEvent() { return triggerEvent; }
-
+    public Player getPlayer() { return Bukkit.getPlayer(mmoPlayer.getUniqueId()); }
 }
