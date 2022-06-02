@@ -64,16 +64,13 @@ dependencies {
 }
 
 group = "net.laboulangerie"
-version = "1.3.2-SNAPSHOT"
+version = "1.3.2"
 description = "LaBoulangerieMmo"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 tasks {
   // Configure reobfJar to run when invoking the build task
   assemble {
-    dependsOn(reobfJar)
-  }
-  jar {
     dependsOn(reobfJar)
   }
   compileJava {
@@ -99,6 +96,7 @@ publishing {
         create<MavenPublication>("default") {
             setArtifactId("laboulangeriemmo")
             from(components["java"])
+            artifact(tasks.named("reobfJar"))
         }
     }
 
