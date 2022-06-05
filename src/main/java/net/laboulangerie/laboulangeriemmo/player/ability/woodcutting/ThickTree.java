@@ -33,7 +33,6 @@ public class ThickTree extends AbilityExecutor{
         Block block = event.getPlayer().getTargetBlock(5);
         World world = block.getWorld();
         TreeType treeType = null;
-        block.setType(Material.AIR);
         switch (block.getType()) {
             case SPRUCE_SAPLING :
                 treeType = TreeType.MEGA_REDWOOD;
@@ -48,8 +47,7 @@ public class ThickTree extends AbilityExecutor{
                 event.getPlayer().sendMessage("Ceci n'est pas un sapling valable");
                 return;
         }
+        block.setType(Material.AIR);
         world.generateTree(block.getLocation(), treeType);
     }
-
-
 }
