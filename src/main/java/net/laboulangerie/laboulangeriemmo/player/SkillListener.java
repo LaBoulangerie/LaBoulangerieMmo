@@ -13,11 +13,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import net.laboulangerie.laboulangeriemmo.reader.BonusYmlReader;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class SkillListener implements Listener {
-    public SkillListener() {
+
+    private BonusYmlReader file;
+    public SkillListener(BonusYmlReader reader) {
+        file = reader;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -61,9 +65,11 @@ public class SkillListener implements Listener {
             if (section == null)
                 return;
 
-            if (section.getKeys(false).contains(identifier))
+            if (section.getKeys(false).contains(identifier)) {
+                double multiplier = file.getSumIntList(talentName);
                 LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName,
-                        section.getDouble(identifier));
+                        section.getDouble(identifier) * multiplier);
+            }
         });
     }
 }

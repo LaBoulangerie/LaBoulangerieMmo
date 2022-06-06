@@ -28,6 +28,7 @@ import net.laboulangerie.laboulangeriemmo.player.MmoPlayerListener;
 import net.laboulangerie.laboulangeriemmo.player.MmoPlayerManager;
 import net.laboulangerie.laboulangeriemmo.player.SkillListener;
 import net.laboulangerie.laboulangeriemmo.player.ability.AbilitiesManager;
+import net.laboulangerie.laboulangeriemmo.reader.BonusYmlReader;
 import net.milkbowl.vault.economy.Economy;
 import pl.betoncraft.betonquest.BetonQuest;
 
@@ -40,6 +41,8 @@ public class LaBoulangerieMmo extends JavaPlugin {
     private BlockusDataManager blockusDataManager;
     private MmoPlayerManager mmoPlayerManager;
     private Bar bar;
+
+    private BonusYmlReader fileBonus = new BonusYmlReader("bonus.yml", this);
 
     @Override
     public void onEnable() {
@@ -102,7 +105,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         Arrays.asList(
                 new ServerListener(),
                 new MmoPlayerListener(),
-                new SkillListener(),
+                new SkillListener(fileBonus),
                 new AbilitiesManager(),
                 new MmoListener(bar),
                 new BlockusListener(),
