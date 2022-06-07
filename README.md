@@ -19,7 +19,7 @@ All LaBoulangerieMmo related keywords are prefixed with `lbmmo_`.
 
 ## Building from sources
 
-THis project uses [Gradle](https://gradle.org/) as its build system, once you have Gradle installed you can build the project by going in cloning the project and then, inside the project's folder, open your terminal and type `> gradlew assemble` if your are on Windows and `$ chmod +x ./gradlew` the first time you build it on Unix-like systems and then `$ ./gradlew assemble`.
+THis project uses [Gradle](https://gradle.org/) as its build system, once you have Gradle installed you can build the project in cloning the project and then, inside the project's folder, open your terminal and type `> gradlew assemble` if your are on Windows and `$ chmod +x ./gradlew` the first time you build it on Unix-like systems and then `$ ./gradlew assemble`.
 
 The generated JARs are located in `build/libs/`, the one you should use is `LaBoulangerie-X.X.X-jar`.
 
