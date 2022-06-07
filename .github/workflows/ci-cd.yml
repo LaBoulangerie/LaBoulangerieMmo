@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths-ignore:
-      - 'README.MD'
+      - 'README.md'
       - '.gitignore'
       - '.github/workflows/maven-publish.yml'
 
