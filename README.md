@@ -1,5 +1,8 @@
 # LaBoulangerieMmo
 
+This plugin supports minecraft 1.18 and might partially support other versions.
+You can download the plugin [here.](https://github.com/LaBoulangerie/LaBoulangerieMmo/releases/latest)
+
 ## BetonQuest integration
 
 LaBoulangerieMmo provides some new conditions and events for BetonQuest.
@@ -13,6 +16,12 @@ All LaBoulangerieMmo related keywords are prefixed with `lbmmo_`.
 > `lbmmo_xp mining +50` will give to the player 50 xp in the mining talent
 
 > `lbmmo_xp mining -50` will take from the player 50 xp in the mining talent
+
+## Building from sources
+
+THis project uses [Gradle](https://gradle.org/) as its build system, once you have Gradle installed you can build the project by going in cloning the project and then, inside the project's folder, open your terminal and type `> gradlew assemble` if your are on Windows and `$ chmod +x ./gradlew` the first time you build it on Unix-like systems and then `$ ./gradlew assemble`.
+
+The generated JARs are located in `build/libs/`, the one you should use is `LaBoulangerie-X.X.X-jar`.
 
 ## API
 
