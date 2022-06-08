@@ -3,9 +3,9 @@ package net.laboulangerie.laboulangeriemmo.expansions;
 import org.bukkit.OfflinePlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayerManager;
-import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerManager;
+import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 
 public class MmoExpansion extends PlaceholderExpansion {
 

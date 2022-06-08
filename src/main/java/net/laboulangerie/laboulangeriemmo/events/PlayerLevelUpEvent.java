@@ -4,8 +4,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 
 public class PlayerLevelUpEvent extends Event {
     private static final HandlerList handlers = new HandlerList();

@@ -21,11 +21,11 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 import net.laboulangerie.laboulangeriemmo.blockus.Blockus;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusDataHolder;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
 public class MmoCommand implements CommandExecutor, TabCompleter {
 

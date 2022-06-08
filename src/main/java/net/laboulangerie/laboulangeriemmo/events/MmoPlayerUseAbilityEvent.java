@@ -6,9 +6,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.player.ability.Abilities;
-import net.laboulangerie.laboulangeriemmo.player.ability.AbilityTrigger;
+import net.laboulangerie.laboulangeriemmo.abilities.Abilities;
+import net.laboulangerie.laboulangeriemmo.abilities.AbilityTrigger;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 
 /**
  * Called just after a player used an ability

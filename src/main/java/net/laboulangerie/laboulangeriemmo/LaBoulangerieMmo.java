@@ -7,6 +7,9 @@ import java.util.logging.Level;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.laboulangerie.laboulangeriemmo.abilities.AbilitiesManager;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerListener;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerManager;
 import net.laboulangerie.laboulangeriemmo.betonquest.LevelCondition;
 import net.laboulangerie.laboulangeriemmo.betonquest.XpEvent;
 import net.laboulangerie.laboulangeriemmo.blockus.BlockusDataManager;
@@ -24,10 +27,7 @@ import net.laboulangerie.laboulangeriemmo.expansions.MmoExpansion;
 import net.laboulangerie.laboulangeriemmo.json.GsonSerializer;
 import net.laboulangerie.laboulangeriemmo.listener.MmoListener;
 import net.laboulangerie.laboulangeriemmo.listener.ServerListener;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayerListener;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayerManager;
-import net.laboulangerie.laboulangeriemmo.player.SkillListener;
-import net.laboulangerie.laboulangeriemmo.player.ability.AbilitiesManager;
+import net.laboulangerie.laboulangeriemmo.listener.GrindingListener;
 import net.milkbowl.vault.economy.Economy;
 import pl.betoncraft.betonquest.BetonQuest;
 
@@ -102,7 +102,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         Arrays.asList(
                 new ServerListener(),
                 new MmoPlayerListener(),
-                new SkillListener(),
+                new GrindingListener(),
                 new AbilitiesManager(),
                 new MmoListener(bar),
                 new BlockusListener(),

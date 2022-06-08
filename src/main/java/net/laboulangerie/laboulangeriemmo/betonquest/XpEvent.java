@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import pl.betoncraft.betonquest.Instruction;
 import pl.betoncraft.betonquest.api.QuestEvent;
 import pl.betoncraft.betonquest.exceptions.InstructionParseException;
