@@ -13,6 +13,7 @@ import pl.betoncraft.betonquest.exceptions.QuestRuntimeException;
 
 public class XpEvent extends QuestEvent {
 
+    @SuppressWarnings("deprecation")
     public XpEvent(Instruction instruction) throws InstructionParseException {
         super(instruction);
     }

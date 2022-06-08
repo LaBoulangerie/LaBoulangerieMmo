@@ -13,6 +13,7 @@ import pl.betoncraft.betonquest.exceptions.QuestRuntimeException;
 
 public class LevelCondition extends Condition {
 
+    @SuppressWarnings("deprecation")
     public LevelCondition(Instruction instruction) {
         super(instruction);
     }
