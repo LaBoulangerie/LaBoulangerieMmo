@@ -1,18 +1,17 @@
 package net.laboulangerie.laboulangeriemmo.api.talent;
 
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+
 public class Talent {
     private double xp = 0;
     private String talentId;
-    private String displayName;
 
     public Talent() {
         talentId = "default";
-        displayName = "default";
     }
 
-    public Talent(String talentId, String displayName) {
+    public Talent(String talentId) {
         this.talentId = talentId;
-        this.displayName = displayName;
     }
 
     public double getXp() {
@@ -48,7 +47,6 @@ public class Talent {
     }
 
     public String getDisplayName() {
-        return displayName;
+        return LaBoulangerieMmo.talentsRegistry.getTalent(talentId).displayName;
     }
-    
 }

@@ -10,7 +10,43 @@ lang:
         level_up: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> ! Vous gagnez <aqua><reward></aqua>
         xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
         combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
-
+enable-talents: true
+talents:
+    miner:
+        display_name: "Miner"
+        abilities:
+            fast-mine:
+                cooldown: 15
+                unit: MINUTES
+                level: 15
+                effect: default
+                log: false
+                tiers:
+                    - 15
+                    - 45
+                    - 75
+            fast-smelt:
+                cooldown: 1
+                unit: HOURS
+                level: 85
+                effect: default
+                log: true
+            minecraft-exp-multiplier:
+                cooldown: 1
+                unit: SECONDS
+                level: 5
+                effect: default
+                log: false
+            magnetic-field:
+                cooldown: 30
+                unit: MINUTES
+                level: 35
+                effect: default
+                log: true
+                tiers:
+                    - 35
+                    - 65
+                    - 95
 talent-grinding:
     mining:
         break:
