@@ -1,8 +1,8 @@
 package net.laboulangerie.laboulangeriemmo.abilities.thehunter;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityTrigger;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.ArmorHider;

@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities;
+package net.laboulangerie.laboulangeriemmo.api.ability;
 
 public enum AbilityTrigger {
     LEFT_CLICK_AIR,

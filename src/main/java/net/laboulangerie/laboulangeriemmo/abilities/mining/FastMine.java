@@ -7,8 +7,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityTrigger;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;

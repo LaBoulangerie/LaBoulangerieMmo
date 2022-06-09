@@ -9,8 +9,8 @@ import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityTrigger;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;

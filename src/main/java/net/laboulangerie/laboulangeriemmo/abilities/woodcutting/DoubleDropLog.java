@@ -9,8 +9,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityTrigger;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 
 public class DoubleDropLog extends AbilityExecutor {

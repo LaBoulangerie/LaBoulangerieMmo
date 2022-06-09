@@ -10,8 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import net.kyori.adventure.text.Component;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityTrigger;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 
 public class ExpInBottle extends AbilityExecutor {
 

@@ -10,8 +10,8 @@ import org.bukkit.entity.WaterMob;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityTrigger;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 
 public class TastyBread extends AbilityExecutor{
 

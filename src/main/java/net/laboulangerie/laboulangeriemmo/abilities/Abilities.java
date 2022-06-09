@@ -21,6 +21,7 @@ import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.DoubleDropLog;
 import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.Strip;
 import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.ThickTree;
 import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.Timber;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 
 public enum Abilities {
 

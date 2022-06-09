@@ -12,8 +12,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.abilities.AbilityTrigger;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 
 public class NatureTouch extends AbilityExecutor {
 
