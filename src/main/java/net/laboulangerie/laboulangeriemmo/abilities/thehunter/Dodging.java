@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
@@ -14,6 +15,10 @@ import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.minecraft.util.Mth;
 
 public class Dodging extends AbilityExecutor {
+
+    public Dodging(AbilityArchetype archetype) {
+        super(archetype);
+    }
 
     @Override
     public AbilityTrigger getAbilityTrigger() {

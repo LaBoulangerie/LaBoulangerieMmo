@@ -7,11 +7,16 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.MagneticFieldTask;
 
 public class MagneticField extends AbilityExecutor {
+
+    public MagneticField(AbilityArchetype archetype) {
+        super(archetype);
+    }
 
     @Override
     public AbilityTrigger getAbilityTrigger() {

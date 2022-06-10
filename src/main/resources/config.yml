@@ -12,6 +12,16 @@ lang:
         combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
 enable-talents: true
 talents:
+    dummy:
+        display_name: "WIP"
+        abilities:
+            dummy:
+                cooldown: 1
+                unit: SECONDS
+                level: 0
+                effect: default
+                log: true
+
     miner:
         display_name: "Miner"
         abilities:

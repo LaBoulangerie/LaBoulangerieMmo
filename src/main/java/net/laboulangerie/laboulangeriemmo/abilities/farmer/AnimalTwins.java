@@ -7,12 +7,17 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityBreedEvent;
 
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 
 public class AnimalTwins extends AbilityExecutor{
 
-	@Override
+	public AnimalTwins(AbilityArchetype archetype) {
+        super(archetype);
+    }
+
+    @Override
 	public AbilityTrigger getAbilityTrigger() {
 		return AbilityTrigger.BREED;
 	}

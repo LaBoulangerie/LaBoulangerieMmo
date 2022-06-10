@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.abilities.farmer.AnimalTwins;
 import net.laboulangerie.laboulangeriemmo.abilities.farmer.BetterBonemeal;
 import net.laboulangerie.laboulangeriemmo.abilities.farmer.NatureTouch;
@@ -25,26 +26,26 @@ import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 
 public enum Abilities {
 
-    MINECRAFT_EXP_MULTIPLIER(5, TimeUnit.SECONDS, 1, "mining", new MinecraftExpMultiplier(), false, "default"),
-    FAST_MINE(15, TimeUnit.MINUTES, 15, "mining", new FastMine(), false, "default"),
-    FAST_SMELT(85, TimeUnit.HOURS, 1, "mining", new FastSmelt(), true, "default"),
-    MAGNETIC_FIELD(35, TimeUnit.MINUTES, 30, "mining", new MagneticField(), true, "default"),
+    MINECRAFT_EXP_MULTIPLIER(5, TimeUnit.SECONDS, 1, "mining", new MinecraftExpMultiplier(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), false, "default"),
+    FAST_MINE(15, TimeUnit.MINUTES, 15, "mining", new FastMine(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), false, "default"),
+    FAST_SMELT(85, TimeUnit.HOURS, 1, "mining", new FastSmelt(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "default"),
+    MAGNETIC_FIELD(35, TimeUnit.MINUTES, 30, "mining", new MagneticField(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "default"),
 
-    DOUBLE_DROP_LOG(0, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(), true, "default"),
-    BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(), false, "default"),
-    TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(), true, "default"),
-    STRIP(0, TimeUnit.SECONDS, 1, "woodcutting", new Strip(), true, "default"),
-    THICK_TREE(0, TimeUnit.SECONDS, 0, "woodcutting", new ThickTree(), true, "default"),
+    DOUBLE_DROP_LOG(0, TimeUnit.SECONDS, 1, "woodcutting", new DoubleDropLog(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "default"),
+    BETTER_APPLE_DROP(1, TimeUnit.SECONDS, 1, "woodcutting", new BetterAppleDrop(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), false, "default"),
+    TIMBER(0, TimeUnit.SECONDS, 1, "woodcutting", new Timber(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "default"),
+    STRIP(0, TimeUnit.SECONDS, 1, "woodcutting", new Strip(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "default"),
+    THICK_TREE(0, TimeUnit.SECONDS, 0, "woodcutting", new ThickTree(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "default"),
 
-    EXP_IN_BOTTLE(0, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(), false, "default"),
-    DODGING(0, TimeUnit.SECONDS, 0, "thehunter", new Dodging(), true, "trail"),
-    FIRE_BOW(0, TimeUnit.SECONDS, 0, "thehunter", new FireBow(), true, "default"),
-    HIDING(1, TimeUnit.SECONDS, 0, "thehunter", new Hiding(), true, "default"),
+    EXP_IN_BOTTLE(0, TimeUnit.SECONDS, 1, "thehunter", new ExpInBottle(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), false, "default"),
+    DODGING(0, TimeUnit.SECONDS, 0, "thehunter", new Dodging(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "trail"),
+    FIRE_BOW(0, TimeUnit.SECONDS, 0, "thehunter", new FireBow(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "default"),
+    HIDING(1, TimeUnit.SECONDS, 0, "thehunter", new Hiding(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "default"),
 
-    NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(), false, "default"),
-    BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(), true, "default"),
-    ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(), false, "default"),
-    TASTY_BREAD(0, TimeUnit.SECONDS, 0, "farmer", new TastyBread(), false, "default");
+    NATURE_TOUCH(1, TimeUnit.SECONDS, 0, "farmer", new NatureTouch(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), false, "default"),
+    BETTER_BONEMEAL(1, TimeUnit.SECONDS, 0, "farmer", new BetterBonemeal(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), true, "default"),
+    ANIMAL_TWINS(1, TimeUnit.SECONDS, 0, "farmer", new AnimalTwins(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), false, "default"),
+    TASTY_BREAD(0, TimeUnit.SECONDS, 0, "farmer", new TastyBread(LaBoulangerieMmo.talentsRegistry.getTalent("dummy").abilitiesArchetypes.get("dummy")), false, "default");
 
     private int requiredLevel;
     private TimeUnit cooldownUnit;

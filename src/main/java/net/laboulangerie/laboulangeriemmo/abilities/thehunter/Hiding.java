@@ -1,6 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.abilities.thehunter;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
@@ -17,6 +18,10 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Hiding extends AbilityExecutor {
+    public Hiding(AbilityArchetype archetype) {
+        super(archetype);
+    }
+
     @Override
     public AbilityTrigger getAbilityTrigger() {
         return AbilityTrigger.COMBO;

@@ -9,6 +9,7 @@ import org.bukkit.event.Event;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
@@ -16,6 +17,10 @@ import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 
 public class Strip extends AbilityExecutor {
+    public Strip(AbilityArchetype archetype) {
+        super(archetype);
+    }
+
     // Relative coordinates of every neighbours that we want to check
     private static int[][] relCoordinates = {
             { 1, 0, 0 },

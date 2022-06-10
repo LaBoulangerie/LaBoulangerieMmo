@@ -18,6 +18,9 @@ public class TalentsRegistry {
     public TalentArchetype getTalent(String identifier) {
         return talentsArchetypes.get(identifier);
     }
+    public HashMap<String, TalentArchetype> getTalents() {
+        return talentsArchetypes;
+    }
     /**
      * Add a talent to the TalentsRegistry
      * @param archetype

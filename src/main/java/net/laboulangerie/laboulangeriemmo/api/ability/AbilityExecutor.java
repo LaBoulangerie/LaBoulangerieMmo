@@ -3,6 +3,11 @@ package net.laboulangerie.laboulangeriemmo.api.ability;
 import org.bukkit.event.Event;
 
 public abstract class AbilityExecutor {
+    private AbilityArchetype archetype;
+
+    public AbilityExecutor(AbilityArchetype archetype) {
+        this.archetype = archetype;
+    }
 
     /**
      * getAbilityTrigger indicate the type of interaction that should be done for a
@@ -31,4 +36,19 @@ public abstract class AbilityExecutor {
      */
     public abstract void trigger(Event baseEvent, int level);
 
+    /**
+     * @return The {@link net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype AbilityArchetype}
+     * used by this executor
+     */
+    public AbilityArchetype getArchetype() {
+        return archetype;
+    }
+    /**
+     * Get the level corresponding to the tier specified
+     * @param tier
+     * @return first level of the tier
+     */
+    public Integer getTier(short tier) {
+        return archetype.getTier(tier);
+    }
 }

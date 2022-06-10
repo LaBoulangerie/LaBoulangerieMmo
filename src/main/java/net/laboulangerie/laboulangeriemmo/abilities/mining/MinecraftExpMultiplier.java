@@ -8,10 +8,15 @@ import org.bukkit.block.Block;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 
 public class MinecraftExpMultiplier extends AbilityExecutor {
+
+    public MinecraftExpMultiplier(AbilityArchetype archetype) {
+        super(archetype);
+    }
 
     @Override
     public AbilityTrigger getAbilityTrigger() {

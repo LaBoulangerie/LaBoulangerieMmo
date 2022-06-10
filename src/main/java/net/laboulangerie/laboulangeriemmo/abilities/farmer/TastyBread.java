@@ -10,10 +10,15 @@ import org.bukkit.entity.WaterMob;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 
 public class TastyBread extends AbilityExecutor{
+
+    public TastyBread(AbilityArchetype archetype) {
+        super(archetype);
+    }
 
     @Override
     public AbilityTrigger getAbilityTrigger() {

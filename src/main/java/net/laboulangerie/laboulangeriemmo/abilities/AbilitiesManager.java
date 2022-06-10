@@ -99,5 +99,9 @@ public class AbilitiesManager implements Listener {
             player.useAbility(x);
             Bukkit.getPluginManager().callEvent(new MmoPlayerUseAbilityEvent(player, x, event));
         });
+        LaBoulangerieMmo.talentsRegistry.getTalents()
+        .values().stream().forEach(archetype -> {
+            
+        });
     }
 }
