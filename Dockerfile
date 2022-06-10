@@ -1,14 +1,20 @@
-FROM maven:3.6-adoptopenjdk-8 AS builder
-MAINTAINER TheHunter365
+FROM gradle:7.4.2-alpine AS builder
 COPY src /usr/app/src
-COPY pom.xml /usr/app
-RUN mvn -f /usr/app/pom.xml clean package
+COPY gradle /usr/app/gradle
+COPY settings.gradle.kts /usr/app
+COPY gradlew /usr/app
+COPY build.gradle.kts /usr/app
 
-FROM openjdk:8-jre-alpine
-MAINTAINER TheHunter365
+WORKDIR /usr/app/
+RUN chmod +x ./gradlew
+RUN ./gradlew assemble --stacktrace
+RUN rm build/libs/LaBoulangerieMmo-*dev*.jar
+RUN mv build/libs/LaBoulangerieMmo-*.jar build/libs/LaBoulangerieMmo.jar
+
+FROM openjdk:17-alpine
 WORKDIR /usr/app/
 RUN echo "eula=true" > eula.txt
-RUN wget -O paper.jar https://papermc.io/api/v2/projects/paper/versions/1.16.5/builds/645/downloads/paper-1.16.5-645.jar
-COPY --from=builder /usr/app/target/LaBoulangerieMmo.jar /usr/app/plugins/LaBoulangerieMmo.jar
+RUN wget -O paper.jar https://papermc.io/api/v2/projects/paper/versions/1.18.2/builds/379/downloads/paper-1.18.2-379.jar
+COPY --from=builder /usr/app/build/libs/LaBoulangerieMmo.jar /usr/app/plugins/LaBoulangerieMmo.jar
 EXPOSE 25565
 ENTRYPOINT ["java", "-Xmx2048M", "-XX:+UseG1GC", "-XX:+DisableExplicitGC", "-jar", "paper.jar"]
