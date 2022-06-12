@@ -101,6 +101,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage("§bReloading config...");
             LaBoulangerieMmo.PLUGIN.saveDefaultConfig();
             LaBoulangerieMmo.PLUGIN.reloadConfig();
+            sender.sendMessage("§bReloading abilities...");
+            LaBoulangerieMmo.abilitiesRegistry.init();
             sender.sendMessage("§bReloading talents...");
             LaBoulangerieMmo.talentsRegistry.init();
             sender.sendMessage("§aReload complete");
