@@ -8,6 +8,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.laboulangerie.laboulangeriemmo.abilities.AbilitiesManager;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilitiesRegistry;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerListener;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerManager;
 import net.laboulangerie.laboulangeriemmo.api.talent.TalentsRegistry;
@@ -37,6 +38,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public static Economy ECONOMY = null;
     public static double XP_MULTIPLIER = 0.1;
     public static TalentsRegistry talentsRegistry = null;
+    public static AbilitiesRegistry abilitiesRegistry = null;
 
     private GsonSerializer serializer;
     private BlockusDataManager blockusDataManager;
@@ -55,6 +57,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
         this.serializer = new GsonSerializer();
 
+        LaBoulangerieMmo.abilitiesRegistry = new AbilitiesRegistry();
         LaBoulangerieMmo.talentsRegistry = new TalentsRegistry();
         talentsRegistry.init();
 

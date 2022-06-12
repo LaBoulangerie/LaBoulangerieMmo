@@ -6,23 +6,23 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import com.google.common.base.Supplier;
-import com.palmergames.bukkit.towny.TownyUniverse;
-import com.palmergames.bukkit.towny.object.Nation;
-import com.palmergames.bukkit.towny.object.Resident;
-import com.palmergames.bukkit.towny.object.Town;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import com.google.common.base.Supplier;
+import com.palmergames.bukkit.towny.TownyUniverse;
+import com.palmergames.bukkit.towny.object.Nation;
+import com.palmergames.bukkit.towny.object.Resident;
+import com.palmergames.bukkit.towny.object.Town;
+
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.abilities.Abilities;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 import net.laboulangerie.laboulangeriemmo.core.XpCountDown;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
@@ -72,17 +72,17 @@ public class MmoPlayer implements GsonSerializable {
         return palier;
     }
 
-    public void useAbility(Abilities ability) {
+    public void useAbility(AbilityArchetype ability) {
         cooldownsHolder.startCooldown(ability);
         Player player = Bukkit.getPlayer(uniqueId);
 
-        if (ability.shouldLog() == true) {
-            EffectRegistry.playEffect(ability.getEffectName(), player);
+        if (ability.shouldLog) {
+            EffectRegistry.playEffect(ability.effect, player);
 
             List<TagResolver.Single> placeholders = Arrays.asList(
                 Placeholder.parsed("ability", ability.toString()),
-                Placeholder.parsed("cooldown", Integer.toString(ability.getCooldown())),
-                Placeholder.parsed("unit", ability.getCooldownUnit().toString().toLowerCase())
+                Placeholder.parsed("cooldown", Integer.toString(ability.cooldown)),
+                Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase())
             );
 
             player.sendMessage(
@@ -92,10 +92,9 @@ public class MmoPlayer implements GsonSerializable {
         }
     }
 
-    public boolean canUseAbility(Abilities ability) {
+    public boolean canUseAbility(AbilityArchetype ability, String talentId) {
         return cooldownsHolder.isCooldownElapsed(ability)
-            && talents.get(ability.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability
-                .getRequiredLevel()
+            && talents.get(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability.requiredLevel
             && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 

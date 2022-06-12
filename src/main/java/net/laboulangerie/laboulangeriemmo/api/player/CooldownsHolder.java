@@ -4,30 +4,36 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-import net.laboulangerie.laboulangeriemmo.abilities.Abilities;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 
 public class CooldownsHolder {
-    private HashMap<Abilities, Date> cooldowns;
+    private HashMap<AbilityArchetype, Date> cooldowns;
 
     public CooldownsHolder() {
-        cooldowns = new HashMap<Abilities, Date>();
+        cooldowns = new HashMap<AbilityArchetype, Date>();
     }
 
-    public long getCooldown(Abilities ability) {
-        return ability.getCooldownUnit().convert(new Date().getTime() - cooldowns.get(ability).getTime(),
+    public long getCooldown(AbilityArchetype ability) {
+        return ability.cooldownUnit.convert(new Date().getTime() - cooldowns.get(ability).getTime(),
                 TimeUnit.MILLISECONDS);
     }
 
-    public boolean isCooldownElapsed(Abilities ability) {
-        return cooldowns.get(ability) == null || getCooldown(ability) >= ability.getCooldown();
-
+    public long getCooldown(String abilityId) {
+        return getCooldown(cooldowns.keySet().stream().filter(ability -> ability.identifier.equals(abilityId)).findFirst().orElse(null));
     }
 
-    public void startCooldown(Abilities ability) {
+    public boolean isCooldownElapsed(AbilityArchetype ability) {
+        return cooldowns.get(ability) == null || getCooldown(ability) >= ability.cooldown;
+    }
+
+    public void startCooldown(AbilityArchetype ability) {
         cooldowns.put(ability, new Date());
     }
 
-    public boolean hasUsed(Abilities ability) {
+    public boolean hasUsed(AbilityArchetype ability) {
         return cooldowns.get(ability) != null;
+    }
+    public boolean hasUsed(String abilityId) {
+        return cooldowns.keySet().stream().filter(ability -> ability.identifier.equals(abilityId)).findFirst().isPresent();
     }
 }

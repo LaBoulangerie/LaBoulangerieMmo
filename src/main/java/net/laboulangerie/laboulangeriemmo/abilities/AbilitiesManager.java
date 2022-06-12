@@ -1,5 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.abilities;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -15,6 +17,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
@@ -88,20 +91,35 @@ public class AbilitiesManager implements Listener {
     }
 
     public void triggerAbility(MmoPlayer player, Event event, AbilityTrigger trigger) {
-        Abilities.supplier().get()
-        .filter(x -> x.getExecutor().getAbilityTrigger() == trigger
-        && player.canUseAbility(x)
-        && x.getExecutor().shouldTrigger(event))
-        .forEach(x -> {
-            x.getExecutor().trigger(event,
-                    player.getTalent(x.getParentTalent()).getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
-            );
-            player.useAbility(x);
-            Bukkit.getPluginManager().callEvent(new MmoPlayerUseAbilityEvent(player, x, event));
-        });
-        LaBoulangerieMmo.talentsRegistry.getTalents()
-        .values().stream().forEach(archetype -> {
-            
+        LaBoulangerieMmo.talentsRegistry.getTalents().values().forEach(talentArchetype -> {
+            if (trigger == AbilityTrigger.COMBO && talentArchetype.comboItem != null //Player doesn't have the right item in his hand so the combo is refused
+                && talentArchetype.comboItem != ((ComboCompletedEvent) event).getPlayer().getInventory().getItemInMainHand().getType()) {
+                    return;
+            }
+            talentArchetype.abilitiesArchetypes.values().stream()
+            .filter(abilityArchetype -> {
+                return LaBoulangerieMmo.abilitiesRegistry.getTriggerForAbility(abilityArchetype.identifier) == trigger;}
+            )
+            .filter(abilityArchetype -> player.canUseAbility(abilityArchetype, talentArchetype.identifier))
+            .forEach(abilityArchetype -> {
+                AbilityExecutor executor;
+                try {
+                    executor = LaBoulangerieMmo.abilitiesRegistry.newAbilityExecutor(abilityArchetype);
+                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+
+                    Player bukkitPlayer = Bukkit.getPlayer(player.getUniqueId());
+                    bukkitPlayer.sendMessage("§4An error occurred when trying to execute the ability '"+ abilityArchetype.identifier +"', please report this to an administrator!");
+                    LaBoulangerieMmo.PLUGIN.getLogger().severe("An error occurred when trying to execute the ability '"+ abilityArchetype.identifier +"' for player '"+ bukkitPlayer.getName() +"'!");
+                    e.printStackTrace();
+                    return;
+                }
+                if (executor.shouldTrigger(event)) {
+                    executor.trigger(event, player.getTalent(talentArchetype.identifier).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                    player.useAbility(abilityArchetype);
+                    Bukkit.getPluginManager().callEvent(new MmoPlayerUseAbilityEvent(player, Abilities.ANIMAL_TWINS, event));
+                }
+            });
         });
     }
 }

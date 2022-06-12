@@ -161,8 +161,15 @@ public class TalentsRegistry {
             warnValidation(talent.identifier, "Talent with this identifier already exists");
             return false;
         }
-        //TODO: validate against AbilitiesRegistry
-        return true;
+        AtomicReference<Boolean> noErrors = new AtomicReference<>(true);
+
+        talent.abilitiesArchetypes.keySet().forEach(abilityId -> {
+            if (!LaBoulangerieMmo.abilitiesRegistry.exists(abilityId)) {
+                warnValidation(talent.identifier, "Talent refers to inexistent ability '"+ abilityId +"'!");
+                noErrors.set(false);
+            }
+        });
+        return noErrors.get();
     }
     private void warnValidation(String talent, String cause) {
         LaBoulangerieMmo.PLUGIN.getLogger().warning("Unable to validate talent '"+ talent +"': "+ cause);
