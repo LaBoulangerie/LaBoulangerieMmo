@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class AbilitiesRegistry {
@@ -58,5 +60,11 @@ public class AbilitiesRegistry {
             throw new IllegalArgumentException("No ability named '"+ abilityArchetype.identifier +"'!");
         }
         return executorClass.getConstructor(AbilityArchetype.class).newInstance(abilityArchetype);
+    }
+
+    public void init() {
+        abilities.clear();
+        triggerIndex.clear();
+        Bukkit.getPluginManager().callEvent(new RegisterAbilitiesEvent(this));
     }
 }
