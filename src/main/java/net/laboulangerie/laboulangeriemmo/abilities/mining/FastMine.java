@@ -1,9 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.abilities.mining;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -29,11 +27,7 @@ public class FastMine extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
-        ItemStack item = event.getPlayer().getInventory().getItemInMainHand();
-        return item != null
-                && (item.getType() == Material.NETHERITE_PICKAXE || item.getType() == Material.DIAMOND_PICKAXE
-                        || item.getType() == Material.IRON_PICKAXE)
-                && event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.LEFT));
+        return event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.LEFT));
     }
 
     @Override
