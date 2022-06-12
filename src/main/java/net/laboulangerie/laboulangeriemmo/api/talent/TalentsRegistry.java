@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -65,6 +66,14 @@ public class TalentsRegistry {
                     TalentArchetype talent = new TalentArchetype();
                     talent.identifier = identifier;
                     talent.displayName = config.getString("talents." + identifier + ".display_name");
+
+                    if (config.isSet("talents." + identifier + ".combo_item")) {
+                        try {
+                            talent.comboItem = Material.valueOf(config.getString("talents." + identifier + ".combo_item"));
+                        } catch (Exception e) {
+                            LaBoulangerieMmo.PLUGIN.getLogger().warning("Unable to parse optional field 'combo_item of talent '"+ identifier+"', ignoring the field!");
+                        }
+                    }
 
                     if (config.isSet("talents." + identifier + ".abilities")) {
                         ConfigurationSection abilities = config.getConfigurationSection("talents." + identifier + ".abilities");
