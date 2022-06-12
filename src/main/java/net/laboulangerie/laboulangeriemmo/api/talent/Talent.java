@@ -46,7 +46,11 @@ public class Talent {
         return talentId;
     }
 
+    /**
+     * 
+     * @return The display name or the identifier if this talent isn't found in the {@link net.laboulangerie.laboulangeriemmo.api.talent.TalentsRegistry TalentsRegistry}
+     */
     public String getDisplayName() {
-        return LaBoulangerieMmo.talentsRegistry.getTalent(talentId).displayName;
+        return LaBoulangerieMmo.talentsRegistry.getTalent(talentId) == null ? talentId : LaBoulangerieMmo.talentsRegistry.getTalent(talentId).displayName;
     }
 }
