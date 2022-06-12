@@ -81,10 +81,12 @@ public class TalentsRegistry {
                             }
                             AbilityArchetype abilityArchetype = new AbilityArchetype();
                             ConfigurationSection ability = abilities.getConfigurationSection(abilityId);
+            
                             if (ability == null) {// Appends if the path lead to a list (talking by experience)
                                 warnAbility(identifier, abilityId, "Configuration node is of wrong type!");
                                 continue;
                             }
+                            abilityArchetype.identifier = abilityId;
                             AtomicReference<Boolean> fieldsMissing = new AtomicReference<>(false);
 
                             requiredFields.keySet().stream().forEach(fieldName -> {
@@ -107,10 +109,7 @@ public class TalentsRegistry {
                                 }
                             });
 
-                            if (fieldsMissing.get()) {
-                                warnAbility(identifier, abilityId, "Some fields are missing in the configuration!");
-                                continue;
-                            }
+                            if (fieldsMissing.get()) continue;
                         
                             if (ability.isSet("tiers")) {
                                 try {
@@ -123,7 +122,7 @@ public class TalentsRegistry {
                             talent.abilitiesArchetypes.put(abilityId, abilityArchetype);
                         }
                     }
-                    talentsArchetypes.put(identifier, talent);
+                    addTalent(talent);
                 } catch (Exception e) {
                     LaBoulangerieMmo.PLUGIN.getLogger().warning("§4Unable to load talent \"" + identifier + "\" from configuration!");
                     e.printStackTrace();
