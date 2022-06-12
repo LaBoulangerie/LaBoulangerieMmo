@@ -1,5 +1,6 @@
 package net.laboulangerie.laboulangeriemmo.api.talent;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +9,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
@@ -48,7 +49,8 @@ public class TalentsRegistry {
 
     public void init() {
         talentsArchetypes = new HashMap<>();
-        FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "config.yml"));
+
         if (config.getBoolean("enable-talents", false) && config.isSet("talents")) {
             LaBoulangerieMmo.PLUGIN.getLogger().info("Loading talents...");
 
@@ -133,7 +135,7 @@ public class TalentsRegistry {
                     }
                     addTalent(talent);
                 } catch (Exception e) {
-                    LaBoulangerieMmo.PLUGIN.getLogger().warning("§4Unable to load talent \"" + identifier + "\" from configuration!");
+                    LaBoulangerieMmo.PLUGIN.getLogger().warning("Unable to load talent \"" + identifier + "\" from configuration!");
                     e.printStackTrace();
                 }
             }
