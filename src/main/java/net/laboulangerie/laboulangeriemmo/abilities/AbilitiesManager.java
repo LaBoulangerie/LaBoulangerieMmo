@@ -117,7 +117,7 @@ public class AbilitiesManager implements Listener {
                 if (executor.shouldTrigger(event)) {
                     executor.trigger(event, player.getTalent(talentArchetype.identifier).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
                     player.useAbility(abilityArchetype);
-                    Bukkit.getPluginManager().callEvent(new MmoPlayerUseAbilityEvent(player, Abilities.ANIMAL_TWINS, event));
+                    Bukkit.getPluginManager().callEvent(new MmoPlayerUseAbilityEvent(player, executor, event, trigger));
                 }
             });
         });

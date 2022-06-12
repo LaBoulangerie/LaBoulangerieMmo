@@ -6,7 +6,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-import net.laboulangerie.laboulangeriemmo.abilities.Abilities;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 
@@ -17,14 +18,16 @@ public class MmoPlayerUseAbilityEvent extends Event{
 
     private static final HandlerList handlers = new HandlerList();
     private MmoPlayer mmoPlayer;
-    private Abilities ability;
+    private AbilityExecutor executor;
+    private AbilityArchetype ability;
     private AbilityTrigger trigger;
     private Event triggerEvent;
 
-    public MmoPlayerUseAbilityEvent(MmoPlayer mmoPlayer, Abilities ability, Event triggerEvent) {
+    public MmoPlayerUseAbilityEvent(MmoPlayer mmoPlayer, AbilityArchetype ability, AbilityExecutor executor, Event triggerEvent, AbilityTrigger trigger) {
         this.mmoPlayer = mmoPlayer;
         this.ability = ability;
-        this.trigger = ability.getExecutor().getAbilityTrigger();
+        this.executor = executor;
+        this.trigger = trigger;
         this.triggerEvent = triggerEvent;
     }
 
@@ -33,7 +36,8 @@ public class MmoPlayerUseAbilityEvent extends Event{
     public static HandlerList getHandlerList() { return handlers; }
     public MmoPlayer getMmoPlayer() { return mmoPlayer; }
     public AbilityTrigger getAbilityTrigger() { return trigger; }
-    public Abilities getAbility() { return ability; }
+    public AbilityArchetype getAbility() { return ability; }
+    public AbilityExecutor getExecutor() { return executor; }
     /**
      * The event that triggered the ability can be cast according to the {@code AbilityTrigger} used
      * @return the event that triggered the ability
