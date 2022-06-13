@@ -1,11 +1,19 @@
 package net.laboulangerie.laboulangeriemmo.core.combo;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
+
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -15,14 +23,6 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers.PlayerDigType;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import net.kyori.adventure.text.Component;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
@@ -30,10 +30,6 @@ import net.minecraft.world.inventory.ClickType;
 
 public class ComboDispatcher implements Listener {
     private Map<Player, KeyStreak> comboStreaks = new HashMap<Player, KeyStreak>();
-    /**
-     * Used to skip combo keys, when other items are in hand
-     */
-    private List<String> authorizedTools = Arrays.asList("PICKAXE", "SWORD", "HOE", "AXE");
     /**
      * Used for protocol dark wizardry
      */
@@ -87,9 +83,7 @@ public class ComboDispatcher implements Listener {
         if (event.getItem() == null || event.getPlayer().getGameMode() == GameMode.CREATIVE)
             return;
 
-        String[] bits = event.getItem().getType().toString().split("_");
-        if (!authorizedTools.contains(bits[bits.length - 1]))
-            return;
+        if (!isAuthorizeItem(event.getItem())) return;
 
         ComboKey key = null;
         Boolean shouldCancel = shouldCancelNextArmAnimation.get(event.getPlayer().getUniqueId());
@@ -139,5 +133,13 @@ public class ComboDispatcher implements Listener {
             Bukkit.getPluginManager().callEvent(new ComboCompletedEvent(player, streak));
             streak.fail(); // the combo didn't fail but we use that to empty it
         }
+    }
+
+    private boolean isAuthorizeItem(ItemStack item) {
+        AtomicBoolean isAuthorized = new AtomicBoolean(false);
+        LaBoulangerieMmo.talentsRegistry.getTalents().values().stream().forEach(talent -> {
+            if (talent.comboItems == null || talent.comboItems.contains(item.getType())) isAuthorized.set(true);
+        });
+        return isAuthorized.get();
     }
 }
