@@ -65,8 +65,8 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     public Integer getPalier() {
         Integer palier = 0;
 
-        for (String key : this.talents.keySet()) {
-            palier += this.getTalent(key).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        for (String key : talents.keySet()) {
+            palier += getTalent(key).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
         }
 
         return palier;
@@ -80,14 +80,14 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
             EffectRegistry.playEffect(ability.effect, player);
 
             List<TagResolver.Single> placeholders = Arrays.asList(
-                Placeholder.parsed("ability", ability.identifier),
+                Placeholder.parsed("ability", ability.displayName),
                 Placeholder.parsed("cooldown", Integer.toString(ability.cooldown)),
                 Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase())
             );
 
             player.sendMessage(
-                MiniMessage.miniMessage().deserialize(this.config.getString("lang.prefix"))
-                    .append(MiniMessage.miniMessage().deserialize(this.config.getString("lang.messages.ability_log"),
+                MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
+                    .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.ability_log"),
                     TagResolver.resolver(placeholders))));
         }
     }

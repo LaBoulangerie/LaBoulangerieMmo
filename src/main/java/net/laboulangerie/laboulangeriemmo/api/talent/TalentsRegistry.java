@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -69,9 +70,10 @@ public class TalentsRegistry {
                     talent.identifier = identifier;
                     talent.displayName = config.getString("talents." + identifier + ".display_name");
 
-                    if (config.isSet("talents." + identifier + ".combo_item")) {
+                    if (config.isSet("talents." + identifier + ".combo_items")) {
                         try {
-                            talent.comboItem = Material.valueOf(config.getString("talents." + identifier + ".combo_item"));
+                            talent.comboItems = config.getStringList("talents." + identifier + ".combo_items")
+                                .stream().map(Material::valueOf).collect(Collectors.toList());
                         } catch (Exception e) {
                             LaBoulangerieMmo.PLUGIN.getLogger().warning("Unable to parse optional field 'combo_item of talent '"+ identifier+"', ignoring the field!");
                         }
@@ -83,7 +85,7 @@ public class TalentsRegistry {
                          * Key is the field's name in the config and the value is
                          * its name in AbilityArchetype
                          */
-                        Map<String, String> requiredFields = Map.of("cooldown", "cooldown", "unit", "cooldownUnit", "level", "requiredLevel", "effect", "effect", "log", "shouldLog");
+                        Map<String, String> requiredFields = Map.of("display_name", "displayName", "cooldown", "cooldown", "unit", "cooldownUnit", "level", "requiredLevel", "effect", "effect", "log", "shouldLog");
 
                         for (String abilityId : abilities.getKeys(false)) { //go through all abilities
                             if  (talent.abilitiesArchetypes.containsKey(abilityId)) {

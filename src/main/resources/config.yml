@@ -15,9 +15,10 @@ lang:
 enable-talents: true
 talents:
     miner:
-        display_name: "Miner"
+        display_name: Miner
         abilities:
             fast-mine:
+                display_name: Fast mine
                 cooldown: 15
                 unit: MINUTES
                 level: 15
@@ -28,18 +29,21 @@ talents:
                     - 45
                     - 75
             fast-smelt:
+                display_name: Fast smelt
                 cooldown: 1
                 unit: HOURS
                 level: 85
                 effect: default
                 log: true
             minecraft-exp-multiplier:
+                display_name: Minecraft xp multiplier
                 cooldown: 1
                 unit: SECONDS
                 level: 5
                 effect: default
                 log: false
             magnetic-field:
+                display_name: Magnetic field
                 cooldown: 30
                 unit: MINUTES
                 level: 35
@@ -49,93 +53,130 @@ talents:
                     - 35
                     - 65
                     - 95
+        combo_items:
+            - DIAMOND_PICKAXE
+            - IRON_PICKAXE
+            - STONE_PICKAXE
+            - GOLDEN_PICKAXE
+            - WOODEN_PICKAXE
     hunter:
         display_name: Hunter
         abilities:
             dodging:
+                display_name: Dodging
                 cooldown: 1
                 unit: SECONDS
                 level: 5
                 effect: trail
                 log: true
             xp-in-bottle:
+                display_name: Xp in bottle
                 cooldown: 4
                 unit: SECONDS
                 level: 10
                 effect: default
                 log: false
             fire-bow:
+                display_name: Fire bow
                 cooldown: 3
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: true
             hiding:
+                display_name: Hiding
                 cooldown: 1
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: true
+        combo_items:
+            - DIAMOND_SWORD
+            - IRON_SWORD
+            - STONE_SWORD
+            - GOLDEN_SWORD
+            - WOODEN_SWORD
     farmer:
         display_name: Farmer
         abilities:
             nature-touch:
+                display_name: Nature touch
                 cooldown: 1
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: false
             better-bonemeal:
+                display_name: Better bonemeal
                 cooldown: 1
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: true
             animal-twins:
+                display_name: Animal twins
                 cooldown: 1
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: false
             tasty-bread:
+                display_name: Tasty bread
                 cooldown: 1
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: false
+        combo_items:
+            - DIAMOND_HOE
+            - IRON_HOE
+            - STONE_HOE
+            - GOLDEN_HOE
+            - WOODEN_HOE
     lumberjack:
         display_name: Lumberjack
         abilities:
             double-drop-log:
+                display_name: Double drop log
                 cooldown: 0
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: false
             better-apple-drop:
+                display_name: Better apple drop
                 cooldown: 0
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: false
             timber:
+                display_name: Timber!!!
                 cooldown: 1
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: true
             strip:
+                display_name: Strip
                 cooldown: 1
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: true
             thick-tree:
+                display_name: Thick tree
                 cooldown: 1
                 unit: SECONDS
                 level: 3
                 effect: default
                 log: true
+        combo_items:
+            - DIAMOND_AXE
+            - IRON_AXE
+            - STONE_AXE
+            - GOLDEN_AXE
+            - WOODEN_AXE
 
 talent-grinding:
     miner:

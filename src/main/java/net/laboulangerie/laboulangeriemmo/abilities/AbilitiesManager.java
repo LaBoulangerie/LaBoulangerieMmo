@@ -92,8 +92,8 @@ public class AbilitiesManager implements Listener {
 
     public void triggerAbility(MmoPlayer player, Event event, AbilityTrigger trigger) {
         LaBoulangerieMmo.talentsRegistry.getTalents().values().forEach(talentArchetype -> {
-            if (trigger == AbilityTrigger.COMBO && talentArchetype.comboItem != null //Player doesn't have the right item in his hand so the combo is refused
-                && talentArchetype.comboItem != ((ComboCompletedEvent) event).getPlayer().getInventory().getItemInMainHand().getType()) {
+            if (trigger == AbilityTrigger.COMBO && talentArchetype.comboItems != null //Player doesn't have the right item in his hand so the combo is refused
+                && !talentArchetype.comboItems.contains(((ComboCompletedEvent) event).getPlayer().getInventory().getItemInMainHand().getType())) {
                     return;
             }
             talentArchetype.abilitiesArchetypes.values().stream()
