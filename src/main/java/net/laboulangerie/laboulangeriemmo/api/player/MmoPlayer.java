@@ -24,6 +24,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
+import net.laboulangerie.laboulangeriemmo.core.PostProcessingEnabler;
 import net.laboulangerie.laboulangeriemmo.core.XpCountDown;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
@@ -31,7 +32,7 @@ import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 import net.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 
 // TODO: update talents list on loading
-public class MmoPlayer implements GsonSerializable {
+public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostProcessable {
     private transient FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
     private transient XpCountDown xpCountdown;
 
@@ -111,6 +112,8 @@ public class MmoPlayer implements GsonSerializable {
     }
 
     public void incrementXp(String talentId, double amount) {
+        if (getTalent(talentId) == null) talents.put(talentId, new Talent(talentId));
+
         if (getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= 100) {
             return;
         }
@@ -185,5 +188,10 @@ public class MmoPlayer implements GsonSerializable {
         	total += MmoPlayer.getTownTalentLevel(town, talentName);
 
     	return total;
+    }
+    @Override
+    public void postProcess() {
+        HashMap<String, Talent> newTalents = (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry.generateTalentsDataHolder();
+        newTalents.entrySet().forEach(entry -> talents.merge(entry.getKey(), entry.getValue(), (oldVal, newVal) -> oldVal));
     }
 }

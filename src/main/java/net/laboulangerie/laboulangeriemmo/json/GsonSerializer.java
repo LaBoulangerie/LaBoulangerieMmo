@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
+import net.laboulangerie.laboulangeriemmo.core.PostProcessingEnabler;
+
 public class GsonSerializer {
 
     private Gson gson;
@@ -12,6 +14,7 @@ public class GsonSerializer {
         this.gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .serializeNulls()
+                .registerTypeAdapterFactory(new PostProcessingEnabler())
                 .create();
     }
 

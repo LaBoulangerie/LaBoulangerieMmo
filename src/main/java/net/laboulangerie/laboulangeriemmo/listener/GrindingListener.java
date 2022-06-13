@@ -57,6 +57,8 @@ public class GrindingListener implements Listener {
                 .getKeys(false);
 
         keys.stream().forEach(talentName -> {
+            if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null) return;
+
             ConfigurationSection section = LaBoulangerieMmo.PLUGIN.getConfig()
                     .getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
             if (section == null)
