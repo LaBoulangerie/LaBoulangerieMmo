@@ -11,11 +11,13 @@ import net.laboulangerie.laboulangeriemmo.abilities.mining.FastMine;
 import net.laboulangerie.laboulangeriemmo.abilities.mining.FastSmelt;
 import net.laboulangerie.laboulangeriemmo.abilities.mining.MagneticField;
 import net.laboulangerie.laboulangeriemmo.abilities.mining.MinecraftExpMultiplier;
+import net.laboulangerie.laboulangeriemmo.abilities.thehunter.Dodging;
 import net.laboulangerie.laboulangeriemmo.abilities.thehunter.ExpInBottle;
 import net.laboulangerie.laboulangeriemmo.abilities.thehunter.FireBow;
 import net.laboulangerie.laboulangeriemmo.abilities.thehunter.Hiding;
 import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.BetterAppleDrop;
 import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.DoubleDropLog;
+import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.Strip;
 import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.ThickTree;
 import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.Timber;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
@@ -34,14 +36,14 @@ public class AbilitiesListener implements Listener {
         event.getRegistry().registerAbility("nature-touch", NatureTouch.class, AbilityTrigger.BREAK);
         event.getRegistry().registerAbility("tasty-bread", TastyBread.class, AbilityTrigger.HOLD_ITEM);
 
-        event.getRegistry().registerAbility("dodging", FastMine.class, AbilityTrigger.COMBO);
+        event.getRegistry().registerAbility("dodging", Dodging.class, AbilityTrigger.COMBO);
         event.getRegistry().registerAbility("xp-in-bottle", ExpInBottle.class, AbilityTrigger.RIGHT_CLICK_AIR);
         event.getRegistry().registerAbility("fire-bow", FireBow.class, AbilityTrigger.COMBO);
         event.getRegistry().registerAbility("hiding", Hiding.class, AbilityTrigger.COMBO);
 
         event.getRegistry().registerAbility("better-apple-drop", BetterAppleDrop.class, AbilityTrigger.BREAK);
         event.getRegistry().registerAbility("double-drop-log", DoubleDropLog.class, AbilityTrigger.BREAK);
-        event.getRegistry().registerAbility("strip", MinecraftExpMultiplier.class, AbilityTrigger.COMBO);
+        event.getRegistry().registerAbility("strip", Strip.class, AbilityTrigger.COMBO);
         event.getRegistry().registerAbility("timber", Timber.class, AbilityTrigger.BREAK);
         event.getRegistry().registerAbility("thick-tree", ThickTree.class, AbilityTrigger.COMBO);
     }

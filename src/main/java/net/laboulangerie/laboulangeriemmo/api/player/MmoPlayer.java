@@ -31,7 +31,6 @@ import net.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 import net.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 
-// TODO: update talents list on loading
 public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostProcessable {
     private transient FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
     private transient XpCountDown xpCountdown;
@@ -81,7 +80,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
             EffectRegistry.playEffect(ability.effect, player);
 
             List<TagResolver.Single> placeholders = Arrays.asList(
-                Placeholder.parsed("ability", ability.toString()),
+                Placeholder.parsed("ability", ability.identifier),
                 Placeholder.parsed("cooldown", Integer.toString(ability.cooldown)),
                 Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase())
             );
@@ -192,6 +191,6 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     @Override
     public void postProcess() {
         HashMap<String, Talent> newTalents = (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry.generateTalentsDataHolder();
-        newTalents.entrySet().forEach(entry -> talents.merge(entry.getKey(), entry.getValue(), (oldVal, newVal) -> oldVal));
+        newTalents.entrySet().forEach(entry -> talents.merge(entry.getKey(), entry.getValue(), (newVal, oldVal) -> newVal));
     }
 }
