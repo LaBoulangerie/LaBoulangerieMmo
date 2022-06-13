@@ -10,18 +10,10 @@ lang:
         level_up: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> ! Vous gagnez <aqua><reward></aqua>
         xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
         combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
+
+#Whether or not the talents should be enabled
 enable-talents: true
 talents:
-    dummy:
-        display_name: "WIP"
-        abilities:
-            dummy:
-                cooldown: 1
-                unit: SECONDS
-                level: 0
-                effect: default
-                log: true
-
     miner:
         display_name: "Miner"
         abilities:
@@ -57,6 +49,94 @@ talents:
                     - 35
                     - 65
                     - 95
+    hunter:
+        display_name: Hunter
+        abilities:
+            dodging:
+                cooldown: 1
+                unit: SECONDS
+                level: 5
+                effect: trail
+                log: true
+            xp-in-bottle:
+                cooldown: 4
+                unit: SECONDS
+                level: 10
+                effect: default
+                log: false
+            fire-bow:
+                cooldown: 3
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: true
+            hiding:
+                cooldown: 1
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: true
+    farmer:
+        display_name: Farmer
+        abilities:
+            nature-touch:
+                cooldown: 1
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: false
+            better-bonemeal:
+                cooldown: 1
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: true
+            animal-twins:
+                cooldown: 1
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: false
+            tasty-bread:
+                cooldown: 1
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: false
+    lumberjack:
+        display_name: Lumberjack
+        abilities:
+            double-drop-log:
+                cooldown: 0
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: false
+            better-apple-drop:
+                cooldown: 0
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: false
+            timber:
+                cooldown: 1
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: true
+            strip:
+                cooldown: 1
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: true
+            thick-tree:
+                cooldown: 1
+                unit: SECONDS
+                level: 3
+                effect: default
+                log: true
+
 talent-grinding:
     mining:
         break:
