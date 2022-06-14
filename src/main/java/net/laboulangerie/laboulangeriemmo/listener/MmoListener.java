@@ -26,7 +26,7 @@ public class MmoListener implements Listener {
 
     public MmoListener(Bar bar) {
         this.bar = bar;
-        this.config = LaBoulangerieMmo.PLUGIN.getConfig();
+        config = LaBoulangerieMmo.PLUGIN.getConfig();
     }
 
     @EventHandler

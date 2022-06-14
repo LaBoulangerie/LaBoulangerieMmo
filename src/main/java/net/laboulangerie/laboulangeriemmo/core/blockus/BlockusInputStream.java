@@ -14,16 +14,16 @@ public class BlockusInputStream extends FileInputStream {
 
     public BlockusDataHolder readBlockuses() throws IOException, ClassNotFoundException {
         byte[] bytes = new byte[4];
-        this.read(bytes);
+        read(bytes);
 
         ByteBuffer wrapped = ByteBuffer.wrap(bytes);
         int size = wrapped.getInt();
 
         if (size == 0)
             return null;
-        byte[] buffer = new byte[this.available()];
+        byte[] buffer = new byte[available()];
 
-        this.read(buffer);
+        read(buffer);
         byte[] data = Zstd.decompress(buffer, size);
         ObjectInput oi = new ObjectInputStream(new ByteArrayInputStream(data));
 

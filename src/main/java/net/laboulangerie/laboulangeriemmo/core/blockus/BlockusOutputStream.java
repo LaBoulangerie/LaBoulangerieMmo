@@ -37,8 +37,8 @@ public class BlockusOutputStream extends FileOutputStream {
         byte[] compressed = Zstd.compress(byteArrayOutputStream.toByteArray());
         buffer.putInt(byteArrayOutputStream.size());
 
-        this.write(buffer.array());
-        this.write(compressed);
-        this.flush();
+        write(buffer.array());
+        write(compressed);
+        flush();
     }
 }

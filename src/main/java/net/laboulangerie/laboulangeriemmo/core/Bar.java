@@ -20,7 +20,7 @@ public class Bar {
     private BossBar bossbar;
 
     public Bar() {
-        this.config = LaBoulangerieMmo.PLUGIN.getConfig();
+        config = LaBoulangerieMmo.PLUGIN.getConfig();
     }
 
     public void displayBar(Talent talent, MmoPlayer mmoPlayer) {

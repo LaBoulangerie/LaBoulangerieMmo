@@ -12,11 +12,11 @@ public class BlockusDataHolder implements Serializable {
     private Set<Blockus> blockuses;
 
     public BlockusDataHolder() {
-        this.blockuses = new HashSet<>();
+        blockuses = new HashSet<>();
     }
 
     public void addBlockus(Blockus blockus) {
-        this.blockuses.add(blockus);
+        blockuses.add(blockus);
     }
 
     public void removeBlockus(Blockus blockus) {
@@ -37,6 +37,6 @@ public class BlockusDataHolder implements Serializable {
     }
 
     public Set<Blockus> getBlockuses() {
-        return this.blockuses;
+        return blockuses;
     }
 }

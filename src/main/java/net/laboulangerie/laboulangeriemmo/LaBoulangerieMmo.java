@@ -49,14 +49,14 @@ public class LaBoulangerieMmo extends JavaPlugin {
     @Override
     public void onEnable() {
         LaBoulangerieMmo.PLUGIN = this;
-        this.saveDefaultConfig();
+        saveDefaultConfig();
         if (!setupEconomy()) {
             getLogger().log(Level.SEVERE, "Can't load the plugin, Vault isn't present");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
-        this.serializer = new GsonSerializer();
+        serializer = new GsonSerializer();
 
         LaBoulangerieMmo.abilitiesRegistry = new AbilitiesRegistry();
         getServer().getPluginManager().registerEvents(new AbilitiesRegisterer(), this);
@@ -65,14 +65,14 @@ public class LaBoulangerieMmo extends JavaPlugin {
         LaBoulangerieMmo.talentsRegistry = new TalentsRegistry();
         talentsRegistry.init();
 
-        this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
-        this.mmoPlayerManager = new MmoPlayerManager();
-        this.bar = new Bar();
+        blockusDataManager = new BlockusDataManager(getDataFolder().getPath() + "/blockus/blockus.dat");
+        mmoPlayerManager = new MmoPlayerManager();
+        bar = new Bar();
 
         BlockusRestoration blockusRestoration = new BlockusRestoration();
         blockusRestoration.runTaskLater(this, 20);
 
-        this.registerListeners();
+        registerListeners();
         getCommand("stats").setExecutor(new Stats());
         getCommand("mmo").setExecutor(new MmoCommand());
         getCommand("combo").setExecutor(new Combo());
@@ -98,7 +98,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
     @Override
     public void onDisable() {
         try {
-            this.blockusDataManager.writeBlockuses();
+            blockusDataManager.writeBlockuses();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,7 +119,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 new MmoListener(bar),
                 new BlockusListener(),
                 LeaderBoardManager.getInstance(),
-                new ComboDispatcher()).forEach(l -> this.getServer().getPluginManager().registerEvents(l, this));
+                new ComboDispatcher()).forEach(l -> getServer().getPluginManager().registerEvents(l, this));
     }
 
     public MmoPlayerManager getMmoPlayerManager() {

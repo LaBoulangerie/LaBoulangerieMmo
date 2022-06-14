@@ -20,29 +20,29 @@ public class Blockus implements Serializable {
     private Map<String, Object> metaData;
 
     public Blockus(Block block) {
-        this.worldId = block.getWorld().getUID();
-        this.x = block.getX();
-        this.y = block.getY();
-        this.z = block.getZ();
+        worldId = block.getWorld().getUID();
+        x = block.getX();
+        y = block.getY();
+        z = block.getZ();
 
-        this.metaData = new HashMap<>();
+        metaData = new HashMap<>();
     }
 
     public Blockus(Location location) {
-        this.worldId = location.getWorld().getUID();
-        this.x = (int) location.getX();
-        this.y = (int) location.getY();
-        this.z = (int) location.getZ();
+        worldId = location.getWorld().getUID();
+        x = (int) location.getX();
+        y = (int) location.getY();
+        z = (int) location.getZ();
 
-        this.metaData = new HashMap<>();
+        metaData = new HashMap<>();
     }
 
     public void putMetadata(String key, Object value) {
-        this.metaData.put(key, value);
+        metaData.put(key, value);
     }
 
     public void markAsBlockus() {
-        Block block = Bukkit.getWorld(this.worldId).getBlockAt(x, y, z);
+        Block block = Bukkit.getWorld(worldId).getBlockAt(x, y, z);
         metaData.entrySet().stream()
                 .filter(entry -> !block.hasMetadata(entry.getKey()))
                 .forEach(entry -> block.setMetadata(entry.getKey(),

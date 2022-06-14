@@ -25,25 +25,25 @@ public class MmoPlayerManager {
     private Map<String, MmoPlayer> playersMap;
 
     public MmoPlayerManager() {
-        this.serializer = LaBoulangerieMmo.PLUGIN.getSerializer();
+        serializer = LaBoulangerieMmo.PLUGIN.getSerializer();
 
-        this.playersFolder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
+        playersFolder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
 
-        this.playersMap = new HashMap<>();
+        playersMap = new HashMap<>();
 
         Bukkit.getOnlinePlayers().stream().forEach(p -> loadPlayerData(p));
     }
 
     public void savePlayerData(Player player) {
         String uniqueId = player.getUniqueId().toString();
-        Optional<MmoPlayer> mmoPlayerOptional = Optional.of(this.playersMap.get(uniqueId));
+        Optional<MmoPlayer> mmoPlayerOptional = Optional.of(playersMap.get(uniqueId));
 
         if (mmoPlayerOptional.isPresent()) {
-            String json = this.serializer.serialize(mmoPlayerOptional.get());
-            FileUtils.save(new File(this.playersFolder, uniqueId + ".json"), json);
+            String json = serializer.serialize(mmoPlayerOptional.get());
+            FileUtils.save(new File(playersFolder, uniqueId + ".json"), json);
         } else {
             MmoPlayer mmoPlayer = new MmoPlayer(player);
-            this.playersMap.put(uniqueId, mmoPlayer);
+            playersMap.put(uniqueId, mmoPlayer);
 
             // c'est extremement hazardeux de faire comme ça xD si ça foire je le change par
             // un truc plus solide
@@ -56,30 +56,30 @@ public class MmoPlayerManager {
         String uniqueId = player.getUniqueId().toString();
 
         try {
-            File file = new File(this.playersFolder, uniqueId + ".json");
+            File file = new File(playersFolder, uniqueId + ".json");
             if (!file.exists())
                 throw new JsonSyntaxException("hacky");
             String json = FileUtils.read(file);
 
             if (!json.equals("")) {
-                MmoPlayer mmoPlayer = (MmoPlayer) this.serializer.deserialize(json, MmoPlayer.class);
-                this.playersMap.put(uniqueId, mmoPlayer);
+                MmoPlayer mmoPlayer = (MmoPlayer) serializer.deserialize(json, MmoPlayer.class);
+                playersMap.put(uniqueId, mmoPlayer);
             }
         } catch (JsonSyntaxException e) {
             MmoPlayer mmoPlayer = new MmoPlayer(player);
-            this.playersMap.put(uniqueId, mmoPlayer);
+            playersMap.put(uniqueId, mmoPlayer);
         }
     }
 
     public MmoPlayer getPlayer(Player player) {
-        return this.playersMap.get(player.getUniqueId().toString());
+        return playersMap.get(player.getUniqueId().toString());
     }
 
     public MmoPlayer getOfflinePlayer(OfflinePlayer player) {
-        MmoPlayer mmoPlayer = this.playersMap.get(player.getUniqueId().toString());
+        MmoPlayer mmoPlayer = playersMap.get(player.getUniqueId().toString());
         if (mmoPlayer == null) {
             loadPlayerData(player);
-            mmoPlayer = this.playersMap.get(player.getUniqueId().toString());
+            mmoPlayer = playersMap.get(player.getUniqueId().toString());
         }
         return mmoPlayer;
     }

@@ -44,8 +44,8 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     private boolean hasEnabledCombo = true;
 
     public MmoPlayer(OfflinePlayer player) {
-        this.uniqueId = player.getUniqueId();
-        this.name = player.getName();
+        uniqueId = player.getUniqueId();
+        name = player.getName();
 
         talents = (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry.generateTalentsDataHolder();
 

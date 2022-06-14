@@ -17,7 +17,7 @@ public class MmoPlayerListener implements Listener {
     private MmoPlayerManager mmoPlayerManager;
 
     public MmoPlayerListener() {
-        this.mmoPlayerManager = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager();
+        mmoPlayerManager = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager();
     }
 
     @EventHandler

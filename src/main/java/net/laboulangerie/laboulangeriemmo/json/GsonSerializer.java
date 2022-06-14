@@ -11,7 +11,7 @@ public class GsonSerializer {
     private Gson gson;
 
     public GsonSerializer() {
-        this.gson = new GsonBuilder()
+        gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .serializeNulls()
                 .registerTypeAdapterFactory(new PostProcessingEnabler())
@@ -19,11 +19,11 @@ public class GsonSerializer {
     }
 
     public String serialize(GsonSerializable serializable) {
-        return this.gson.toJson(serializable);
+        return gson.toJson(serializable);
     }
 
     public GsonSerializable deserialize(String json, Class<? extends GsonSerializable> type)
             throws JsonSyntaxException {
-        return this.gson.fromJson(json, type);
+        return gson.fromJson(json, type);
     }
 }

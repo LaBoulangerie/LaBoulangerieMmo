@@ -37,7 +37,7 @@ public class MagneticFieldTask extends BukkitRunnable {
         for (long x = Math.round(center.getX()) - radius; x < center.getX() + radius; x++) {
             for (long y = Math.round(center.getY()) - radius; y < center.getY() + radius; y++) {
                 for (long z = Math.round(center.getZ()) - radius; z < center.getZ() + radius; z++) {
-                    Location point = new Location(this.center.getWorld(), x, y, z);
+                    Location point = new Location(center.getWorld(), x, y, z);
                     if (!isInTheBall(point))
                         continue;
 

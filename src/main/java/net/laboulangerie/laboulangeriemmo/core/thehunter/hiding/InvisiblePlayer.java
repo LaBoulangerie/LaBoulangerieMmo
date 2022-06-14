@@ -51,14 +51,14 @@ public class InvisiblePlayer {
     }
 
     public void cancelAbility() {
-        this.abilityCancelled = true;
+        abilityCancelled = true;
         invisiblePlayer.remove(this);
 
         if (scheduler != null) {
             scheduler.cancel();
         }
 
-        final Player player = this.getPlayer();
+        final Player player = getPlayer();
         if (player == null) return;
         player.removePotionEffect(PotionEffectType.INVISIBILITY);
 

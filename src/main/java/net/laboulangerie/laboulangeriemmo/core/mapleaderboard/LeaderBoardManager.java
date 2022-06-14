@@ -175,7 +175,7 @@ public class LeaderBoardManager implements Listener {
         public MapDataSave(String name) throws IOException {
             this.name = name;
             ensureFileExists();
-            this.dataYAML = YamlConfiguration.loadConfiguration(dataFile);
+            dataYAML = YamlConfiguration.loadConfiguration(dataFile);
         }
 
         private void ensureFileExists() throws IOException {
@@ -185,7 +185,7 @@ public class LeaderBoardManager implements Listener {
         }
 
         public FileConfiguration getSave() {
-            return this.dataYAML;
+            return dataYAML;
         }
 
         public void save() throws IOException {

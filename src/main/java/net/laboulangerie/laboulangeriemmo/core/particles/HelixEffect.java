@@ -23,7 +23,6 @@ public class HelixEffect extends Effect {
         world.spawnParticle(Particle.REDSTONE, location.getX() + x, location.getY() + y, location.getZ() + z, 3, 1, 0.6,
                 0, dustOptions);
         i++;
-        if (y >= 3)
-            this.cancel();
+        if (y >= 3) cancel();
     }
 }

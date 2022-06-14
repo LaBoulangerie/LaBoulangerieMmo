@@ -31,7 +31,7 @@ public class Talent {
     }
 
     public int getLevel(double multiplier) {
-        return (int) (multiplier * Math.sqrt(this.getXp()));
+        return (int) (multiplier * Math.sqrt(getXp()));
     }
 
     public int getLevelXp(double multiplier) {
