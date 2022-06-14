@@ -101,7 +101,7 @@ public class ServerListener implements Listener {
         if (Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) > 0)
             event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()));
 
-        event.getEntity().setVelocity(player.getLocation().getDirection().multiply(1));
+        event.getEntity().setVelocity(player.getLocation().getDirection().multiply(5));
     }
 
     @EventHandler

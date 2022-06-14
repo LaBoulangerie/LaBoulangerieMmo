@@ -40,15 +40,15 @@ public class Dodging extends AbilityExecutor {
          * See ItemTrident.java in craftbukkit or TridentItem.java in paper
          * Mapping:
          * k -> power (originally the riptide level)
-         * f -> yRot
-         * f1 -> xRot
+         * f -> xRot
+         * f1 -> yRot
          */
         float power = 1;
-        float yRot = human.getYRot();
-        float xRot = human.getXRot();
-        float f2 = -Mth.sin(yRot * 0.017453292F) * Mth.cos(xRot * 0.017453292F);
-        float f3 = -Mth.sin(xRot * 0.017453292F);
-        float f4 = Mth.cos(yRot * 0.017453292F) * Mth.cos(xRot * 0.017453292F);
+        float xRot = human.getYRot();
+        float yRot = human.getXRot()-15;
+        float f2 = -Mth.sin(xRot * 0.017453292F) * Mth.cos(yRot * 0.017453292F);
+        float f3 = -Mth.sin(yRot * 0.017453292F);
+        float f4 = Mth.cos(xRot * 0.017453292F) * Mth.cos(yRot * 0.017453292F);
         float f5 = Mth.sqrt(f2 * f2 + f3 * f3 + f4 * f4);
         float f6 = 3.0F * ((1.0F + power) / 4.0F);
 
