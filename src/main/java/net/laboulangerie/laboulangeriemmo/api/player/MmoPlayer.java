@@ -24,6 +24,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
+import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
 import net.laboulangerie.laboulangeriemmo.core.PostProcessingEnabler;
 import net.laboulangerie.laboulangeriemmo.core.XpCountDown;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
@@ -72,8 +73,8 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         return palier;
     }
 
-    public void useAbility(AbilityArchetype ability) {
-        cooldownsHolder.startCooldown(ability);
+    public void useAbility(AbilityArchetype ability, TalentArchetype talent) {
+        cooldownsHolder.startCooldown(ability, talent.identifier);
         Player player = Bukkit.getPlayer(uniqueId);
 
         if (ability.shouldLog) {
@@ -82,7 +83,8 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
             List<TagResolver.Single> placeholders = Arrays.asList(
                 Placeholder.parsed("ability", ability.displayName),
                 Placeholder.parsed("cooldown", Integer.toString(ability.cooldown)),
-                Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase())
+                Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase()),
+                Placeholder.parsed("talent", talent.displayName)
             );
 
             player.sendMessage(
@@ -93,7 +95,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     }
 
     public boolean canUseAbility(AbilityArchetype ability, String talentId) {
-        return cooldownsHolder.isCooldownElapsed(ability)
+        return cooldownsHolder.isCooldownElapsed(ability, talentId)
             && talents.get(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability.requiredLevel
             && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }

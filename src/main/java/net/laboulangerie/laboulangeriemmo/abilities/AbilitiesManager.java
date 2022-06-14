@@ -97,9 +97,7 @@ public class AbilitiesManager implements Listener {
                     return;
             }
             talentArchetype.abilitiesArchetypes.values().stream()
-            .filter(abilityArchetype -> {
-                return LaBoulangerieMmo.abilitiesRegistry.getTriggerForAbility(abilityArchetype.identifier) == trigger;}
-            )
+            .filter(abilityArchetype -> LaBoulangerieMmo.abilitiesRegistry.getTriggerForAbility(abilityArchetype.identifier) == trigger)
             .filter(abilityArchetype -> player.canUseAbility(abilityArchetype, talentArchetype.identifier))
             .forEach(abilityArchetype -> {
                 AbilityExecutor executor;
@@ -116,7 +114,7 @@ public class AbilitiesManager implements Listener {
                 }
                 if (executor.shouldTrigger(event)) {
                     executor.trigger(event, player.getTalent(talentArchetype.identifier).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
-                    player.useAbility(abilityArchetype);
+                    player.useAbility(abilityArchetype, talentArchetype);
                     Bukkit.getPluginManager().callEvent(new MmoPlayerUseAbilityEvent(player, abilityArchetype, executor, event, trigger));
                 }
             });

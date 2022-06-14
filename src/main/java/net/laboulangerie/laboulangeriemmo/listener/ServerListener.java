@@ -95,7 +95,7 @@ public class ServerListener implements Listener {
             return;
         }
 
-        if (!mmoPlayer.getCooldowns().hasUsed("dodging") || mmoPlayer.getCooldowns().getCooldown("dodging") >= 1) // 1 is the duration of the spin attack TODO: Change when real cooldown is set
+        if (!mmoPlayer.getCooldowns().hasUsed("dodging") || !mmoPlayer.getCooldowns().getCooldowns("dodging").stream().filter(x -> x <= 1).findAny().isPresent()) // 1 is the duration of the spin attack
             return;
 
         if (Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) > 0)
