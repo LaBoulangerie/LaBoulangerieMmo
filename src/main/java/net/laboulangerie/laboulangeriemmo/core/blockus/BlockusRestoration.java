@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.blockus;
+package net.laboulangerie.laboulangeriemmo.core.blockus;
 
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicReference;

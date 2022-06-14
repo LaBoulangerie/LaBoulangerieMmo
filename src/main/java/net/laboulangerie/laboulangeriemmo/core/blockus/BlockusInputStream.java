@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.blockus;
+package net.laboulangerie.laboulangeriemmo.core.blockus;
 
 import com.github.luben.zstd.Zstd;
 import org.jetbrains.annotations.NotNull;

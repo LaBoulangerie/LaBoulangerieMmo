@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.blockus;
+package net.laboulangerie.laboulangeriemmo.core.blockus;
 
 import java.io.Serializable;
 import java.util.HashSet;
