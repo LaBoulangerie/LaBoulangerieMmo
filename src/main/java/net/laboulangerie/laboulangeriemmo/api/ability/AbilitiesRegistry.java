@@ -33,6 +33,10 @@ public class AbilitiesRegistry {
         return abilities.containsKey(abilityId);
     }
     private boolean validateAbility(String abilityId) {
+        if (abilityId.contains("/")) { // "/" is forbidden because it is used to reference abilities in CooldownsHolder (talent/ability)
+            LaBoulangerieMmo.PLUGIN.getLogger().warning("Can't register ability '"+ abilityId +"', it contains a forbidden character: '/'");
+            return false;
+        }
         if (exists(abilityId)) {
             LaBoulangerieMmo.PLUGIN.getLogger().warning("Can't register ability '"+ abilityId +"', it already exists!");
             return false;

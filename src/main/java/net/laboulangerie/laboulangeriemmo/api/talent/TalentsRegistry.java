@@ -159,6 +159,10 @@ public class TalentsRegistry {
         return talents;
     }
     private boolean validateTalent(TalentArchetype talent) {
+        if (talent.identifier.contains("/")) { // "/" is forbidden because it is used to reference abilities in CooldownsHolder (talent/ability)
+            warnTalent(talent.identifier, "It contains a forbidden character: '/'");
+            return false;
+        }
         if (talentsArchetypes.containsKey(talent.identifier)) {
             warnValidation(talent.identifier, "Talent with this identifier already exists");
             return false;
