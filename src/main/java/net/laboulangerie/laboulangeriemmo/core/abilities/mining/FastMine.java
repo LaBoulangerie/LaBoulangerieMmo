@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities.mining;
+package net.laboulangerie.laboulangeriemmo.core.abilities.mining;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

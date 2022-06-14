@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.core;
+package net.laboulangerie.laboulangeriemmo.core.abilities.mining;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class BlockWatcher {
     private UUID uuid;
     private List<Player> watchers = new ArrayList<Player>();
 
-    BlockWatcher(int entityId, UUID uuid, Player firstWatcher) {
+    public BlockWatcher(int entityId, UUID uuid, Player firstWatcher) {
         this.entityId = entityId;
         this.uuid = uuid;
         watchers.add(firstWatcher);

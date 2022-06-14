@@ -1,23 +1,20 @@
-package net.laboulangerie.laboulangeriemmo.abilities.woodcutting;
+package net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
-import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
-import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
-import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 
-public class Strip extends AbilityExecutor {
-    public Strip(AbilityArchetype archetype) {
+public class Timber extends AbilityExecutor {
+    public Timber(AbilityArchetype archetype) {
         super(archetype);
     }
 
@@ -57,32 +54,32 @@ public class Strip extends AbilityExecutor {
 
     @Override
     public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.COMBO;
+        return AbilityTrigger.BREAK;
     }
 
     @Override
     public boolean shouldTrigger(Event baseEvent) {
-        ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
-        Block block = event.getPlayer().getTargetBlock(5);
+        BlockBreakEvent event = (BlockBreakEvent) baseEvent;
+        Block block = event.getBlock();
 
-        return new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.LEFT).match(event.getKeyStreak()) && block != null && Tag.LOGS.isTagged(block.getType()) && !(block.hasMetadata("laboulangerie:placed"));
+        return block != null && Tag.LOGS.isTagged(block.getType()) && !(block.hasMetadata("laboulangerie:placed"));
     }
 
     @Override
     public void trigger(Event baseEvent, int level) {
-        ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
-        Block initBlock = event.getPlayer().getTargetBlock(5);
+        BlockBreakEvent event = (BlockBreakEvent) baseEvent;
+        Block initBlock = event.getBlock();
         initType = initBlock.getType();
         initLocation = initBlock.getLocation();
-        stripNeighbours(initBlock, event.getPlayer());
+        breakNeighbours(initBlock);
     }
 
-    private void stripNeighbours(Block block, Player player) {
+    private void breakNeighbours(Block block) {
         new BukkitRunnable() {
             @Override
             public void run() {
                 Location loc = block.getLocation();
-                for (int[] coordinate : Strip.relCoordinates) {
+                for (int[] coordinate : Timber.relCoordinates) {
                     Location neighbourLoc = loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
                     Block neighbour = neighbourLoc.getBlock();
 
@@ -90,9 +87,10 @@ public class Strip extends AbilityExecutor {
                             && neighbour.getY() >= initLocation.getBlockY()
                             && Math.abs(neighbour.getX() - initLocation.getBlockX()) <= range
                             && Math.abs(neighbour.getZ() - initLocation.getBlockZ()) <= range) {
-                        block.setType(Material.getMaterial("STRIPPED_" + block.getType().toString()));
+                        // Drop the item and spawn block particles
+                        neighbour.breakNaturally(null, true);
                         // Break neighbours of neighbour recursively
-                        stripNeighbours(neighbour , player);
+                        breakNeighbours(neighbour);
                     }
                 }
             }

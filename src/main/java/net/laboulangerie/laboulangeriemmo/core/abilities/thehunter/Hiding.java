@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities.thehunter;
+package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;

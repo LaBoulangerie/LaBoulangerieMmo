@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities.thehunter;
+package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter;
 
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;

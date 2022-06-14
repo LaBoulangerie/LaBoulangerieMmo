@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities.thehunter;
+package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter;
 
 import java.util.Arrays;
 

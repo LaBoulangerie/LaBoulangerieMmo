@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities.woodcutting;
+package net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting;
 
 import java.util.Random;
 

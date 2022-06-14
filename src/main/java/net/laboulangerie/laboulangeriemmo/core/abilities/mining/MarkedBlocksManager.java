@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.core;
+package net.laboulangerie.laboulangeriemmo.core.abilities.mining;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;

@@ -22,9 +22,9 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.abilities.thehunter.FireBow;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.core.MarkedBlocksManager;
+import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MarkedBlocksManager;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.FireBow;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.core.thehunter.firebow.FireArrow;
 import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisibleParticles;

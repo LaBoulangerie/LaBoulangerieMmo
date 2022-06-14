@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities.mining;
+package net.laboulangerie.laboulangeriemmo.core.abilities.mining;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,7 +10,6 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
-import net.laboulangerie.laboulangeriemmo.core.MagneticFieldTask;
 
 public class MagneticField extends AbilityExecutor {
 

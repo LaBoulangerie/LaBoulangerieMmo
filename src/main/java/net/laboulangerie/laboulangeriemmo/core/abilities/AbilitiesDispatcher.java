@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities;
+package net.laboulangerie.laboulangeriemmo.core.abilities;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -23,9 +23,9 @@ import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.laboulangerie.laboulangeriemmo.events.MmoPlayerUseAbilityEvent;
 
-public class AbilitiesManager implements Listener {
+public class AbilitiesDispatcher implements Listener {
 
-    public AbilitiesManager() {
+    public AbilitiesDispatcher() {
     }
 
     @EventHandler

@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities.farmer;
+package net.laboulangerie.laboulangeriemmo.core.abilities.farmer;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Breedable;

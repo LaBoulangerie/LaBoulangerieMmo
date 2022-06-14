@@ -7,7 +7,6 @@ import java.util.logging.Level;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.laboulangerie.laboulangeriemmo.abilities.AbilitiesManager;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilitiesRegistry;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerListener;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerManager;
@@ -22,6 +21,7 @@ import net.laboulangerie.laboulangeriemmo.commands.MmoCommand;
 import net.laboulangerie.laboulangeriemmo.commands.Stats;
 import net.laboulangerie.laboulangeriemmo.commands.TownyMmo;
 import net.laboulangerie.laboulangeriemmo.core.Bar;
+import net.laboulangerie.laboulangeriemmo.core.abilities.AbilitiesDispatcher;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboDispatcher;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
@@ -115,7 +115,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 new ServerListener(),
                 new MmoPlayerListener(),
                 new GrindingListener(),
-                new AbilitiesManager(),
+                new AbilitiesDispatcher(),
                 new MmoListener(bar),
                 new BlockusListener(),
                 LeaderBoardManager.getInstance(),

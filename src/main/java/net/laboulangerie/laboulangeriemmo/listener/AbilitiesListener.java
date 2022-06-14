@@ -3,25 +3,25 @@ package net.laboulangerie.laboulangeriemmo.listener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import net.laboulangerie.laboulangeriemmo.abilities.farmer.AnimalTwins;
-import net.laboulangerie.laboulangeriemmo.abilities.farmer.BetterBonemeal;
-import net.laboulangerie.laboulangeriemmo.abilities.farmer.NatureTouch;
-import net.laboulangerie.laboulangeriemmo.abilities.farmer.TastyBread;
-import net.laboulangerie.laboulangeriemmo.abilities.mining.FastMine;
-import net.laboulangerie.laboulangeriemmo.abilities.mining.FastSmelt;
-import net.laboulangerie.laboulangeriemmo.abilities.mining.MagneticField;
-import net.laboulangerie.laboulangeriemmo.abilities.mining.MinecraftExpMultiplier;
-import net.laboulangerie.laboulangeriemmo.abilities.thehunter.Dodging;
-import net.laboulangerie.laboulangeriemmo.abilities.thehunter.ExpInBottle;
-import net.laboulangerie.laboulangeriemmo.abilities.thehunter.FireBow;
-import net.laboulangerie.laboulangeriemmo.abilities.thehunter.Hiding;
-import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.BetterAppleDrop;
-import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.DoubleDropLog;
-import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.Strip;
-import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.ThickTree;
-import net.laboulangerie.laboulangeriemmo.abilities.woodcutting.Timber;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.api.ability.RegisterAbilitiesEvent;
+import net.laboulangerie.laboulangeriemmo.core.abilities.farmer.AnimalTwins;
+import net.laboulangerie.laboulangeriemmo.core.abilities.farmer.BetterBonemeal;
+import net.laboulangerie.laboulangeriemmo.core.abilities.farmer.NatureTouch;
+import net.laboulangerie.laboulangeriemmo.core.abilities.farmer.TastyBread;
+import net.laboulangerie.laboulangeriemmo.core.abilities.mining.FastMine;
+import net.laboulangerie.laboulangeriemmo.core.abilities.mining.FastSmelt;
+import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MagneticField;
+import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MinecraftExpMultiplier;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.Dodging;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.ExpInBottle;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.FireBow;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.Hiding;
+import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.BetterAppleDrop;
+import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.DoubleDropLog;
+import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.Strip;
+import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.ThickTree;
+import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.Timber;
 
 public class AbilitiesListener implements Listener {
     @EventHandler

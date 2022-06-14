@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.core;
+package net.laboulangerie.laboulangeriemmo.core.abilities.mining;
 
 import java.util.ArrayList;
 import java.util.Arrays;

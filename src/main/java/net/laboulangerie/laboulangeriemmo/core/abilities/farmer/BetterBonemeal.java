@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.abilities.farmer;
+package net.laboulangerie.laboulangeriemmo.core.abilities.farmer;
 
 import java.util.ArrayList;
 
