@@ -27,7 +27,7 @@ import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.expansions.MmoExpansion;
 import net.laboulangerie.laboulangeriemmo.json.GsonSerializer;
-import net.laboulangerie.laboulangeriemmo.listener.AbilitiesListener;
+import net.laboulangerie.laboulangeriemmo.listener.AbilitiesRegisterer;
 import net.laboulangerie.laboulangeriemmo.listener.GrindingListener;
 import net.laboulangerie.laboulangeriemmo.listener.MmoListener;
 import net.laboulangerie.laboulangeriemmo.listener.ServerListener;
@@ -59,7 +59,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         this.serializer = new GsonSerializer();
 
         LaBoulangerieMmo.abilitiesRegistry = new AbilitiesRegistry();
-        getServer().getPluginManager().registerEvents(new AbilitiesListener(), this);
+        getServer().getPluginManager().registerEvents(new AbilitiesRegisterer(), this);
         abilitiesRegistry.init();
 
         LaBoulangerieMmo.talentsRegistry = new TalentsRegistry();

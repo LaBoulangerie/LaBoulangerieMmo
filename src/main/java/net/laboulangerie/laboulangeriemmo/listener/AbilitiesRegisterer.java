@@ -23,7 +23,7 @@ import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.Strip;
 import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.ThickTree;
 import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.Timber;
 
-public class AbilitiesListener implements Listener {
+public class AbilitiesRegisterer implements Listener {
     @EventHandler
     public void onRegisterTime(RegisterAbilitiesEvent event) {
         event.getRegistry().registerAbility("fast-mine", FastMine.class, AbilityTrigger.COMBO);
