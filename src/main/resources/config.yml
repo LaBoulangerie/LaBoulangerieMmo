@@ -11,8 +11,11 @@ lang:
         xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
         combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
 
+#Whether or not to display a boss bar showing player's progression when gaining xp
+enable-xp-bar: true
 #Whether or not the talents should be enabled
 enable-talents: true
+
 talents:
     miner:
         display_name: Miner

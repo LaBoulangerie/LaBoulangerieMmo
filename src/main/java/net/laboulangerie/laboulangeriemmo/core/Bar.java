@@ -24,6 +24,7 @@ public class Bar {
     }
 
     public void displayBar(Talent talent, MmoPlayer mmoPlayer) {
+        if (!config.getBoolean("enable-xp-bar", false)) return;
         List<TagResolver.Single> placeholders = Arrays.asList(
             Placeholder.parsed("talent", talent.getDisplayName()),
             Placeholder.parsed("level", Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER))),
