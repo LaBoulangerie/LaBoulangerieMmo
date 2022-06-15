@@ -7,7 +7,6 @@ import org.bukkit.potion.PotionEffectType;
 
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
@@ -17,11 +16,6 @@ public class FastMine extends AbilityExecutor {
 
     public FastMine(AbilityArchetype archetype) {
         super(archetype);
-    }
-
-    @Override
-    public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.COMBO;
     }
 
     @Override

@@ -12,17 +12,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import net.kyori.adventure.text.Component;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 
 public class ExpInBottle extends AbilityExecutor {
 
     public ExpInBottle(AbilityArchetype archetype) {
         super(archetype);
-    }
-
-    @Override
-    public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.RIGHT_CLICK_AIR;
     }
 
     @Override

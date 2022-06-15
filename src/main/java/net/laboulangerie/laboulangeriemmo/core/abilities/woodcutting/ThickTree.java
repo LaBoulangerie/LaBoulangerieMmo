@@ -8,7 +8,6 @@ import org.bukkit.event.Event;
 
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
@@ -17,11 +16,6 @@ public class ThickTree extends AbilityExecutor{
 
     public ThickTree(AbilityArchetype archetype) {
         super(archetype);
-    }
-
-    @Override
-    public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.COMBO;
     }
 
     @Override

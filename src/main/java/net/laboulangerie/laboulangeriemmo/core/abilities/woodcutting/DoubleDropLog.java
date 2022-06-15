@@ -11,18 +11,12 @@ import org.bukkit.inventory.ItemStack;
 
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 
 public class DoubleDropLog extends AbilityExecutor {
 
     public DoubleDropLog(AbilityArchetype archetype) {
         super(archetype);
-    }
-
-    @Override
-    public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.BREAK;
     }
 
     @Override

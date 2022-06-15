@@ -2,27 +2,21 @@ package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter;
 
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
-import net.minecraft.world.entity.player.Player;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 
 public class Dodging extends AbilityExecutor {
 
     public Dodging(AbilityArchetype archetype) {
         super(archetype);
-    }
-
-    @Override
-    public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.COMBO;
     }
 
     @Override

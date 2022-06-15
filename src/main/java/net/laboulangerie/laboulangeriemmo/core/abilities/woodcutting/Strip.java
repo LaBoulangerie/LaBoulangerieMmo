@@ -11,7 +11,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
@@ -54,11 +53,6 @@ public class Strip extends AbilityExecutor {
 
     private Material initType;
     private Location initLocation;
-
-    @Override
-    public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.COMBO;
-    }
 
     @Override
     public boolean shouldTrigger(Event baseEvent) {

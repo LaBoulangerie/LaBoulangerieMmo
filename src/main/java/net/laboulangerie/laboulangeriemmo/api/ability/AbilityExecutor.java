@@ -10,15 +10,6 @@ public abstract class AbilityExecutor {
     }
 
     /**
-     * getAbilityTrigger indicate the type of interaction that should be done for a
-     * given ability.
-     * Example: CLICK_ENTITY, will trigger on PlayerInteractAtEntityEvent
-     *
-     * @return the type of trigger desired
-     */
-    public abstract AbilityTrigger getAbilityTrigger();
-
-    /**
      * shouldTrigger method indicate if the ability should trigger or not based on
      * the event where it happen.
      * ps: the cooldown will be managed elsewhere

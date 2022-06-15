@@ -1,15 +1,5 @@
 package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter;
 
-import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
-import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
-import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.ArmorHider;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisiblePlayer;
-import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -17,14 +7,18 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
+import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
+import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.ArmorHider;
+import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisiblePlayer;
+import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
+
 public class Hiding extends AbilityExecutor {
     public Hiding(AbilityArchetype archetype) {
         super(archetype);
-    }
-
-    @Override
-    public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.COMBO;
     }
 
     @Override

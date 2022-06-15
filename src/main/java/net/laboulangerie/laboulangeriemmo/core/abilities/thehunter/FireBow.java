@@ -16,7 +16,6 @@ import org.bukkit.event.Event;
 
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.core.thehunter.firebow.FireArrow;
@@ -30,12 +29,6 @@ public class FireBow extends AbilityExecutor {
 
     private static final int SMALL_EXPLOSION_POWER = 2;
     private static final int LARGE_EXPLOSION_POWER = 3;
-
-
-    @Override
-    public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.COMBO;
-    }
 
     @Override
     public boolean shouldTrigger(Event baseEvent) {

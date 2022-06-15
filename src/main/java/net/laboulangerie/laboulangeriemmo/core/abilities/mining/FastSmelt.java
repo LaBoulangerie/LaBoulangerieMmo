@@ -17,18 +17,12 @@ import org.bukkit.inventory.Recipe;
 
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 
 public class FastSmelt extends AbilityExecutor {
 
     public FastSmelt(AbilityArchetype archetype) {
         super(archetype);
-    }
-
-    @Override
-    public AbilityTrigger getAbilityTrigger() {
-        return AbilityTrigger.LEFT_CLICK_BLOCK;
     }
 
     @Override
