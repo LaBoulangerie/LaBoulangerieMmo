@@ -36,10 +36,10 @@ public class FastMine extends AbilityExecutor {
         Player player = event.getPlayer();
         int duration = 0;
         int amplifier = 0;
-        if (level >= 75) {
+        if (level >= getTier(2)) {
             duration = 300;
             amplifier = 3;
-        } else if (level >= 45) {
+        } else if (level >= getTier(1)) {
             duration = 60;
             amplifier = 2;
         } else {

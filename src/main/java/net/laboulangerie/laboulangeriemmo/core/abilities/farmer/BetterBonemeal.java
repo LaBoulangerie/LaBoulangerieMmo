@@ -35,24 +35,22 @@ public class BetterBonemeal extends AbilityExecutor{
     @Override
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-        if (level < 30) {
-            ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 5);
+        if (level >= getTier(2)) {
+            ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 30);
             for (Block block : blocks) {
                 block.applyBoneMeal(BlockFace.UP);
+                block.applyBoneMeal(BlockFace.UP);
+                block.applyBoneMeal(BlockFace.UP);
             }
-        }
-        if (level >= 30 && level < 45) {
+        }else if (level >= getTier(1) && level < 45) {
             ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 10);
             for (Block block : blocks) {
                 block.applyBoneMeal(BlockFace.UP);
                 block.applyBoneMeal(BlockFace.UP);
             }
-        }
-        if (level >= 45) {
-            ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 30);
+        }else {
+            ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 5);
             for (Block block : blocks) {
-                block.applyBoneMeal(BlockFace.UP);
-                block.applyBoneMeal(BlockFace.UP);
                 block.applyBoneMeal(BlockFace.UP);
             }
         }

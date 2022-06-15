@@ -57,9 +57,9 @@ public class FireBow extends AbilityExecutor {
 
         int abilityLevel = 1;
 
-        if (level >= 50)
+        if (level >= getTier(2))
             abilityLevel = 3;
-        else if (level >= 30)
+        else if (level >= getTier(1))
             abilityLevel = 2;
 
         FireArrow.fireArrow.add(new FireArrow(player, abilityLevel));

@@ -48,9 +48,9 @@ public class DoubleDropLog extends AbilityExecutor {
         int find_nearest_int = min_number + random_chance.nextInt(max_number);
         boolean shouldDouble = false;
 
-        if (level >= 60 && find_nearest_int <= 80)
+        if (level >= getTier(2) && find_nearest_int <= 80)
             shouldDouble = true;
-        else if (level >= 40 && find_nearest_int <= 40)
+        else if (level >= getTier(1) && find_nearest_int <= 40)
             shouldDouble = true;
         else if (find_nearest_int <= 10)
             shouldDouble = true;

@@ -58,7 +58,7 @@ public class NatureTouch extends AbilityExecutor {
         int min_number = 1;
         Random random_chance = new Random();
         int find_nearest_int = min_number + random_chance.nextInt(max_number);
-        if (level >= 60) {
+        if (level >= getTier(2)) {
             if (ageable.getAge() == 0) {
                 block.getDrops().clear();
                 event.setCancelled(true);
@@ -74,7 +74,7 @@ public class NatureTouch extends AbilityExecutor {
             }
             event.setCancelled(false);
         }
-        else if (level >= 40 && find_nearest_int <= 40) {
+        else if (level >= getTier(1) && find_nearest_int <= 40) {
             if (ageable.getAge() == 0) {
                 block.getDrops().clear();
                 event.setCancelled(true);

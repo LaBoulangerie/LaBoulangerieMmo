@@ -39,9 +39,9 @@ public class ExpInBottle extends AbilityExecutor {
         int lvlToSubtract = 10; // tier 1
         int playerCurrentLevel = player.getTotalExperience();
 
-        if (level >= 70)
+        if (level >= getTier(2))
             lvlToSubtract = 30; // tier 3
-        else if (level >= 50)
+        else if (level >= getTier(1))
             lvlToSubtract = 20; // tier 2
 
         if (playerCurrentLevel >= lvlToSubtract) {

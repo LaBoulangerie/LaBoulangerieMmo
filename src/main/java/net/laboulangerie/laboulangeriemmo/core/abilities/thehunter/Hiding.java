@@ -42,11 +42,11 @@ public class Hiding extends AbilityExecutor {
         final Player player = event.getPlayer();
 
         // Same as the combo I used random level so edit and delete this comment
-        if (level >= 70) {
+        if (level >= getTier(2)) {
             totalInvisibility(new InvisiblePlayer(player, 3), 12000);
-        } else if (level >= 50) {
+        } else if (level >= getTier(1)) {
             totalInvisibility(new InvisiblePlayer(player, 2), 6000);
-        } else if (level >= 10) {
+        } else {
             basicInvisibility(new InvisiblePlayer(player, 1));
         }
     }

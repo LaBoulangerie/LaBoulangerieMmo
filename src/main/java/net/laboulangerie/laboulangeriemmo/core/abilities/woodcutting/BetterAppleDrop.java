@@ -44,9 +44,9 @@ public class BetterAppleDrop extends AbilityExecutor {
         int find_nearest_int = min_number + random_chance.nextInt(max_number);
         boolean shouldDrop = false;
 
-        if (level >= 60 && find_nearest_int <= 80)
+        if (level >= getTier(2) && find_nearest_int <= 80)
             shouldDrop = true;
-        else if (level >= 40 && find_nearest_int <= 40)
+        else if (level >= getTier(1) && find_nearest_int <= 40)
             shouldDrop = true;
         else if (find_nearest_int <= 10)
             shouldDrop = true;

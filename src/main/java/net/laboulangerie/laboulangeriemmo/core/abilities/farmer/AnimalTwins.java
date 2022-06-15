@@ -37,11 +37,11 @@ public class AnimalTwins extends AbilityExecutor{
         Random random_chance = new Random();
         int find_nearest_int = min_number + random_chance.nextInt(max_number);
 
-        if (level >= 60) {
+        if (level >= getTier(2)) {
         	Animals animal = (Animals) entity.getWorld().spawnEntity(entity.getLocation(), entity.getType());
         	animal.setBaby();
         }
-        else if (level >= 40 && find_nearest_int <= 40) {
+        else if (level >= getTier(1) && find_nearest_int <= 40) {
         	Animals animal = (Animals) entity.getWorld().spawnEntity(entity.getLocation(), entity.getType());
         	animal.setBaby();
         }

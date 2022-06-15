@@ -29,7 +29,7 @@ public class AbilityArchetype {
      * @return Tier's required level or highest tier's one or 
      * requiredLevel if no tier is defined
      */
-    public Integer getTier(Short tier) {
+    public Integer getTier(int tier) {
         return tiers.size() > tier ? tiers.get(tier) : tiers.get(tiers.size()-1);
     }
 }

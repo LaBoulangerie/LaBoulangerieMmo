@@ -48,7 +48,7 @@ public abstract class AbilityExecutor {
      * @param tier
      * @return first level of the tier
      */
-    public Integer getTier(short tier) {
+    public Integer getTier(int tier) {
         return archetype.getTier(tier);
     }
 }
