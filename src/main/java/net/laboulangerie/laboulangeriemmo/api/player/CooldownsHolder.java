@@ -13,7 +13,7 @@ public class CooldownsHolder {
     private HashMap<String, Date> cooldowns;
 
     public CooldownsHolder() {
-        cooldowns = new HashMap<String, Date>();
+        cooldowns = new HashMap<>();
     }
 
     public long getCooldown(AbilityArchetype ability, String talentId) {

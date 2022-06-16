@@ -58,7 +58,7 @@ public class InvisiblePlayer {
             scheduler.cancel();
         }
 
-        final Player player = getPlayer();
+        Player player = getPlayer();
         if (player == null) return;
         player.removePotionEffect(PotionEffectType.INVISIBILITY);
 

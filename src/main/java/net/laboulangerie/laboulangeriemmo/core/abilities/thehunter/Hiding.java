@@ -23,9 +23,6 @@ public class Hiding extends AbilityExecutor {
 
     @Override
     public boolean shouldTrigger(Event baseEvent) {
-        // I'm currently using a random combo as I don't know what you guys want
-        // Feel free to edit this and delete those comments afterward
-
         final ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
         return event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.RIGHT, ComboKey.RIGHT));
     }
@@ -35,7 +32,6 @@ public class Hiding extends AbilityExecutor {
         final ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
         final Player player = event.getPlayer();
 
-        // Same as the combo I used random level so edit and delete this comment
         if (level >= getTier(2)) {
             totalInvisibility(new InvisiblePlayer(player, 3), 12000);
         } else if (level >= getTier(1)) {

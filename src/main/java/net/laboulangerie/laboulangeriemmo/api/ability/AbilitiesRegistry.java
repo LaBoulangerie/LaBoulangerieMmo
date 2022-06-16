@@ -12,9 +12,6 @@ public class AbilitiesRegistry {
     private Map<String, Class<? extends AbilityExecutor>> abilities = new HashMap<>();
     private Map<String, AbilityTrigger> triggerIndex = new HashMap<>();
 
-    public Class<? extends AbilityExecutor> getAbility(String abilityId) {
-        return abilities.get(abilityId);
-    }
     /**
      * Add an ability to the AbilitiesRegistry
      * @param abilityId Unique identifier of the ability
@@ -29,9 +26,7 @@ public class AbilitiesRegistry {
             triggerIndex.put(abilityId, trigger);
         }
     }
-    public boolean exists(String abilityId) {
-        return abilities.containsKey(abilityId);
-    }
+
     private boolean validateAbility(String abilityId) {
         if (abilityId.contains("/")) { // "/" is forbidden because it is used to reference abilities in CooldownsHolder (talent/ability)
             LaBoulangerieMmo.PLUGIN.getLogger().warning("Can't register ability '"+ abilityId +"', it contains a forbidden character: '/'");
@@ -43,9 +38,7 @@ public class AbilitiesRegistry {
         }
         return true;
     }
-    public AbilityTrigger getTriggerForAbility(String abilityId) {
-        return triggerIndex.get(abilityId);
-    }
+
     /**
      * Return a fresh instance of the {@link net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor AbilityExecutor}
      * corresponding to the provided {@link net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype AbilityArchetype}
@@ -70,5 +63,20 @@ public class AbilitiesRegistry {
         abilities.clear();
         triggerIndex.clear();
         Bukkit.getPluginManager().callEvent(new RegisterAbilitiesEvent(this));
+    }
+
+    public AbilityTrigger getTriggerForAbility(String abilityId) {
+        return triggerIndex.get(abilityId);
+    }
+    public boolean exists(String abilityId) {
+        return abilities.containsKey(abilityId);
+    }
+    /**
+     * Gets the {@link net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor AbilityExecutor} associated with the ability identifier
+     * @param abilityId Identifier of the AbilityExecutor
+     * @return {@link net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor AbilityExecutor} or null if it doesn't exist
+     */
+    public Class<? extends AbilityExecutor> getAbility(String abilityId) {
+        return abilities.get(abilityId);
     }
 }

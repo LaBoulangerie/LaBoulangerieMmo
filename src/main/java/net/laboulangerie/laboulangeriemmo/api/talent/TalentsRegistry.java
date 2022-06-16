@@ -88,7 +88,7 @@ public class TalentsRegistry {
                         Map<String, String> requiredFields = Map.of("display_name", "displayName", "cooldown", "cooldown", "unit", "cooldownUnit", "level", "requiredLevel", "effect", "effect", "log", "shouldLog");
 
                         for (String abilityId : abilities.getKeys(false)) { //go through all abilities
-                            if  (talent.abilitiesArchetypes.containsKey(abilityId)) {
+                            if (talent.abilitiesArchetypes.containsKey(abilityId)) {
                                 warnAbility(identifier, abilityId, "An ability with this identifier already exists!");
                                 continue;
                             }
@@ -158,6 +158,7 @@ public class TalentsRegistry {
             .forEach(archetype -> talents.put(archetype.identifier, new Talent(archetype.identifier)));
         return talents;
     }
+
     private boolean validateTalent(TalentArchetype talent) {
         if (talent.identifier.contains("/")) { // "/" is forbidden because it is used to reference abilities in CooldownsHolder (talent/ability)
             warnTalent(talent.identifier, "It contains a forbidden character: '/'");
