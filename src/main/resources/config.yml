@@ -183,7 +183,7 @@ talents:
             - STONE_AXE
             - GOLDEN_AXE
             - WOODEN_AXE
-            - NETHERITE_
+            - NETHERITE_AXE
 
 talent-grinding:
     miner:
