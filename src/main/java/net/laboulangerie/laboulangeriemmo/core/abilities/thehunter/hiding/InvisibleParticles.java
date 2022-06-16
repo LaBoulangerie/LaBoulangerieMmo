@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.core.thehunter.hiding;
+package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

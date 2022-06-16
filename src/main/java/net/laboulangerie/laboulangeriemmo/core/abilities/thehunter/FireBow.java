@@ -16,9 +16,9 @@ import org.bukkit.event.Event;
 
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow.FireArrow;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.firebow.FireArrow;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 
 public class FireBow extends AbilityExecutor {

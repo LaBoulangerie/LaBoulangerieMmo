@@ -25,10 +25,10 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MarkedBlocksManager;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.FireBow;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow.FireArrow;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.InvisibleParticles;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.InvisiblePlayer;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.firebow.FireArrow;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisibleParticles;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisiblePlayer;
 import net.laboulangerie.laboulangeriemmo.utils.Utils;
 
 public class ServerListener implements Listener {

@@ -6,7 +6,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-import net.laboulangerie.laboulangeriemmo.core.thehunter.firebow.FireArrow;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow.FireArrow;
 
 public class ArrowEffect extends Effect {
 

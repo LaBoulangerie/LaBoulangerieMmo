@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.core.thehunter.firebow;
+package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow;
 
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;

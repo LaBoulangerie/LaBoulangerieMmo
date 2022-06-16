@@ -10,10 +10,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.ArmorHider;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.InvisiblePlayer;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.ArmorHider;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisiblePlayer;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 
 public class Hiding extends AbilityExecutor {
