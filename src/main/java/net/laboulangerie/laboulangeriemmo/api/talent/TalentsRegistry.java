@@ -177,11 +177,12 @@ public class TalentsRegistry {
         });
         return noErrors.get();
     }
+
     private void warnValidation(String talent, String cause) {
         LaBoulangerieMmo.PLUGIN.getLogger().warning("Unable to validate talent '"+ talent +"': "+ cause);
     }
     private void warnTalent(String talent, String cause) {
-        LaBoulangerieMmo.PLUGIN.getLogger().warning("Unable to load talent \"" + talent + "\": " + cause);
+        LaBoulangerieMmo.PLUGIN.getLogger().warning("Unable to load talent '" + talent + "': " + cause);
     }
     private void warnAbility(String talent, String ability, String cause) {
         LaBoulangerieMmo.PLUGIN.getLogger().warning("Unable to load ability '" +ability+ "' of talent '"+talent+"': "+cause);

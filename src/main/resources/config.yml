@@ -73,7 +73,7 @@ talents:
                 level: 5
                 effect: trail
                 log: true
-            xp-in-bottle:
+            exp-in-bottle:
                 display_name: Xp in bottle
                 cooldown: 4
                 unit: SECONDS

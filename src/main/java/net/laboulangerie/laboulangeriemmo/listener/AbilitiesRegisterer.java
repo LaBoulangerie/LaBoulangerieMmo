@@ -37,7 +37,7 @@ public class AbilitiesRegisterer implements Listener {
         event.getRegistry().registerAbility("tasty-bread", TastyBread.class, AbilityTrigger.HOLD_ITEM);
 
         event.getRegistry().registerAbility("dodging", Dodging.class, AbilityTrigger.COMBO);
-        event.getRegistry().registerAbility("xp-in-bottle", ExpInBottle.class, AbilityTrigger.RIGHT_CLICK_AIR);
+        event.getRegistry().registerAbility("exp-in-bottle", ExpInBottle.class, AbilityTrigger.RIGHT_CLICK_AIR);
         event.getRegistry().registerAbility("fire-bow", FireBow.class, AbilityTrigger.COMBO);
         event.getRegistry().registerAbility("hiding", Hiding.class, AbilityTrigger.COMBO);
 
