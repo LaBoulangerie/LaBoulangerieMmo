@@ -75,7 +75,7 @@ talents:
                 log: true
             exp-in-bottle:
                 display_name: Xp in bottle
-                cooldown: 4
+                cooldown: 0
                 unit: SECONDS
                 level: 10
                 effect: default
