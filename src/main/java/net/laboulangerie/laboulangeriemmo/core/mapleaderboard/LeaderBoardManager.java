@@ -46,6 +46,7 @@ public class LeaderBoardManager implements Listener {
         return instance;
     }
 
+    @SuppressWarnings("deprecation")
     public List<Integer> createLeaderBoard(HashMap<String, Double> pretenders, String title, String unit, int width, int height) throws IOException {
         if (width <= 0 || height <= 0)
             throw new IllegalArgumentException("Dimensions cannot be negative or null");
@@ -97,6 +98,7 @@ public class LeaderBoardManager implements Listener {
      * @param id
      * @throws IllegalArgumentException if {@code id} is invalid
      */
+    @SuppressWarnings("deprecation")
     public void updateMap(Integer id, HashMap<String, Double> pretenders) throws IllegalArgumentException {
         if (!usedMaps.contains(id)) throw new IllegalArgumentException("No map with id: " + id);
 
@@ -108,6 +110,7 @@ public class LeaderBoardManager implements Listener {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public ItemStack getMapItem(Integer id) throws IllegalArgumentException {
         if (!usedMaps.contains(id)) throw new IllegalArgumentException("No map with id: " + id);
         ItemStack map = new ItemStack(Material.FILLED_MAP);
@@ -172,7 +175,7 @@ public class LeaderBoardManager implements Listener {
         public MapDataSave(String name) throws IOException {
             this.name = name;
             ensureFileExists();
-            this.dataYAML = YamlConfiguration.loadConfiguration(dataFile);
+            dataYAML = YamlConfiguration.loadConfiguration(dataFile);
         }
 
         private void ensureFileExists() throws IOException {
@@ -182,7 +185,7 @@ public class LeaderBoardManager implements Listener {
         }
 
         public FileConfiguration getSave() {
-            return this.dataYAML;
+            return dataYAML;
         }
 
         public void save() throws IOException {

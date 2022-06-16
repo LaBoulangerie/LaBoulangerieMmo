@@ -7,27 +7,30 @@ import java.util.logging.Level;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilitiesRegistry;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerListener;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerManager;
+import net.laboulangerie.laboulangeriemmo.api.talent.TalentsRegistry;
 import net.laboulangerie.laboulangeriemmo.betonquest.LevelCondition;
 import net.laboulangerie.laboulangeriemmo.betonquest.XpEvent;
-import net.laboulangerie.laboulangeriemmo.blockus.BlockusDataManager;
-import net.laboulangerie.laboulangeriemmo.blockus.BlockusListener;
-import net.laboulangerie.laboulangeriemmo.blockus.BlockusRestoration;
 import net.laboulangerie.laboulangeriemmo.commands.Combo;
 import net.laboulangerie.laboulangeriemmo.commands.MmoCommand;
 import net.laboulangerie.laboulangeriemmo.commands.Stats;
 import net.laboulangerie.laboulangeriemmo.commands.TownyMmo;
 import net.laboulangerie.laboulangeriemmo.core.Bar;
+import net.laboulangerie.laboulangeriemmo.core.abilities.AbilitiesDispatcher;
+import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusDataManager;
+import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusListener;
+import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusRestoration;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboDispatcher;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.expansions.MmoExpansion;
 import net.laboulangerie.laboulangeriemmo.json.GsonSerializer;
+import net.laboulangerie.laboulangeriemmo.listener.AbilitiesRegisterer;
+import net.laboulangerie.laboulangeriemmo.listener.GrindingListener;
 import net.laboulangerie.laboulangeriemmo.listener.MmoListener;
 import net.laboulangerie.laboulangeriemmo.listener.ServerListener;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayerListener;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayerManager;
-import net.laboulangerie.laboulangeriemmo.player.SkillListener;
-import net.laboulangerie.laboulangeriemmo.player.ability.AbilitiesManager;
 import net.milkbowl.vault.economy.Economy;
 import pl.betoncraft.betonquest.BetonQuest;
 
@@ -35,6 +38,8 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public static LaBoulangerieMmo PLUGIN;
     public static Economy ECONOMY = null;
     public static double XP_MULTIPLIER = 0.1;
+    public static TalentsRegistry talentsRegistry = null;
+    public static AbilitiesRegistry abilitiesRegistry = null;
 
     private GsonSerializer serializer;
     private BlockusDataManager blockusDataManager;
@@ -44,23 +49,30 @@ public class LaBoulangerieMmo extends JavaPlugin {
     @Override
     public void onEnable() {
         LaBoulangerieMmo.PLUGIN = this;
-        this.saveDefaultConfig();
+        saveDefaultConfig();
         if (!setupEconomy()) {
             getLogger().log(Level.SEVERE, "Can't load the plugin, Vault isn't present");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
 
-        this.serializer = new GsonSerializer();
+        serializer = new GsonSerializer();
 
-        this.blockusDataManager = new BlockusDataManager(this.getDataFolder().getPath() + "/blockus/blockus.dat");
-        this.mmoPlayerManager = new MmoPlayerManager();
-        this.bar = new Bar();
+        LaBoulangerieMmo.abilitiesRegistry = new AbilitiesRegistry();
+        getServer().getPluginManager().registerEvents(new AbilitiesRegisterer(), this);
+        abilitiesRegistry.init();
+
+        LaBoulangerieMmo.talentsRegistry = new TalentsRegistry();
+        talentsRegistry.init();
+
+        blockusDataManager = new BlockusDataManager(getDataFolder().getPath() + "/blockus/blockus.dat");
+        mmoPlayerManager = new MmoPlayerManager();
+        bar = new Bar();
 
         BlockusRestoration blockusRestoration = new BlockusRestoration();
         blockusRestoration.runTaskLater(this, 20);
 
-        this.registerListeners();
+        registerListeners();
         getCommand("stats").setExecutor(new Stats());
         getCommand("mmo").setExecutor(new MmoCommand());
         getCommand("combo").setExecutor(new Combo());
@@ -86,7 +98,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
     @Override
     public void onDisable() {
         try {
-            this.blockusDataManager.writeBlockuses();
+            blockusDataManager.writeBlockuses();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,12 +114,12 @@ public class LaBoulangerieMmo extends JavaPlugin {
         Arrays.asList(
                 new ServerListener(),
                 new MmoPlayerListener(),
-                new SkillListener(),
-                new AbilitiesManager(),
+                new GrindingListener(),
+                new AbilitiesDispatcher(),
                 new MmoListener(bar),
                 new BlockusListener(),
                 LeaderBoardManager.getInstance(),
-                new ComboDispatcher()).forEach(l -> this.getServer().getPluginManager().registerEvents(l, this));
+                new ComboDispatcher()).forEach(l -> getServer().getPluginManager().registerEvents(l, this));
     }
 
     public MmoPlayerManager getMmoPlayerManager() {

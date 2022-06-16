@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import pl.betoncraft.betonquest.Instruction;
 import pl.betoncraft.betonquest.api.Condition;
 import pl.betoncraft.betonquest.exceptions.InstructionParseException;
@@ -13,6 +13,7 @@ import pl.betoncraft.betonquest.exceptions.QuestRuntimeException;
 
 public class LevelCondition extends Condition {
 
+    @SuppressWarnings("deprecation")
     public LevelCondition(Instruction instruction) {
         super(instruction);
     }

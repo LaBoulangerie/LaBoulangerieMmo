@@ -14,10 +14,10 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 import net.laboulangerie.laboulangeriemmo.core.Bar;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 import net.laboulangerie.laboulangeriemmo.events.XpCountDownFinishedEvent;
-import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
 
 public class MmoListener implements Listener {
 
@@ -26,7 +26,7 @@ public class MmoListener implements Listener {
 
     public MmoListener(Bar bar) {
         this.bar = bar;
-        this.config = LaBoulangerieMmo.PLUGIN.getConfig();
+        config = LaBoulangerieMmo.PLUGIN.getConfig();
     }
 
     @EventHandler

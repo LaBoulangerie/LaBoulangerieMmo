@@ -12,18 +12,19 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.player.talent.Talent;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 
 public class Bar {
     private FileConfiguration config;
     private BossBar bossbar;
 
     public Bar() {
-        this.config = LaBoulangerieMmo.PLUGIN.getConfig();
+        config = LaBoulangerieMmo.PLUGIN.getConfig();
     }
 
     public void displayBar(Talent talent, MmoPlayer mmoPlayer) {
+        if (!config.getBoolean("enable-xp-bar", false)) return;
         List<TagResolver.Single> placeholders = Arrays.asList(
             Placeholder.parsed("talent", talent.getDisplayName()),
             Placeholder.parsed("level", Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER))),

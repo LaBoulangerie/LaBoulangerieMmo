@@ -1,9 +1,5 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
-import net.laboulangerie.laboulangeriemmo.core.thehunter.firebow.FireArrow;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisibleParticles;
-import net.laboulangerie.laboulangeriemmo.core.thehunter.hiding.InvisiblePlayer;
-import net.laboulangerie.laboulangeriemmo.player.ability.thehunter.FireBow;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
@@ -12,7 +8,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ExpBottleEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -22,10 +22,13 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.core.MarkedBlocksManager;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MarkedBlocksManager;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.FireBow;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow.FireArrow;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.InvisibleParticles;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.InvisiblePlayer;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.player.ability.Abilities;
 import net.laboulangerie.laboulangeriemmo.utils.Utils;
 
 public class ServerListener implements Listener {
@@ -92,13 +95,13 @@ public class ServerListener implements Listener {
             return;
         }
 
-        if (!mmoPlayer.getCooldowns().hasUsed(Abilities.DODGING) || mmoPlayer.getCooldowns().getCooldown(Abilities.DODGING) >= 1) // 1 is the duration of the spin attack TODO: Change when real cooldown is set
+        if (!mmoPlayer.getCooldowns().hasUsed("dodging") || !mmoPlayer.getCooldowns().getCooldowns("dodging").stream().filter(x -> x <= 1).findAny().isPresent()) // 1 is the duration of the spin attack
             return;
 
         if (Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) > 0)
             event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()));
 
-        event.getEntity().setVelocity(player.getLocation().getDirection().multiply(1));
+        event.getEntity().setVelocity(player.getLocation().getDirection().multiply(5));
     }
 
     @EventHandler

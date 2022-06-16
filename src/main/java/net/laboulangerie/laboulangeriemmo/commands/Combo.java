@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.player.MmoPlayer;
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 
 public class Combo implements CommandExecutor, TabCompleter {
 
