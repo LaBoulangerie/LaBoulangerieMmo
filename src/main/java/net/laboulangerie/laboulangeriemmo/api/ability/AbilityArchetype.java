@@ -30,6 +30,7 @@ public class AbilityArchetype {
      * requiredLevel if no tier is defined
      */
     public Integer getTier(int tier) {
+        if (tiers.size() == 0) return requiredLevel;
         return tiers.size() > tier ? tiers.get(tier) : tiers.get(tiers.size()-1);
     }
 }
