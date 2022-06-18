@@ -15,16 +15,11 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 
-public class Bar {
-    private FileConfiguration config;
-    private BossBar bossbar;
-
-    public Bar() {
-        config = LaBoulangerieMmo.PLUGIN.getConfig();
-    }
-
-    public void displayBar(Talent talent, MmoPlayer mmoPlayer) {
+public class XpBar {
+    public static void displayBar(Talent talent, MmoPlayer mmoPlayer) {
+        FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
         if (!config.getBoolean("enable-xp-bar", false)) return;
+
         List<TagResolver.Single> placeholders = Arrays.asList(
             Placeholder.parsed("talent", talent.getDisplayName()),
             Placeholder.parsed("level", Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER))),
@@ -32,7 +27,7 @@ public class Bar {
             Placeholder.parsed("max_xp", Double.toString(talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER)))
         );
         
-        bossbar = BossBar.bossBar(
+        final BossBar bossbar = BossBar.bossBar(
                 MiniMessage.miniMessage().deserialize(config.getString("lang.bar.format"), TagResolver.resolver(placeholders)),
                 (float) (((talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))
                         / talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER))),

@@ -15,19 +15,12 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
-import net.laboulangerie.laboulangeriemmo.core.Bar;
+import net.laboulangerie.laboulangeriemmo.core.XpBar;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 import net.laboulangerie.laboulangeriemmo.events.XpCountDownFinishedEvent;
 
 public class MmoListener implements Listener {
-
-    private Bar bar;
-    private FileConfiguration config;
-
-    public MmoListener(Bar bar) {
-        this.bar = bar;
-        config = LaBoulangerieMmo.PLUGIN.getConfig();
-    }
+    private FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
     @EventHandler
     public void onLevelUp(PlayerLevelUpEvent event) {
@@ -47,7 +40,7 @@ public class MmoListener implements Listener {
             Placeholder.parsed("talent", talent.getDisplayName()),
             Placeholder.parsed("reward", amount + "$")
         );
-        
+
         player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
                 .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level_up"), TagResolver.resolver(placeholders))));
     }
@@ -55,7 +48,7 @@ public class MmoListener implements Listener {
     @EventHandler
     public void onCountDownFinished(XpCountDownFinishedEvent event) {
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
-        bar.displayBar(event.getTalent(), event.getPlayer());
+        XpBar.displayBar(event.getTalent(), event.getPlayer());
 
         List<TagResolver.Single> placeholders = Arrays.asList(
             Placeholder.parsed("xp", Double.toString(event.getAmount())),
