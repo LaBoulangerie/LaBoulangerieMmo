@@ -10,12 +10,12 @@ LaBoulangerieMmo provides some new conditions and events for BetonQuest.
 All LaBoulangerieMmo related keywords are prefixed with `lbmmo_`.
 
 - Check if a player has more than a required level: `lbmmo_level <talent> <level>`
-> `lbmmo_level mining 50` verifies if the player's mining level is greater or equal to 50.
+> `lbmmo_level miner 50` verifies if the player's mining level is greater or equal to 50.
 
 - Give or take xp: `lbmmo_xp <talent> <level>`
-> `lbmmo_xp mining +50` will give to the player 50 xp in the mining talent
+> `lbmmo_xp miner +50` will give to the player 50 xp in the mining talent
 
-> `lbmmo_xp mining -50` will take from the player 50 xp in the mining talent
+> `lbmmo_xp miner -50` will take from the player 50 xp in the mining talent
 
 ## Building from sources
 
