@@ -33,12 +33,19 @@ public class MmoListener implements Listener {
     public void onLevelUp(PlayerLevelUpEvent event) {
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
         Talent talent = event.getTalent();
-        LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, 1_000);
+
+        if (!LaBoulangerieMmo.PLUGIN.getConfig().isSet("level-up-rewards." + talent.getTalentId())) return;
+
+        double amount = LaBoulangerieMmo.PLUGIN.getConfig().getDouble("level-up-rewards."+talent.getTalentId()+".*", 0);
+        amount += LaBoulangerieMmo.PLUGIN.getConfig().getDouble("level-up-rewards."+talent.getTalentId()+"."+talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER), 0);
+
+        if (amount == 0) return;
+        LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, amount);
 
         List<TagResolver.Single> placeholders = Arrays.asList(
             Placeholder.parsed("level", Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER))),
             Placeholder.parsed("talent", talent.getDisplayName()),
-            Placeholder.parsed("reward", "1000$") // TODO Changer "1000$"
+            Placeholder.parsed("reward", amount + "$")
         );
         
         player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))

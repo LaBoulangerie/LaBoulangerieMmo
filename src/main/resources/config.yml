@@ -239,3 +239,10 @@ talent-grinding:
             IRON_PICKAXE: 50
             STONE_PICKAXE: 25
             WOODEN_PICKAXE: 10
+
+#Define money rewards when a player levels up in one talent
+level-up-rewards:
+    miner:
+#       "level": reward # "*" means every levels, its stacked with the specific level reward 
+        "*": 10
+        "50": 30
