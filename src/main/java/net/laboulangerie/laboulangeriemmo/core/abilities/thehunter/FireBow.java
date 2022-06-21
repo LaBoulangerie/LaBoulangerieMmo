@@ -55,6 +55,11 @@ public class FireBow extends AbilityExecutor {
         else if (level >= getTier(1))
             abilityLevel = 2;
 
+        for (FireArrow fa : FireArrow.fireArrow) {
+            if (fa.getShooter().getUniqueId().equals(player.getUniqueId())) {
+                return;
+            }
+        }
         FireArrow.fireArrow.add(new FireArrow(player, abilityLevel));
     }
 
@@ -77,8 +82,11 @@ public class FireBow extends AbilityExecutor {
         FireArrow.fireArrow.remove(fireArrow);
     }
 
-    private static void onEntityHit(FireArrow fireArrow, Entity entity) {
-        final int level = fireArrow.getAbilityLevel();
+    private static void onEntityHit(FireArrow fireArrow, Entity entity)  {
+        if (!(fireArrow.getShooter().getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))) {
+        	return;
+        }
+    	final int level = fireArrow.getAbilityLevel();
 
         if (level == 1) putFire(entity.getLocation());
         if (level == 2) explosion(fireArrow.getShooter(), entity.getLocation(), SMALL_EXPLOSION_POWER);
@@ -86,6 +94,9 @@ public class FireBow extends AbilityExecutor {
     }
 
     private static void onBlockHit(FireArrow fireArrow, Block block) {
+        if (!(fireArrow.getShooter().getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))) {
+        	return;
+        }
         final int level = fireArrow.getAbilityLevel();
 
 
