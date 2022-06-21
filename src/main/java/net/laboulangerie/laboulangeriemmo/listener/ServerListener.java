@@ -70,8 +70,17 @@ public class ServerListener implements Listener {
 
     @EventHandler
     public void onShootArrow(EntityShootBowEvent event) {
+    	Arrow arrow = (Arrow) event.getProjectile();
+    	Player player = (Player)event.getEntity();
+
         if (event.getProjectile().getFireTicks() > 0) {
             EffectRegistry.playEffect("arrow", event.getProjectile());
+        }
+
+        if (event.getEntity() instanceof Player &&
+                event.getProjectile() instanceof Arrow) {
+            FireArrow.shoot(player, arrow);
+            FireBow.onPlayerShoot(player, arrow);
         }
     }
 
@@ -118,13 +127,6 @@ public class ServerListener implements Listener {
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
         InvisiblePlayer.onDamage(event.getEntity());
-    }
-
-    @EventHandler
-    public void onProjectileShoot(EntityShootBowEvent event) {
-        if (event.getEntity() instanceof Player player &&
-                event.getProjectile() instanceof Arrow arrow)
-            FireArrow.shoot(player, arrow);
     }
 
     @EventHandler

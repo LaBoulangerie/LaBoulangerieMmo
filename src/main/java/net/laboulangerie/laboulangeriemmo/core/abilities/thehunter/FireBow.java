@@ -63,6 +63,18 @@ public class FireBow extends AbilityExecutor {
         FireArrow.fireArrow.add(new FireArrow(player, abilityLevel));
     }
 
+    public static void onPlayerShoot(Player player, Arrow arrow) {
+    	FireArrow fireArrow = null;
+        for (FireArrow fa : FireArrow.fireArrow) {
+            if (fa.getShooter().getUniqueId().equals(player.getUniqueId()) && arrow == fa.getArrow()) {
+            	fireArrow = fa;
+                if (!(fireArrow.getShooter().getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))) {
+                	FireArrow.fireArrow.remove(fireArrow);
+                }
+            }
+        }
+    }
+
     public static void onArrowHit(Player player, Arrow arrow, Block block, Entity entity) {
         FireArrow fireArrow = null;
 
@@ -83,9 +95,6 @@ public class FireBow extends AbilityExecutor {
     }
 
     private static void onEntityHit(FireArrow fireArrow, Entity entity)  {
-        if (!(fireArrow.getShooter().getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))) {
-        	return;
-        }
     	final int level = fireArrow.getAbilityLevel();
 
         if (level == 1) putFire(entity.getLocation());
@@ -94,11 +103,7 @@ public class FireBow extends AbilityExecutor {
     }
 
     private static void onBlockHit(FireArrow fireArrow, Block block) {
-        if (!(fireArrow.getShooter().getInventory().getItemInMainHand().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))) {
-        	return;
-        }
         final int level = fireArrow.getAbilityLevel();
-
 
         if (level == 1) putFire(block.getLocation());
         if (level == 2) explosion(fireArrow.getShooter(), block.getLocation(), SMALL_EXPLOSION_POWER);
