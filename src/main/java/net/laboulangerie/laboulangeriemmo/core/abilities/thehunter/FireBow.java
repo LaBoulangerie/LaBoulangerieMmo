@@ -40,7 +40,8 @@ public class FireBow extends AbilityExecutor {
                 .reduce(false, (result, hasEnchant)-> (result == true) || hasEnchant);
 
         return new KeyStreak(ComboKey.RIGHT, ComboKey.LEFT, ComboKey.LEFT).match(event.getKeyStreak())
-            && hasFlameBow;
+            && hasFlameBow
+            && !FireArrow.fireArrow.stream().filter(fireArrow -> fireArrow.getShooter() == event.getPlayer()).findAny().isPresent();
     }
 
     @Override
@@ -50,10 +51,8 @@ public class FireBow extends AbilityExecutor {
 
         int abilityLevel = 1;
 
-        if (level >= getTier(2))
-            abilityLevel = 3;
-        else if (level >= getTier(1))
-            abilityLevel = 2;
+        if (level >= getTier(2)) abilityLevel = 3;
+        else if (level >= getTier(1)) abilityLevel = 2;
 
         FireArrow.fireArrow.add(new FireArrow(player, abilityLevel));
     }
@@ -61,18 +60,14 @@ public class FireBow extends AbilityExecutor {
     public static void onArrowHit(Player player, Arrow arrow, Block block, Entity entity) {
         FireArrow fireArrow = null;
 
-        for (FireArrow fa : FireArrow.fireArrow) {
-            if (fa.getShooter().getUniqueId().equals(player.getUniqueId()) && arrow == fa.getArrow()) {
+        for (FireArrow fa : FireArrow.fireArrow)
+            if (fa.getShooter().getUniqueId().equals(player.getUniqueId()) && arrow == fa.getArrow())
                 fireArrow = fa;
-            }
-        }
 
         if (fireArrow == null) return;
 
-        if (entity != null)
-            onEntityHit(fireArrow, entity);
-        else if (block != null)
-            onBlockHit(fireArrow, block);
+        if (entity != null) onEntityHit(fireArrow, entity);
+        else if (block != null) onBlockHit(fireArrow, block);
 
         FireArrow.fireArrow.remove(fireArrow);
     }
@@ -88,7 +83,6 @@ public class FireBow extends AbilityExecutor {
     private static void onBlockHit(FireArrow fireArrow, Block block) {
         final int level = fireArrow.getAbilityLevel();
 
-
         if (level == 1) putFire(block.getLocation());
         if (level == 2) explosion(fireArrow.getShooter(), block.getLocation(), SMALL_EXPLOSION_POWER);
         if (level == 3) explosion(fireArrow.getShooter(), block.getLocation(), LARGE_EXPLOSION_POWER);
@@ -98,15 +92,11 @@ public class FireBow extends AbilityExecutor {
         final World world = location.getWorld();
         final Random RNG = new Random();
 
-        for (int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++) {
-            for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++) {
-                for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++) {
-                    if (world.getBlockAt(x, y, z).getType().equals(Material.AIR) && RNG.nextInt(4) < 3) {
+        for (int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++)
+            for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++)
+                for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++)
+                    if (world.getBlockAt(x, y, z).getType().equals(Material.AIR) && RNG.nextInt(4) < 3)
                         world.getBlockAt(x, y, z).setType(Material.FIRE);
-                    }
-                }
-            }
-        }
     }
 
     private static void explosion(Player shooter, Location location, int power) {

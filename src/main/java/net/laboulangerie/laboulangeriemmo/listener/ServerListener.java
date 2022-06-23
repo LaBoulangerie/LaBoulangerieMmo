@@ -1,6 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -68,13 +69,6 @@ public class ServerListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onShootArrow(EntityShootBowEvent event) {
-        if (event.getProjectile().getFireTicks() > 0) {
-            EffectRegistry.playEffect("arrow", event.getProjectile());
-        }
-    }
-
     /**
      * Apply knockback and damages when hitting an entity withe the DODGE ability
      * @param event
@@ -122,15 +116,18 @@ public class ServerListener implements Listener {
 
     @EventHandler
     public void onProjectileShoot(EntityShootBowEvent event) {
+        if (event.getProjectile().getFireTicks() > 0) EffectRegistry.playEffect("arrow", event.getProjectile());
+
         if (event.getEntity() instanceof Player player &&
-                event.getProjectile() instanceof Arrow arrow)
+                event.getProjectile() instanceof Arrow arrow &&
+                event.getBow().hasItemMeta() &&
+                event.getBow().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))
             FireArrow.shoot(player, arrow);
     }
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
-        if (event.getEntity() instanceof Arrow arrow && arrow.getShooter() instanceof Player player) {
+        if (event.getEntity() instanceof Arrow arrow && arrow.getShooter() instanceof Player player)
             FireBow.onArrowHit(player, arrow, event.getHitBlock(), event.getHitEntity());
-        }
     }
 }
