@@ -230,15 +230,84 @@ talent-grinding:
             DEEPSLATE_LAPIS_ORE: 13
             DEEPSLATE_DIAMOND_ORE: 25
             DEEPSLATE_EMERALD_ORE: 33
-
-        craft:
-            NETHERITE_PICKAXE: 5
-
         first_craft:
             DIAMOND_PICKAXE: 100
             IRON_PICKAXE: 50
-            STONE_PICKAXE: 25
-            WOODEN_PICKAXE: 10
+            NETHERITE_PICKAXE: 200
+    lumberjack:
+        break:
+            OAK_LEAVES: 0.5
+            SPRUCE_LEAVES: 0.5
+            JUNGLE_LEAVES: 0.5
+            DARK_OAK_LEAVES: 0.5
+            BIRCH_LEAVES: 0.5
+            ACACIA_LEAVES: 0.5
+            AZALEA_LEAVES: 0.5
+            FLOWERING_AZALEA_LEAVES: 1
+            SPRUCE_LOG: 3
+            SPRUCE_WOOD: 3
+            JUNGLE_LOG: 3
+            JUNGLE_WOOD: 3
+            DARK_OAK_LOG: 4
+            DARK_OAK_WOOD: 4
+            OAK_LOG: 5
+            OAK_WOOD: 5
+            BIRCH_LOG: 5
+            BIRCH_WOOD: 5
+            ACACIA_LOG: 5
+            RED_MUSHROOM_BLOCK: 6
+            BROWN_MUSHROOMS_BLOCK: 6
+            MUSHROOM_STEM: 6
+            WARPED_STEM: 7
+            WARPED_FUNGUS: 7
+            WARPED_WART_BLOCK: 1
+            NETHER_WART_BLOCK: 1
+            VINE: 2
+            TWISTING_VINES: 3
+            WEEPING_VINES: 3
+        first_craft:
+            IRON_AXE: 50
+            DIAMOND_AXE: 100
+            NETHERITE_AXE: 200
+    hunter:
+        kill:
+            ZOMBIE: 0.5
+            ZOMBIE_VILLAGER: 3
+            HUSK: 4
+            SKELETON: 0.5
+            STRAY: 4
+            CREEPER: 1
+            DROWNED: 1.25
+            ENDERMAN: 0.5
+            ENDERMITE: 7
+            WITCH: 5
+            WITHER_SKELETON: 4
+            PHANTOM: 3
+            GUARDIAN: 5
+            ELDER_GUARDIAN: 10
+            EVOKER: 6
+            GHAST: 5
+            HOGLIN: 3
+            MAGMA_CUBE: 1
+            PIGLIN_BRUTE: 6
+            PIGLIN: 2
+            ZOMBIFIED_PIGLIN: 4
+            RAVAGER: 8
+            SILVERFISH: 1
+            SHULKER: 5
+            PILLAGER: 3
+            SLIME: 0.5
+            VEX: 2
+            VINDICATOR: 4
+            ZOGLIN: 6
+            ENDER_DRAGON: 150
+            WITHER: 50
+            CAVE_SPIDER: 1
+            SPIDER: 1
+        first_craft:
+            IRON_SWORD: 50
+            DIAMOND_SWORD: 100
+            NETHERITE_SWORD: 200
 
 #Define money rewards when a player levels up in one talent
 level-up-rewards:
