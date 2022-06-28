@@ -39,7 +39,7 @@ public class Dodging extends AbilityExecutor {
          */
         float power = 1;
         float xRot = human.getYRot();
-        float yRot = human.getXRot()-15;
+        float yRot = Math.max(human.getXRot()-15, -90);
         float f2 = -Mth.sin(xRot * 0.017453292F) * Mth.cos(yRot * 0.017453292F);
         float f3 = -Mth.sin(yRot * 0.017453292F);
         float f4 = Mth.cos(xRot * 0.017453292F) * Mth.cos(yRot * 0.017453292F);
