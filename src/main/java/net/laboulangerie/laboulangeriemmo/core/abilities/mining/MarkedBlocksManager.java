@@ -1,6 +1,5 @@
 package net.laboulangerie.laboulangeriemmo.core.abilities.mining;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -8,6 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -21,10 +25,7 @@ import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.WrappedDataWatcherObject;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
+import net.minecraft.world.entity.EntityType;
 
 public class MarkedBlocksManager {
     private static MarkedBlocksManager INSTANCE = null;
@@ -76,21 +77,21 @@ public class MarkedBlocksManager {
     }
 
     private void sendShulker(Player player, Block block, Integer id, UUID uuid) {
-        // https://github.com/libraryaddict/LibsDisguises/blob/master/src/main/java/me/libraryaddict/disguise/utilities/packets/packethandlers/PacketHandlerSpawn.java
-        PacketContainer spawnShulker = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY_LIVING);
+        // https://github.com/libraryaddict/LibsDisguises/blob/master/plugin/src/main/java/me/libraryaddict/disguise/utilities/packets/packethandlers/PacketHandlerSpawn.java
+        PacketContainer spawnShulker = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY);
         StructureModifier<Object> mods = spawnShulker.getModifier();
 
         mods.write(0, id) // Entity ID
                 .write(1, uuid) // entity UUID
-                .write(2, 75) // 75 = shulker
+                .write(2, EntityType.SHULKER)
                 .write(3, block.getX() + 0.5) // Pos X, Y, Z
                 .write(4, block.getY())
                 .write(5, block.getZ() + 0.5)
                 .write(6, (short) 0) // Velocity X, Y, Z
                 .write(7, (short) 0)
                 .write(8, (short) 0)
-                .write(9, (byte) 0) // yaw
-                .write(10, (byte) 0) // pitch
+                .write(9, (byte) 0) // pitch
+                .write(10, (byte) 0) // yaw
                 .write(11, (byte) 0); // yaw
 
         PacketContainer shulkerMetadata = new PacketContainer(PacketType.Play.Server.ENTITY_METADATA);
@@ -104,23 +105,16 @@ public class MarkedBlocksManager {
                                                                                                             // 0x40
                                                                                                             // glowing
         shulkerMetadata.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
-        try {
-            ProtocolLibrary.getProtocolManager().sendServerPacket(player, spawnShulker);
-            ProtocolLibrary.getProtocolManager().sendServerPacket(player, shulkerMetadata);
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+
+        ProtocolLibrary.getProtocolManager().sendServerPacket(player, spawnShulker);
+        ProtocolLibrary.getProtocolManager().sendServerPacket(player, shulkerMetadata);
     }
 
     private void removeShulker(Player player, int id) {
         PacketContainer destroyShulker = new PacketContainer(PacketType.Play.Server.ENTITY_DESTROY);
         destroyShulker.getIntLists().write(0, Arrays.asList(id));
 
-        try {
-            ProtocolLibrary.getProtocolManager().sendServerPacket(player, destroyShulker);
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+        ProtocolLibrary.getProtocolManager().sendServerPacket(player, destroyShulker);
     }
 
     public void colorize(Block block, Player player) {
@@ -136,11 +130,8 @@ public class MarkedBlocksManager {
                 .write(0, 3); // Mode: 3 = ADD ENTITIES
         updateTeam.getSpecificModifier(Collection.class).write(0,
                 Collections.singletonList(blockWatcher.getUuid().toString()));
-        try {
-            ProtocolLibrary.getProtocolManager().sendServerPacket(player, updateTeam);
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+
+        ProtocolLibrary.getProtocolManager().sendServerPacket(player, updateTeam);
     }
 
     public void setupTeams(Player player) { // https://github.com/lucko/helper/blob/master/helper/src/main/java/me/lucko/helper/scoreboard/PacketScoreboardTeam.java
@@ -162,11 +153,7 @@ public class MarkedBlocksManager {
                     teamsColor[i]);
 
             team.getOptionalStructures().write(0, Optional.of((InternalStructure) struct));
-            try {
-                ProtocolLibrary.getProtocolManager().sendServerPacket(player, team);
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
+            ProtocolLibrary.getProtocolManager().sendServerPacket(player, team);
         }
     }
 

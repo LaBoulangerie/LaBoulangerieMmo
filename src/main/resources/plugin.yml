@@ -1,7 +1,7 @@
 name: LaBoulangerieMmo
 version: 2.0.0
 main: net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
-api-version: 1.18
+api-version: 1.19
 authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco, BlackoutBurst]
 depend: [ProtocolLib, Vault]
 softdepend: [PlaceholderAPI, Towny, BetonQuest]

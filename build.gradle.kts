@@ -52,15 +52,15 @@ repositories {
 }
 
 dependencies {
-    paperDevBundle("1.18.2-R0.1-SNAPSHOT")
+    paperDevBundle("1.19-R0.1-SNAPSHOT")
     implementation("com.github.luben:zstd-jni:1.5.0-4")
-    implementation("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT")
-    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:4.8.0")
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    implementation("net.kyori:adventure-text-minimessage:4.11.0-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly("me.clip:placeholderapi:2.11.1")
-    compileOnly("com.palmergames.bukkit.towny:towny:0.98.0.0")
-    compileOnly("pl.betoncraft:betonquest:1.12.8")
+    compileOnly("com.palmergames.bukkit.towny:towny:0.98.2.0")
+    compileOnly("pl.betoncraft:betonquest:1.12.9")
 }
 
 group = "net.laboulangerie"
