@@ -223,7 +223,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 case 5:
                     if (args[2].equalsIgnoreCase("see"))
                         return Arrays.asList("");
-                    return Arrays.asList("10", "100", "1000");
+                    return Arrays.asList("10", "1000", "1000000");
             }
         }
         if (args[0].equalsIgnoreCase("blockus") && args.length == 2)
