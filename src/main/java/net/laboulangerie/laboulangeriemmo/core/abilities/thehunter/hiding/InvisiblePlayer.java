@@ -1,13 +1,13 @@
 package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class InvisiblePlayer {
 
@@ -64,10 +64,7 @@ public class InvisiblePlayer {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.getUniqueId().equals(player.getUniqueId())) continue;
-            ArmorHider.reloadArmor(p, player, ArmorHider.EquipmentSlot.HEAD);
-            ArmorHider.reloadArmor(p, player, ArmorHider.EquipmentSlot.CHEST);
-            ArmorHider.reloadArmor(p, player, ArmorHider.EquipmentSlot.LEGS);
-            ArmorHider.reloadArmor(p, player, ArmorHider.EquipmentSlot.FEET);
+            ArmorHider.restoreArmor(p, player);
         }
     }
 
