@@ -24,7 +24,7 @@ public class BlockusRestoration extends BukkitRunnable {
             } catch (NullPointerException e) {
                 iterator.remove();
 
-                if (warnedWorldRemoval.get()) return; //Warn only on the first failure
+                if (warnedWorldRemoval.get()) continue; //Warn only on the first failure
                 warnedWorldRemoval.set(true);
                 LaBoulangerieMmo.PLUGIN.getLogger().warning("A world has been deleted so all its blockuses have been dropped.");
             }
