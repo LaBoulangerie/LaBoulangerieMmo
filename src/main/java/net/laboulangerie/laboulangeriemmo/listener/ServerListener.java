@@ -27,7 +27,6 @@ import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MarkedBlocksManager;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.FireBow;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow.FireArrow;
-import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.InvisibleParticles;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.InvisiblePlayer;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.utils.Utils;
@@ -100,7 +99,6 @@ public class ServerListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        InvisibleParticles.renderParticles(event.getPlayer());
         InvisiblePlayer.hidePlayerArmor(event.getPlayer());
     }
 

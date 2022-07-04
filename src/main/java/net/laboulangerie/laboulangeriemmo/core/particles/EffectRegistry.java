@@ -16,12 +16,13 @@ public class EffectRegistry {
         particles.put("default", HelixEffect.class);
         particles.put("trail", TrailEffect.class);
         particles.put("arrow", ArrowEffect.class);
+        particles.put("invisible-particles", InvisibleParticles.class);
     }
 
     public static Effect getNewEffect(String effectName, Entity entity) throws IllegalArgumentException {
         Class<? extends Effect> effectAsClass = particles.get(effectName);
         if (effectAsClass == null)
-            throw new IllegalArgumentException("Effect " + effectName + "doesn't exists!");
+            throw new IllegalArgumentException("Effect " + effectName + " doesn't exists!");
 
         try {
             return effectAsClass.getConstructor(Entity.class).newInstance(entity);

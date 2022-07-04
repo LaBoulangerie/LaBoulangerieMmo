@@ -14,6 +14,7 @@ import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.ArmorH
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.InvisiblePlayer;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
+import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 
 public class Hiding extends AbilityExecutor {
@@ -50,12 +51,14 @@ public class Hiding extends AbilityExecutor {
             ArmorHider.hideArmor(p, invisiblePlayer.getPlayer());
         }
         endScheduler(invisiblePlayer, duration);
+        if (invisiblePlayer.getAbilityLevel() < 3) EffectRegistry.playEffect("invisible-particles", invisiblePlayer.getPlayer());
     }
 
     private void basicInvisibility(InvisiblePlayer invisiblePlayer) {
         invisiblePlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 2400, 0, false, false));
         InvisiblePlayer.invisiblePlayer.add(invisiblePlayer);
         endScheduler(invisiblePlayer, 2400);
+        EffectRegistry.playEffect("invisible-particles", invisiblePlayer.getPlayer());
     }
 
     private void endScheduler(InvisiblePlayer invisiblePlayer, int duration) {
