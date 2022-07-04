@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.Event;
@@ -30,7 +31,7 @@ public class BetterBonemeal extends AbilityExecutor{
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         if (level >= getTier(2)) {
-            ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 30);
+            ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), 20);
             for (Block block : blocks) {
                 block.applyBoneMeal(BlockFace.UP);
                 block.applyBoneMeal(BlockFace.UP);
@@ -57,7 +58,8 @@ public class BetterBonemeal extends AbilityExecutor{
                 for (int z = (loc.getBlockZ()-radius); z <= (loc.getBlockZ()+radius); z++) {
                     Location l = new Location(loc.getWorld(), x, y, z);
                     if (l.distance(loc) <= radius) {
-                        blocks.add(l.getBlock());
+                        Block block = l.getBlock();
+                        if (Tag.CROPS.isTagged(block.getType())) blocks.add(block);
                     }
                 }
             }
