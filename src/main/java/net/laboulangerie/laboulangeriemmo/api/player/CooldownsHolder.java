@@ -3,6 +3,7 @@ package net.laboulangerie.laboulangeriemmo.api.player;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,16 @@ public class CooldownsHolder {
             return archetype.cooldownUnit.convert(new Date().getTime() - entry.getValue().getTime(),
                 TimeUnit.MILLISECONDS);
         }).collect(Collectors.toList());
+    }
+
+    public HashMap<AbilityArchetype, Long> getArchetypeCooldowns(String abilityId) {
+        return (HashMap<AbilityArchetype, Long>) cooldowns.entrySet().stream().filter(entry -> entry.getKey().endsWith("/" + abilityId)).collect(Collectors.toMap(
+            e -> LaBoulangerieMmo.talentsRegistry.getTalent(e.getKey().split("/")[0]).abilitiesArchetypes.get(e.getKey().split("/")[1]),
+            Entry::getValue
+        )).entrySet().stream().collect(Collectors.toMap(
+            Entry::getKey,
+            e -> e.getKey().cooldownUnit.convert(new Date().getTime() - e.getValue().getTime(), TimeUnit.MILLISECONDS)
+        ));
     }
 
     public boolean isCooldownElapsed(AbilityArchetype ability, String talentId) {

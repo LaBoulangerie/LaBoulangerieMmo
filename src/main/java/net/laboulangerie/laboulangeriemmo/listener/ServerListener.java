@@ -1,5 +1,8 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
+import java.util.Map.Entry;
+import java.util.Optional;
+
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
@@ -23,6 +26,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MarkedBlocksManager;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.FireBow;
@@ -88,13 +92,15 @@ public class ServerListener implements Listener {
             return;
         }
 
-        if (!mmoPlayer.getCooldowns().hasUsed("dodging") || !mmoPlayer.getCooldowns().getCooldowns("dodging").stream().filter(x -> x <= 1).findAny().isPresent()) // 1 is the duration of the spin attack
-            return;
+        Optional<Entry<AbilityArchetype, Long>> ability = mmoPlayer.getCooldowns().getArchetypeCooldowns("dodging")
+            .entrySet().stream().filter(e -> e.getValue() <= 1).findFirst(); // 1 is the duration of the spin attack
+
+        if (ability.isEmpty()) return;
 
         if (Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) > 0)
-            event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()));
+            event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) + (ability.get().getKey().getTier(1) > player.getLevel() ? 1 : 4 ));
 
-        event.getEntity().setVelocity(player.getLocation().getDirection().multiply(5));
+        event.getEntity().setVelocity(player.getLocation().getDirection().multiply(ability.get().getKey().getTier(1) > player.getLevel() ? 3 : 5));
     }
 
     @EventHandler
