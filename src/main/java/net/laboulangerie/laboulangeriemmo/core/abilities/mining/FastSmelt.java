@@ -28,7 +28,7 @@ public class FastSmelt extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-        if (event.getClickedBlock().getType() != Material.BLAST_FURNACE || event.getItem().getType() != Material.COAL)
+        if (event.getClickedBlock().getType() != Material.BLAST_FURNACE || event.getItem() == null || event.getItem().getType() != Material.COAL)
             return false;
 
         BlastFurnace furnace = (BlastFurnace) event.getClickedBlock().getState();
