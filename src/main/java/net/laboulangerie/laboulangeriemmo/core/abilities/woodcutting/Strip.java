@@ -68,6 +68,7 @@ public class Strip extends AbilityExecutor {
         Block initBlock = event.getPlayer().getTargetBlock(5);
         initType = initBlock.getType();
         initLocation = initBlock.getLocation();
+        initBlock.setType(Material.getMaterial("STRIPPED_" + initBlock.getType().toString()));
         stripNeighbours(initBlock, event.getPlayer());
     }
 
@@ -80,11 +81,12 @@ public class Strip extends AbilityExecutor {
                     Location neighbourLoc = loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
                     Block neighbour = neighbourLoc.getBlock();
 
-                    if (neighbour.getType() == initType
+                    if ((neighbour.getType() == Material.getMaterial(initType.toString().replace("_WOOD", "_LOG")) || neighbour.getType() == Material.getMaterial(initType.toString().replace("_LOG", "_WOOD")))
                             && neighbour.getY() >= initLocation.getBlockY()
                             && Math.abs(neighbour.getX() - initLocation.getBlockX()) <= range
-                            && Math.abs(neighbour.getZ() - initLocation.getBlockZ()) <= range) {
-                        block.setType(Material.getMaterial("STRIPPED_" + block.getType().toString()));
+                            && Math.abs(neighbour.getZ() - initLocation.getBlockZ()) <= range
+                    ) {
+                        neighbour.setType(Material.getMaterial("STRIPPED_" + neighbour.getType().toString()));
                         // Break neighbours of neighbour recursively
                         stripNeighbours(neighbour , player);
                     }
