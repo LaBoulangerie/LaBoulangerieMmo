@@ -149,6 +149,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
                 BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
                 dataHolder.removeBlockus(dataHolder.getBlockus(block));
+                player.sendMessage("§aLe bloc visé n'est plus un blockus");
+                return true;
             }
         }
         if (args[0].equalsIgnoreCase("leaderboards")) {
