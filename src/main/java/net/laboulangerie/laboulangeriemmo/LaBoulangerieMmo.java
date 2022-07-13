@@ -6,6 +6,7 @@ import java.util.logging.Level;
 
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilitiesRegistry;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerListener;
@@ -88,6 +89,18 @@ public class LaBoulangerieMmo extends JavaPlugin {
             BetonQuest.getInstance().registerEvents("lbmmo_xp", XpEvent.class);
             getLogger().info("Hooked in BetonQuest!"); 
         }
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                try {
+                    blockusDataManager.writeBlockuses();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                mmoPlayerManager.savePlayersData();
+            }
+        }.runTaskTimerAsynchronously(this, 2400, 2400);
 
         getLogger().info("Plugin started");
     }
