@@ -59,7 +59,7 @@ public class Strip extends AbilityExecutor {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
         Block block = event.getPlayer().getTargetBlock(5);
 
-        return new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.LEFT).match(event.getKeyStreak()) && block != null && Tag.LOGS.isTagged(block.getType()) && !(block.hasMetadata("laboulangerie:placed"));
+        return new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.LEFT).match(event.getKeyStreak()) && block != null && Tag.LOGS.isTagged(block.getType()) && !block.getType().toString().startsWith("STRIPPED") && !(block.hasMetadata("laboulangerie:placed"));
     }
 
     @Override
