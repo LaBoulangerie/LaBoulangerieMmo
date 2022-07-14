@@ -15,6 +15,7 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 public class MagneticFieldTask extends BukkitRunnable {
     private Location center;
     private int radius;
+    private int squaredRadius;
     private Player player;
     private boolean colorize;
     private List<Material> ores = Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE,
@@ -27,6 +28,7 @@ public class MagneticFieldTask extends BukkitRunnable {
     public MagneticFieldTask(Location center, int radius, Player player, boolean colorize) {
         this.center = center;
         this.radius = radius;
+        squaredRadius = (int) Math.pow(radius, 2);
         this.player = player;
         this.colorize = colorize;
     }
@@ -61,6 +63,6 @@ public class MagneticFieldTask extends BukkitRunnable {
     }
 
     private boolean isInTheBall(Location point) {
-        return center.distanceSquared(point) <= Math.pow(radius, 2);
+        return center.distanceSquared(point) <= squaredRadius;
     }
 }
