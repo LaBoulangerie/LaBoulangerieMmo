@@ -43,7 +43,7 @@ public class AbilitiesRegisterer implements Listener {
 
         event.getRegistry().registerAbility("better-apple-drop", BetterAppleDrop.class, AbilityTrigger.BREAK);
         event.getRegistry().registerAbility("double-drop-log", DoubleDropLog.class, AbilityTrigger.BREAK);
-        event.getRegistry().registerAbility("strip", Strip.class, AbilityTrigger.COMBO);
+        event.getRegistry().registerAbility("strip", Strip.class, AbilityTrigger.LEFT_CLICK_BLOCK);
         event.getRegistry().registerAbility("timber", Timber.class, AbilityTrigger.BREAK);
         event.getRegistry().registerAbility("thick-tree", ThickTree.class, AbilityTrigger.COMBO);
     }
