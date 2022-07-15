@@ -34,9 +34,9 @@ public class Hiding extends AbilityExecutor {
         final Player player = event.getPlayer();
 
         if (level >= getTier(2)) {
-            totalInvisibility(new InvisiblePlayer(player, 3), 12000);
+            totalInvisibility(new InvisiblePlayer(player, 3), 4800);
         } else if (level >= getTier(1)) {
-            totalInvisibility(new InvisiblePlayer(player, 2), 6000);
+            totalInvisibility(new InvisiblePlayer(player, 2), 3600);
         } else {
             basicInvisibility(new InvisiblePlayer(player, 1));
         }
