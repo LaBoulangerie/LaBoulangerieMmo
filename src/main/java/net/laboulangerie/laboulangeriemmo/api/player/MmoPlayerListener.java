@@ -23,9 +23,8 @@ public class MmoPlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (mmoPlayerManager.getPlayer(player) != null)
-            return;
-        mmoPlayerManager.loadPlayerData(player);
+        if (mmoPlayerManager.getPlayer(player) == null)
+            mmoPlayerManager.loadPlayerData(player);
         MarkedBlocksManager.manager().setupTeams(player);
     }
 
