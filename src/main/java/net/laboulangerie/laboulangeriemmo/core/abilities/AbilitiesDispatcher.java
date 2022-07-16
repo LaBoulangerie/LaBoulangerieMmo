@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -28,7 +29,7 @@ public class AbilitiesDispatcher implements Listener {
     public AbilitiesDispatcher() {
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onClick(PlayerInteractEvent event) {
         MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
 
@@ -50,38 +51,43 @@ public class AbilitiesDispatcher implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onConsumeItem(PlayerItemConsumeEvent event) {
+        if (event.isCancelled()) return;
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event, AbilityTrigger.EAT);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockPlace(BlockPlaceEvent event) {
+        if (event.isCancelled()) return;
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event, AbilityTrigger.PLACE);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event, AbilityTrigger.BREAK);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onClickEntity(PlayerInteractEntityEvent event) {
+        if (event.isCancelled()) return;
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event, AbilityTrigger.RIGHT_CLICK_ENTITY);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onHurtEntity(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player)
+        if (event.getDamager() instanceof Player && !event.isCancelled())
             triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) event.getDamager()), event, AbilityTrigger.LEFT_CLICK_ENTITY);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onComboCompleted(ComboCompletedEvent event) {
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event, AbilityTrigger.COMBO);
     }
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityBreed(EntityBreedEvent event) {
+        if (event.isCancelled()) return;
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) event.getBreeder()), event, AbilityTrigger.BREED);
     }
 
