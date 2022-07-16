@@ -32,7 +32,7 @@ public class MarkedBlocksManager {
     private Map<Block, BlockWatcher> markedBlocks = new HashMap<Block, BlockWatcher>();
     private int idCount = 100000;
     private String[] teamsIdentifier = { "DIAMOND_ORE", "IRON_ORE", "COAL_ORE", "GOLD_ORE", "LAPIS_ORE", "REDSTONE_ORE",
-            "EMERALD_ORE", "COPPER_ORE", "ANCIENT_DEBRIS", "NETHER_GOLD_ORE", "AMETHYST_CLUSTER" };
+            "EMERALD_ORE", "COPPER_ORE", "ANCIENT_DEBRIS", "NETHER_GOLD_ORE", "BUDDING_AMETHYST" };
     private ChatColor[] teamsColor = { ChatColor.AQUA, ChatColor.GRAY, ChatColor.BLACK, ChatColor.YELLOW,
             ChatColor.DARK_BLUE, ChatColor.RED, ChatColor.GREEN, ChatColor.GOLD, ChatColor.DARK_GRAY, ChatColor.YELLOW,
             ChatColor.DARK_PURPLE };

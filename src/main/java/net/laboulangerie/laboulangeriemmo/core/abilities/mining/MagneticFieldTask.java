@@ -23,7 +23,8 @@ public class MagneticFieldTask extends BukkitRunnable {
             Material.DEEPSLATE_COAL_ORE, Material.DEEPSLATE_IRON_ORE, Material.DEEPSLATE_GOLD_ORE,
             Material.DEEPSLATE_DIAMOND_ORE, Material.DEEPSLATE_REDSTONE_ORE, Material.DEEPSLATE_LAPIS_ORE,
             Material.DEEPSLATE_EMERALD_ORE, Material.DEEPSLATE_COPPER_ORE, Material.NETHER_GOLD_ORE,
-            Material.ANCIENT_DEBRIS, Material.NETHER_QUARTZ_ORE);
+            Material.ANCIENT_DEBRIS, Material.NETHER_QUARTZ_ORE, Material.BUDDING_AMETHYST
+    );
 
     public MagneticFieldTask(Location center, int radius, Player player, boolean colorize) {
         this.center = center;
