@@ -1,7 +1,17 @@
 # LaBoulangerieMmo
 
-This plugin supports minecraft 1.18 and might partially support other versions.
+This plugin supports minecraft 1.19 and might partially support other versions.
 You can download the plugin [here.](https://github.com/LaBoulangerie/LaBoulangerieMmo/releases/latest)
+
+## Concept
+
+LaBoulangerieMmo is a plugin in the spirit of McMmo, it provides you with "talents" (professions) that give you access to "abilities" (skills) when you have acquired enough experience in the talent.
+
+Players don't need to choose only one talent, they can grind all of them!
+
+On top of that, LaBoulangerieMmo lets other plugins create new talents and abilities via its [API](#api) and server owners can also create and delete talents through the plugin's configuration file.
+
+How do you gain experience you might ask? There are a lot of ways! Depending on the talent, you can get xp by breaking blocks, killing entities, crafting or discovering a recipe. All of that can be configured!
 
 ## BetonQuest integration
 
@@ -25,7 +35,10 @@ The generated JARs are located in `build/libs/`, the one you should use is `LaBo
 
 ## API
 
+Our API is distributed as a maven package, you can found out how to add it to your maven project [here.](https://github.com/LaBoulangerie/LaBoulangerieMmo/packages/1356101)
 ### Leaderboards
+
+> **/!\ This is still in an very early stage**
 
 LaBoulangerieMmo provides you with an API to create leaderboards that will be displayed on minecraft maps.
 This API takes care of all the headaches related to managing the maps, it creates the maps, deletes them stores them between restarts and provides you with a way to update them.
