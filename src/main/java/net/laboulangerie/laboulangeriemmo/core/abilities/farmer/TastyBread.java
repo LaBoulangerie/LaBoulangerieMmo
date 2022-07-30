@@ -22,7 +22,7 @@ public class TastyBread extends AbilityExecutor{
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         PlayerItemHeldEvent event = (PlayerItemHeldEvent) baseEvent;
-        return event.getPlayer().getInventory().getItemInMainHand().getType() == Material.BREAD;
+        return event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.BREAD);
     }
 
     @Override
