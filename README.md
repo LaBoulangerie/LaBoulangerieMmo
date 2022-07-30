@@ -29,7 +29,7 @@ All LaBoulangerieMmo related keywords are prefixed with `lbmmo_`.
 
 ## Building from sources
 
-THis project uses [Gradle](https://gradle.org/) as its build system, once you have Gradle installed you can build the project in cloning the project and then, inside the project's folder, open your terminal and type `> gradlew assemble` if your are on Windows and `$ chmod +x ./gradlew` the first time you build it on Unix-like systems and then `$ ./gradlew assemble`.
+THis project uses [Gradle](https://gradle.org/) as its build system, once you have Gradle installed you can build the project by cloning the project and then, inside the project's folder, open your terminal and type `> gradlew assemble` if your are on Windows and `$ chmod +x ./gradlew` the first time you build it on Unix-like systems and then `$ ./gradlew assemble`.
 
 The generated JARs are located in `build/libs/`, the one you should use is `LaBoulangerie-X.X.X-jar`.
 
@@ -38,7 +38,7 @@ The generated JARs are located in `build/libs/`, the one you should use is `LaBo
 Our API is distributed as a maven package, you can found out how to add it to your maven project [here.](https://github.com/LaBoulangerie/LaBoulangerieMmo/packages/1356101)
 ### Leaderboards
 
-> **/!\ This is still in an very early stage**
+> **/!\ This is still in a very early stage**
 
 LaBoulangerieMmo provides you with an API to create leaderboards that will be displayed on minecraft maps.
 This API takes care of all the headaches related to managing the maps, it creates the maps, deletes them stores them between restarts and provides you with a way to update them.
@@ -68,7 +68,7 @@ You can do so with:
 mapsId.stream().forEach(id -> player.getInventory().addItem(LeaderBoardManager.getInstance().getMapItem(id)));
 ```
 
-If you want to update your leaderboard with an updated list of pretenders you do:
+If you want to update your leaderboard with an updated list of pretenders, you can do:
 
 ```java
 mapsId.stream().forEach(id -> player.getInventory().addItem(LeaderBoardManager.getInstance().updateMap(id, newPretenders)));
@@ -78,7 +78,7 @@ mapsId.stream().forEach(id -> player.getInventory().addItem(LeaderBoardManager.g
 
 Finally you can delete your leaderboard by marking all its maps as "free":
 ```java
-mapsId.stream().forEach(id -> player.getInventory().addItem(LeaderBoardManager.getInstance().freeMap(id)));
+mapsId.stream().forEach(id -> LeaderBoardManager.getInstance().freeMap(id));
 ```
 
 **/!\\** The method LeaderBoardManager#freeAllMaps() is intended for **debugging** only and shouldn't be called, if you really need it, use the command `/mmo leaderboards freeAllMaps`.
