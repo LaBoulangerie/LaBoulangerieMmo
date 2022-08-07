@@ -93,6 +93,7 @@ public class AbilitiesDispatcher implements Listener {
 
     @EventHandler
     public void onItemHeld(PlayerItemHeldEvent event) {
+        if (event.getPlayer().getInventory().getItem(event.getNewSlot()) == null) return;
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event, AbilityTrigger.HOLD_ITEM);
     }
 
