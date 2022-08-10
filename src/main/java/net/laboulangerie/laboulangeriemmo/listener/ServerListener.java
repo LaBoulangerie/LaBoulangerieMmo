@@ -9,7 +9,9 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -39,8 +41,9 @@ public class ServerListener implements Listener {
     public ServerListener() {
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlace(BlockPlaceEvent event) {
+        if (event.isCancelled()) return;
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
@@ -51,9 +54,9 @@ public class ServerListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onClick(PlayerInteractEvent event) {
-        if (event.getAction() != Action.LEFT_CLICK_BLOCK)
+        if (event.getAction() != Action.LEFT_CLICK_BLOCK || event.useItemInHand() == Result.DENY)
             return;
 
         MarkedBlocksManager.manager().unmarkBlock(event.getClickedBlock());
@@ -76,9 +79,9 @@ public class ServerListener implements Listener {
      * Apply knockback and damages when hitting an entity withe the DODGE ability
      * @param event
      */
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onRiptideHit(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity))
+        if (event.isCancelled() || !(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity))
             return;
         Player player = (Player) event.getDamager();
 
@@ -113,13 +116,15 @@ public class ServerListener implements Listener {
         InvisiblePlayer.onJoin(event.getPlayer());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onDamage(EntityDamageEvent event) {
+        if (event.isCancelled()) return;
         InvisiblePlayer.onDamage(event.getEntity());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onProjectileShoot(EntityShootBowEvent event) {
+        if (event.isCancelled()) return;
         if (event.getProjectile().getFireTicks() > 0) EffectRegistry.playEffect("arrow", event.getProjectile());
 
         if (event.getEntity() instanceof Player player &&
@@ -129,8 +134,9 @@ public class ServerListener implements Listener {
             FireArrow.shoot(player, arrow);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onProjectileHit(ProjectileHitEvent event) {
+        if (event.isCancelled()) return;
         if (event.getEntity() instanceof Arrow arrow && arrow.getShooter() instanceof Player player)
             FireBow.onArrowHit(player, arrow, event.getHitBlock(), event.getHitEntity());
     }
