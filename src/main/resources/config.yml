@@ -236,13 +236,13 @@ talent-grinding:
             NETHERITE_PICKAXE: 200
     lumberjack:
         break:
-            OAK_LEAVES: 0.5
-            SPRUCE_LEAVES: 0.5
-            JUNGLE_LEAVES: 0.5
-            DARK_OAK_LEAVES: 0.5
-            BIRCH_LEAVES: 0.5
-            ACACIA_LEAVES: 0.5
-            AZALEA_LEAVES: 0.5
+            OAK_LEAVES: 0.1
+            SPRUCE_LEAVES: 0.1
+            JUNGLE_LEAVES: 0.1
+            DARK_OAK_LEAVES: 0.1
+            BIRCH_LEAVES: 0.1
+            ACACIA_LEAVES: 0.1
+            AZALEA_LEAVES: 0.1
             FLOWERING_AZALEA_LEAVES: 1
             SPRUCE_LOG: 3
             SPRUCE_WOOD: 3
