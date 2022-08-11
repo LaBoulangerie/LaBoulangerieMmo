@@ -31,6 +31,7 @@ import net.laboulangerie.laboulangeriemmo.listener.AbilitiesRegisterer;
 import net.laboulangerie.laboulangeriemmo.listener.GrindingListener;
 import net.laboulangerie.laboulangeriemmo.listener.MmoListener;
 import net.laboulangerie.laboulangeriemmo.listener.ServerListener;
+import net.laboulangerie.laboulangeriemmo.utils.WolrdGuardSupport;
 import net.milkbowl.vault.economy.Economy;
 import pl.betoncraft.betonquest.BetonQuest;
 
@@ -40,10 +41,20 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public static double XP_MULTIPLIER = 0.1;
     public static TalentsRegistry talentsRegistry = null;
     public static AbilitiesRegistry abilitiesRegistry = null;
+    public static boolean WORLDGUARD_SUPPORT = false;
 
     private GsonSerializer serializer;
     private BlockusDataManager blockusDataManager;
     private MmoPlayerManager mmoPlayerManager;
+
+    @Override
+    public void onLoad() {
+        if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
+            WolrdGuardSupport.enableSupport();
+            WORLDGUARD_SUPPORT = true;
+            getLogger().info("Hooked in WorldGuard!");
+        }
+    }
 
     @Override
     public void onEnable() {

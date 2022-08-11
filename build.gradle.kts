@@ -49,6 +49,9 @@ repositories {
     maven {
         url = uri("https://repo.codemc.io/repository/maven-public/")
     }
+    maven {
+        url = uri("https://maven.enginehub.org/repo/")
+    }
 }
 
 dependencies {
@@ -61,6 +64,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.11.1")
     compileOnly("com.palmergames.bukkit.towny:towny:0.98.2.0")
     compileOnly("pl.betoncraft:betonquest:1.12.9")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8-SNAPSHOT")
 }
 
 group = "net.laboulangerie"

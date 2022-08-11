@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -23,6 +24,7 @@ import net.laboulangerie.laboulangeriemmo.api.ability.AbilityTrigger;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.laboulangerie.laboulangeriemmo.events.MmoPlayerUseAbilityEvent;
+import net.laboulangerie.laboulangeriemmo.utils.WolrdGuardSupport;
 
 public class AbilitiesDispatcher implements Listener {
 
@@ -31,6 +33,7 @@ public class AbilitiesDispatcher implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onClick(PlayerInteractEvent event) {
+        if (event.useInteractedBlock() == Result.DENY || event.useItemInHand() == Result.DENY) return;
         MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
 
         switch (event.getAction()) {
@@ -98,6 +101,8 @@ public class AbilitiesDispatcher implements Listener {
     }
 
     public void triggerAbility(MmoPlayer player, Event event, AbilityTrigger trigger) {
+        if (LaBoulangerieMmo.WORLDGUARD_SUPPORT && !WolrdGuardSupport.isOperationPermitted(Bukkit.getPlayer(player.getUniqueId()))) return;
+
         LaBoulangerieMmo.talentsRegistry.getTalents().values().forEach(talentArchetype -> {
             if (trigger == AbilityTrigger.COMBO && talentArchetype.comboItems != null //Player doesn't have the right item in his hand so the combo is refused
                 && !talentArchetype.comboItems.contains(((ComboCompletedEvent) event).getPlayer().getInventory().getItemInMainHand().getType())) {
