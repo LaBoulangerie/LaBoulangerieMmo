@@ -231,8 +231,8 @@ talent-grinding:
             DEEPSLATE_DIAMOND_ORE: 25
             DEEPSLATE_EMERALD_ORE: 33
         first_craft:
-            DIAMOND_PICKAXE: 100
             IRON_PICKAXE: 50
+            DIAMOND_PICKAXE: 100
             NETHERITE_PICKAXE: 200
     lumberjack:
         break:
@@ -308,6 +308,32 @@ talent-grinding:
             IRON_SWORD: 50
             DIAMOND_SWORD: 100
             NETHERITE_SWORD: 200
+    farmer:
+        break:
+            WHEAT_SEEDS: 2.5
+            BEETROOT_SEEDS: 2.5
+            POTATO: 2.5
+            CARROT: 2.5
+            NETHER_WART: 2.5
+            SWEET_BERRIES: 2.5
+            COCOA_BEANS: 2.5
+            MELON: 3
+            PUMPKIN: 3
+            BAMBOO: 2
+            SUGAR_CANE: 2
+            CACTUS: 2
+            KELP: 2
+            CRIMSON_FUNGUS: 4
+            WARPED_FUNGUS: 4
+            SEA_PICKLE: 4
+            BROWN_MUSHROOM: 6
+            RED_MUSHROOM: 6
+            CHORUS_FLOWER: 8
+        first_craft:
+            IRON_HOE: 50
+            DIAMOND_HOE: 100
+            NETHERITE_HOE: 200
+
 
 #Define money rewards when a player levels up in one talent
 level-up-rewards:
