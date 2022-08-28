@@ -2,10 +2,8 @@ package net.laboulangerie.laboulangeriemmo.core.blockus;
 
 import java.util.List;
 
-import com.destroystokyo.paper.event.block.BlockDestroyEvent;
-import com.destroystokyo.paper.event.block.TNTPrimeEvent;
-
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,8 +15,12 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.util.Vector;
+
+import com.destroystokyo.paper.event.block.BlockDestroyEvent;
+import com.destroystokyo.paper.event.block.TNTPrimeEvent;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
@@ -98,6 +100,14 @@ public class BlockusListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBurn(BlockBurnEvent event) {
         unMark(event.getBlock());
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onTreeGrow(StructureGrowEvent event) {
+    	for(BlockState blockState : event.getBlocks()) {
+    		Block block = blockState.getBlock();
+            unMark(block);
+    	}
     }
 
     /**
