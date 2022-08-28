@@ -29,8 +29,8 @@ public class MmoListener implements Listener {
 
         if (!LaBoulangerieMmo.PLUGIN.getConfig().isSet("level-up-rewards." + talent.getTalentId())) return;
 
-        double amount = LaBoulangerieMmo.PLUGIN.getConfig().getDouble("level-up-rewards."+talent.getTalentId()+".*", 0);
-        amount += LaBoulangerieMmo.PLUGIN.getConfig().getDouble("level-up-rewards."+talent.getTalentId()+"."+talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER), 0);
+        double amount = processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+".*"), talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER));
+        amount += processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+"."+talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)), talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER));
 
         if (amount == 0) return;
         LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, amount);
@@ -38,7 +38,7 @@ public class MmoListener implements Listener {
         List<TagResolver.Single> placeholders = Arrays.asList(
             Placeholder.parsed("level", Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER))),
             Placeholder.parsed("talent", talent.getDisplayName()),
-            Placeholder.parsed("reward", amount + "$")
+            Placeholder.parsed("reward", LaBoulangerieMmo.formatter.format(amount) + "$")
         );
 
         player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
@@ -57,5 +57,22 @@ public class MmoListener implements Listener {
 
         player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
                 .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.xp_up"), TagResolver.resolver(placeholders))));
+    }
+
+    private double processMoneyAmount(String rawAmount, double levelXp) {
+        if (rawAmount == null) return 0;
+        System.out.println(levelXp);
+        if (rawAmount.endsWith("%")) {
+            double percentage = 0;
+            try {
+                percentage = Double.parseDouble(rawAmount.split("%")[0]);
+            } catch (Exception e) {}
+            return levelXp * percentage / 100;
+        }
+        try {
+            return Double.parseDouble(rawAmount);
+        } catch (Exception e) {}
+
+        return 0;
     }
 }
