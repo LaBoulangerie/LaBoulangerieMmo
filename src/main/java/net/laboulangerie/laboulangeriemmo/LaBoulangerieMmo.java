@@ -1,7 +1,10 @@
 package net.laboulangerie.laboulangeriemmo;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.logging.Level;
 
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -42,6 +45,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public static TalentsRegistry talentsRegistry = null;
     public static AbilitiesRegistry abilitiesRegistry = null;
     public static boolean WORLDGUARD_SUPPORT = false;
+    public static DecimalFormat formatter;
 
     private GsonSerializer serializer;
     private BlockusDataManager blockusDataManager;
@@ -49,6 +53,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        LaBoulangerieMmo.PLUGIN = this;
         if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
             WolrdGuardSupport.enableSupport();
             WORLDGUARD_SUPPORT = true;
@@ -58,8 +63,9 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        LaBoulangerieMmo.PLUGIN = this;
         saveDefaultConfig();
+        formatter = (DecimalFormat) NumberFormat.getNumberInstance(Locale.forLanguageTag(getConfig().getString("locale")));
+        formatter.applyPattern("#.##");
         if (!setupEconomy()) {
             getLogger().log(Level.SEVERE, "Can't load the plugin, Vault isn't present");
             getServer().getPluginManager().disablePlugin(this);

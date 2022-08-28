@@ -51,7 +51,7 @@ public class MmoListener implements Listener {
         XpBar.displayBar(event.getTalent(), event.getPlayer());
 
         List<TagResolver.Single> placeholders = Arrays.asList(
-            Placeholder.parsed("xp", Double.toString(event.getAmount())),
+            Placeholder.parsed("xp", LaBoulangerieMmo.formatter.format(event.getAmount())),
             Placeholder.parsed("talent", event.getTalent().getDisplayName())
         );
 

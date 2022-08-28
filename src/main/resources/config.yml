@@ -1,3 +1,4 @@
+locale: en_UK #Used to determine how numbers need to be formatted when displayed to players
 lang:
     prefix: "<#FF8C42>[MMO] "
     bar:

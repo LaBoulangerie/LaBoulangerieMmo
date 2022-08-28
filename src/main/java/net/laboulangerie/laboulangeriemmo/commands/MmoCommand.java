@@ -52,9 +52,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 sender.sendMessage(
                         "§a" + args[1] + ": §b"
                                 + args[3] + ": §rlvl §e" + talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)
-                                + "§r, xp §e" + (talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))
-                                + "§r, total xp §e" + talent.getXp()
-                                + "§r/§e" + talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER));
+                                + "§r, lvl's xp §e" + (talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))
+                                + "§r, total xp §e" + talent.getXp());
                 return true;
             }
 
