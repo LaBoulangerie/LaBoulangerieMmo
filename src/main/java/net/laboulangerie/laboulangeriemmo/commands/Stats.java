@@ -119,9 +119,9 @@ public class Stats implements CommandExecutor, TabCompleter {
 
         source.streamTalents().get().forEach(talent -> {
             String firstPart = "§b" + talent.getDisplayName();
-            String secondPart = "§r: lvl §e" + talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-            String thirdPart = "§r, xp §e" + LaBoulangerieMmo.formatter.format(talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER))
-                    + "§5/§e" + LaBoulangerieMmo.formatter.format(talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+            String secondPart = "§r: lvl §e" + talent.getLevel();
+            String thirdPart = "§r, xp §e" + LaBoulangerieMmo.formatter.format(talent.getXp() - talent.getLevelXp())
+                    + "§5/§e" + LaBoulangerieMmo.formatter.format(talent.getXpToNextLevel());
             target.sendMessage(firstPart + "" + secondPart + "" + thirdPart);
         });
     }

@@ -125,7 +125,7 @@ public class AbilitiesDispatcher implements Listener {
                     return;
                 }
                 if (executor.shouldTrigger(event)) {
-                    executor.trigger(event, player.getTalent(talentArchetype.identifier).getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+                    executor.trigger(event, player.getTalent(talentArchetype.identifier).getLevel());
                     player.useAbility(abilityArchetype, talentArchetype);
                     Bukkit.getPluginManager().callEvent(new MmoPlayerUseAbilityEvent(player, abilityArchetype, executor, event, trigger));
                 }

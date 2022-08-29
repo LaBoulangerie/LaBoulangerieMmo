@@ -64,15 +64,15 @@ public class MmoExpansion extends PlaceholderExpansion {
         }
 
         if (params.equals(talentId + "_level")) {
-            return Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+            return Integer.toString(talent.getLevel());
         }
 
         if (params.equals(talentId + "_xp_in_level")) {
-            return Double.toString(talent.getXp() - talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER));
+            return Double.toString(talent.getXp() - talent.getLevelXp());
         }
 
         if (params.equals(talentId + "_xp_to_next_lvl")) {
-            return Double.toString(talent.getXpToNextLevel(LaBoulangerieMmo.XP_MULTIPLIER));
+            return Double.toString(talent.getXpToNextLevel());
         }
 
         if (params.equals(talentId + "_name")) {

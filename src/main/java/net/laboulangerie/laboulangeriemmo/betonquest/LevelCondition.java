@@ -30,7 +30,7 @@ public class LevelCondition extends Condition {
         } catch (InstructionParseException e) {
             e.printStackTrace();
         }
-        return instruction.getAllNumbers().get(0) <= mmoPlayer.getTalent(talentName).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        return instruction.getAllNumbers().get(0) <= mmoPlayer.getTalent(talentName).getLevel();
     }
     
 }

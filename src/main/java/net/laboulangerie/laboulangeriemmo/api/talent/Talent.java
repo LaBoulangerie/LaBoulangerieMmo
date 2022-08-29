@@ -30,16 +30,16 @@ public class Talent {
         xp -= amount;
     }
 
-    public int getLevel(double multiplier) {
-        return (int) (multiplier * Math.sqrt(getXp()));
+    public int getLevel() {
+        return (int) (LaBoulangerieMmo.XP_MULTIPLIER * Math.sqrt(getXp()));
     }
 
-    public int getLevelXp(double multiplier) {
-        return (int) Math.pow(getLevel(multiplier) / multiplier, 2);
+    public int getLevelXp() {
+        return (int) Math.pow(getLevel() / LaBoulangerieMmo.XP_MULTIPLIER, 2);
     }
 
-    public double getXpToNextLevel(double multiplier) {
-        return Math.pow((getLevel(multiplier) + 1) / multiplier, 2) - getLevelXp(multiplier);
+    public double getXpToNextLevel() {
+        return Math.pow((getLevel() + 1) / LaBoulangerieMmo.XP_MULTIPLIER, 2) - getLevelXp();
     }
 
     public String getTalentId() {

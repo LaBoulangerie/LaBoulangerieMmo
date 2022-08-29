@@ -29,14 +29,14 @@ public class MmoListener implements Listener {
 
         if (!LaBoulangerieMmo.PLUGIN.getConfig().isSet("level-up-rewards." + talent.getTalentId())) return;
 
-        double amount = processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+".*"), talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER));
-        amount += processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+"."+talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER)), talent.getLevelXp(LaBoulangerieMmo.XP_MULTIPLIER));
+        double amount = processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+".*"), talent.getLevelXp());
+        amount += processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+"."+talent.getLevel()), talent.getLevelXp());
 
         if (amount == 0) return;
         LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, amount);
 
         List<TagResolver.Single> placeholders = Arrays.asList(
-            Placeholder.parsed("level", Integer.toString(talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER))),
+            Placeholder.parsed("level", Integer.toString(talent.getLevel())),
             Placeholder.parsed("talent", talent.getDisplayName()),
             Placeholder.parsed("reward", LaBoulangerieMmo.formatter.format(amount) + "$")
         );

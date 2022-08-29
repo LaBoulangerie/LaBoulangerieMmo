@@ -67,7 +67,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         Integer palier = 0;
 
         for (String key : talents.keySet()) {
-            palier += getTalent(key).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+            palier += getTalent(key).getLevel();
         }
 
         return palier;
@@ -96,7 +96,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
 
     public boolean canUseAbility(AbilityArchetype ability, String talentId) {
         return cooldownsHolder.isCooldownElapsed(ability, talentId)
-            && talents.get(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= ability.requiredLevel
+            && talents.get(talentId).getLevel() >= ability.requiredLevel
             && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 
@@ -115,15 +115,15 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     public void incrementXp(String talentId, double amount) {
         if (getTalent(talentId) == null) talents.put(talentId, new Talent(talentId));
 
-        if (getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= 100) {
+        if (getTalent(talentId).getLevel() >= 100) {
             return;
         }
         Bukkit.getPluginManager().callEvent(new PlayerEarnsXpEvent(amount, talentId, this));
-        int oldLevel = getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        int oldLevel = getTalent(talentId).getLevel();
 
         xpCountdown.startCountDown(talentId, amount);
         getTalent(talentId).incrementXp(amount);
-        int newLevel = getTalent(talentId).getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+        int newLevel = getTalent(talentId).getLevel();
         if (oldLevel < newLevel) {
             Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
             /*
@@ -171,7 +171,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
                 MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
                 Talent talent = mmoPlayer.getTalent(talentName);
-                townTotal += talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
+                townTotal += talent.getLevel();
             }
         }
         return townTotal;
