@@ -3,7 +3,9 @@ package net.laboulangerie.laboulangeriemmo.commands;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -11,107 +13,82 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 
-public class Stats implements CommandExecutor, TabCompleter {
+public class Stats implements TabExecutor {
+    /**
+     * per talent list of players classed by their xp
+     * cleared every 2 minutes
+     */
+    private static Map<String, List<MmoPlayer>> talentTopCache = new HashMap<>();
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias,
-            @NotNull String[] args) {
-        OfflinePlayer bukkitPlayer = (OfflinePlayer) sender;
+    public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
+        OfflinePlayer source = null;
         if (args.length > 0) {
-            if (args.length > 1 && args[0].equalsIgnoreCase("leaderboard")
-                    && "miningwoodcuttingthehunterfarmer".contains(args[1])) {
-                File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
-                Integer maxLevel = 0;
-                Integer max2Level = 0;
-                Integer max3Level = 0;
-                Double maxExp = 0.0;
-                Double max2Exp = 0.0;
-                Double max3Exp = 0.0;
-                String name = null;
-                String name2 = null;
-                String name3 = null;
-
-                for (File file : folder.listFiles()) {
-                    OfflinePlayer player2 = Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0]));
-                    MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player2);
-                    Talent talent = mmoPlayer.getTalent(args[1]);
-                    if (talent.getXp() > maxExp && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= maxLevel) {
-                    	max3Level = max2Level;
-                    	max3Exp = max2Exp;
-                    	name3 = name2;
-                    	max2Level = maxLevel;
-                    	max2Exp = maxExp;
-                    	name2 = name;
-                        maxLevel = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-                        maxExp = talent.getXp();
-                        name = mmoPlayer.getName();
-                    } else if (talent.getXp() < maxExp && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) == maxLevel) {
-                    	max3Level = max2Level;
-                    	max3Exp = max2Exp;
-                    	name3 = name2;
-                        max2Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-                        name2 = mmoPlayer.getName();
-                        max2Exp = talent.getXp();
-                    } else if (talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) < maxLevel && talent.getXp() > max2Exp
-                            && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= max2Level) {
-                    	max3Level = max2Level;
-                    	max3Exp = max2Exp;
-                    	name3 = name2;
-                        max2Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-                        name2 = mmoPlayer.getName();
-                        max2Exp = talent.getXp();
-                    } else if (talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) < maxLevel && talent.getXp() < max2Exp
-                            && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) == max2Level) {
-                        max3Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-                        name3 = mmoPlayer.getName();
-                        max3Exp = talent.getXp();
-                    } else if (talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) < max2Level && talent.getXp() > max3Exp
-                            && talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER) >= max3Level) {
-                        max3Level = talent.getLevel(LaBoulangerieMmo.XP_MULTIPLIER);
-                        name3 = mmoPlayer.getName();
-                        max3Exp = talent.getXp();
+            if (args[0].equalsIgnoreCase("leaderboard")) {
+                if (args.length == 1) return false;
+                if (LaBoulangerieMmo.talentsRegistry.getTalent(args[1]) == null) {
+                    sender.sendMessage("§4Invalid talent.");
+                    return true;
+                }
+                int page = 0;
+                if (args.length > 2) {
+                    try {
+                        page = Integer.parseInt(args[2])-1;
+                        if (page < 0) {
+                            sender.sendMessage("§4Invalid page number");
+                            return true;
+                        }
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage("§4Invalid page number");
+                        return true;
                     }
                 }
-                if (name == null) {
-                    sender.sendMessage("§cAucun joueur n'a d'exp en §a" + args[1]);
-                } else {
-                    sender.sendMessage("§lClassement de §a" + args[1] + "§r :");
-                    sender.sendMessage("§e1. §a" + name + " qui est niveau " + maxLevel + " avec " + maxExp + "§r xp");
-                    sender.sendMessage(
-                            "§62. §a" + name2 + " qui est niveau " + max2Level + " avec " + max2Exp + "§r xp");
-                    sender.sendMessage(
-                            "§c3. §a" + name3 + " qui est niveau " + max3Level + " avec " + max3Exp + "§r xp");
+                if (talentTopCache.get(args[1]) == null) {
+                    File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
+    
+                    talentTopCache.put(args[1], List.of(folder.listFiles()).stream().map(file -> 
+                        LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])))
+                    ).sorted((v1, v2) -> (int) (v2.getTalent(args[1]).getXp() - v1.getTalent(args[1]).getXp())).collect(Collectors.toList()));
                 }
+                List<MmoPlayer> orderedPlayers = talentTopCache.get(args[1]);
+
+                for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
+                    MmoPlayer player = orderedPlayers.get(i);
+                    sender.sendMessage("§e" + i+1 + ". §a" + player.getName() + " §6- §3level §9" + player.getTalent(args[1]).getLevel());
+                }
+                
                 return true;
             }
+
             if (!sender.hasPermission("laboulangeriemmo.stats.see")) {
-                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] "
-                        + "§4Vous n'avez pas la permission de voir les statistiques d'un autre joueur.");
+                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] §4You don't have the permission to see other's stats.");
                 return true;
             }
-            bukkitPlayer = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
-            if (bukkitPlayer == null) {
+            source = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
+            if (source == null) {
                 sender.sendMessage("§4Invalid player!");
-                return false;
+                return true;
             }
         }
-        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(bukkitPlayer);
-        sendStatsTo((Player) sender, player);
+        if (source == null && !(sender instanceof Player)) {
+            sender.sendMessage("§4You must be in game to use this command!");
+            return true;
+        } else if (source == null) source = (OfflinePlayer) sender;
+
+        MmoPlayer mmoSource = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(source);
+        sendStatsTo(sender, mmoSource);
         return true;
     }
 
-    private void sendStatsTo(Player target, MmoPlayer source) {
+    private void sendStatsTo(CommandSender target, MmoPlayer source) {
 
         target.sendMessage("");
         target.sendMessage("§8------§6Stats§8------");
@@ -127,8 +104,8 @@ public class Stats implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
-            @NotNull String alias, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(CommandSender sender, Command command,
+            String alias, String[] args) {
         if (args.length == 1) {
             List<String> list = new ArrayList<String>();
             list.add("leaderboard");
@@ -139,7 +116,7 @@ public class Stats implements CommandExecutor, TabCompleter {
         if (args[0].equalsIgnoreCase("leaderboard")) {
             switch (args.length) {
                 case 2:
-                    return Arrays.asList("mining", "woodcutting", "thehunter", "farmer"); // Lists players
+                    return new ArrayList<>(LaBoulangerieMmo.talentsRegistry.getTalents().keySet());
                 default:
                     return Arrays.asList("");
             }
