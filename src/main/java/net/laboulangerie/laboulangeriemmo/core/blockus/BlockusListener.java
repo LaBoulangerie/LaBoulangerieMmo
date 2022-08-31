@@ -29,8 +29,9 @@ public class BlockusListener implements Listener {
     public BlockusListener() {
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPlace(BlockPlaceEvent event) {
+        if (event.isCancelled()) return;
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
@@ -53,6 +54,7 @@ public class BlockusListener implements Listener {
             Blockus blockus = new Blockus(block.getLocation().add(vec));
             blockus.putMetadata("laboulangerie:placed", value);
             blockus.markAsBlockus();
+            dataHolder.addBlockus(blockus);
         });
     }
 
@@ -69,6 +71,7 @@ public class BlockusListener implements Listener {
             Blockus blockus = new Blockus(block.getLocation().add(vec));
             blockus.putMetadata("laboulangerie:placed", value);
             blockus.markAsBlockus();
+            dataHolder.addBlockus(blockus);
         });
     }
 
