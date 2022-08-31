@@ -2,6 +2,8 @@ package net.laboulangerie.laboulangeriemmo.core.blockus;
 
 import java.io.*;
 
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+
 public class BlockusDataManager {
 
     private File blockusFile;
@@ -23,8 +25,10 @@ public class BlockusDataManager {
 
         try {
             blockusDataHolder = readBlockuses();
-        } catch (IOException | ClassNotFoundException ignored) {
+        } catch (IOException | ClassNotFoundException e) {
             blockusDataHolder = new BlockusDataHolder();
+            LaBoulangerieMmo.PLUGIN.getLogger().warning("Something went wrong while trying to restore blockuses:");
+            e.printStackTrace();
         }
         if (blockusDataHolder == null) {
             blockusDataHolder = new BlockusDataHolder();
