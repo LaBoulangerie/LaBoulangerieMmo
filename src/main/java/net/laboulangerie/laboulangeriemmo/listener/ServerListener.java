@@ -3,17 +3,15 @@ package net.laboulangerie.laboulangeriemmo.listener;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -24,7 +22,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
@@ -38,21 +35,6 @@ import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.utils.Utils;
 
 public class ServerListener implements Listener {
-    public ServerListener() {
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlace(BlockPlaceEvent event) {
-        if (event.isCancelled()) return;
-        Player player = event.getPlayer();
-        Block block = event.getBlock();
-
-        boolean hasMetaData = block.hasMetadata("laboulangerie:placed");
-        if (!hasMetaData) {
-            block.setMetadata("laboulangerie:placed",
-                    new FixedMetadataValue(LaBoulangerieMmo.PLUGIN, player.getUniqueId().toString()));
-        }
-    }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onClick(PlayerInteractEvent event) {

@@ -342,3 +342,9 @@ level-up-rewards:
 #       "level": reward # "*" means every levels, its stacked with the specific level reward 
         "*": 1.25% #If you add a %, the money given will be the percentage of the xp required to reach this level from the previous one
         "50": 30
+
+blockus-ignored-blocks:
+    - CARROTS
+    - WHEAT
+    - POTATOES
+    - BEETROOTS

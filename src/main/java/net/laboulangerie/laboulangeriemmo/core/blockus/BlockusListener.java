@@ -1,7 +1,5 @@
 package net.laboulangerie.laboulangeriemmo.core.blockus;
 
-import java.util.List;
-
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
@@ -35,8 +33,10 @@ public class BlockusListener implements Listener {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
+        if (LaBoulangerieMmo.PLUGIN.getConfig().getStringList("blockus-ignored-blocks").contains(block.getType().toString())) return;
+
         Blockus blockus = new Blockus(block);
-        blockus.putMetadata("laboulangerie:placed", player.getUniqueId());
+        blockus.putMetadata("laboulangerie:placed", player.getUniqueId().toString());
         blockus.markAsBlockus();
         LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus);
     }
