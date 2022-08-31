@@ -46,13 +46,13 @@ public class BlockusListener implements Listener {
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
         event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
-            List<MetadataValue> value = block.getMetadata("laboulangerie:placed");
+            MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
 
             block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
-            blockus.putMetadata("laboulangerie:placed", value);
+            blockus.putMetadata("laboulangerie:placed", value.asString());
             blockus.markAsBlockus();
             dataHolder.addBlockus(blockus);
         });
@@ -63,13 +63,13 @@ public class BlockusListener implements Listener {
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
         event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
-            List<MetadataValue> value = block.getMetadata("laboulangerie:placed");
+            MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
 
             block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
-            blockus.putMetadata("laboulangerie:placed", value);
+            blockus.putMetadata("laboulangerie:placed", value.asString());
             blockus.markAsBlockus();
             dataHolder.addBlockus(blockus);
         });
