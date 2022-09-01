@@ -311,10 +311,10 @@ talent-grinding:
             NETHERITE_SWORD: 200
     farmer:
         break:
-            WHEAT_SEEDS: 2.5
+            WHEAT: 2.5
             BEETROOT_SEEDS: 2.5
-            POTATO: 2.5
-            CARROT: 2.5
+            POTATOS: 2.5
+            CARROTS: 2.5
             NETHER_WART: 2.5
             SWEET_BERRIES: 2.5
             COCOA_BEANS: 2.5
