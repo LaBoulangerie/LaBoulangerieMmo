@@ -33,7 +33,7 @@ public class AbilitiesDispatcher implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onClick(PlayerInteractEvent event) {
-        if (event.useInteractedBlock() == Result.DENY || event.useItemInHand() == Result.DENY) return;
+        if (event.useInteractedBlock() == Result.DENY && event.useItemInHand() == Result.DENY) return;
         MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
 
         switch (event.getAction()) {
