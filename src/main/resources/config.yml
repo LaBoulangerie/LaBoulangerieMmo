@@ -96,6 +96,7 @@ talents:
                 level: 15
                 effect: default
                 log: true
+                tiers:
                   - 15
                   - 30
                   - 70

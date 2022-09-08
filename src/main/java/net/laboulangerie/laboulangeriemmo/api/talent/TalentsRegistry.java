@@ -117,7 +117,7 @@ public class TalentsRegistry {
 
                                     classField.set(abilityArchetype, value);
                                 }catch(Exception e) {
-                                    LaBoulangerieMmo.PLUGIN.getLogger().severe("§4Error when trying to set field '"+ fieldName +"' of ability '"+ abilityId +"' from talent '"+ identifier +"', value's type might be invalid!");
+                                    LaBoulangerieMmo.PLUGIN.getLogger().severe("Error when trying to set field '"+ fieldName +"' of ability '"+ abilityId +"' from talent '"+ identifier +"', value's type might be invalid!");
                                     e.printStackTrace();
                                 }
                             });
