@@ -27,7 +27,16 @@ public class MmoListener implements Listener {
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
         Talent talent = event.getTalent();
 
-        if (!LaBoulangerieMmo.PLUGIN.getConfig().isSet("level-up-rewards." + talent.getTalentId())) return;
+        if (!LaBoulangerieMmo.PLUGIN.getConfig().isSet("level-up-rewards." + talent.getTalentId())) {
+            List<TagResolver.Single> placeholders = Arrays.asList(
+                Placeholder.parsed("level", Integer.toString(talent.getLevel())),
+                Placeholder.parsed("talent", talent.getDisplayName())
+            );
+
+            player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
+                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level_up"), TagResolver.resolver(placeholders))));
+            return;
+        }
 
         double amount = processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+".*"), talent.getLevelXp());
         amount += processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+"."+talent.getLevel()), talent.getLevelXp());
