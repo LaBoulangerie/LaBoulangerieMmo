@@ -69,32 +69,47 @@ talents:
         abilities:
             dodging:
                 display_name: Dodging
-                cooldown: 1
-                unit: SECONDS
-                level: 5
+                cooldown: 5
+                unit: MINUTES
+                level: 25
                 effect: trail
                 log: true
+                tiers:
+                  - 25
+                  - 60
+                  - 95
             exp-in-bottle:
                 display_name: Xp in bottle
                 cooldown: 0
                 unit: SECONDS
-                level: 10
+                level: 5
                 effect: default
                 log: false
+                tiers:
+                  - 5
+                  - 30
+                  - 40
             fire-bow:
                 display_name: Fire bow
-                cooldown: 3
-                unit: SECONDS
-                level: 3
+                cooldown: 30
+                unit: MINUTES
+                level: 15
                 effect: default
                 log: true
+                  - 15
+                  - 30
+                  - 70
             hiding:
                 display_name: Hiding
                 cooldown: 1
                 unit: SECONDS
-                level: 3
+                level: 50
                 effect: default
                 log: true
+                tiers:
+                  - 50
+                  - 85
+                  - 100
         combo_items:
             - DIAMOND_SWORD
             - IRON_SWORD
@@ -109,30 +124,45 @@ talents:
                 display_name: Nature touch
                 cooldown: 1
                 unit: SECONDS
-                level: 3
+                level: 5
                 effect: default
                 log: false
+                tiers:
+                  - 5
+                  - 30
+                  - 70
             better-bonemeal:
                 display_name: Better bonemeal
                 cooldown: 1
                 unit: SECONDS
-                level: 3
+                level: 15
                 effect: default
                 log: true
+                tiers:
+                  - 15
+                  - 45
+                  - 100
             animal-twins:
                 display_name: Animal twins
                 cooldown: 1
                 unit: SECONDS
-                level: 3
+                level: 20
                 effect: default
                 log: false
+                tiers:
+                  - 20
+                  - 55
+                  - 80
             tasty-bread:
                 display_name: Tasty bread
                 cooldown: 1
                 unit: SECONDS
-                level: 3
+                level: 10
                 effect: default
                 log: false
+                tiers:
+                  - 10
+                  - 60
         combo_items:
             - DIAMOND_HOE
             - IRON_HOE
@@ -147,35 +177,47 @@ talents:
                 display_name: Double drop log
                 cooldown: 0
                 unit: SECONDS
-                level: 3
+                level: 5
                 effect: default
                 log: false
+                tiers:
+                  - 5
+                  - 40
+                  - 75
             better-apple-drop:
                 display_name: Better apple drop
                 cooldown: 0
                 unit: SECONDS
-                level: 3
+                level: 5
                 effect: default
                 log: false
+                tiers:
+                  - 5
+                  - 40
+                  - 75
             timber:
                 display_name: Timber!!!
                 cooldown: 1
                 unit: SECONDS
-                level: 3
+                level: 35
                 effect: default
                 log: true
+                tiers:
+                  - 35
+                  - 65
+                  - 95
             strip:
                 display_name: Strip
                 cooldown: 1
                 unit: SECONDS
-                level: 3
+                level: 50
                 effect: default
                 log: true
             thick-tree:
                 display_name: Thick tree
                 cooldown: 1
                 unit: SECONDS
-                level: 3
+                level: 10
                 effect: default
                 log: true
         combo_items:
