@@ -24,9 +24,6 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class BlockusListener implements Listener {
 
-    public BlockusListener() {
-    }
-
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlace(BlockPlaceEvent event) {
         if (event.isCancelled()) return;
@@ -43,6 +40,7 @@ public class BlockusListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPistonExtend(BlockPistonExtendEvent event) {
+        if (event.isCancelled()) return;
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
         event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
@@ -60,6 +58,7 @@ public class BlockusListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPistonRetract(BlockPistonRetractEvent event) {
+        if (event.isCancelled()) return;
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
         event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
@@ -77,36 +76,43 @@ public class BlockusListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDestroyed(BlockDestroyEvent event) {
+        if (event.isCancelled()) return;
         unMark(event.getBlock());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
         unMark(event.getBlock());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onExplode(BlockExplodeEvent event) {
+        if (event.isCancelled()) return;
         event.blockList().stream().forEach(block -> unMark(block));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityExplode(EntityExplodeEvent event) {
+        if (event.isCancelled()) return;
         event.blockList().stream().forEach(block -> unMark(block));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPrimed(TNTPrimeEvent event) {
+        if (event.isCancelled()) return;
         unMark(event.getBlock());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBurn(BlockBurnEvent event) {
+        if (event.isCancelled()) return;
         unMark(event.getBlock());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTreeGrow(StructureGrowEvent event) {
+        if (event.isCancelled()) return;
     	for(BlockState blockState : event.getBlocks()) {
     		Block block = blockState.getBlock();
             unMark(block);
