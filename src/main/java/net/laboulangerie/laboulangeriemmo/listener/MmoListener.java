@@ -34,7 +34,7 @@ public class MmoListener implements Listener {
             );
 
             player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level_up"), TagResolver.resolver(placeholders))));
+                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level-up-no-rewards"), TagResolver.resolver(placeholders))));
             return;
         }
 
@@ -51,7 +51,7 @@ public class MmoListener implements Listener {
         );
 
         player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level_up"), TagResolver.resolver(placeholders))));
+                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level-up"), TagResolver.resolver(placeholders))));
     }
 
     @EventHandler
