@@ -5,6 +5,7 @@ import java.util.Set;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,8 +24,12 @@ public class GrindingListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (event.isCancelled() || event.getBlock().hasMetadata("laboulangerie:placed"))
-            return;
+        if (event.isCancelled() || event.getBlock().hasMetadata("laboulangerie:placed")) return;
+
+        if (event.getBlock().getState().getBlockData() instanceof Ageable) {
+            Ageable ageable = ((Ageable) event.getBlock().getState().getBlockData());
+            if (ageable.getAge() != ageable.getMaximumAge()) return;
+        }
         giveReward(event.getPlayer(), GrindingCategory.BREAK, event.getBlock().getType().toString());
     }
 
