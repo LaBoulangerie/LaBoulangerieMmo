@@ -92,7 +92,7 @@ talents:
                   - 40
             fire-bow:
                 display_name: Fire bow
-                cooldown: 30
+                cooldown: 15
                 unit: MINUTES
                 level: 15
                 effect: default
@@ -103,7 +103,7 @@ talents:
                   - 70
             hiding:
                 display_name: Hiding
-                cooldown: 1
+                cooldown: 25
                 unit: SECONDS
                 level: 50
                 effect: default
@@ -124,8 +124,8 @@ talents:
         abilities:
             nature-touch:
                 display_name: Nature touch
-                cooldown: 1
-                unit: SECONDS
+                cooldown: 15
+                unit: MINUTES
                 level: 5
                 effect: default
                 log: false
@@ -135,7 +135,7 @@ talents:
                   - 70
             better-bonemeal:
                 display_name: Better bonemeal
-                cooldown: 1
+                cooldown: 0
                 unit: SECONDS
                 level: 15
                 effect: default
@@ -199,8 +199,8 @@ talents:
                   - 75
             timber:
                 display_name: Timber!!!
-                cooldown: 1
-                unit: SECONDS
+                cooldown: 5
+                unit: MINUTES
                 level: 35
                 effect: default
                 log: true
@@ -210,15 +210,15 @@ talents:
                   - 95
             strip:
                 display_name: Strip
-                cooldown: 1
-                unit: SECONDS
+                cooldown: 10
+                unit: MINUTES
                 level: 50
                 effect: default
                 log: true
             thick-tree:
                 display_name: Thick tree
-                cooldown: 1
-                unit: SECONDS
+                cooldown: 15
+                unit: MINUTES
                 level: 10
                 effect: default
                 log: true
