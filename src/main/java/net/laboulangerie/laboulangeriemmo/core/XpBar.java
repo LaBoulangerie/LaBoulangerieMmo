@@ -35,6 +35,7 @@ public class XpBar {
         );
 
         final Player player = Bukkit.getPlayer(mmoPlayer.getUniqueId());
+        if (!player.isOnline()) return;
         player.showBossBar(bossbar);
 
         Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, () -> {
