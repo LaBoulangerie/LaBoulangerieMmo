@@ -34,9 +34,9 @@ public class Hiding extends AbilityExecutor {
         final Player player = event.getPlayer();
 
         if (level >= getTier(2)) {
-            totalInvisibility(new InvisiblePlayer(player, 3), 4800);
+            totalInvisibility(new InvisiblePlayer(player, 3), 9600);
         } else if (level >= getTier(1)) {
-            totalInvisibility(new InvisiblePlayer(player, 2), 3600);
+            totalInvisibility(new InvisiblePlayer(player, 2), 6000);
         } else {
             basicInvisibility(new InvisiblePlayer(player, 1));
         }
@@ -55,7 +55,7 @@ public class Hiding extends AbilityExecutor {
     }
 
     private void basicInvisibility(InvisiblePlayer invisiblePlayer) {
-        invisiblePlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 2400, 0, false, false));
+        invisiblePlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 3600, 0, false, false));
         InvisiblePlayer.invisiblePlayer.add(invisiblePlayer);
         endScheduler(invisiblePlayer, 2400);
         EffectRegistry.playEffect("invisible-particles", invisiblePlayer.getPlayer());
