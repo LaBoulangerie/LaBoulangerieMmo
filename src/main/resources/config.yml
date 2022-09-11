@@ -357,7 +357,7 @@ talent-grinding:
         break:
             WHEAT: 2.5
             BEETROOT_SEEDS: 2.5
-            POTATOS: 2.5
+            POTATOES: 2.5
             CARROTS: 2.5
             NETHER_WART: 2.5
             SWEET_BERRIES: 2.5
