@@ -42,6 +42,20 @@ public class MmoListener implements Listener {
         amount += processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+"."+talent.getLevel()), talent.getLevelXp());
 
         if (amount == 0) return;
+        switch (LaBoulangerieMmo.PLUGIN.getConfig().getString("rewards-rounding-method", "no")) {
+            case "closest":
+                amount = Math.round(amount);
+                break;
+            case "up":
+                amount = Math.ceil(amount);
+                break;
+            case "down":
+                amount = Math.floor(amount);
+                break;
+            case "no":
+            default:
+                break;
+        }
         LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, amount);
 
         List<TagResolver.Single> placeholders = Arrays.asList(
@@ -70,7 +84,7 @@ public class MmoListener implements Listener {
 
     private double processMoneyAmount(String rawAmount, double levelXp) {
         if (rawAmount == null) return 0;
-        System.out.println(levelXp);
+
         if (rawAmount.endsWith("%")) {
             double percentage = 0;
             try {
