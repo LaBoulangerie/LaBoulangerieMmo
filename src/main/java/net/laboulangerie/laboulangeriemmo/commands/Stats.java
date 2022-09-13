@@ -56,7 +56,7 @@ public class Stats implements TabExecutor {
     
                     talentTopCache.put(args[1], List.of(folder.listFiles()).stream().map(file -> 
                         LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])))
-                    ).sorted((v1, v2) -> (int) (v2.getTalent(args[1]).getXp() - v1.getTalent(args[1]).getXp())).collect(Collectors.toList()));
+                    ).sorted((v1, v2) ->  ((Double) v2.getTalent(args[1]).getXp()).compareTo(v1.getTalent(args[1]).getXp())).collect(Collectors.toList()));
                 }
                 List<MmoPlayer> orderedPlayers = talentTopCache.get(args[1]);
 
