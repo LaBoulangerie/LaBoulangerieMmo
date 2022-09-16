@@ -34,7 +34,9 @@ public class Stats implements TabExecutor {
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("leaderboard")) {
                 if (args.length == 1) return false;
-                if (LaBoulangerieMmo.talentsRegistry.getTalent(args[1]) == null) {
+            	ArrayList<String> arrayList = new ArrayList<String>(LaBoulangerieMmo.talentsRegistry.getTalents().keySet());
+            	arrayList.add("total");
+                if (!(arrayList.contains(args[1]))) {
                     sender.sendMessage("§4Invalid talent.");
                     return true;
                 }
@@ -51,20 +53,37 @@ public class Stats implements TabExecutor {
                         return true;
                     }
                 }
-                if (talentTopCache.get(args[1]) == null) {
-                    File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
-    
-                    talentTopCache.put(args[1], List.of(folder.listFiles()).stream().map(file -> 
-                        LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])))
-                    ).sorted((v1, v2) -> (int) (v2.getTalent(args[1]).getXp() - v1.getTalent(args[1]).getXp())).collect(Collectors.toList()));
-                }
-                List<MmoPlayer> orderedPlayers = talentTopCache.get(args[1]);
+                if(args[1].equals("total")) {
+                	if (talentTopCache.get(args[1]) == null) {
+                		File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
 
-                for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
-                    MmoPlayer player = orderedPlayers.get(i);
-                    sender.sendMessage("§e" + (i+1) + ". §a" + player.getName() + " §6- §3level §9" + player.getTalent(args[1]).getLevel());
+                		talentTopCache.put(args[1], List.of(folder.listFiles()).stream().map(file ->
+                        	LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])))
+                				).sorted((v1, v2) -> (v2.getPalier() - v1.getPalier())).collect(Collectors.toList()));
+                	}
+                	List<MmoPlayer> orderedPlayers = talentTopCache.get(args[1]);
+
+                	for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
+                		MmoPlayer player = orderedPlayers.get(i);
+                		sender.sendMessage("§e" + (i+1) + ". §a" + player.getName() + " §6- §3pallier §9" + player.getPalier());
+                	}
                 }
-                
+                else {
+                	if (talentTopCache.get(args[1]) == null) {
+                		File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
+
+                		talentTopCache.put(args[1], List.of(folder.listFiles()).stream().map(file ->
+                        	LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])))
+                				).sorted((v1, v2) -> (int) (v2.getTalent(args[1]).getXp() - v1.getTalent(args[1]).getXp())).collect(Collectors.toList()));
+                	}
+                	List<MmoPlayer> orderedPlayers = talentTopCache.get(args[1]);
+
+                	for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
+                		MmoPlayer player = orderedPlayers.get(i);
+                		sender.sendMessage("§e" + (i+1) + ". §a" + player.getName() + " §6- §3level §9" + player.getTalent(args[1]).getLevel());
+                	}
+                }
+
                 return true;
             }
 
@@ -116,7 +135,9 @@ public class Stats implements TabExecutor {
         if (args[0].equalsIgnoreCase("leaderboard")) {
             switch (args.length) {
                 case 2:
-                    return new ArrayList<>(LaBoulangerieMmo.talentsRegistry.getTalents().keySet());
+                	ArrayList<String> arrayList = new ArrayList<String>(LaBoulangerieMmo.talentsRegistry.getTalents().keySet());
+                	arrayList.add("total");
+                    return arrayList ;
                 default:
                     return Arrays.asList("");
             }

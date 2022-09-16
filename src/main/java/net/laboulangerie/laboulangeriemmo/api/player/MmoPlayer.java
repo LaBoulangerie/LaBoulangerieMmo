@@ -142,23 +142,23 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     public CooldownsHolder getCooldowns() {
         return cooldownsHolder;
     }
-    
+
     public Town getTown() {
     	Resident resident = TownyUniverse.getInstance().getResident(uniqueId);
     	return resident.getTownOrNull();
     }
-    
+
     public Nation getNation() {
     	Resident resident = TownyUniverse.getInstance().getResident(uniqueId);
     	return resident.getNationOrNull();
     }
-    
+
     public static Integer getTownTotalLevel (Town town) {
 		int townTotal = 0;
         for (Resident resident :  town.getResidents()) {
             if (resident != null) {
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID()); 
-                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
+                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
                 townTotal += mmoPlayer.getPalier();
             }
         }
