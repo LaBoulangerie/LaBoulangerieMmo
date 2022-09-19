@@ -32,4 +32,37 @@ public class Utils {
 
         return damages;
     }
-}        
+
+    public static int getExpAtLevel(int level) {
+        if(level <= 16)
+            return (int) (Math.pow(level,2) + 6*level);
+        else if(level <= 31)
+            return (int) (2.5*Math.pow(level,2) - 40.5*level + 360.0);
+        else
+            return (int) (4.5*Math.pow(level,2) - 162.5*level + 2220.0);
+    }
+
+    public static int getPlayerExp(Player player) {
+        int exp = 0;
+
+        // Get the amount of XP in past levels
+        exp += getExpAtLevel(player.getLevel());
+
+        // Get amount of XP towards next level
+        exp += Math.round(player.getExpToLevel() * player.getExp());
+
+        return exp;
+    }
+
+    public static void changePlayerExp(Player player, int exp) {
+        int currentExp = getPlayerExp(player);
+
+        // Reset player's current exp to 0
+        player.setExp(0);
+        player.setLevel(0);
+        
+        // Give the player their exp back, with the difference
+        int newExp = currentExp + exp;
+        player.giveExp(newExp);
+    }
+}

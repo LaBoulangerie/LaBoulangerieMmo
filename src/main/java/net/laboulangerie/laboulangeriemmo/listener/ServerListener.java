@@ -51,9 +51,9 @@ public class ServerListener implements Listener {
         if (meta.hasLore() && PlainTextComponentSerializer.plainText()
                 .serialize(meta.lore().get(0)).startsWith("Quantité:")) {
 
-            int lvl = Integer.parseInt(PlainTextComponentSerializer.plainText()
+            int expPoints = Integer.parseInt(PlainTextComponentSerializer.plainText()
                     .serialize(meta.lore().get(0)).split("Quantité: ")[1].split(" ")[0]);
-            event.setExperience(lvl);
+            event.setExperience(expPoints);
         }
     }
 
