@@ -62,7 +62,7 @@ public class NatureTouch extends AbilityExecutor {
                 Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
                     public void run() {
                         block.setType(finalCropBlockType);
-                        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 100);
+                        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().toCenterLocation(), 100);
                     }
                 }, 1L);
             }
@@ -78,7 +78,7 @@ public class NatureTouch extends AbilityExecutor {
                 Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
                     public void run() {
                         block.setType(finalCropBlockType);
-                        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 100);
+                        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().toCenterLocation(), 100);
                     }
                 }, 1L);
             }
@@ -94,7 +94,7 @@ public class NatureTouch extends AbilityExecutor {
                 Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
                     public void run() {
                         block.setType(finalCropBlockType);
-                        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 100);
+                        block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().toCenterLocation(), 100);
                     }
                 }, 1L);
             }
