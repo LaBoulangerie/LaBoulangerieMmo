@@ -119,8 +119,10 @@ public class Stats implements TabExecutor {
             switch (args.length) {
                 case 2:
                      suggestions = new ArrayList<>(LaBoulangerieMmo.talentsRegistry.getTalents().keySet());
+                break;
                 case 3:
                     suggestions = Arrays.asList("1", "2", "3", "4", "5");
+                break;
                 default:
             }
         }
