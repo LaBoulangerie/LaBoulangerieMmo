@@ -31,13 +31,13 @@ public class ExpInBottle extends AbilityExecutor {
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         Player player = event.getPlayer();
-        int pointsToSubtract = 10; // tier 1
+        int pointsToSubtract = 30; // tier 1
         int currentExp = Utils.getPlayerExp(player);
 
         if (level >= getTier(2))
-            pointsToSubtract = 30; // tier 3
+            pointsToSubtract = 70; // tier 3
         else if (level >= getTier(1))
-            pointsToSubtract = 20; // tier 2
+            pointsToSubtract = 50; // tier 2
 
         if (currentExp >= pointsToSubtract) {
             Utils.changePlayerExp(player, -pointsToSubtract);
