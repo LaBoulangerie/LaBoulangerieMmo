@@ -15,6 +15,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import com.destroystokyo.paper.event.block.BlockDestroyEvent;
@@ -43,6 +44,7 @@ public class BlockusListener implements Listener {
         if (event.isCancelled()) return;
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
+
         event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
             MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
 
@@ -51,8 +53,14 @@ public class BlockusListener implements Listener {
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
             blockus.putMetadata("laboulangerie:placed", value.asString());
-            blockus.markAsBlockus();
             dataHolder.addBlockus(blockus);
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    blockus.markAsBlockus();
+                }
+            }.runTaskLater(LaBoulangerieMmo.PLUGIN, 0);
         });
     }
 
@@ -61,6 +69,7 @@ public class BlockusListener implements Listener {
         if (event.isCancelled()) return;
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
+
         event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
             MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
 
@@ -69,8 +78,15 @@ public class BlockusListener implements Listener {
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
             blockus.putMetadata("laboulangerie:placed", value.asString());
-            blockus.markAsBlockus();
             dataHolder.addBlockus(blockus);
+            blockus.markAsBlockus();
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    blockus.markAsBlockus();
+                }
+            }.runTaskLater(LaBoulangerieMmo.PLUGIN, 0);
         });
     }
 
