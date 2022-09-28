@@ -46,12 +46,10 @@ public class BlockusListener implements Listener {
         event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
             MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
 
-            block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
             blockus.putMetadata("laboulangerie:placed", value.asString());
-            blockus.markAsBlockus();
             dataHolder.addBlockus(blockus);
         });
     }

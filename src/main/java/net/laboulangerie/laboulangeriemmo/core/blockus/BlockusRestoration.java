@@ -17,7 +17,7 @@ public class BlockusRestoration extends BukkitRunnable {
         AtomicReference<Boolean> warnedWorldRemoval = new AtomicReference<>(false);
         BlockusDataHolder blockusDataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
 
-        for (Iterator<Blockus> iterator = blockusDataHolder.getBlockuses().iterator(); iterator.hasNext();) {
+        for (Iterator<Blockus> iterator = blockusDataHolder.getBlockuses().values().iterator(); iterator.hasNext();) {
             Blockus blockus = iterator.next();
             try {
                 blockus.markAsBlockus();
