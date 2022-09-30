@@ -234,7 +234,7 @@ talent-grinding:
     miner:
         break:
             NETHERRACK: 0.5
-            STONE: 1
+            STONE: 0.75
             DIORITE: 1.5
             ANDESITE: 1.5
             GRANITE: 1.5
@@ -249,7 +249,7 @@ talent-grinding:
             CALCITE: 3
             TUFF: 3
             DRIPSTONE_BLOCK: 3
-            BASALT: 3
+            BASALT: 0.75
             END_STONE: 3
             BLACKSTONE: 4
             COAL_ORE: 6
@@ -257,8 +257,8 @@ talent-grinding:
             IRON_ORE: 6
             NETHER_QUARTZ_ORE: 6
             NETHER_GOLD_ORE: 6
-            AMETHYST_BLOCK: 10
-            AMETHYST_CLUSTER: 10
+            AMETHYST_BLOCK: 2.5
+            AMETHYST_CLUSTER: 2
             GOLD_ORE: 12
             REDSTONE_ORE: 12
             LAPIS_ORE: 12
@@ -295,6 +295,8 @@ talent-grinding:
             JUNGLE_WOOD: 3
             DARK_OAK_LOG: 4
             DARK_OAK_WOOD: 4
+            MANGROVE_LOG: 4
+            MANGROVE_ROOTS: 4
             OAK_LOG: 5
             OAK_WOOD: 5
             BIRCH_LOG: 5
@@ -316,13 +318,13 @@ talent-grinding:
             NETHERITE_AXE: 200
     hunter:
         kill:
-            ZOMBIE: 0.5
+            ZOMBIE: 1.5
             ZOMBIE_VILLAGER: 3
             HUSK: 4
-            SKELETON: 0.5
+            SKELETON: 1.5
             STRAY: 4
-            CREEPER: 1
-            DROWNED: 1.25
+            CREEPER: 2
+            DROWNED: 2.25
             ENDERMAN: 0.5
             ENDERMITE: 7
             WITCH: 5
@@ -349,6 +351,7 @@ talent-grinding:
             WITHER: 50
             CAVE_SPIDER: 1
             SPIDER: 1
+            BLAZE: 2
         first_craft:
             IRON_SWORD: 50
             DIAMOND_SWORD: 100

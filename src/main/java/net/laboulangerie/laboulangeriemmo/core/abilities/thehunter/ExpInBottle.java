@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import net.kyori.adventure.text.Component;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.utils.Utils;
 
 public class ExpInBottle extends AbilityExecutor {
 
@@ -30,23 +31,20 @@ public class ExpInBottle extends AbilityExecutor {
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         Player player = event.getPlayer();
-        int lvlToSubtract = 10; // tier 1
-        int playerCurrentLevel = player.getTotalExperience();
+        int pointsToSubtract = 10; // tier 1
+        int currentExp = Utils.getPlayerExp(player);
 
         if (level >= getTier(2))
-            lvlToSubtract = 30; // tier 3
+            pointsToSubtract = 30; // tier 3
         else if (level >= getTier(1))
-            lvlToSubtract = 20; // tier 2
+            pointsToSubtract = 20; // tier 2
 
-        if (playerCurrentLevel >= lvlToSubtract) {
-            player.setLevel(0); // this is a needed trick, it works, don't touch it :p
-            player.setExp(0);
-            player.setTotalExperience(0);
-            player.giveExp(playerCurrentLevel - lvlToSubtract);
+        if (currentExp >= pointsToSubtract) {
+            Utils.changePlayerExp(player, -pointsToSubtract);
 
             ItemStack item = new ItemStack(Material.EXPERIENCE_BOTTLE);
             ItemMeta itemMeta = item.getItemMeta();
-            itemMeta.lore(Arrays.asList(Component.text("Quantité: " + lvlToSubtract + " xp")));
+            itemMeta.lore(Arrays.asList(Component.text("Quantité: " + pointsToSubtract + " xp")));
             item.setItemMeta(itemMeta);
             player.getInventory().getItemInMainHand()
                     .setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
