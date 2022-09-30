@@ -35,9 +35,8 @@ public class Stats implements TabExecutor {
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("leaderboard")) {
                 if (args.length == 1) return false;
-                if (LaBoulangerieMmo.talentsRegistry.getTalent(args[1]) == null) {
+                if (LaBoulangerieMmo.talentsRegistry.getTalent(args[1]) == null && args[1] == "total") {
                     sender.sendMessage("§4Invalid talent.");
-                    return true;
                 }
                 int page = 0;
                 if (args.length > 2) {
@@ -54,21 +53,36 @@ public class Stats implements TabExecutor {
                 }
                 if (talentTopCache.get(args[1]) == null) {
                     File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
-    
-                    talentTopCache.put(args[1], List.of(folder.listFiles()).stream().map(file -> 
-                        LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])))
-                    ).sorted((v1, v2) ->  ((Double) v2.getTalent(args[1]).getXp()).compareTo(v1.getTalent(args[1]).getXp())).collect(Collectors.toList()));
 
+                    if(args[1].equals("total")) {
+                    	talentTopCache.put(args[1], List.of(folder.listFiles()).stream().map(file ->
+                        	LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])))
+                    			).sorted((v1, v2) ->  (v2.getPalier()).compareTo(v1.getPalier())).collect(Collectors.toList()));
+                    }
+                    else {
+                    	talentTopCache.put(args[1], List.of(folder.listFiles()).stream().map(file ->
+                    	LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])))
+                			).sorted((v1, v2) ->  ((Double) v2.getTalent(args[1]).getXp()).compareTo(v1.getTalent(args[1]).getXp())).collect(Collectors.toList()));
+                    }
                     scheduleCacheClear(args[1]);
                 }
                 List<MmoPlayer> orderedPlayers = talentTopCache.get(args[1]);
 
-                sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
-                for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
-                    MmoPlayer player = orderedPlayers.get(i);
-                    sender.sendMessage("§e" + (i+1) + ". §a" + player.getName() + " §6- §3level §9" + player.getTalent(args[1]).getLevel());
+                if(args[1].equals("total")) {
+                	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
+                	for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
+                    	MmoPlayer player = orderedPlayers.get(i);
+                    	sender.sendMessage("§e" + (i+1) + ". §a" + player.getName() + " §6- §3total §9" + player.getPalier());
+                	}
                 }
-                
+                else {
+                	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
+                	for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
+                    	MmoPlayer player = orderedPlayers.get(i);
+                    	sender.sendMessage("§e" + (i+1) + ". §a" + player.getName() + " §6- §3level §9" + player.getTalent(args[1]).getLevel());
+                	}
+                }
+
                 return true;
             }
 
@@ -119,6 +133,7 @@ public class Stats implements TabExecutor {
             switch (args.length) {
                 case 2:
                      suggestions = new ArrayList<>(LaBoulangerieMmo.talentsRegistry.getTalents().keySet());
+                     suggestions.add("total");
                 break;
                 case 3:
                     suggestions = Arrays.asList("1", "2", "3", "4", "5");
