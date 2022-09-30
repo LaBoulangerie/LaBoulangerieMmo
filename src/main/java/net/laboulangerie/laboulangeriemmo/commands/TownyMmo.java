@@ -1,12 +1,17 @@
 package net.laboulangerie.laboulangeriemmo.commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,201 +19,140 @@ import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Town;
 
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 
 public class TownyMmo implements CommandExecutor, TabCompleter{
 
+    private static Map<String, List<Town>> townTopCache = new HashMap<>();
+    private static Map<String, List<Nation>> nationTopCache = new HashMap<>();
+
+
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {
+        List<String> list = new ArrayList<String>();
         if (args.length == 1) {
-            List<String> list = new ArrayList<String>();
-            list.add("nation");
-            list.add("town");
-            return list;
+            list = Arrays.asList("town", "nation");
         }
         if (args.length == 2) {
-            List<String> list = new ArrayList<String>();
-            list.add("leaderboard");
-            list.add("see");
-            return list;
+            list = new ArrayList<>(LaBoulangerieMmo.talentsRegistry.getTalents().keySet());
+            list.add("total ");
         }
         if (args.length == 3) {
-            List<String> list = new ArrayList<String>();
-            list.add("total ");
-            list.add("farmer");
-            list.add("mining");
-            list.add("woodcutting");
-            list.add("thehunter");
-            return list;
+            list = Arrays.asList("1", "2", "3", "4", "5");
         }
-        if (args.length == 4 && args[0].equalsIgnoreCase("town") && !(args[1].equalsIgnoreCase("leaderboard"))) {
-            List<String> list = new ArrayList<String>();
-            for (Town town :  TownyUniverse.getInstance().getTowns()) {
-                list.add(town.getName());
-            }
-            return list;
-        }
-        else if (args.length == 4 && args[0].equalsIgnoreCase("nation") && !(args[1].equalsIgnoreCase("leaderboard"))) {
-            List<String> list = new ArrayList<String>();
-            for (Nation nation :  TownyUniverse.getInstance().getNations()) {
-                list.add(nation.getName());
-            }
-            return list;
-        }
-        return null;
+        return list.stream().filter(str -> str.startsWith(args[args.length == 0 ? 0 : args.length-1]))
+            .collect(Collectors.toList());
+
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args[0].equalsIgnoreCase("town")) {
-            if (args[1].equalsIgnoreCase("leaderboard")) {
-                if (args[2].equalsIgnoreCase("total")) {
-                    int total = 0;
-                    int villeUn = 0;
-                    String villeUnName = null;
-                    String villeDeuxName = null;
-                    int villeDeux = 0;
-
-                    for (Town town :  TownyUniverse.getInstance().getTowns()) {
-                        total = 0;
-                        total = MmoPlayer.getTownTotalLevel(town);
-                        if (total > villeUn) {
-                            if (villeUn != 0) {
-                                if (villeUn > villeDeux) {
-                                    villeDeux = villeUn;
-                                }
-                            }
-                            villeUn = total;
-                            villeUnName = town.getName();
-                        }
-                        else if (total < villeUn && total > villeDeux) {
-                            villeDeux = total;
-                            villeDeuxName = town.getName();
-                        }
-
+            if (args.length == 1) return false;
+            if (LaBoulangerieMmo.talentsRegistry.getTalent(args[1]) == null && args[1] == "total") {
+                sender.sendMessage("§4Invalid talent.");
+            }
+            int page = 0;
+            if (args.length > 2) {
+                try {
+                    page = Integer.parseInt(args[2])-1;
+                    if (page < 0) {
+                        sender.sendMessage("§4Invalid page number");
+                        return true;
                     }
-                    sender.sendMessage("La ville avec le plus gros total de pallier est : " + villeUnName + " avec ce nombre de palliers : " + villeUn);
-                    sender.sendMessage("La ville avec le deuxième plus gros total de pallier est : " + villeDeuxName + " avec ce nombre de palliers : " + villeDeux);
-                }
-                if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer") || args[2].equalsIgnoreCase("woodcutting") || args[2].equalsIgnoreCase("thehunter")) {
-                    int total = 0;
-                    int villeUn = 0;
-                    String villeUnName = null;
-                    String villeDeuxName = null;
-                    int villeDeux = 0;
-
-                    for (Town town :  TownyUniverse.getInstance().getTowns()) {
-                        total = 0;
-                        total = MmoPlayer.getTownTalentLevel(town, args[2]);
-                        if (total > villeUn) {
-                            if (villeUn != 0) {
-                                if (villeUn > villeDeux) {
-                                    villeDeux = villeUn;
-                                    villeDeuxName = villeUnName;
-                                }
-                            }
-                            villeUn = total;
-                            villeUnName = town.getName();
-                        }
-                        else if (total < villeUn && total > villeDeux) {
-                            villeDeux = total;
-                            villeDeuxName = town.getName();
-                        }
-
-                    }
-                    sender.sendMessage("La ville avec le plus gros total de niveaux de " + args[2] +" est : " + villeUnName + " avec ce nombre de palliers : " + villeUn);
-                    sender.sendMessage("La ville avec le deuxième plus gros total de pallier est : " + villeDeuxName + " avec ce nombre de palliers : " + villeDeux);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage("§4Invalid page number");
+                    return true;
                 }
             }
-            if (args[1].equalsIgnoreCase("see")) {
-                if (args[2].equalsIgnoreCase("total")) {
-                    int total = 0;
-                    Town town = TownyUniverse.getInstance().getTown(args[3]);
-                    String villeUnName = town.getName();
-                    total = MmoPlayer.getTownTotalLevel(town);
-                    sender.sendMessage("La ville de " + villeUnName + " a un pallier total de : " + total);
+            if (townTopCache.get(args[1]) == null) {
+                if(args[1].equals("total")) {
+                	townTopCache.put(args[1], List.of(TownyUniverse.getInstance().getTowns()).stream().map(town ->
+                	TownyUniverse.getInstance().getTown(town.toArray()[0].toString())
+            			).sorted((v1, v2) ->  (MmoPlayer.getTownTotalLevel(v2)).compareTo(MmoPlayer.getTownTotalLevel(v1))).collect(Collectors.toList()));
                 }
-                if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer") || args[2].equalsIgnoreCase("woodcutting") || args[2].equalsIgnoreCase("thehunter")) {
-                    int total = 0;
-                    Town town = TownyUniverse.getInstance().getTown(args[3]);
-                    String villeUnName = town.getName();
-                    total = MmoPlayer.getTownTalentLevel(town, args[2]);
-                    sender.sendMessage("Le niveau total de " + villeUnName + "dans le métier " + args[2] + " est de : " + total);
+                else {
+                	townTopCache.put(args[1], List.of(TownyUniverse.getInstance().getTowns()).stream().map(town ->
+                	TownyUniverse.getInstance().getTown(town.toArray()[0].toString())
+            			).sorted((v1, v2) ->  (MmoPlayer.getTownTalentLevel(v2, args[1])).compareTo(MmoPlayer.getTownTalentLevel(v1, args[1]))).collect(Collectors.toList()));
                 }
+                scheduleCacheClear(args[1]);
+            }
+            List<Town> orderedTowns = townTopCache.get(args[1]);
+
+            if(args[1].equals("total")) {
+            	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
+            	for (int i = page*10; i < (orderedTowns.size() < (page+1) *10 ? orderedTowns.size() : (page+1) *10); i++) {
+                	Town town = orderedTowns.get(i);
+                	sender.sendMessage("§e" + (i+1) + ". §a" + town.getName() + " §6- §3total §9" + MmoPlayer.getTownTotalLevel(town));
+            	}
+            }
+            else {
+            	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
+            	for (int i = page*10; i < (orderedTowns.size() < (page+1) *10 ? orderedTowns.size() : (page+1) *10); i++) {
+                	Town town = orderedTowns.get(i);
+                	sender.sendMessage("§e" + (i+1) + ". §a" + town.getName() + " §6- §3level §9" + MmoPlayer.getTownTalentLevel(town, args[1]));
+            	}
             }
         }
         if (args[0].equalsIgnoreCase("nation")) {
-            if (args[1].equalsIgnoreCase("leaderboard")) {
-                if (args[2].equalsIgnoreCase("total")) {
-                    int total = 0;
-                    int nationUn = 0;
-                    String nationUnName = null;
-                    String nationDeuxName = null;
-                    int nationDeux = 0;
-
-                    for (Nation nation : TownyUniverse.getInstance().getNations()) {
-                        total = MmoPlayer.getNationTotalLevel(nation);
-                        if (total > nationUn) {
-                            if (nationUn != 0) {
-                                if (nationUn > nationDeux) {
-                                    nationDeux = nationUn;
-                                    nationDeuxName = nationUnName;
-                                }
-                            }
-                            nationUn = total;
-                            nationUnName = nation.getName();
-                        }
-                        else if (total < nationUn && total > nationDeux) {
-                            nationDeux = total;
-                            nationDeuxName = nation.getName();
-                        }
+            if ((args.length == 1) || TownyUniverse.getInstance().getNations().isEmpty()) return false;
+            if (LaBoulangerieMmo.talentsRegistry.getTalent(args[1]) == null && args[1] == "total") {
+                sender.sendMessage("§4Invalid talent.");
+            }
+            int page = 0;
+            if (args.length > 2) {
+                try {
+                    page = Integer.parseInt(args[2])-1;
+                    if (page < 0) {
+                        sender.sendMessage("§4Invalid page number");
+                        return true;
                     }
-                    sender.sendMessage("La nation avec le plus gros total de pallier est : " + nationUnName + " avec ce nombre de palliers : " + nationUn);
-                    sender.sendMessage("La nation avec le deuxième plus gros total de pallier est : " + nationDeuxName + " avec ce nombre de palliers : " + nationDeux);
-                }
-                if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer") || args[2].equalsIgnoreCase("woodcutting") || args[2].equalsIgnoreCase("thehunter")) {
-                    int total = 0;
-                    int nationUn = 0;
-                    String nationUnName = null;
-                    String nationDeuxName = null;
-                    int nationDeux = 0;
-
-                    for (Nation nation : TownyUniverse.getInstance().getNations()) {
-                        total = MmoPlayer.getNationTalentLevel(nation, args[2]);
-                        if (total > nationUn) {
-                            if (nationUn != 0) {
-                                if (nationUn > nationDeux) {
-                                    nationDeux = nationUn;
-                                }
-                            }
-                            nationUn = total;
-                            nationUnName = nation.getName();
-                        }
-                        else if (total < nationUn && total > nationDeux) {
-                            nationDeux = total;
-                            nationDeuxName = nation.getName();
-                        }
-                    }
-                    sender.sendMessage("La nation avec le plus gros total de niveaux de " + args[2] +" est : " + nationUnName + " avec ce nombre de palliers : " + nationUn);
-                    sender.sendMessage("La deuxième nation avec le plus gros total de niveaux de " + args[2] +" est : " + nationDeuxName + " avec ce nombre de palliers : " + nationDeux);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage("§4Invalid page number");
+                    return true;
                 }
             }
-            if (args[1].equalsIgnoreCase("see")) {
-                if (args[2].equalsIgnoreCase("total")) {
-                    int total = 0;
-                    Nation nation = TownyUniverse.getInstance().getNation(args[3]);
-                    String nationUnName = nation.getName();
-                    total = MmoPlayer.getNationTotalLevel(nation);
-                    sender.sendMessage("La ville de " + nationUnName + " a un pallier total de : " + total);
+            if (nationTopCache.get(args[1]) == null) {
+                if(args[1].equals("total")) {
+                	nationTopCache.put(args[1], List.of(TownyUniverse.getInstance().getNations()).stream().map(nation ->
+                	TownyUniverse.getInstance().getNation(nation.toArray()[0].toString())
+            			).sorted((v1, v2) ->  (MmoPlayer.getNationTotalLevel(v2)).compareTo(MmoPlayer.getNationTotalLevel(v1))).collect(Collectors.toList()));
                 }
-                if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer") || args[2].equalsIgnoreCase("woodcutting") || args[2].equalsIgnoreCase("thehunter")) {
-                    int total = 0;
-                    Nation nation = TownyUniverse.getInstance().getNation(args[3]);
-                    String nationUnName = nation.getName();
-                    total = MmoPlayer.getNationTalentLevel(nation, args[2]);
-                    sender.sendMessage("Le niveau total de " + nationUnName + "dans le métier " + args[2] + " est de : " + total);
+                else {
+                	nationTopCache.put(args[1], List.of(TownyUniverse.getInstance().getNations()).stream().map(nation ->
+                	TownyUniverse.getInstance().getNation(nation.toArray()[0].toString())
+            			).sorted((v1, v2) ->  (MmoPlayer.getNationTalentLevel(v2, args[1])).compareTo(MmoPlayer.getNationTalentLevel(v1, args[1]))).collect(Collectors.toList()));
                 }
+                scheduleCacheClear(args[1]);
+            }
+            List<Nation> orderedNations = nationTopCache.get(args[1]);
+
+            if(args[1].equals("total")) {
+            	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
+            	for (int i = page*10; i < (orderedNations.size() < (page+1) *10 ? orderedNations.size() : (page+1) *10); i++) {
+                	Nation nation = orderedNations.get(i);
+                	sender.sendMessage("§e" + (i+1) + ". §a" + nation.getName() + " §6- §3total §9" + MmoPlayer.getNationTotalLevel(nation));
+            	}
+            }
+            else {
+            	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
+            	for (int i = page*10; i < (orderedNations.size() < (page+1) *10 ? orderedNations.size() : (page+1) *10); i++) {
+                	Nation nation = orderedNations.get(i);
+                	sender.sendMessage("§e" + (i+1) + ". §a" + nation.getName() + " §6- §3level §9" + MmoPlayer.getNationTalentLevel(nation, args[1]));
+            	}
             }
         }
-        return false;
+
+        return true;
+    }
+    private void scheduleCacheClear(String talent) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                townTopCache.remove(talent);
+                nationTopCache.remove(talent);
+            }
+        }.runTaskLater(LaBoulangerieMmo.PLUGIN, 20*60);
     }
 }
