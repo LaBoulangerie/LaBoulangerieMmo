@@ -233,7 +233,7 @@ talents:
 talent-grinding:
     miner:
         break:
-            NETHERRACK: 0.5
+            NETHERRACK: 0.25
             STONE: 0.75
             DIORITE: 1.5
             ANDESITE: 1.5
@@ -247,11 +247,11 @@ talent-grinding:
             RED_TERRACOTTA: 1.5
             DEEPSLATE: 3
             CALCITE: 3
-            TUFF: 3
+            TUFF: 2.5
             DRIPSTONE_BLOCK: 3
             BASALT: 0.75
             END_STONE: 3
-            BLACKSTONE: 4
+            BLACKSTONE: 2.75
             COAL_ORE: 6
             COPPER_ORE: 6
             IRON_ORE: 6
@@ -262,12 +262,12 @@ talent-grinding:
             GOLD_ORE: 12
             REDSTONE_ORE: 12
             LAPIS_ORE: 12
-            OBSIDIAN: 16
+            OBSIDIAN: 10
             DIAMOND_ORE: 24
             EMERALD_ORE: 32
             ANCIENT_DEBRIS: 48
 
-            DEEPSLATE_COAL_ORE: 7
+            DEEPSLATE_COAL_ORE: 8
             DEEPSLATE_COPPER_ORE: 7
             DEEPSLATE_IRON_ORE: 7
             DEEPSLATE_GOLD_ORE: 13
@@ -296,17 +296,17 @@ talent-grinding:
             DARK_OAK_LOG: 4
             DARK_OAK_WOOD: 4
             MANGROVE_LOG: 4
-            MANGROVE_ROOTS: 4
+            MANGROVE_ROOTS: 2.5
             OAK_LOG: 5
             OAK_WOOD: 5
             BIRCH_LOG: 5
             BIRCH_WOOD: 5
             ACACIA_LOG: 5
-            RED_MUSHROOM_BLOCK: 6
-            BROWN_MUSHROOMS_BLOCK: 6
-            MUSHROOM_STEM: 6
-            WARPED_STEM: 7
-            WARPED_FUNGUS: 7
+            RED_MUSHROOM_BLOCK: 1
+            BROWN_MUSHROOM_BLOCK: 1
+            MUSHROOM_STEM: 1
+            WARPED_STEM: 2
+            WARPED_FUNGUS: 2
             WARPED_WART_BLOCK: 1
             NETHER_WART_BLOCK: 1
             VINE: 2
@@ -318,40 +318,41 @@ talent-grinding:
             NETHERITE_AXE: 200
     hunter:
         kill:
-            ZOMBIE: 1.5
-            ZOMBIE_VILLAGER: 3
-            HUSK: 4
-            SKELETON: 1.5
-            STRAY: 4
-            CREEPER: 2
-            DROWNED: 2.25
-            ENDERMAN: 0.5
-            ENDERMITE: 7
-            WITCH: 5
-            WITHER_SKELETON: 4
+            ZOMBIE: 3
+            ZOMBIE_VILLAGER: 5
+            HUSK: 7
+            SKELETON: 3
+            STRAY: 5.75
+            CREEPER: 4
+            DROWNED: 3.25
+            ENDERMAN: 7
+            ENDERMITE: 9
+            WITCH: 7
+            WITHER_SKELETON: 8
             PHANTOM: 3
             GUARDIAN: 5
             ELDER_GUARDIAN: 10
-            EVOKER: 6
-            GHAST: 5
-            HOGLIN: 3
-            MAGMA_CUBE: 1
-            PIGLIN_BRUTE: 6
-            PIGLIN: 2
-            ZOMBIFIED_PIGLIN: 4
-            RAVAGER: 8
-            SILVERFISH: 1
+            EVOKER: 2.5
+            GHAST: 6
+            HOGLIN: 4.5
+            MAGMA_CUBE: 1.5
+            PIGLIN_BRUTE: 2.75
+            PIGLIN: 4
+            ZOMBIFIED_PIGLIN: 1.5
+            RAVAGER: 13
+            SILVERFISH: 1.5
             SHULKER: 5
-            PILLAGER: 3
-            SLIME: 0.5
-            VEX: 2
+            PILLAGER: 6
+            SLIME: 1
+            VEX: 4
             VINDICATOR: 4
             ZOGLIN: 6
             ENDER_DRAGON: 150
             WITHER: 50
-            CAVE_SPIDER: 1
-            SPIDER: 1
-            BLAZE: 2
+            WARDEN: 100
+            CAVE_SPIDER: 3
+            SPIDER: 3.5
+            BLAZE: 3
         first_craft:
             IRON_SWORD: 50
             DIAMOND_SWORD: 100
@@ -373,10 +374,10 @@ talent-grinding:
             KELP: 2
             CRIMSON_FUNGUS: 4
             WARPED_FUNGUS: 4
-            SEA_PICKLE: 4
-            BROWN_MUSHROOM: 6
-            RED_MUSHROOM: 6
-            CHORUS_FLOWER: 8
+            SEA_PICKLE: 2.75
+            BROWN_MUSHROOM: 1
+            RED_MUSHROOM: 1
+            CHORUS_FLOWER: 3
         first_craft:
             IRON_HOE: 50
             DIAMOND_HOE: 100
