@@ -8,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 public class BlockusDataHolder implements Serializable {
+    private static final long serialVersionUID = 0L;
 
     private Map<String, Blockus> blockuses;
 
@@ -16,11 +17,11 @@ public class BlockusDataHolder implements Serializable {
     }
 
     public void addBlockus(Blockus blockus) {
-        blockuses.put(getId(blockus), blockus);
+        blockuses.put(blockus.getId(), blockus);
     }
 
     public void removeBlockus(Blockus blockus) {
-        blockuses.remove(getId(blockus));
+        blockuses.remove(blockus.getId());
     }
 
     public Blockus getBlockus(Block block) {
@@ -32,9 +33,6 @@ public class BlockusDataHolder implements Serializable {
     }
 
     private String getId(Location loc) {
-        return loc.getX() + ";" + loc.getY() + ";" + loc.getZ() + ";" + loc.getWorld().getUID().toString();
-    }
-    private String getId(Blockus blockus) {
-        return blockus.getX() + ";" + blockus.getY() + ";" + blockus.getZ() + ";" + blockus.getWorldId().toString();
+        return loc.getBlockX() + ";" + loc.getBlockY() + ";" + loc.getBlockZ() + ";" + loc.getWorld().getUID().toString();
     }
 }
