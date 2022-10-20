@@ -47,7 +47,7 @@ public class ExpInBottle extends AbilityExecutor {
             itemMeta.lore(Arrays.asList(Component.text("Quantité: " + pointsToSubtract + " xp")));
             item.setItemMeta(itemMeta);
             event.getItem()
-                .setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                .setAmount(event.getItem().getAmount() - 1);
 
             if (player.getInventory().firstEmpty() != -1) {
                 player.getInventory().addItem(item);
