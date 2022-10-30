@@ -13,6 +13,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class Blockus implements Serializable {
+    private static final long serialVersionUID = 0L;
 
     private UUID worldId;
     private int x, y, z;
@@ -64,5 +65,9 @@ public class Blockus implements Serializable {
 
     public UUID getWorldId() {
         return worldId;
+    }
+
+    public String getId() {
+        return x + ";" + y + ";" + z + ";" + worldId.toString();
     }
 }
