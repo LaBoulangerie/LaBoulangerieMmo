@@ -71,14 +71,14 @@ public class Stats implements TabExecutor {
                 if(args[1].equals("total")) {
                 	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
                 	for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
-                    	MmoPlayer player = orderedPlayers.get(i);
+                    	final MmoPlayer player = orderedPlayers.get(i);
                     	sender.sendMessage("§e" + (i+1) + ". §a" + player.getName() + " §6- §3total §9" + player.getPalier());
                 	}
                 }
                 else {
                 	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
                 	for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
-                    	MmoPlayer player = orderedPlayers.get(i);
+                    	final MmoPlayer player = orderedPlayers.get(i);
                     	sender.sendMessage("§e" + (i+1) + ". §a" + player.getName() + " §6- §3level §9" + player.getTalent(args[1]).getLevel());
                 	}
                 }

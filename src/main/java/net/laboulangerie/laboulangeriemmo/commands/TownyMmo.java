@@ -78,7 +78,7 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
                 }
                 scheduleCacheClear(args[1]);
             }
-            List<Town> orderedTowns = townTopCache.get(args[1]);
+            final List<Town> orderedTowns = townTopCache.get(args[1]);
 
             if(args[1].equals("total")) {
             	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
@@ -90,7 +90,7 @@ public class TownyMmo implements CommandExecutor, TabCompleter{
             else {
             	sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
             	for (int i = page*10; i < (orderedTowns.size() < (page+1) *10 ? orderedTowns.size() : (page+1) *10); i++) {
-                	Town town = orderedTowns.get(i);
+                	final Town town = orderedTowns.get(i);
                 	sender.sendMessage("§e" + (i+1) + ". §a" + town.getName() + " §6- §3level §9" + MmoPlayer.getTownTalentLevel(town, args[1]));
             	}
             }

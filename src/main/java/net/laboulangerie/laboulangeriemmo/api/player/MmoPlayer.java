@@ -155,7 +155,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
 
     public static Integer getTownTotalLevel (Town town) {
 		int townTotal = 0;
-        for (Resident resident :  town.getResidents()) {
+        for (final Resident resident :  town.getResidents()) {
             if (resident != null) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
                 MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
