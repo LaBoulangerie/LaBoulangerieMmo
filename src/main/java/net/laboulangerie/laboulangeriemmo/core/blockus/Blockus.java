@@ -13,7 +13,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class Blockus implements Serializable {
-    private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 10L;
 
     private UUID worldId;
     private int x, y, z;

@@ -8,7 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 public class BlockusDataHolder implements Serializable {
-    private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 10L;
 
     private Map<String, Blockus> blockuses;
 
