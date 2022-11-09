@@ -71,6 +71,7 @@ public class MmoListener implements Listener {
     @EventHandler
     public void onCountDownFinished(XpCountDownFinishedEvent event) {
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
+        if (player == null) return;
         XpBar.displayBar(event.getTalent(), event.getPlayer());
 
         List<TagResolver.Single> placeholders = Arrays.asList(
