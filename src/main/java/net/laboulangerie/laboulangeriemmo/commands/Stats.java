@@ -76,11 +76,12 @@ public class Stats implements TabExecutor {
                 sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] §4You don't have the permission to see other's stats.");
                 return true;
             }
-            source = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[0]));
-            if (source == null) {
+            UUID uuid = Bukkit.getPlayerUniqueId(args[0]);
+            if (uuid == null) {
                 sender.sendMessage("§4Invalid player!");
                 return true;
             }
+            source = Bukkit.getOfflinePlayer(uuid);
         }
         if (source == null && !(sender instanceof Player)) {
             sender.sendMessage("§4You must be in game to use this command!");

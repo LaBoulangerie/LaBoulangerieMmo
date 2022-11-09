@@ -1,42 +1,38 @@
 package net.laboulangerie.laboulangeriemmo.core.blockus;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 public class BlockusDataHolder implements Serializable {
+    private static final long serialVersionUID = 10L;
 
-    private Set<Blockus> blockuses;
+    private Map<String, Blockus> blockuses;
 
     public BlockusDataHolder() {
-        blockuses = new HashSet<>();
+        blockuses = new HashMap<>();
     }
 
     public void addBlockus(Blockus blockus) {
-        blockuses.add(blockus);
+        blockuses.put(blockus.getId(), blockus);
     }
 
     public void removeBlockus(Blockus blockus) {
-        blockuses.remove(blockus);
+        blockuses.remove(blockus.getId());
     }
 
     public Blockus getBlockus(Block block) {
-        Iterator<Blockus> it = blockuses.iterator();
-        while (it.hasNext()) {
-            Blockus blockus = it.next();
-            if (blockus.getX() == block.getLocation().getX()
-                    && blockus.getY() == block.getLocation().getY()
-                    && blockus.getZ() == block.getLocation().getZ()
-                    && blockus.getWorldId() == block.getLocation().getWorld().getUID())
-                return blockus;
-        }
-        return null;
+        return blockuses.get(getId(block.getLocation()));
     }
 
-    public Set<Blockus> getBlockuses() {
+    public Map<String, Blockus> getBlockuses() {
         return blockuses;
+    }
+
+    private String getId(Location loc) {
+        return loc.getBlockX() + ";" + loc.getBlockY() + ";" + loc.getBlockZ() + ";" + loc.getWorld().getUID().toString();
     }
 }
