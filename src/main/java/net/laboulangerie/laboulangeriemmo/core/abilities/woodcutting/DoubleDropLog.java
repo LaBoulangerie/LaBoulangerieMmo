@@ -2,16 +2,15 @@ package net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting;
 
 import java.util.Random;
 
+import org.bukkit.Particle;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
-import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 
 public class DoubleDropLog extends AbilityExecutor {
 
@@ -34,7 +33,6 @@ public class DoubleDropLog extends AbilityExecutor {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
         ItemStack item = new ItemStack(block.getType());
-        Player player = event.getPlayer();
 
         int max_number = 100;
         int min_number = 1;
@@ -50,9 +48,8 @@ public class DoubleDropLog extends AbilityExecutor {
             shouldDouble = true;
 
         if (shouldDouble) {
-            EffectRegistry.playEffect("default", player);
+            block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().toCenterLocation().add(0, -0.2 , 0), 5, 0.1, 0.1, 0.1);
             block.getWorld().dropItemNaturally(block.getLocation(), item);
-            player.sendMessage("§eVotre drop a été doublé.");
         }
     }
 }
