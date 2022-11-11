@@ -124,10 +124,12 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        try {
-            blockusDataManager.writeBlockuses();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (blockusDataManager != null) {
+            try {
+                blockusDataManager.writeBlockuses();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         mmoPlayerManager.savePlayersData();
         getLogger().info("Plugin Disabled");
