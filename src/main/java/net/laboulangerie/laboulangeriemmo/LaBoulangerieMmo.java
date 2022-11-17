@@ -131,7 +131,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 e.printStackTrace();
             }
         }
-        mmoPlayerManager.savePlayersData();
+        if (mmoPlayerManager != null) mmoPlayerManager.savePlayersData();
         getLogger().info("Plugin Disabled");
     }
 
