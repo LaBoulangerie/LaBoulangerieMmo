@@ -1,6 +1,12 @@
 package net.laboulangerie.laboulangeriemmo.core.blockus;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
+import org.bukkit.Bukkit;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
@@ -12,31 +18,32 @@ public class BlockusDataManager {
 
     public BlockusDataManager(String path) {
         blockusFile = new File(path);
-        File parentFile = blockusFile.getParentFile();
-        if (!parentFile.exists())
-            parentFile.mkdir();
+        File parentFolder = blockusFile.getParentFile();
+        if (!parentFolder.exists())
+            parentFolder.mkdir();
 
-        try {
-            if (!blockusFile.exists())
-                blockusFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!blockusFile.exists()) {
+            try {
+                    blockusFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                blockusDataHolder = new BlockusDataHolder();
+            }
         }
 
         try {
             blockusDataHolder = readBlockuses();
         } catch (IOException | ClassNotFoundException e) {
-            blockusDataHolder = new BlockusDataHolder();
             LaBoulangerieMmo.PLUGIN.getLogger().warning("Something went wrong while trying to restore blockuses:");
             e.printStackTrace();
-        }
-        if (blockusDataHolder == null) {
-            blockusDataHolder = new BlockusDataHolder();
+            Bukkit.getServer().getPluginManager().disablePlugin(LaBoulangerieMmo.PLUGIN);
         }
 
     }
 
     public void writeBlockuses() throws IOException {
+        Files.copy(Paths.get(blockusFile.getPath()), Paths.get(blockusFile.getPath() + ".end"), StandardCopyOption.REPLACE_EXISTING);
         BlockusOutputStream bos = new BlockusOutputStream(blockusFile);
         bos.writeBlockuses(blockusDataHolder);
         bos.close();
