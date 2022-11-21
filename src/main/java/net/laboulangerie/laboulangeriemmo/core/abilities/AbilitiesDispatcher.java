@@ -90,12 +90,13 @@ public class AbilitiesDispatcher implements Listener {
     }
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityBreed(EntityBreedEvent event) {
-        if (event.isCancelled()) return;
+        if (event.isCancelled() || event.getBreeder() == null || !(event.getBreeder() instanceof Player)) return;
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) event.getBreeder()), event, AbilityTrigger.BREED);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onItemHeld(PlayerItemHeldEvent event) {
+        if (event.isCancelled()) return;
         if (event.getPlayer().getInventory().getItem(event.getNewSlot()) == null) return;
         triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event, AbilityTrigger.HOLD_ITEM);
     }
