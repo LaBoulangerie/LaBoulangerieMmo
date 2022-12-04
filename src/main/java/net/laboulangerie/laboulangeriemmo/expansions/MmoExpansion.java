@@ -1,5 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.expansions;
 
+import java.util.List;
+
 import org.bukkit.OfflinePlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
@@ -44,13 +46,24 @@ public class MmoExpansion extends PlaceholderExpansion {
             return Integer.toString(mmoPlayer.getPalier());
         }
 
+        if (params.equalsIgnoreCase("palier_colored")) {
+            List<String> colors = LaBoulangerieMmo.PLUGIN.getConfig().getStringList("palier-coloration");
+            Integer maxPalier = 400; // TODO : make max talent lvl configurable
+            Integer palier = mmoPlayer.getPalier();
+            // This float cast in necessary, thanks java
+            float progress = ((float) palier) / maxPalier;
+
+            return String.format("<transition:" + String.join(":", colors) +
+                    ":%.2f>%d</transition>", progress, palier);
+        }
+
         String talentId = params.split("_")[0];
         Talent talent = mmoPlayer.getTalent(talentId);
-        
+
         if (params.equals("town_total_level")) {
             return Integer.toString(MmoPlayer.getTownTotalLevel(mmoPlayer.getTown()));
         }
-        
+
         if (params.equals("nation_total_level")) {
             return Integer.toString(MmoPlayer.getNationTotalLevel(mmoPlayer.getNation()));
         }
@@ -78,7 +91,6 @@ public class MmoExpansion extends PlaceholderExpansion {
         if (params.equals(talentId + "_name")) {
             return talent.getDisplayName();
         }
-        
 
         return null; // Placeholder is unknown by the Expansion
     }

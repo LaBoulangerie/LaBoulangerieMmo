@@ -76,9 +76,9 @@ talents:
                 effect: trail
                 log: true
                 tiers:
-                  - 25
-                  - 60
-                  - 95
+                    - 25
+                    - 60
+                    - 95
             exp-in-bottle:
                 display_name: Xp in bottle
                 cooldown: 0
@@ -87,9 +87,9 @@ talents:
                 effect: default
                 log: false
                 tiers:
-                  - 5
-                  - 30
-                  - 40
+                    - 5
+                    - 30
+                    - 40
             fire-bow:
                 display_name: Fire bow
                 cooldown: 15
@@ -98,9 +98,9 @@ talents:
                 effect: default
                 log: true
                 tiers:
-                  - 15
-                  - 30
-                  - 70
+                    - 15
+                    - 30
+                    - 70
             hiding:
                 display_name: Hiding
                 cooldown: 25
@@ -109,9 +109,9 @@ talents:
                 effect: default
                 log: true
                 tiers:
-                  - 50
-                  - 85
-                  - 100
+                    - 50
+                    - 85
+                    - 100
         combo_items:
             - DIAMOND_SWORD
             - IRON_SWORD
@@ -130,9 +130,9 @@ talents:
                 effect: default
                 log: false
                 tiers:
-                  - 5
-                  - 30
-                  - 70
+                    - 5
+                    - 30
+                    - 70
             better-bonemeal:
                 display_name: Better bonemeal
                 cooldown: 0
@@ -141,9 +141,9 @@ talents:
                 effect: default
                 log: true
                 tiers:
-                  - 15
-                  - 45
-                  - 100
+                    - 15
+                    - 45
+                    - 100
             animal-twins:
                 display_name: Animal twins
                 cooldown: 1
@@ -152,9 +152,9 @@ talents:
                 effect: default
                 log: false
                 tiers:
-                  - 20
-                  - 55
-                  - 80
+                    - 20
+                    - 55
+                    - 80
             tasty-bread:
                 display_name: Tasty bread
                 cooldown: 1
@@ -163,8 +163,8 @@ talents:
                 effect: default
                 log: false
                 tiers:
-                  - 10
-                  - 60
+                    - 10
+                    - 60
         combo_items:
             - DIAMOND_HOE
             - IRON_HOE
@@ -397,3 +397,10 @@ blockus-ignored-blocks:
     - WHEAT
     - POTATOES
     - BEETROOTS
+
+palier-coloration:
+    - "#5EBD3E"
+    - "#FFB900"
+    - "#F78200"
+    - "#E23838"
+    - "#973999"
