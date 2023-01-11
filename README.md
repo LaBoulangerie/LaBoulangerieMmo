@@ -7,11 +7,11 @@ You can download the plugin [here.](https://github.com/LaBoulangerie/LaBoulanger
 
 LaBoulangerieMmo is a plugin in the spirit of McMmo, it provides you with "talents" (professions) that give you access to "abilities" (skills) when you have acquired enough experience in the talent.
 
-Players don't need to choose only one talent, they can grind all of them!
+Players don't need to choose only one talent, they can grind them all!
 
 On top of that, LaBoulangerieMmo lets other plugins create new talents and abilities via its [API](#api) and server owners can also create and delete talents through the plugin's configuration file.
 
-How do you gain experience you might ask? There are a lot of ways! Depending on the talent, you can get xp by breaking blocks, killing entities, crafting or discovering a recipe. All of that can be configured!
+How do you gain experience you might ask? There are lot of ways! Depending on the talent, you can get xp by breaking blocks, killing entities, crafting or discovering a recipe. All of that can be configured!
 
 ## BetonQuest integration
 
@@ -20,28 +20,30 @@ LaBoulangerieMmo provides some new conditions and events for BetonQuest.
 All LaBoulangerieMmo related keywords are prefixed with `lbmmo_`.
 
 - Check if a player has more than a required level: `lbmmo_level <talent> <level>`
-> `lbmmo_level miner 50` verifies if the player's mining level is greater or equal to 50.
+> `lbmmo_level miner 50` verifies if the player's miner level is greater or equal to 50.
 
 - Give or take xp: `lbmmo_xp <talent> <level>`
-> `lbmmo_xp miner +50` will give to the player 50 xp in the mining talent
+> `lbmmo_xp miner +50` will give to the player 50 xp in the miner talent
 
-> `lbmmo_xp miner -50` will take from the player 50 xp in the mining talent
+> `lbmmo_xp miner -50` will take from the player 50 xp in the miner talent
 
 ## Building from sources
 
-THis project uses [Gradle](https://gradle.org/) as its build system, once you have Gradle installed you can build the project by cloning the project and then, inside the project's folder, open your terminal and type `> gradlew assemble` if your are on Windows and `$ chmod +x ./gradlew` the first time you build it on Unix-like systems and then `$ ./gradlew assemble`.
+This project uses [Gradle](https://gradle.org/) as its build system, once you have Gradle installed, follow the steps below:
+Clone the project then, go into the project'sfolderby typing `> cd LaBoulangerieMmo` next, type `> gradlew assemble` if your are on Windows.
+If you are using Linux or macOS, type the following in your terminal the first time you try to build the project `$ chmod +x ./gradlew` then, type `$ ./gradlew assemble`.
 
 The generated JARs are located in `build/libs/`, the one you should use is `LaBoulangerie-X.X.X-jar`.
 
 ## API
 
-Our API is distributed as a maven package, you can found out how to add it to your maven project [here.](https://github.com/LaBoulangerie/LaBoulangerieMmo/packages/1356101)
+Our API is distributed as a maven package, you can find out how to add it to your maven project [here.](https://github.com/LaBoulangerie/LaBoulangerieMmo/packages/1356101)
 ### Leaderboards
 
 > **/!\ This is still in a very early stage**
 
 LaBoulangerieMmo provides you with an API to create leaderboards that will be displayed on minecraft maps.
-This API takes care of all the headaches related to managing the maps, it creates the maps, deletes them stores them between restarts and provides you with a way to update them.
+This API takes care of all the headaches related to managing the maps, it creates and deletes them stores them between restarts and provides you with a way to update them.
 
 The API supports combining multiple maps together to create a single leaderboard.
 
@@ -61,7 +63,7 @@ All the pretenders will be sorted and displayed in descending order.
 - `int width` defines how many maps are combined vertically in order to display the leaderboard. (must be between 0 and 10)
 - `int height` defines how many maps are combined horizontally in order to display the leaderboard. (must be between 0 and 10)
 
-`List<Integer> mapsId` is containing the id of all the maps used in this leaderboard you will need them if you want to update or delete the leaderboard and if you want to give them to a player.
+`List<Integer> mapsId` is contains the id of all the maps used in this leaderboard, you will need them if you want to update or delete the leaderboard or if you want to give them to a player.
 
 You can do so with:
 ```java
