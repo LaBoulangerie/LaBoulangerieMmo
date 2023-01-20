@@ -104,7 +104,7 @@ talents:
             hiding:
                 display_name: Hiding
                 cooldown: 25
-                unit: SECONDS
+                unit: MINUTES
                 level: 50
                 effect: default
                 log: true
@@ -252,6 +252,7 @@ talent-grinding:
             BASALT: 0.75
             END_STONE: 3
             BLACKSTONE: 2.75
+            GILDED_BLACKSTONE: 13
             COAL_ORE: 6
             COPPER_ORE: 6
             IRON_ORE: 6
@@ -336,7 +337,7 @@ talent-grinding:
             GHAST: 6
             HOGLIN: 4.5
             MAGMA_CUBE: 1.5
-            PIGLIN_BRUTE: 2.75
+            PIGLIN_BRUTE: 5
             PIGLIN: 4
             ZOMBIFIED_PIGLIN: 1.5
             RAVAGER: 13
@@ -390,7 +391,7 @@ level-up-rewards:
 #       "level": reward # "*" means every levels, its stacked with the specific level reward 
         "*": 1.25% #If you add a %, the money given will be the percentage of the xp required to reach this level from the previous one
         "50": 30
-rewards-rounding-method: no # Round rewards defined above, accepted values no, closest, up, down
+rewards-rounding-method: "no" # Round rewards defined above, accepted values no, closest, up, down
 
 blockus-ignored-blocks:
     - CARROTS
