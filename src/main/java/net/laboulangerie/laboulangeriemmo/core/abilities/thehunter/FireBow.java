@@ -41,7 +41,7 @@ public class FireBow extends AbilityExecutor {
 
         return new KeyStreak(ComboKey.RIGHT, ComboKey.LEFT, ComboKey.LEFT).match(event.getKeyStreak())
             && hasFlameBow
-            && !FireArrow.fireArrow.stream().filter(fireArrow -> fireArrow.getShooter() == event.getPlayer()).findAny().isPresent();
+            && !FireArrow.fireArrow.stream().filter(fireArrow -> fireArrow.getShooter().getUniqueId() == event.getPlayer().getUniqueId()).findAny().isPresent();
     }
 
     @Override
