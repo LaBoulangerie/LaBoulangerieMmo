@@ -68,7 +68,7 @@ dependencies {
 }
 
 group = "net.laboulangerie"
-version = "2.2.2"
+version = "2.2.3"
 description = "LaBoulangerieMmo"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
