@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -57,7 +57,7 @@ public class FireBow extends AbilityExecutor {
         FireArrow.fireArrow.add(new FireArrow(player, abilityLevel));
     }
 
-    public static void onArrowHit(Player player, Arrow arrow, Block block, Entity entity) {
+    public static void onArrowHit(Player player, AbstractArrow arrow, Block block, Entity entity) {
         FireArrow fireArrow = null;
 
         for (FireArrow fa : FireArrow.fireArrow)

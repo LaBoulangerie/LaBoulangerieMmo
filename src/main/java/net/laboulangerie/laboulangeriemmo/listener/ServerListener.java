@@ -4,7 +4,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Arrow;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
@@ -104,13 +104,12 @@ public class ServerListener implements Listener {
         InvisiblePlayer.onDamage(event.getEntity());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onProjectileShoot(EntityShootBowEvent event) {
-        if (event.isCancelled()) return;
         if (event.getProjectile().getFireTicks() > 0) EffectRegistry.playEffect("arrow", event.getProjectile());
 
         if (event.getEntity() instanceof Player player &&
-                event.getProjectile() instanceof Arrow arrow &&
+                event.getProjectile() instanceof AbstractArrow arrow &&
                 event.getBow().hasItemMeta() &&
                 event.getBow().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))
             FireArrow.shoot(player, arrow);
@@ -119,7 +118,7 @@ public class ServerListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onProjectileHit(ProjectileHitEvent event) {
         if (event.isCancelled()) return;
-        if (event.getEntity() instanceof Arrow arrow && arrow.getShooter() instanceof Player player)
+        if (event.getEntity() instanceof AbstractArrow arrow && arrow.getShooter() instanceof Player player)
             FireBow.onArrowHit(player, arrow, event.getHitBlock(), event.getHitEntity());
     }
 }

@@ -2,7 +2,7 @@ package net.laboulangerie.laboulangeriemmo.core.particles;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;
-import org.bukkit.entity.Arrow;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
@@ -12,7 +12,7 @@ public class ArrowEffect extends Effect {
 
     public ArrowEffect(Entity arrow) {
         super(arrow);
-        if (!(arrow instanceof Arrow))
+        if (!(arrow instanceof AbstractArrow))
             throw new IllegalArgumentException("This animation can only work on arrows");
     }
 
@@ -40,7 +40,7 @@ public class ArrowEffect extends Effect {
 
         if (fireArrow == null || fireArrow.getAbilityLevel() == 1)
             world.spawnParticle(Particle.FLAME, entity.getLocation(), 0, 0, 0, 0, 8);
-        if (((Arrow) entity).isInBlock() || ((Arrow) entity).getFireTicks() == 0 || ((Arrow) entity).isDead())
+        if (((AbstractArrow) entity).isInBlock() || ((AbstractArrow) entity).getFireTicks() == 0 || ((AbstractArrow) entity).isDead())
             cancel();
     }
 

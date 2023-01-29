@@ -1,10 +1,10 @@
 package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow;
 
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Player;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import org.bukkit.entity.AbstractArrow;
+import org.bukkit.entity.Player;
 
 public class FireArrow {
 
@@ -14,9 +14,9 @@ public class FireArrow {
 
     private final int abilityLevel;
 
-    private Arrow arrow;
+    private AbstractArrow arrow;
 
-    public static void shoot(Player player, Arrow arrow) {
+    public static void shoot(Player player, AbstractArrow arrow) {
         for (FireArrow fa : fireArrow) {
             if (fa.shooter.getUniqueId().equals(player.getUniqueId())) {
                 fa.arrow = arrow;
@@ -37,8 +37,7 @@ public class FireArrow {
         return abilityLevel;
     }
 
-    public Arrow getArrow() {
+    public AbstractArrow getArrow() {
         return arrow;
     }
-
 }
