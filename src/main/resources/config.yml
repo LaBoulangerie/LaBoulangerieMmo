@@ -405,6 +405,7 @@ ageable-ignored-blocks:
     - TWISTING_VINES
     - WEEPING_VINES_PLANT
     - WEEPING_VINES
+    - SUGAR_CANE
 
 palier-coloration:
     - "#5EBD3E"
