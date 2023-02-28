@@ -5,6 +5,7 @@ import java.util.Set;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
+import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -22,15 +23,18 @@ public class GrindingListener implements Listener {
     public GrindingListener() {
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (event.isCancelled() || event.getBlock().hasMetadata("laboulangerie:placed")) return;
+        Block block = event.getBlock();
+        if (block.hasMetadata("laboulangerie:placed")) return;
 
-        if (event.getBlock().getState().getBlockData() instanceof Ageable) {
-            Ageable ageable = ((Ageable) event.getBlock().getState().getBlockData());
-            if (ageable.getAge() != ageable.getMaximumAge()) return;
+        if (block.getState().getBlockData() instanceof Ageable) {
+            Ageable ageable = ((Ageable) block.getState().getBlockData());
+            if (ageable.getAge() != ageable.getMaximumAge() &&
+                !LaBoulangerieMmo.PLUGIN.getConfig().getStringList("ageable-ignored-blocks").contains(block.getType().toString())
+            ) return;
         }
-        giveReward(event.getPlayer(), GrindingCategory.BREAK, event.getBlock().getType().toString());
+        giveReward(event.getPlayer(), GrindingCategory.BREAK, block.getType().toString());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

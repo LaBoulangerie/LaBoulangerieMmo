@@ -312,7 +312,9 @@ talent-grinding:
             NETHER_WART_BLOCK: 1
             VINE: 2
             TWISTING_VINES: 3
+            TWISTING_VINES_PLANT: 3
             WEEPING_VINES: 3
+            WEEPING_VINES_PLANT: 3
         first_craft:
             IRON_AXE: 50
             DIAMOND_AXE: 100
@@ -398,6 +400,11 @@ blockus-ignored-blocks:
     - WHEAT
     - POTATOES
     - BEETROOTS
+ageable-ignored-blocks:
+    - TWISTING_VINES_PLANT
+    - TWISTING_VINES
+    - WEEPING_VINES_PLANT
+    - WEEPING_VINES
 
 palier-coloration:
     - "#5EBD3E"
