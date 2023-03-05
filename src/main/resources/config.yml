@@ -136,7 +136,7 @@ talents:
             better-bonemeal:
                 display_name: Better bonemeal
                 cooldown: 0
-                unit: SECONDS
+                unit: MINUTES
                 level: 15
                 effect: default
                 log: true
@@ -311,10 +311,10 @@ talent-grinding:
             WARPED_WART_BLOCK: 1
             NETHER_WART_BLOCK: 1
             VINE: 2
-            TWISTING_VINES: 3
-            TWISTING_VINES_PLANT: 3
-            WEEPING_VINES: 3
-            WEEPING_VINES_PLANT: 3
+            TWISTING_VINES: 2
+            TWISTING_VINES_PLANT: 2
+            WEEPING_VINES: 2
+            WEEPING_VINES_PLANT: 2
         first_craft:
             IRON_AXE: 50
             DIAMOND_AXE: 100
