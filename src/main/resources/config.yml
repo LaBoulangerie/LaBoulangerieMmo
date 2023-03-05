@@ -135,7 +135,7 @@ talents:
                     - 70
             better-bonemeal:
                 display_name: Better bonemeal
-                cooldown: 0
+                cooldown: 15
                 unit: MINUTES
                 level: 15
                 effect: default
