@@ -1,6 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.expansions;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.bukkit.OfflinePlayer;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
