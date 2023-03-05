@@ -53,7 +53,7 @@ public class MmoExpansion extends PlaceholderExpansion {
             // This float cast in necessary, thanks java
             float progress = ((float) palier) / maxPalier;
 
-            return String.format("<transition:" + String.join(":", colors) +
+            return String.format(Locale.US, "<transition:" + String.join(":", colors) +
                     ":%.2f>%d</transition>", progress, palier);
         }
 
