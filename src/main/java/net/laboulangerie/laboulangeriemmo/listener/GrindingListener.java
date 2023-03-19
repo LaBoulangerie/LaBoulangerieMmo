@@ -16,6 +16,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 
+import io.lumine.mythic.bukkit.MythicBukkit;
+import io.lumine.mythic.core.mobs.ActiveMob;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.GrindingCategory;
 
@@ -26,13 +28,15 @@ public class GrindingListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
-        if (block.hasMetadata("laboulangerie:placed")) return;
+        if (block.hasMetadata("laboulangerie:placed"))
+            return;
 
         if (block.getState().getBlockData() instanceof Ageable) {
             Ageable ageable = ((Ageable) block.getState().getBlockData());
             if (ageable.getAge() != ageable.getMaximumAge() &&
-                !LaBoulangerieMmo.PLUGIN.getConfig().getStringList("ageable-ignored-blocks").contains(block.getType().toString())
-            ) return;
+                    !LaBoulangerieMmo.PLUGIN.getConfig().getStringList("ageable-ignored-blocks")
+                            .contains(block.getType().toString()))
+                return;
         }
         giveReward(event.getPlayer(), GrindingCategory.BREAK, block.getType().toString());
     }
@@ -42,7 +46,17 @@ public class GrindingListener implements Listener {
         if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player))
             return;
 
-        giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString());
+        String entityName = event.getEntity().getType().toString();
+
+        ActiveMob mythicMob = MythicBukkit.inst().getMobManager().getActiveMob(event.getEntity().getUniqueId())
+                .orElse(null);
+
+        if (mythicMob != null) {
+            giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, "MythicMobs-" + mythicMob.getName());
+            return;
+        }
+
+        giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, entityName);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -66,7 +80,8 @@ public class GrindingListener implements Listener {
                 .getKeys(false);
 
         keys.stream().forEach(talentName -> {
-            if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null) return;
+            if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null)
+                return;
 
             ConfigurationSection section = LaBoulangerieMmo.PLUGIN.getConfig()
                     .getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
