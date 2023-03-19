@@ -105,7 +105,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
             List<TagResolver.Single> placeholders = Arrays.asList(
                 Placeholder.parsed("ability", ability.displayName),
                 Placeholder.parsed("duration", String.valueOf(cooldownsHolder.getCooldown(ability, talentId))),
-                Placeholder.parsed("unit", ability.cooldownUnit.name()),
+                Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase()),
                 Placeholder.parsed("talent", LaBoulangerieMmo.talentsRegistry.getTalent(talentId).displayName)
             );
             Bukkit.getPlayer(uniqueId).sendMessage(
