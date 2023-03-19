@@ -111,7 +111,7 @@ public class AbilitiesDispatcher implements Listener {
             }
             talentArchetype.abilitiesArchetypes.values().stream()
             .filter(abilityArchetype -> LaBoulangerieMmo.abilitiesRegistry.getTriggerForAbility(abilityArchetype.identifier) == trigger)
-            .filter(abilityArchetype -> player.canUseAbility(abilityArchetype, talentArchetype.identifier))
+            .filter(abilityArchetype -> player.canUseAbility(abilityArchetype, talentArchetype.identifier, true))
             .forEach(abilityArchetype -> {
                 AbilityExecutor executor;
                 try {

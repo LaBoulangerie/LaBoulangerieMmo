@@ -100,6 +100,27 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
             && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 
+    public boolean canUseAbility(AbilityArchetype ability, String talentId, boolean showTimer) {
+        if (!cooldownsHolder.isCooldownElapsed(ability, talentId) && showTimer && Bukkit.getPlayer(uniqueId).isOnline()) {
+            List<TagResolver.Single> placeholders = Arrays.asList(
+                Placeholder.parsed("ability", ability.displayName),
+                Placeholder.parsed("duration", String.valueOf(cooldownsHolder.getCooldown(ability, talentId))),
+                Placeholder.parsed("unit", ability.cooldownUnit.name()),
+                Placeholder.parsed("talent", LaBoulangerieMmo.talentsRegistry.getTalent(talentId).displayName)
+            );
+            Bukkit.getPlayer(uniqueId).sendMessage(
+                MiniMessage.miniMessage().deserialize(
+                    LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.messages.ability-use-cooldown"),
+                    TagResolver.resolver(placeholders)
+                )
+            );
+            return false;
+        }
+        return cooldownsHolder.isCooldownElapsed(ability, talentId)
+            && talents.get(talentId).getLevel() >= ability.requiredLevel
+            && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
+    }
+
     public String getName() {
         return name;
     }

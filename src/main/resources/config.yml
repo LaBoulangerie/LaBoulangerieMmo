@@ -12,6 +12,7 @@ lang:
         level-up-no-reward: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> !
         xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
         combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
+        ability-use-cooldown: <gold>You must wait <gray><duration> <unit></gray> before using <aqua><ability></aqua>.
 
 #Whether or not to display a boss bar showing player's progression when gaining xp
 enable-xp-bar: true
