@@ -73,7 +73,7 @@ public class GrindingListener implements Listener {
         }
     }
 
-    private void giveReward(Player player, GrindingCategory category, String identifier) {
+    public static void giveReward(Player player, GrindingCategory category, String identifier) {
         if (player.getGameMode() == GameMode.CREATIVE)
             return;
         Set<String> keys = LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding")
