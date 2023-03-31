@@ -16,10 +16,9 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 
-import io.lumine.mythic.bukkit.MythicBukkit;
-import io.lumine.mythic.core.mobs.ActiveMob;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.GrindingCategory;
+import net.laboulangerie.laboulangeriemmo.utils.MythicMobsSupport;
 
 public class GrindingListener implements Listener {
     public GrindingListener() {
@@ -46,17 +45,15 @@ public class GrindingListener implements Listener {
         if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player))
             return;
 
-        String entityName = event.getEntity().getType().toString();
-
-        ActiveMob mythicMob = MythicBukkit.inst().getMobManager().getActiveMob(event.getEntity().getUniqueId())
-                .orElse(null);
-
-        if (mythicMob != null) {
-            giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, "MythicMobs-" + mythicMob.getName());
-            return;
+        boolean isMythicMob = false;
+        if (LaBoulangerieMmo.MYTHICMOBS_SUPPORT) {
+            System.out.println("myth");
+            try {
+                isMythicMob = MythicMobsSupport.tryToGiveMythicReward(event.getEntity(), event.getEntity().getKiller());
+            } catch (Exception e) {}
         }
 
-        giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, entityName);
+        if (!isMythicMob) giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
