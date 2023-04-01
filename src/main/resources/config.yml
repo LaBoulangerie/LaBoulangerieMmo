@@ -407,6 +407,10 @@ ageable-ignored-blocks:
     - WEEPING_VINES_PLANT
     - WEEPING_VINES
     - SUGAR_CANE
+# This will subtract the specified xp from the xp given by mobs originating from spawners
+decrease-spawner-mobs-by:
+#    "*": 5.0 # Will subtract 5 xp to every spawner mobs
+#   "SPIDER": 1.5 # This has priority over the global selector "*" 
 
 palier-coloration:
     - "#5EBD3E"

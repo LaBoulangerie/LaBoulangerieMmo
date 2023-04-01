@@ -8,12 +8,14 @@ import org.bukkit.Statistic;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.inventory.CraftItemEvent;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
@@ -21,6 +23,7 @@ import net.laboulangerie.laboulangeriemmo.api.player.GrindingCategory;
 import net.laboulangerie.laboulangeriemmo.utils.MythicMobsSupport;
 
 public class GrindingListener implements Listener {
+    private static FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
     public GrindingListener() {
     }
 
@@ -37,7 +40,7 @@ public class GrindingListener implements Listener {
                             .contains(block.getType().toString()))
                 return;
         }
-        giveReward(event.getPlayer(), GrindingCategory.BREAK, block.getType().toString());
+        giveReward(event.getPlayer(), GrindingCategory.BREAK, block.getType().toString(), false);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -47,13 +50,12 @@ public class GrindingListener implements Listener {
 
         boolean isMythicMob = false;
         if (LaBoulangerieMmo.MYTHICMOBS_SUPPORT) {
-            System.out.println("myth");
             try {
                 isMythicMob = MythicMobsSupport.tryToGiveMythicReward(event.getEntity(), event.getEntity().getKiller());
             } catch (Exception e) {}
         }
 
-        if (!isMythicMob) giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString());
+        if (!isMythicMob) giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString(), event.getEntity().getEntitySpawnReason() == SpawnReason.SPAWNER);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -63,14 +65,14 @@ public class GrindingListener implements Listener {
             return;
         Material crafted = event.getRecipe().getResult().getType();
 
-        giveReward(player, GrindingCategory.CRAFT, crafted.toString());
+        giveReward(player, GrindingCategory.CRAFT, crafted.toString(), false);
 
         if (player.getStatistic(Statistic.CRAFT_ITEM, crafted) == 0) {
-            giveReward(player, GrindingCategory.FIRST_CRAFT, crafted.toString());
+            giveReward(player, GrindingCategory.FIRST_CRAFT, crafted.toString(), false);
         }
     }
 
-    public static void giveReward(Player player, GrindingCategory category, String identifier) {
+    public static void giveReward(Player player, GrindingCategory category, String identifier, boolean isSpawnerMob) {
         if (player.getGameMode() == GameMode.CREATIVE)
             return;
         Set<String> keys = LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding")
@@ -85,9 +87,18 @@ public class GrindingListener implements Listener {
             if (section == null)
                 return;
 
-            if (section.getKeys(false).contains(identifier))
-                LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName,
-                        section.getDouble(identifier));
+            if (section.getKeys(false).contains(identifier)) {
+                double xpAmount = section.getDouble(identifier);
+                if (isSpawnerMob && category == GrindingCategory.KILL) {
+                    if (config.contains("decrease-spawner-mobs-by." + identifier)) {
+                        xpAmount -= config.getDouble("decrease-spawner-mobs-by." + identifier);
+                    } else if (config.contains("decrease-spawner-mobs-by.*")) {
+                        xpAmount -= config.getDouble("decrease-spawner-mobs-by.*");
+                    }
+                    xpAmount = xpAmount < 0 ? 0 : xpAmount;
+                }
+                LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, xpAmount);
+            }
         });
     }
 }
