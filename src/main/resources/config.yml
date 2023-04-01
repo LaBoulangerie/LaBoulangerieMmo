@@ -246,13 +246,14 @@ talent-grinding:
             ORANGE_TERRACOTTA: 1.5
             RED_TERRACOTTA: 1.5
             DEEPSLATE: 3
-            CALCITE: 3
+            CALCITE: 5
             TUFF: 2.5
             DRIPSTONE_BLOCK: 3
             BASALT: 0.75
+            SMOOTH_BASALT: 5
             END_STONE: 3
             BLACKSTONE: 2.75
-            GILDED_BLACKSTONE: 13
+            GILDED_BLACKSTONE: 15
             COAL_ORE: 6
             COPPER_ORE: 6
             IRON_ORE: 6
@@ -264,7 +265,7 @@ talent-grinding:
             REDSTONE_ORE: 12
             LAPIS_ORE: 12
             OBSIDIAN: 10
-            DIAMOND_ORE: 24
+            DIAMOND_ORE: 27
             EMERALD_ORE: 32
             ANCIENT_DEBRIS: 48
 
@@ -274,7 +275,7 @@ talent-grinding:
             DEEPSLATE_GOLD_ORE: 13
             DEEPSLATE_REDSTONE_ORE: 13
             DEEPSLATE_LAPIS_ORE: 13
-            DEEPSLATE_DIAMOND_ORE: 25
+            DEEPSLATE_DIAMOND_ORE: 24
             DEEPSLATE_EMERALD_ORE: 33
         first_craft:
             IRON_PICKAXE: 50
@@ -289,6 +290,7 @@ talent-grinding:
             BIRCH_LEAVES: 0.1
             ACACIA_LEAVES: 0.1
             AZALEA_LEAVES: 0.1
+            MANGROVE_LEAVES: 0.1
             FLOWERING_AZALEA_LEAVES: 1
             SPRUCE_LOG: 3
             SPRUCE_WOOD: 3
@@ -296,7 +298,7 @@ talent-grinding:
             JUNGLE_WOOD: 3
             DARK_OAK_LOG: 4
             DARK_OAK_WOOD: 4
-            MANGROVE_LOG: 4
+            MANGROVE_LOG: 6
             MANGROVE_ROOTS: 2.5
             OAK_LOG: 5
             OAK_WOOD: 5
@@ -328,7 +330,7 @@ talent-grinding:
             STRAY: 5.75
             CREEPER: 4
             DROWNED: 3.25
-            ENDERMAN: 7
+            ENDERMAN: 0.5
             ENDERMITE: 9
             WITCH: 7
             WITHER_SKELETON: 8
@@ -353,7 +355,7 @@ talent-grinding:
             ENDER_DRAGON: 150
             WITHER: 50
             WARDEN: 100
-            CAVE_SPIDER: 3
+            CAVE_SPIDER: 4
             SPIDER: 3.5
             BLAZE: 3
         first_craft:
@@ -362,13 +364,13 @@ talent-grinding:
             NETHERITE_SWORD: 200
     farmer:
         break:
-            WHEAT: 2.5
-            BEETROOT_SEEDS: 2.5
-            POTATOES: 2.5
-            CARROTS: 2.5
-            NETHER_WART: 2.5
-            SWEET_BERRIES: 2.5
-            COCOA_BEANS: 2.5
+            WHEAT: 4
+            BEETROOT_SEEDS: 4
+            POTATOES: 4
+            CARROTS: 4
+            NETHER_WART: 4
+            SWEET_BERRIES: 4
+            COCOA_BEANS: 4
             MELON: 3
             PUMPKIN: 3
             BAMBOO: 2
@@ -390,8 +392,8 @@ talent-grinding:
 #Define money rewards when a player levels up in one talent
 level-up-rewards:
     miner:
-#       "level": reward # "*" means every levels, its stacked with the specific level reward 
-        "*": 1.25% #If you add a %, the money given will be the percentage of the xp required to reach this level from the previous one
+#       "level": reward # "*" means every levels, its stacked with the specific level reward
+        "*": 1.0% #If you add a %, the money given will be the percentage of the xp you have accumulated over time
         "50": 30
 rewards-rounding-method: "no" # Round rewards defined above, accepted values no, closest, up, down
 
