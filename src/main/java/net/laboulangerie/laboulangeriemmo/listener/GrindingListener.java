@@ -27,7 +27,6 @@ public class GrindingListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
         if (block.hasMetadata("laboulangerie:placed")) return;
-
         if (block.getState().getBlockData() instanceof Ageable) {
             Ageable ageable = ((Ageable) block.getState().getBlockData());
             if (ageable.getAge() != ageable.getMaximumAge() &&
@@ -64,18 +63,16 @@ public class GrindingListener implements Listener {
             return;
         Set<String> keys = LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding")
                 .getKeys(false);
-
         keys.stream().forEach(talentName -> {
             if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null) return;
-
             ConfigurationSection section = LaBoulangerieMmo.PLUGIN.getConfig()
                     .getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
             if (section == null)
                 return;
-
-            if (section.getKeys(false).contains(identifier))
+            if (section.getKeys(false).contains(identifier)) {
                 LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName,
                         section.getDouble(identifier));
+            }
         });
     }
 }

@@ -50,7 +50,10 @@ public class XpBoostObj {
                 this.showAlreadyBossBar = true;
             } else {
                 updateTitle();
-                float progress = this.time / totalTime;
+
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
+                float progress = Float.parseFloat(df.format((float) this.time / totalTime).replace(",", "."));
                 this.bossBar.progress(progress);
             }
             instance.time--;
