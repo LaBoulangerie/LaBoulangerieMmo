@@ -146,7 +146,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 new GrindingListener(),
                 new AbilitiesDispatcher(),
                 new MmoListener(),
-                //new BlockusListener(),
+                new BlockusListener(),
                 new XpBoostListener(),
                 LeaderBoardManager.getInstance(),
                 new ComboDispatcher()).forEach(l -> getServer().getPluginManager().registerEvents(l, this));
