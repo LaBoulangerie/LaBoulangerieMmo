@@ -1,26 +1,28 @@
 package net.laboulangerie.laboulangeriemmo.api.xpboost;
 
+import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.KeyedBossBar;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class XpBoostObj {
 
-
     private final UUID uid;
     private boolean showAlreadyBossBar = false;
-    private final KeyedBossBar bossBar;
+    private final BossBar bossBar;
     public MmoPlayer author;
     public TalentArchetype talent;
     public double boost;
@@ -37,49 +39,60 @@ public class XpBoostObj {
         int totalTime = this.time;
         final XpBoostObj instance = this;
         this.boosBarKey = new NamespacedKey("laboulangerie_xpboost", this.uid.toString());
-        this.bossBar = Bukkit.createBossBar(boosBarKey, updateTitle(), BarColor.GREEN, BarStyle.SOLID);
-        this.bossBar.setProgress(1.0D);
+        this.bossBar = BossBar.bossBar(updateTitle(), 1, BossBar.Color.GREEN, BossBar.Overlay.PROGRESS);
         idSchedule = Bukkit.getScheduler().scheduleSyncRepeatingTask(LaBoulangerieMmo.PLUGIN, () -> {
-            if(instance.time <= 0) {
+            if (instance.time <= 0) {
                 stopBoost();
             }
-            if(!this.showAlreadyBossBar) {
-                for(Player p : Bukkit.getOnlinePlayers())
-                    this.bossBar.addPlayer(p);
+            if (!this.showAlreadyBossBar) {
+                for (Player p : Bukkit.getOnlinePlayers())
+                    p.showBossBar(this.bossBar);
                 this.showAlreadyBossBar = true;
-            }else{
+            } else {
                 updateTitle();
-                double progress = (double) this.time / totalTime;
-                this.bossBar.setProgress(progress);
+                float progress = this.time / totalTime;
+                this.bossBar.progress(progress);
             }
             instance.time--;
         }, 20, 20L);
     }
 
-    public void stopBoost(){
-        this.bossBar.removeAll();
+    public void stopBoost() {
+        for (Player p : Bukkit.getOnlinePlayers())
+            p.hideBossBar(this.bossBar);
         Bukkit.removeBossBar(boosBarKey);
         Bukkit.getScheduler().cancelTask(idSchedule);
         LaBoulangerieMmo.PLUGIN.getXpBoostManager().expire(this.uid);
     }
 
-    public String updateTitle(){
+    public Component updateTitle() {
         int hours = this.time / 3600;
         int minutes = (this.time % 3600) / 60;
         int seconds = this.time % 60;
 
         String timeString = "err";
-        if(hours > 0)
+        if (hours > 0)
             timeString = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        else if(minutes > 0)
+        else if (minutes > 0)
             timeString = String.format("%02d:%02d", minutes, seconds);
-        else if(seconds > 0)
+        else if (seconds > 0)
             timeString = String.format("00:%02d", seconds);
 
         DecimalFormat df = new DecimalFormat("###.#");
-        String newTitle = "XP Boost x"+df.format(this.getBoost())+" - "+talent.displayName+" - "+this.author.getName()+" - Temps restant: "+timeString;
-        if(this.bossBar != null)
-            this.bossBar.setTitle(newTitle);
+
+        FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+
+        List<TagResolver.Single> placeholders = Arrays.asList(
+                Placeholder.parsed("boost", df.format(this.getBoost())),
+                Placeholder.parsed("talent", talent.displayName),
+                Placeholder.parsed("author", this.author.getName()),
+                Placeholder.parsed("time", timeString));
+
+        Component newTitle = MiniMessage.miniMessage().deserialize(config.getString("lang.xp_boost.bar_title"),
+                TagResolver.resolver(placeholders));
+
+        if (this.bossBar != null)
+            this.bossBar.name(newTitle);
         return newTitle;
     }
 
@@ -107,7 +120,7 @@ public class XpBoostObj {
         return idSchedule;
     }
 
-    public KeyedBossBar getBossBar() {
+    public BossBar getBossBar() {
         return bossBar;
     }
 

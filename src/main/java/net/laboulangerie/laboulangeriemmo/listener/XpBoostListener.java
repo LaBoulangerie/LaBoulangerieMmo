@@ -1,11 +1,9 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
 import net.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -28,13 +26,13 @@ public class XpBoostListener implements Listener {
     @EventHandler
     public static void onPlayerJoinEvent(PlayerJoinEvent event){
         for(XpBoostObj xpBoostObj : LaBoulangerieMmo.PLUGIN.getXpBoostManager().getList())
-            xpBoostObj.getBossBar().addPlayer(event.getPlayer());
+            event.getPlayer().showBossBar(xpBoostObj.getBossBar());
     }
 
     @EventHandler
     public static void onPlayerQuitEvent(PlayerQuitEvent event){
         for(XpBoostObj xpBoostObj : LaBoulangerieMmo.PLUGIN.getXpBoostManager().getList())
-            xpBoostObj.getBossBar().removePlayer(event.getPlayer());
+            event.getPlayer().hideBossBar(xpBoostObj.getBossBar());
     }
 
 

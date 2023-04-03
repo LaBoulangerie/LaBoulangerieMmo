@@ -1,10 +1,8 @@
 package net.laboulangerie.laboulangeriemmo.core;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
 import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
 import org.bukkit.Bukkit;
-import org.bukkit.boss.BossBar;
 import org.bukkit.boss.KeyedBossBar;
 import org.jetbrains.annotations.NotNull;
 
@@ -48,7 +46,7 @@ public class XpBoostManager {
     }
 
     public void expire(UUID uid) {
-        Iterator itr = getList().iterator();
+        Iterator<XpBoostObj> itr = getList().iterator();
         while (itr.hasNext()) {
             XpBoostObj xpBoostObj = (XpBoostObj) itr.next();
             if (xpBoostObj.getUid().equals(uid))

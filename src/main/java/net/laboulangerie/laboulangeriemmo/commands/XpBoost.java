@@ -3,13 +3,12 @@ package net.laboulangerie.laboulangeriemmo.commands;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
-import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerManager;
-import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
 import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
-import net.laboulangerie.laboulangeriemmo.core.XpBoostManager;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -30,6 +29,8 @@ public class XpBoost implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+        
         if (args.length == 5){
             if(args[0].equalsIgnoreCase("add")){
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[1]);
@@ -41,15 +42,25 @@ public class XpBoost implements CommandExecutor, TabCompleter {
                     sender.sendMessage("§4Time argument is not numeric");
                     return true;
                 }
-                double boost = Double.parseDouble(args[2]);
+                Double boost = Double.parseDouble(args[2]);
                 String identifier = args[3];
                 int time = Integer.parseInt(args[4]);
                 MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
                 TalentArchetype talentTarget = LaBoulangerieMmo.talentsRegistry.getTalent(identifier);
                 LaBoulangerieMmo.PLUGIN.getXpBoostManager().add(new XpBoostObj(mmoPlayer, talentTarget, boost, time));
+
+                List<TagResolver.Single> placeholders = Arrays.asList(
+                    Placeholder.parsed("boost", boost.toString()),
+                    Placeholder.parsed("talent", talentTarget.displayName),
+                    Placeholder.parsed("author", offlinePlayer.getName())
+                );
+
+                Component prefix = MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"));
+                Component notification =  MiniMessage.miniMessage().deserialize(config.getString("lang.xp_boost.notif"),
+                    TagResolver.resolver(placeholders)); 
+
                 for(Player p : Bukkit.getOnlinePlayers())
-                    p.sendMessage(MiniMessage.miniMessage().deserialize(LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.prefix"))
-                                    .append(MiniMessage.miniMessage().deserialize( "<#F9C784>"+offlinePlayer.getName()+" vient d'activer un boost x"+boost+" pour le métier "+talentTarget.displayName+" !")));
+                    p.sendMessage(prefix.append(notification));
             }
             return true;
         }

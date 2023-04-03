@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import java.awt.Color;
+
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;
@@ -44,7 +46,7 @@ public class LeaderBoardRenderer extends MapRenderer implements GsonSerializable
         done = true;
         for (int x = 0; x < 128; ++x) //clear the canvas
             for (int y = 0; y < 128; ++y)
-                canvas.setPixel(x, y, (byte) 0);
+                canvas.setPixelColor(x, y, Color.BLACK);
     
         HashMap<String, Double> sortedElmts = elements.entrySet().stream() // Sort by value
             .sorted(Entry.comparingByValue((a, b) -> Double.compare(b, a)))

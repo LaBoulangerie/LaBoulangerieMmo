@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import net.laboulangerie.laboulangeriemmo.commands.*;
 import net.laboulangerie.laboulangeriemmo.core.XpBoostManager;
 import net.laboulangerie.laboulangeriemmo.listener.*;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
