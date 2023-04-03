@@ -28,8 +28,6 @@ import java.util.List;
 
 public class XpBoost implements CommandExecutor, TabCompleter {
 
-    private FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
-
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 5){
@@ -50,7 +48,7 @@ public class XpBoost implements CommandExecutor, TabCompleter {
                 TalentArchetype talentTarget = LaBoulangerieMmo.talentsRegistry.getTalent(identifier);
                 LaBoulangerieMmo.PLUGIN.getXpBoostManager().add(new XpBoostObj(mmoPlayer, talentTarget, boost, time));
                 for(Player p : Bukkit.getOnlinePlayers())
-                    p.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
+                    p.sendMessage(MiniMessage.miniMessage().deserialize(LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.prefix"))
                                     .append(MiniMessage.miniMessage().deserialize( "<#F9C784>"+offlinePlayer.getName()+" vient d'activer un boost x"+boost+" pour le métier "+talentTarget.displayName+" !")));
             }
             return true;
