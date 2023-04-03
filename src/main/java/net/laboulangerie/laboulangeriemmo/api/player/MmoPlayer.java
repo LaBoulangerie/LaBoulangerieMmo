@@ -112,32 +112,30 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         return () -> talents.values().stream();
     }
 
-    public void incrementXp(String talentId, double amount) {
-        incrementXp(talentId, amount, false);
-    }
 
-    public void incrementXp(String talentId, double amount, boolean isBoost) {
+    public void incrementXp(String talentId, double amount) {
         if (getTalent(talentId) == null) talents.put(talentId, new Talent(talentId));
 
         if (getTalent(talentId).getLevel() >= 100) {
             return;
         }
         PlayerEarnsXpEvent playerEarnsXpEvent = new PlayerEarnsXpEvent(amount, talentId, this);
-        if(!isBoost) Bukkit.getPluginManager().callEvent(playerEarnsXpEvent);
-        if(!playerEarnsXpEvent.isCancelled() || isBoost) {
-            int oldLevel = getTalent(talentId).getLevel();
+        Bukkit.getPluginManager().callEvent(playerEarnsXpEvent);
 
-            xpCountdown.startCountDown(talentId, amount);
-            getTalent(talentId).incrementXp(amount);
-            int newLevel = getTalent(talentId).getLevel();
-            if (oldLevel < newLevel) {
-                Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
-                /*
-                 * if (getPalier(this) == ???) {
-                 * do some stuff
-                 * }
-                 */
-            }
+        amount = playerEarnsXpEvent.getAmount();
+
+        int oldLevel = getTalent(talentId).getLevel();
+
+        xpCountdown.startCountDown(talentId, amount);
+        getTalent(talentId).incrementXp(amount);
+        int newLevel = getTalent(talentId).getLevel();
+        if (oldLevel < newLevel) {
+            Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
+            /*
+             * if (getPalier(this) == ???) {
+             * do some stuff
+             * }
+             */
         }
     }
     public boolean hasEnabledCombo() {

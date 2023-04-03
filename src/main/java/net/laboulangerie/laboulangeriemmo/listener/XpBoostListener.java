@@ -17,9 +17,8 @@ public class XpBoostListener implements Listener {
         //Get Boost Current
         XpBoostObj xpBoostObjTarget = LaBoulangerieMmo.PLUGIN.getXpBoostManager().getBoost(event.getTalentName()); //Get boost higher in list (Where Talent)
         if(xpBoostObjTarget != null){
-            event.setCancelled(true);
             double amountCalc = event.getAmount() * xpBoostObjTarget.getBoost();
-            event.getPlayer().incrementXp(xpBoostObjTarget.getTalent().identifier, amountCalc, true);
+            event.setAmount(amountCalc);
         }
     }
 
