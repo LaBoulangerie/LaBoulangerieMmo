@@ -186,9 +186,9 @@ talents:
                 effect: default
                 log: false
                 tiers:
-                    - 5
-                    - 40
-                    - 75
+                  - 5
+                  - 40
+                  - 75
             better-apple-drop:
                 display_name: Better apple drop
                 cooldown: 0
@@ -197,9 +197,9 @@ talents:
                 effect: default
                 log: false
                 tiers:
-                    - 5
-                    - 40
-                    - 75
+                  - 5
+                  - 40
+                  - 75
             timber:
                 display_name: Timber!!!
                 cooldown: 5
@@ -208,9 +208,9 @@ talents:
                 effect: default
                 log: true
                 tiers:
-                    - 35
-                    - 65
-                    - 95
+                  - 35
+                  - 65
+                  - 95
             strip:
                 display_name: Strip
                 cooldown: 10
@@ -391,10 +391,11 @@ talent-grinding:
             DIAMOND_HOE: 100
             NETHERITE_HOE: 200
 
+
 #Define money rewards when a player levels up in one talent
 level-up-rewards:
     miner:
-        #       "level": reward # "*" means every levels, its stacked with the specific level reward
+#       "level": reward # "*" means every levels, its stacked with the specific level reward
         "*": 1.0% #If you add a %, the money given will be the percentage of the xp you have accumulated over time
         "50": 30
 rewards-rounding-method: "no" # Round rewards defined above, accepted values no, closest, up, down
