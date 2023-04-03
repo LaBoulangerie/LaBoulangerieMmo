@@ -22,9 +22,11 @@ public class BlockusDataManager {
         if (!parentFolder.exists())
             parentFolder.mkdir();
 
+
+
         if (!blockusFile.exists()) {
             try {
-                    blockusFile.createNewFile();
+                blockusFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {

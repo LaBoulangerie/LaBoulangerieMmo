@@ -2,10 +2,14 @@ name: LaBoulangerieMmo
 version: 2.2.3
 main: net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
 api-version: 1.19
-authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco, BlackoutBurst]
+authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco, BlackoutBurst, SunshineDev]
 depend: [ProtocolLib, Vault]
 softdepend: [PlaceholderAPI, Towny, BetonQuest, WorldGuard]
 commands:
+    xpboost:
+        permission: laboulangeriemmo.xpboost
+        description: Boost xp talent
+        usage: /xpboost <action> <author> <boost> <talent> <time>
     stats:
         permission: laboulangeriemmo.stats
         description: See your level and other information
@@ -20,6 +24,8 @@ commands:
         usage: /mmo ?[on|off|toggle]
     townymmo:
 permissions:
+    laboulangeriemmo.xpboost:
+        default: op
     laboulangeriemmo.stats:
         default: true
     laboulangeriemmo.combo:
