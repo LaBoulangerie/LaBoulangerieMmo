@@ -111,18 +111,4 @@ public class XpBoostObj {
         return bossBar;
     }
 
-    @Override
-    public String toString() {
-        return "XpBoostObj{" +
-                "uid=" + uid +
-                ", showAlreadyBossBar=" + showAlreadyBossBar +
-                ", bossBar=" + bossBar +
-                ", author=" + author +
-                ", talent=" + talent +
-                ", boost=" + boost +
-                ", time=" + time +
-                ", idSchedule=" + idSchedule +
-                ", boosBarKey=" + boosBarKey +
-                '}';
-    }
 }
