@@ -89,7 +89,7 @@ public class MmoListener implements Listener {
 
         if (xpBoost != null) {
             TagResolver.Single boostPlaceholder = Placeholder.parsed("boost", xpBoost.getFormattedBoost());
-            Component boostMessage = MiniMessage.miniMessage().deserialize(config.getString("lang.messages.xp_boost"), boostPlaceholder);
+            Component boostMessage = MiniMessage.miniMessage().deserialize(config.getString("lang.messages.xp_up_boost"), boostPlaceholder);
             message = message.append(boostMessage);
         }
 
