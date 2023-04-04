@@ -81,12 +81,10 @@ public class XpBoostObj {
         else if (seconds > 0)
             timeString = String.format("00:%02d", seconds);
 
-        DecimalFormat df = new DecimalFormat("###.#");
-
         FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
         List<TagResolver.Single> placeholders = Arrays.asList(
-                Placeholder.parsed("boost", df.format(this.getBoost())),
+                Placeholder.parsed("boost", this.getFormattedBoost()),
                 Placeholder.parsed("talent", talent.displayName),
                 Placeholder.parsed("author", this.author.getName()),
                 Placeholder.parsed("time", timeString));
@@ -109,6 +107,11 @@ public class XpBoostObj {
 
     public double getBoost() {
         return boost;
+    }
+
+    public String getFormattedBoost() {
+        DecimalFormat df = new DecimalFormat("###.#");
+        return df.format(this.getBoost());
     }
 
     public double getTime() {

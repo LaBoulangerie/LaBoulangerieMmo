@@ -1,6 +1,5 @@
 package net.laboulangerie.laboulangeriemmo.events;
 
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
