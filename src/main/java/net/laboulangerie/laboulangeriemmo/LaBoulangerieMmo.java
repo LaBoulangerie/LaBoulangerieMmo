@@ -90,7 +90,6 @@ public class LaBoulangerieMmo extends JavaPlugin {
         getCommand("stats").setExecutor(new Stats());
         getCommand("mmo").setExecutor(new MmoCommand());
         getCommand("combo").setExecutor(new Combo());
-        getCommand("xpboost").setExecutor(new XpBoost());
 
         EffectRegistry.registerParticlesEffects();
 

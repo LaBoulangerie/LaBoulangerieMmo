@@ -6,10 +6,6 @@ authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco, BlackoutBurst, Sunshine
 depend: [ProtocolLib, Vault]
 softdepend: [PlaceholderAPI, Towny, BetonQuest, WorldGuard]
 commands:
-    xpboost:
-        permission: laboulangeriemmo.xpboost
-        description: Boost xp talent
-        usage: /xpboost <action> <author> <boost> <talent> <time>
     stats:
         permission: laboulangeriemmo.stats
         description: See your level and other information
@@ -17,7 +13,7 @@ commands:
     mmo:
         permission: laboulangeriemmo.mmo
         description: Admin command
-        usage: /mmo [xp|reload|blockus] <player>|[isBlockus|mark|unmark] [see|add|subtract] <talent> ?[amount]
+        usage: /mmo [xp|reload|blockus|xpboost] <player>|[isBlockus|mark|unmark] [see|add|subtract] <talent> ?[amount]
     combo:
         permission: laboulangeriemmo.combo
         description: Toggle on/off the combo system
