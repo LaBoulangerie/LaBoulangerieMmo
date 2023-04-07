@@ -24,12 +24,13 @@ public class BlockusDataManager {
 
         if (!blockusFile.exists()) {
             try {
-                    blockusFile.createNewFile();
+                blockusFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 blockusDataHolder = new BlockusDataHolder();
             }
+            return;
         }
 
         try {
