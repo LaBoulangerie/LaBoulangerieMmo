@@ -20,8 +20,6 @@ commands:
         usage: /mmo ?[on|off|toggle]
     townymmo:
 permissions:
-    laboulangeriemmo.xpboost:
-        default: op
     laboulangeriemmo.stats:
         default: true
     laboulangeriemmo.combo:

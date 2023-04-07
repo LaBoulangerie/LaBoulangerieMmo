@@ -99,7 +99,6 @@ public class MmoListener implements Listener {
     private double processMoneyAmount(String rawAmount, double levelXp) {
         if (rawAmount == null) return 0;
 
-
         if (rawAmount.endsWith("%")) {
             double percentage = 0;
             try {

@@ -11,7 +11,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class XpBoostListener implements Listener {
 
-
     @EventHandler
     public static void onPlayerChangeXP(PlayerEarnsXpEvent event){
         //Get Boost Current
@@ -33,6 +32,4 @@ public class XpBoostListener implements Listener {
         for(XpBoostObj xpBoostObj : LaBoulangerieMmo.PLUGIN.getXpBoostManager().getList())
             event.getPlayer().hideBossBar(xpBoostObj.getBossBar());
     }
-
-
 }

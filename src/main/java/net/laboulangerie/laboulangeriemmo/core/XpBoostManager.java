@@ -15,7 +15,7 @@ public class XpBoostManager {
 
     public List<XpBoostObj> list = new ArrayList<XpBoostObj>();
 
-    public void init(){
+    public void init() {
         for (@NotNull Iterator<KeyedBossBar> it = Bukkit.getBossBars(); it.hasNext(); ) {
             KeyedBossBar bossBar = it.next();
             if(bossBar.getKey().getNamespace().equalsIgnoreCase("laboulangerie_xpboost")) {
@@ -23,8 +23,8 @@ public class XpBoostManager {
                 Bukkit.removeBossBar(bossBar.getKey());
             }
         }
-
     }
+
     public void add(XpBoostObj xpBoostObj) {
         list.add(xpBoostObj);
     }

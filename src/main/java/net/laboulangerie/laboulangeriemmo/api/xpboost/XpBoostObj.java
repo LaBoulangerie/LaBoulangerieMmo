@@ -21,14 +21,14 @@ import java.util.UUID;
 public class XpBoostObj {
 
     private final UUID uid;
-    private boolean showAlreadyBossBar = false;
+    private boolean alreadyShownBossBar = false;
     private final BossBar bossBar;
     public MmoPlayer author;
     public TalentArchetype talent;
     public double boost;
     public int time;
     public int idSchedule = -1;
-    public NamespacedKey boosBarKey;
+    public NamespacedKey bossBarKey;
 
     public XpBoostObj(MmoPlayer author, TalentArchetype talent, double boost, int time) {
         this.uid = UUID.randomUUID();
@@ -38,16 +38,16 @@ public class XpBoostObj {
         this.time = time;
         int totalTime = this.time;
         final XpBoostObj instance = this;
-        this.boosBarKey = new NamespacedKey("laboulangerie_xpboost", this.uid.toString());
+        this.bossBarKey = new NamespacedKey("laboulangerie_xpboost", this.uid.toString());
         this.bossBar = BossBar.bossBar(updateTitle(), 1, BossBar.Color.GREEN, BossBar.Overlay.PROGRESS);
         idSchedule = Bukkit.getScheduler().scheduleSyncRepeatingTask(LaBoulangerieMmo.PLUGIN, () -> {
             if (instance.time <= 0) {
                 stopBoost();
             }
-            if (!this.showAlreadyBossBar) {
+            if (!this.alreadyShownBossBar) {
                 for (Player p : Bukkit.getOnlinePlayers())
                     p.showBossBar(this.bossBar);
-                this.showAlreadyBossBar = true;
+                this.alreadyShownBossBar = true;
             } else {
                 updateTitle();
 
@@ -63,7 +63,7 @@ public class XpBoostObj {
     public void stopBoost() {
         for (Player p : Bukkit.getOnlinePlayers())
             p.hideBossBar(this.bossBar);
-        Bukkit.removeBossBar(boosBarKey);
+        Bukkit.removeBossBar(bossBarKey);
         Bukkit.getScheduler().cancelTask(idSchedule);
         LaBoulangerieMmo.PLUGIN.getXpBoostManager().expire(this.uid);
     }
