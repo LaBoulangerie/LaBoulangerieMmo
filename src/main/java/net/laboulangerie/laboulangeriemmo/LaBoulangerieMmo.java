@@ -8,7 +8,6 @@ import java.util.Locale;
 import java.util.logging.Level;
 
 import net.laboulangerie.laboulangeriemmo.commands.*;
-import net.laboulangerie.laboulangeriemmo.core.XpBoostManager;
 import net.laboulangerie.laboulangeriemmo.listener.*;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +17,7 @@ import net.laboulangerie.laboulangeriemmo.api.ability.AbilitiesRegistry;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerListener;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerManager;
 import net.laboulangerie.laboulangeriemmo.api.talent.TalentsRegistry;
+import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostManager;
 import net.laboulangerie.laboulangeriemmo.betonquest.LevelCondition;
 import net.laboulangerie.laboulangeriemmo.betonquest.XpEvent;
 import net.laboulangerie.laboulangeriemmo.core.abilities.AbilitiesDispatcher;
@@ -81,7 +81,6 @@ public class LaBoulangerieMmo extends JavaPlugin {
         blockusDataManager = new BlockusDataManager(getDataFolder().getPath() + "/blockus/blockus.dat");
         mmoPlayerManager = new MmoPlayerManager();
         xpBoostManager = new XpBoostManager();
-        xpBoostManager.init();
 
         BlockusRestoration blockusRestoration = new BlockusRestoration();
         blockusRestoration.runTaskLater(this, 20);

@@ -9,7 +9,6 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
 import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -28,7 +27,6 @@ public class XpBoostObj {
     public double boost;
     public int time;
     public int idSchedule = -1;
-    public NamespacedKey bossBarKey;
 
     public XpBoostObj(MmoPlayer author, TalentArchetype talent, double boost, int time) {
         this.uid = UUID.randomUUID();
@@ -38,7 +36,6 @@ public class XpBoostObj {
         this.time = time;
         int totalTime = this.time;
         final XpBoostObj instance = this;
-        this.bossBarKey = new NamespacedKey("laboulangerie_xpboost", this.uid.toString());
         this.bossBar = BossBar.bossBar(updateTitle(), 1, BossBar.Color.GREEN, BossBar.Overlay.PROGRESS);
         idSchedule = Bukkit.getScheduler().scheduleSyncRepeatingTask(LaBoulangerieMmo.PLUGIN, () -> {
             if (instance.time <= 0) {
@@ -63,7 +60,6 @@ public class XpBoostObj {
     public void stopBoost() {
         for (Player p : Bukkit.getOnlinePlayers())
             p.hideBossBar(this.bossBar);
-        Bukkit.removeBossBar(bossBarKey);
         Bukkit.getScheduler().cancelTask(idSchedule);
         LaBoulangerieMmo.PLUGIN.getXpBoostManager().expire(this.uid);
     }
