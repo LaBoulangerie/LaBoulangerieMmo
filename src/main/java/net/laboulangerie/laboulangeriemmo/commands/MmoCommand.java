@@ -42,26 +42,30 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
         FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
-        if(args[0].equalsIgnoreCase("xpboost") && args.length >= 5) {
-            if(args[1].equalsIgnoreCase("add")){
+        if(args[0].equalsIgnoreCase("xpboost") && args.length >= 6) {
+            if(args[1].equalsIgnoreCase("add")) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[2]);
+
                 if(!(NumberUtils.isParsable(args[3]))) {
                     sender.sendMessage("§4Boost argument is not numeric");
                     return true;
                 }
+
                 if(!(NumberUtils.isParsable(args[5]))) {
                     sender.sendMessage("§4Time argument is not numeric");
                     return true;
                 }
+
                 Double boost = Double.parseDouble(args[3]);
                 String identifier = args[4];
                 int time = Integer.parseInt(args[5]);
                 MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
                 TalentArchetype talentTarget = LaBoulangerieMmo.talentsRegistry.getTalent(identifier);
-                LaBoulangerieMmo.PLUGIN.getXpBoostManager().add(new XpBoostObj(mmoPlayer, talentTarget, boost, time));
+                XpBoostObj xpBoostObj = new XpBoostObj(mmoPlayer, talentTarget, boost, time);
+                LaBoulangerieMmo.PLUGIN.getXpBoostManager().add(xpBoostObj);
 
                 List<TagResolver.Single> placeholders = Arrays.asList(
-                        Placeholder.parsed("boost", boost.toString()),
+                        Placeholder.parsed("boost", xpBoostObj.getFormattedBoost()),
                         Placeholder.parsed("talent", talentTarget.displayName),
                         Placeholder.parsed("author", offlinePlayer.getName())
                 );
@@ -70,8 +74,9 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 Component notification =  MiniMessage.miniMessage().deserialize(config.getString("lang.xp_boost.notif"),
                         TagResolver.resolver(placeholders));
 
-                for(Player p : Bukkit.getOnlinePlayers())
+                for(Player p : Bukkit.getOnlinePlayers()) {
                     p.sendMessage(prefix.append(notification));
+                }
             }
             return true;
         }
