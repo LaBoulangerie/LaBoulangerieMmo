@@ -14,8 +14,8 @@ lang:
         xp_up_boost: "<bold><aqua> BOOST x<boost></aqua></bold>"
         combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
     xp_boost:
-        bar_title: "XP Boost x<boost> - <talent> - <author> - <time>"
-        notif: "<author> vient d'activer un boost x<boost> pour le métier <talent> !"
+        bar_title: "<aqua><bold>XP Boost x<boost></bold> <yellow>-</yellow> <talent> <yellow>-</yellow> <author> <yellow>-</yellow> <time></aqua>"
+        notif: "<yellow><aqua><author></aqua> vient d'activer un boost <aqua><bold>x<boost></bold></aqua> pour le métier <aqua><talent></aqua> !"
 
 #Whether or not to display a boss bar showing player's progression when gaining xp
 enable-xp-bar: true
