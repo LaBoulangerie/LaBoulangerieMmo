@@ -32,6 +32,7 @@ public class BlockusDataManager {
             } finally {
                 blockusDataHolder = new BlockusDataHolder();
             }
+            return;
         }
 
         try {

@@ -127,7 +127,7 @@ public class LeaderBoardManager implements Listener {
      */
     public void freeAllMaps() throws IOException {
         unusedMaps.addAll(usedMaps);
-        usedMaps.forEach(rendererProvider::remove);
+        usedMaps.forEach((map) -> rendererProvider.remove(map));
         usedMaps.clear();
         saveData();
     }
