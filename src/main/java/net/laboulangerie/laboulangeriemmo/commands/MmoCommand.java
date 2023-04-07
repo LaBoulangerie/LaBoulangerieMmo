@@ -42,7 +42,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
         FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
-        if(args[0].equalsIgnoreCase("xpboost") && args.length >= 5) {
+        if(args[0].equalsIgnoreCase("xpboost") && args.length >= 6) {
             if(args[1].equalsIgnoreCase("add")) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[2]);
 
@@ -50,7 +50,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                     sender.sendMessage("§4Boost argument is not numeric");
                     return true;
                 }
-                if(!(NumberUtils.isParsable(args[4]))) {
+
+                if(!(NumberUtils.isParsable(args[5]))) {
                     sender.sendMessage("§4Time argument is not numeric");
                     return true;
                 }
