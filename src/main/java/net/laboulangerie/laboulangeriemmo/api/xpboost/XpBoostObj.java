@@ -82,11 +82,12 @@ public class XpBoostObj {
             timeString = String.format("00:%02d", seconds);
 
         FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+        Player player = Bukkit.getPlayer(author.getUniqueId());
 
         List<TagResolver.Single> placeholders =
                 Arrays.asList(Placeholder.parsed("boost", this.getFormattedBoost()),
                         Placeholder.parsed("talent", talent.displayName),
-                        Placeholder.parsed("author", this.author.getName()),
+                        Placeholder.component("author", player.displayName() != null ? player.displayName() : Component.text(author.getName())),
                         Placeholder.parsed("time", timeString));
 
         Component newTitle = MiniMessage.miniMessage().deserialize(
