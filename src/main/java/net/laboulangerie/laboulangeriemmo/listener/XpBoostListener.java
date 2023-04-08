@@ -23,12 +23,14 @@ public class XpBoostListener implements Listener {
     @EventHandler
     public static void onPlayerJoinEvent(PlayerJoinEvent event){
         for(XpBoostObj xpBoostObj : LaBoulangerieMmo.PLUGIN.getXpBoostManager().getList())
-            event.getPlayer().showBossBar(xpBoostObj.getBossBar());
+            if(xpBoostObj.isShownBar())
+                event.getPlayer().showBossBar(xpBoostObj.getBossBar());
     }
 
     @EventHandler
     public static void onPlayerQuitEvent(PlayerQuitEvent event){
         for(XpBoostObj xpBoostObj : LaBoulangerieMmo.PLUGIN.getXpBoostManager().getList())
-            event.getPlayer().hideBossBar(xpBoostObj.getBossBar());
+            if(xpBoostObj.isShownBar())
+                event.getPlayer().hideBossBar(xpBoostObj.getBossBar());
     }
 }

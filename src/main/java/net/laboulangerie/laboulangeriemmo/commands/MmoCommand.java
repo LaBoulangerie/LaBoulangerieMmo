@@ -63,8 +63,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
                 TalentArchetype talentTarget = LaBoulangerieMmo.talentsRegistry.getTalent(identifier);
 
-                XpBoostObj xpBoostObj = new XpBoostObj(mmoPlayer, talentTarget, boost, time);
-                LaBoulangerieMmo.PLUGIN.getXpBoostManager().add(xpBoostObj);
+                XpBoostObj xpBoostObj = LaBoulangerieMmo.PLUGIN.getXpBoostManager().add(mmoPlayer, talentTarget, boost, time);
 
                 List<TagResolver.Single> placeholders = Arrays.asList(
                         Placeholder.parsed("boost", xpBoostObj.getFormattedBoost()),

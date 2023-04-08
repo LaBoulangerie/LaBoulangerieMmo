@@ -1,5 +1,6 @@
 package net.laboulangerie.laboulangeriemmo.api.xpboost;
 
+import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
 
 import java.util.ArrayList;
@@ -11,17 +12,21 @@ public class XpBoostManager {
 
     public List<XpBoostObj> list = new ArrayList<XpBoostObj>();
 
-    public void add(XpBoostObj xpBoostObj) {
+    public XpBoostObj add(MmoPlayer mmoPlayer, TalentArchetype talentArchetype, double boost, int time) {
+        XpBoostObj xpBoostObj = new XpBoostObj(mmoPlayer, talentArchetype, boost, time);
         list.forEach(item -> {
             if(item.getTalent().equals(xpBoostObj.getTalent())) {
-                if (item.getBoost() < xpBoostObj.getBoost() && item.getTime() > xpBoostObj.getTime() || item.getTime() > xpBoostObj.getTime()) {
+                if (item.getBoost() < xpBoostObj.getBoost() && item.getTime() > xpBoostObj.getTime() ||
+                    item.getTime() < xpBoostObj.getTime() && item.getBoost() < xpBoostObj.getBoost() ) {
                     item.hideBossBar();
                 } else {
-                    xpBoostObj.setInitShownBossBar(false);
+                    xpBoostObj.setInitShowBossBar(false);
                 }
             }
         });
+        xpBoostObj.startBoost();
         list.add(xpBoostObj);
+        return xpBoostObj;
     }
 
     public List<XpBoostObj> getList() {

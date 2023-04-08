@@ -20,8 +20,8 @@ import java.util.UUID;
 public class XpBoostObj {
 
     private final UUID uid;
-    private boolean alreadyShownBossBar = false;
-    private boolean initShownBossBar = true;
+    private boolean initShowBossBar = true;
+    private boolean shownBar = false;
     private final BossBar bossBar;
     public MmoPlayer author;
     public TalentArchetype talent;
@@ -35,28 +35,28 @@ public class XpBoostObj {
         this.talent = talent;
         this.boost = boost;
         this.time = time;
-        int totalTime = this.time;
-        final XpBoostObj instance = this;
         this.bossBar = BossBar.bossBar(updateTitle(), 1, BossBar.Color.GREEN, BossBar.Overlay.PROGRESS);
+    }
+
+    public void startBoost() {
+        if(this.initShowBossBar){
+            this.shownBar = true;
+            for (Player p : Bukkit.getOnlinePlayers())
+                p.showBossBar(this.bossBar);
+        }
+        int totalTime = this.time;
         idSchedule = Bukkit.getScheduler().scheduleSyncRepeatingTask(LaBoulangerieMmo.PLUGIN, () -> {
-            if (instance.time <= 0) {
+            if (this.time <= 0) {
                 stopBoost();
             }
-            if (!this.alreadyShownBossBar) {
-                if(this.initShownBossBar){
-                    for (Player p : Bukkit.getOnlinePlayers())
-                        p.showBossBar(this.bossBar);
-                }
-                this.alreadyShownBossBar = true;
-            } else {
-                updateTitle();
+            updateTitle();
 
-                DecimalFormat df = new DecimalFormat();
-                df.setMaximumFractionDigits(2);
-                float progress = Float.parseFloat(df.format((float) this.time / totalTime).replace(",", "."));
-                this.bossBar.progress(progress);
-            }
-            instance.time--;
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(2);
+            float progress = Float.parseFloat(df.format((float) this.time / totalTime).replace(",", "."));
+            this.bossBar.progress(progress);
+
+            this.time--;
         }, 20, 20L);
     }
 
@@ -130,21 +130,22 @@ public class XpBoostObj {
     }
 
     public void hideBossBar() {
+        this.shownBar = false;
         for (Player p : Bukkit.getOnlinePlayers())
             p.hideBossBar(this.bossBar);
     }
 
     public void showBossBar() {
+        this.shownBar = true;
         for (Player p : Bukkit.getOnlinePlayers())
             p.showBossBar(this.bossBar);
     }
 
-    public boolean isInitShownBossBar() {
-        return initShownBossBar;
+    public void setInitShowBossBar(boolean initShownBossBarBar) {
+        this.initShowBossBar = initShownBossBarBar;
     }
 
-    public void setInitShownBossBar(boolean initShownBossBarBar) {
-        this.initShownBossBar = initShownBossBarBar;
+    public boolean isShownBar() {
+        return shownBar;
     }
-
 }
