@@ -19,8 +19,7 @@ public class BlockusDataManager {
     public BlockusDataManager(String path) {
         blockusFile = new File(path);
         File parentFolder = blockusFile.getParentFile();
-        if (!parentFolder.exists())
-            parentFolder.mkdir();
+        if (!parentFolder.exists()) parentFolder.mkdir();
 
         if (!blockusFile.exists()) {
             try {
@@ -36,7 +35,8 @@ public class BlockusDataManager {
         try {
             blockusDataHolder = readBlockuses();
         } catch (IOException | ClassNotFoundException e) {
-            LaBoulangerieMmo.PLUGIN.getLogger().warning("Something went wrong while trying to restore blockuses:");
+            LaBoulangerieMmo.PLUGIN.getLogger()
+                    .warning("Something went wrong while trying to restore blockuses:");
             e.printStackTrace();
             Bukkit.getServer().getPluginManager().disablePlugin(LaBoulangerieMmo.PLUGIN);
         }
@@ -44,7 +44,8 @@ public class BlockusDataManager {
     }
 
     public void writeBlockuses() throws IOException {
-        Files.copy(Paths.get(blockusFile.getPath()), Paths.get(blockusFile.getPath() + ".end"), StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(Paths.get(blockusFile.getPath()), Paths.get(blockusFile.getPath() + ".end"),
+                StandardCopyOption.REPLACE_EXISTING);
         BlockusOutputStream bos = new BlockusOutputStream(blockusFile);
         bos.writeBlockuses(blockusDataHolder);
         bos.close();

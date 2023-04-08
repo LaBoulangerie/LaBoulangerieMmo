@@ -44,8 +44,7 @@ public class Blockus implements Serializable {
 
     public void markAsBlockus() {
         Block block = Bukkit.getWorld(worldId).getBlockAt(x, y, z);
-        metaData.entrySet().stream()
-                .filter(entry -> !block.hasMetadata(entry.getKey()))
+        metaData.entrySet().stream().filter(entry -> !block.hasMetadata(entry.getKey()))
                 .forEach(entry -> block.setMetadata(entry.getKey(),
                         new FixedMetadataValue(LaBoulangerieMmo.PLUGIN, entry.getValue())));
 

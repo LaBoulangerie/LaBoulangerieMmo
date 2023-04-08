@@ -20,8 +20,7 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.GrindingCategory;
 
 public class GrindingListener implements Listener {
-    public GrindingListener() {
-    }
+    public GrindingListener() {}
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
@@ -30,26 +29,25 @@ public class GrindingListener implements Listener {
 
         if (block.getState().getBlockData() instanceof Ageable) {
             Ageable ageable = ((Ageable) block.getState().getBlockData());
-            if (ageable.getAge() != ageable.getMaximumAge() &&
-                !LaBoulangerieMmo.PLUGIN.getConfig().getStringList("ageable-ignored-blocks").contains(block.getType().toString())
-            ) return;
+            if (ageable.getAge() != ageable.getMaximumAge() && !LaBoulangerieMmo.PLUGIN.getConfig()
+                    .getStringList("ageable-ignored-blocks").contains(block.getType().toString()))
+                return;
         }
         giveReward(event.getPlayer(), GrindingCategory.BREAK, block.getType().toString());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityKill(EntityDeathEvent event) {
-        if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player))
-            return;
+        if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player)) return;
 
-        giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString());
+        giveReward(event.getEntity().getKiller(), GrindingCategory.KILL,
+                event.getEntity().getType().toString());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCraft(CraftItemEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (event.isCancelled() || !(event.getWhoClicked() instanceof Player))
-            return;
+        if (event.isCancelled() || !(event.getWhoClicked() instanceof Player)) return;
         Material crafted = event.getRecipe().getResult().getType();
 
         giveReward(player, GrindingCategory.CRAFT, crafted.toString());
@@ -60,22 +58,21 @@ public class GrindingListener implements Listener {
     }
 
     private void giveReward(Player player, GrindingCategory category, String identifier) {
-        if (player.getGameMode() == GameMode.CREATIVE)
-            return;
-        Set<String> keys = LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding")
-                .getKeys(false);
+        if (player.getGameMode() == GameMode.CREATIVE) return;
+        Set<String> keys = LaBoulangerieMmo.PLUGIN.getConfig()
+                .getConfigurationSection("talent-grinding").getKeys(false);
 
         keys.stream().forEach(talentName -> {
             if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null) return;
 
-            ConfigurationSection section = LaBoulangerieMmo.PLUGIN.getConfig()
-                    .getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
-            if (section == null)
-                return;
+            ConfigurationSection section =
+                    LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection(
+                            "talent-grinding." + talentName + "." + category.toString());
+            if (section == null) return;
 
             if (section.getKeys(false).contains(identifier))
-                LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName,
-                        section.getDouble(identifier));
+                LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player)
+                        .incrementXp(talentName, section.getDouble(identifier));
         });
     }
 }

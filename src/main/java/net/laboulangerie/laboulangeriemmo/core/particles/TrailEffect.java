@@ -15,7 +15,6 @@ public class TrailEffect extends Effect {
     public void run() {
         world.spawnParticle(Particle.FIREWORKS_SPARK, entity.getLocation(), 0, 0, 0, 0, 8);
         i++;
-        if (i == 4)
-            cancel();
+        if (i == 4) cancel();
     }
 }

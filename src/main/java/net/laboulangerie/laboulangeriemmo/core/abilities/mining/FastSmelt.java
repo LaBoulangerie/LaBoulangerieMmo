@@ -28,23 +28,21 @@ public class FastSmelt extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-        if (event.getClickedBlock().getType() != Material.BLAST_FURNACE || event.getItem() == null || event.getItem().getType() != Material.COAL)
+        if (event.getClickedBlock().getType() != Material.BLAST_FURNACE || event.getItem() == null
+                || event.getItem().getType() != Material.COAL)
             return false;
 
         BlastFurnace furnace = (BlastFurnace) event.getClickedBlock().getState();
         ItemStack toSmelt = furnace.getInventory().getSmelting();
-        if (toSmelt == null || toSmelt.getType() == Material.AIR)
-            return false;
+        if (toSmelt == null || toSmelt.getType() == Material.AIR) return false;
 
         ItemStack result = null;
         Iterator<Recipe> iter = Bukkit.recipeIterator();
         while (iter.hasNext()) {
             Recipe recipe = iter.next();
 
-            if (!(recipe instanceof BlastingRecipe))
-                continue;
-            if (((BlastingRecipe) recipe).getInput().getType() != toSmelt.getType())
-                continue;
+            if (!(recipe instanceof BlastingRecipe)) continue;
+            if (((BlastingRecipe) recipe).getInput().getType() != toSmelt.getType()) continue;
 
             result = recipe.getResult();
             break;
@@ -63,9 +61,9 @@ public class FastSmelt extends AbilityExecutor {
         while (iter.hasNext()) {
             Recipe recipe = iter.next();
 
-            if (!(recipe instanceof FurnaceRecipe))
-                continue;
-            if (((FurnaceRecipe) recipe).getInput().getType() != furnace.getInventory().getSmelting().getType())
+            if (!(recipe instanceof FurnaceRecipe)) continue;
+            if (((FurnaceRecipe) recipe).getInput().getType() != furnace.getInventory()
+                    .getSmelting().getType())
                 continue;
 
             result = recipe.getResult();
@@ -77,7 +75,8 @@ public class FastSmelt extends AbilityExecutor {
 
         if (inv.getResult() == null || (inv.getResult().getType() == result.getType()
                 && inv.getResult().getAmount() + result.getAmount() <= 64)) {
-            result.setAmount(result.getAmount() + (inv.getResult() != null ? inv.getResult().getAmount() : 0));
+            result.setAmount(result.getAmount()
+                    + (inv.getResult() != null ? inv.getResult().getAmount() : 0));
             inv.setResult(result);
         } else {
             bukkitPlayer.getWorld().dropItemNaturally(bukkitPlayer.getLocation(), result);

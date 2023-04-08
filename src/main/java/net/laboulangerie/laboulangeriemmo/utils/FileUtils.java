@@ -19,12 +19,10 @@ public class FileUtils {
 
     public static void save(File file, String content) {
         File parentFile = file.getParentFile();
-        if (!parentFile.exists())
-            parentFile.mkdir();
+        if (!parentFile.exists()) parentFile.mkdir();
 
         try {
-            if (!file.exists())
-                file.createNewFile();
+            if (!file.exists()) file.createNewFile();
 
             FileWriter writer = new FileWriter(file);
             writer.write(content);

@@ -27,19 +27,26 @@ public class MmoListener implements Listener {
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
         Talent talent = event.getTalent();
 
-        if (!LaBoulangerieMmo.PLUGIN.getConfig().isSet("level-up-rewards." + talent.getTalentId())) {
-            List<TagResolver.Single> placeholders = Arrays.asList(
-                Placeholder.parsed("level", Integer.toString(talent.getLevel())),
-                Placeholder.parsed("talent", talent.getDisplayName())
-            );
+        if (!LaBoulangerieMmo.PLUGIN.getConfig()
+                .isSet("level-up-rewards." + talent.getTalentId())) {
+            List<TagResolver.Single> placeholders =
+                    Arrays.asList(Placeholder.parsed("level", Integer.toString(talent.getLevel())),
+                            Placeholder.parsed("talent", talent.getDisplayName()));
 
-            player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level-up-no-reward"), TagResolver.resolver(placeholders))));
+            player.sendMessage(
+                    MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
+                            .append(MiniMessage.miniMessage().deserialize(
+                                    config.getString("lang.messages.level-up-no-reward"),
+                                    TagResolver.resolver(placeholders))));
             return;
         }
 
-        double amount = processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+".*"), talent.getLevelXp());
-        amount += processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig().getString("level-up-rewards."+talent.getTalentId()+"."+talent.getLevel()), talent.getLevelXp());
+        double amount = processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig()
+                .getString("level-up-rewards." + talent.getTalentId() + ".*"), talent.getLevelXp());
+        amount += processMoneyAmount(
+                LaBoulangerieMmo.PLUGIN.getConfig().getString(
+                        "level-up-rewards." + talent.getTalentId() + "." + talent.getLevel()),
+                talent.getLevelXp());
 
         if (amount == 0) return;
         switch (LaBoulangerieMmo.PLUGIN.getConfig().getString("rewards-rounding-method", "no")) {
@@ -59,13 +66,14 @@ public class MmoListener implements Listener {
         LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, amount);
 
         List<TagResolver.Single> placeholders = Arrays.asList(
-            Placeholder.parsed("level", Integer.toString(talent.getLevel())),
-            Placeholder.parsed("talent", talent.getDisplayName()),
-            Placeholder.parsed("reward", LaBoulangerieMmo.formatter.format(amount) + "$")
-        );
+                Placeholder.parsed("level", Integer.toString(talent.getLevel())),
+                Placeholder.parsed("talent", talent.getDisplayName()),
+                Placeholder.parsed("reward", LaBoulangerieMmo.formatter.format(amount) + "$"));
 
         player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level-up"), TagResolver.resolver(placeholders))));
+                .append(MiniMessage.miniMessage().deserialize(
+                        config.getString("lang.messages.level-up"),
+                        TagResolver.resolver(placeholders))));
     }
 
     @EventHandler
@@ -75,12 +83,13 @@ public class MmoListener implements Listener {
         XpBar.displayBar(event.getTalent(), event.getPlayer());
 
         List<TagResolver.Single> placeholders = Arrays.asList(
-            Placeholder.parsed("xp", LaBoulangerieMmo.formatter.format(event.getAmount())),
-            Placeholder.parsed("talent", event.getTalent().getDisplayName())
-        );
+                Placeholder.parsed("xp", LaBoulangerieMmo.formatter.format(event.getAmount())),
+                Placeholder.parsed("talent", event.getTalent().getDisplayName()));
 
         player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.xp_up"), TagResolver.resolver(placeholders))));
+                .append(MiniMessage.miniMessage().deserialize(
+                        config.getString("lang.messages.xp_up"),
+                        TagResolver.resolver(placeholders))));
     }
 
     private double processMoneyAmount(String rawAmount, double levelXp) {
@@ -90,12 +99,14 @@ public class MmoListener implements Listener {
             double percentage = 0;
             try {
                 percentage = Double.parseDouble(rawAmount.split("%")[0]);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
             return levelXp * percentage / 100;
         }
         try {
             return Double.parseDouble(rawAmount);
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
 
         return 0;
     }

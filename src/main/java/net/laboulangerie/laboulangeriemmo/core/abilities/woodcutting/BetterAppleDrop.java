@@ -20,8 +20,7 @@ public class BetterAppleDrop extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
-        if (event.getBlock().hasMetadata("laboulangerie:placed"))
-            return false;
+        if (event.getBlock().hasMetadata("laboulangerie:placed")) return false;
         return block != null && block.getType() == Material.OAK_LEAVES;
     }
 
@@ -38,12 +37,9 @@ public class BetterAppleDrop extends AbilityExecutor {
         int find_nearest_int = min_number + random_chance.nextInt(max_number);
         boolean shouldDrop = false;
 
-        if (level >= getTier(2) && find_nearest_int <= 80)
-            shouldDrop = true;
-        else if (level >= getTier(1) && find_nearest_int <= 40)
-            shouldDrop = true;
-        else if (find_nearest_int <= 10)
-            shouldDrop = true;
+        if (level >= getTier(2) && find_nearest_int <= 80) shouldDrop = true;
+        else if (level >= getTier(1) && find_nearest_int <= 40) shouldDrop = true;
+        else if (find_nearest_int <= 10) shouldDrop = true;
 
         if (shouldDrop) {
             block.getWorld().dropItemNaturally(block.getLocation(), item);

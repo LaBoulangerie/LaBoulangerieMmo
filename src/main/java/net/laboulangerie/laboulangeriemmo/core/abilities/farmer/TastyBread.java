@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 
-public class TastyBread extends AbilityExecutor{
+public class TastyBread extends AbilityExecutor {
 
     public TastyBread(AbilityArchetype archetype) {
         super(archetype);
@@ -22,7 +22,8 @@ public class TastyBread extends AbilityExecutor{
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         PlayerItemHeldEvent event = (PlayerItemHeldEvent) baseEvent;
-        return event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.BREAD);
+        return event.getPlayer().getInventory().getItem(event.getNewSlot()).getType()
+                .equals(Material.BREAD);
     }
 
     @Override
@@ -35,7 +36,9 @@ public class TastyBread extends AbilityExecutor{
         }
         for (Entity en : player.getNearbyEntities(followRadius, followRadius, followRadius)) {
             if (level < getTier(2)) {
-                if (en.getType() == EntityType.COW || en.getType() == EntityType.PIG || en.getType() == EntityType.PIG || en.getType() == EntityType.CHICKEN || en.getType() == EntityType.SHEEP) {
+                if (en.getType() == EntityType.COW || en.getType() == EntityType.PIG
+                        || en.getType() == EntityType.PIG || en.getType() == EntityType.CHICKEN
+                        || en.getType() == EntityType.SHEEP) {
                     Creature animal = (Creature) en;
                     animal.getPathfinder().moveTo(player, 1);
                 }

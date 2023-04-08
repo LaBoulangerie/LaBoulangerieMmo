@@ -47,7 +47,8 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         uniqueId = player.getUniqueId();
         name = player.getName();
 
-        talents = (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry.generateTalentsDataHolder();
+        talents = (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry
+                .generateTalentsDataHolder();
 
         cooldownsHolder = new CooldownsHolder();
         xpCountdown = new XpCountDown(this);
@@ -80,24 +81,25 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         if (ability.shouldLog) {
             EffectRegistry.playEffect(ability.effect, player);
 
-            List<TagResolver.Single> placeholders = Arrays.asList(
-                Placeholder.parsed("ability", ability.displayName),
-                Placeholder.parsed("cooldown", Integer.toString(ability.cooldown)),
-                Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase()),
-                Placeholder.parsed("talent", talent.displayName)
-            );
+            List<TagResolver.Single> placeholders =
+                    Arrays.asList(Placeholder.parsed("ability", ability.displayName),
+                            Placeholder.parsed("cooldown", Integer.toString(ability.cooldown)),
+                            Placeholder.parsed("unit",
+                                    ability.cooldownUnit.toString().toLowerCase()),
+                            Placeholder.parsed("talent", talent.displayName));
 
             player.sendMessage(
-                MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                    .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.ability_log"),
-                    TagResolver.resolver(placeholders))));
+                    MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
+                            .append(MiniMessage.miniMessage().deserialize(
+                                    config.getString("lang.messages.ability_log"),
+                                    TagResolver.resolver(placeholders))));
         }
     }
 
     public boolean canUseAbility(AbilityArchetype ability, String talentId) {
         return cooldownsHolder.isCooldownElapsed(ability, talentId)
-            && talents.get(talentId).getLevel() >= ability.requiredLevel
-            && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
+                && talents.get(talentId).getLevel() >= ability.requiredLevel
+                && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 
     public String getName() {
@@ -127,72 +129,82 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         if (oldLevel < newLevel) {
             Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
             /*
-             * if (getPalier(this) == ???) {
-             * do some stuff
-             * }
+             * if (getPalier(this) == ???) { do some stuff }
              */
         }
     }
+
     public boolean hasEnabledCombo() {
         return hasEnabledCombo;
     }
+
     public void setEnableCombo(boolean enabled) {
         hasEnabledCombo = enabled;
     }
+
     public CooldownsHolder getCooldowns() {
         return cooldownsHolder;
     }
-    
+
     public Town getTown() {
-    	Resident resident = TownyUniverse.getInstance().getResident(uniqueId);
-    	return resident.getTownOrNull();
+        Resident resident = TownyUniverse.getInstance().getResident(uniqueId);
+        return resident.getTownOrNull();
     }
-    
+
     public Nation getNation() {
-    	Resident resident = TownyUniverse.getInstance().getResident(uniqueId);
-    	return resident.getNationOrNull();
+        Resident resident = TownyUniverse.getInstance().getResident(uniqueId);
+        return resident.getNationOrNull();
     }
-    
-    public static Integer getTownTotalLevel (Town town) {
-		int townTotal = 0;
-        for (Resident resident :  town.getResidents()) {
+
+    public static Integer getTownTotalLevel(Town town) {
+        int townTotal = 0;
+        for (Resident resident : town.getResidents()) {
             if (resident != null) {
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID()); 
-                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);		
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
+                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
+                        .getOfflinePlayer(offlinePlayer);
                 townTotal += mmoPlayer.getPalier();
             }
         }
         return townTotal;
     }
-    public static Integer getTownTalentLevel (Town town, String talentName) {
-		int townTotal = 0;
+
+    public static Integer getTownTalentLevel(Town town, String talentName) {
+        int townTotal = 0;
         for (Resident resident : town.getResidents()) {
             if (resident != null) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
-                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
+                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
+                        .getOfflinePlayer(offlinePlayer);
                 Talent talent = mmoPlayer.getTalent(talentName);
                 townTotal += talent.getLevel();
             }
         }
         return townTotal;
     }
-    public static Integer getNationTotalLevel (Nation nation) {
-		int total = 0;
-    	for (Town town :  nation.getTowns())
-        	total += MmoPlayer.getTownTotalLevel(town);
 
-    	return total;
-    }
-    public static Integer getNationTalentLevel (Nation nation, String talentName) {
-		int total = 0;
-    	for (Town town :  nation.getTowns())
-        	total += MmoPlayer.getTownTalentLevel(town, talentName);
+    public static Integer getNationTotalLevel(Nation nation) {
+        int total = 0;
+        for (Town town : nation.getTowns())
+            total += MmoPlayer.getTownTotalLevel(town);
 
-    	return total;
+        return total;
     }
+
+    public static Integer getNationTalentLevel(Nation nation, String talentName) {
+        int total = 0;
+        for (Town town : nation.getTowns())
+            total += MmoPlayer.getTownTalentLevel(town, talentName);
+
+        return total;
+    }
+
     @Override
     public void postProcess() {
-        HashMap<String, Talent> newTalents = (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry.generateTalentsDataHolder();
-        newTalents.entrySet().forEach(entry -> talents.merge(entry.getKey(), entry.getValue(), (newVal, oldVal) -> newVal));
+        HashMap<String, Talent> newTalents =
+                (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry
+                        .generateTalentsDataHolder();
+        newTalents.entrySet().forEach(entry -> talents.merge(entry.getKey(), entry.getValue(),
+                (newVal, oldVal) -> newVal));
     }
 }

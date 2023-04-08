@@ -25,7 +25,8 @@ public class Hiding extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         final ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
-        return event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.RIGHT, ComboKey.RIGHT));
+        return event.getKeyStreak()
+                .match(new KeyStreak(ComboKey.LEFT, ComboKey.RIGHT, ComboKey.RIGHT));
     }
 
     @Override
@@ -43,7 +44,8 @@ public class Hiding extends AbilityExecutor {
     }
 
     private void totalInvisibility(InvisiblePlayer invisiblePlayer, int duration) {
-        invisiblePlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, duration, 0, false, false));
+        invisiblePlayer.getPlayer().addPotionEffect(
+                new PotionEffect(PotionEffectType.INVISIBILITY, duration, 0, false, false));
         InvisiblePlayer.invisiblePlayer.add(invisiblePlayer);
 
         for (Player p : Bukkit.getOnlinePlayers()) {
@@ -51,11 +53,13 @@ public class Hiding extends AbilityExecutor {
             ArmorHider.hideArmor(p, invisiblePlayer.getPlayer());
         }
         endScheduler(invisiblePlayer, duration);
-        if (invisiblePlayer.getAbilityLevel() < 3) EffectRegistry.playEffect("invisible-particles", invisiblePlayer.getPlayer());
+        if (invisiblePlayer.getAbilityLevel() < 3)
+            EffectRegistry.playEffect("invisible-particles", invisiblePlayer.getPlayer());
     }
 
     private void basicInvisibility(InvisiblePlayer invisiblePlayer) {
-        invisiblePlayer.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 3600, 0, false, false));
+        invisiblePlayer.getPlayer().addPotionEffect(
+                new PotionEffect(PotionEffectType.INVISIBILITY, 3600, 0, false, false));
         InvisiblePlayer.invisiblePlayer.add(invisiblePlayer);
         endScheduler(invisiblePlayer, 2400);
         EffectRegistry.playEffect("invisible-particles", invisiblePlayer.getPlayer());
