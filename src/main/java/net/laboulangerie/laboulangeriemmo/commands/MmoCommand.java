@@ -2,12 +2,16 @@ package net.laboulangerie.laboulangeriemmo.commands;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
+import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
@@ -15,6 +19,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.NotNull;
@@ -33,6 +38,48 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd,
             @NotNull String alias, @NotNull String[] args) {
         if (args.length == 0) return false;
+
+        FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+
+        if(args[0].equalsIgnoreCase("xpboost") && args.length >= 6) {
+            if(args[1].equalsIgnoreCase("add")) {
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[2]);
+
+                if(!(NumberUtils.isParsable(args[3]))) {
+                    sender.sendMessage("§4Boost argument is not numeric");
+                    return true;
+                }
+
+                if(!(NumberUtils.isParsable(args[5]))) {
+                    sender.sendMessage("§4Time argument is not numeric");
+                    return true;
+                }
+
+                Double boost = Double.parseDouble(args[3]);
+                String identifier = args[4];
+                int time = Integer.parseInt(args[5]);
+
+                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
+                TalentArchetype talentTarget = LaBoulangerieMmo.talentsRegistry.getTalent(identifier);
+
+                XpBoostObj xpBoostObj = LaBoulangerieMmo.PLUGIN.getXpBoostManager().add(mmoPlayer, talentTarget, boost, time);
+
+                List<TagResolver.Single> placeholders = Arrays.asList(
+                        Placeholder.parsed("boost", xpBoostObj.getFormattedBoost()),
+                        Placeholder.parsed("talent", talentTarget.displayName),
+                        Placeholder.parsed("author", offlinePlayer.getName())
+                );
+
+                Component prefix = MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"));
+                Component notification =  MiniMessage.miniMessage().deserialize(config.getString("lang.xp_boost.notif"),
+                        TagResolver.resolver(placeholders));
+
+                for(Player p : Bukkit.getOnlinePlayers()) {
+                    p.sendMessage(prefix.append(notification));
+                }
+            }
+            return true;
+        }
 
         if (args[0].equalsIgnoreCase("xp") && args.length >= 4) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
@@ -209,7 +256,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd,
             @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1) return Arrays.asList("xp", "reload", "rl", "blockus", "leaderboards");
+        if (args.length == 1) return Arrays.asList("xp", "reload", "rl", "blockus", "leaderboards", "xpboost");
         if (args[0].equalsIgnoreCase("xp")) {
             switch (args.length) {
                 default:
@@ -239,6 +286,26 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         if (args.length == 3 && args[0].equalsIgnoreCase("leaderboards")
                 && args[1].equalsIgnoreCase("create"))
             return Arrays.asList("mining", "thehunter", "woodcutting", "farmer");
+
+        if (args[0].equalsIgnoreCase("xpboost")) {
+            if (args.length == 2)
+                return Arrays.asList("add");
+            if (args[1].equalsIgnoreCase("add") && args.length > 2) {
+                if (args.length == 3)
+                    return null;
+                if (args.length == 4)
+                    return Arrays.asList("1.5", "2", "2.5", "3");
+                if (args.length == 5) {
+                    List<String> talentIdentifier = new ArrayList<>();
+                    LaBoulangerieMmo.talentsRegistry.getTalents().forEach((key, value) -> {
+                        talentIdentifier.add(value.identifier);
+                    });
+                    return talentIdentifier;
+                }
+                if (args.length == 6)
+                    return Arrays.asList("60", "120", "180", "240");
+            }
+        }
 
         return Arrays.asList("");
     }

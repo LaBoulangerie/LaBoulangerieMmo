@@ -40,7 +40,6 @@ public class BlockusDataManager {
             e.printStackTrace();
             Bukkit.getServer().getPluginManager().disablePlugin(LaBoulangerieMmo.PLUGIN);
         }
-
     }
 
     public void writeBlockuses() throws IOException {

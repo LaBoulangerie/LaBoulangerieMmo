@@ -25,7 +25,6 @@ public class BlockusInputStream extends FileInputStream {
         read(buffer);
         byte[] data = Zstd.decompress(buffer, size);
         ObjectInput oi = new ObjectInputStream(new ByteArrayInputStream(data));
-
         return (BlockusDataHolder) oi.readObject();
     }
 }

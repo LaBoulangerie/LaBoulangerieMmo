@@ -114,13 +114,18 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         return () -> talents.values().stream();
     }
 
+
     public void incrementXp(String talentId, double amount) {
         if (getTalent(talentId) == null) talents.put(talentId, new Talent(talentId));
 
         if (getTalent(talentId).getLevel() >= 100) {
             return;
         }
-        Bukkit.getPluginManager().callEvent(new PlayerEarnsXpEvent(amount, talentId, this));
+        PlayerEarnsXpEvent playerEarnsXpEvent = new PlayerEarnsXpEvent(amount, talentId, this);
+        Bukkit.getPluginManager().callEvent(playerEarnsXpEvent);
+
+        amount = playerEarnsXpEvent.getAmount();
+
         int oldLevel = getTalent(talentId).getLevel();
 
         xpCountdown.startCountDown(talentId, amount);

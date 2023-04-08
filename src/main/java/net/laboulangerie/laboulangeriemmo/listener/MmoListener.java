@@ -10,11 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
+import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
 import net.laboulangerie.laboulangeriemmo.core.XpBar;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 import net.laboulangerie.laboulangeriemmo.events.XpCountDownFinishedEvent;
@@ -86,10 +88,19 @@ public class MmoListener implements Listener {
                 Placeholder.parsed("xp", LaBoulangerieMmo.formatter.format(event.getAmount())),
                 Placeholder.parsed("talent", event.getTalent().getDisplayName()));
 
-        player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                .append(MiniMessage.miniMessage().deserialize(
-                        config.getString("lang.messages.xp_up"),
-                        TagResolver.resolver(placeholders))));
+        Component prefix = MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"));
+        Component message = MiniMessage.miniMessage().deserialize(config.getString("lang.messages.xp_up"),
+            TagResolver.resolver(placeholders));
+
+        XpBoostObj xpBoost = LaBoulangerieMmo.PLUGIN.getXpBoostManager().getBoost(event.getTalent().getTalentId());
+
+        if (xpBoost != null) {
+            TagResolver.Single boostPlaceholder = Placeholder.parsed("boost", xpBoost.getFormattedBoost());
+            Component boostMessage = MiniMessage.miniMessage().deserialize(config.getString("lang.messages.xp_up_boost"), boostPlaceholder);
+            message = message.append(boostMessage);
+        }
+
+        player.sendMessage(prefix.append(message));
     }
 
     private double processMoneyAmount(String rawAmount, double levelXp) {

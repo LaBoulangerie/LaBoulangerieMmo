@@ -41,4 +41,7 @@ public class PlayerEarnsXpEvent extends Event {
         return handlers;
     }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 }
