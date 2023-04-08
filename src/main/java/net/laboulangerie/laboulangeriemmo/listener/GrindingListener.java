@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 
@@ -39,14 +40,13 @@ public class GrindingListener implements Listener {
     public void onEntityKill(EntityDeathEvent event) {
         if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player)) return;
 
-        giveReward(event.getEntity().getKiller(), GrindingCategory.KILL,
-                event.getEntity().getType().toString());
+        giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString());
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onCraft(CraftItemEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) return;
         Player player = (Player) event.getWhoClicked();
-        if (event.isCancelled() || !(event.getWhoClicked() instanceof Player)) return;
         Material crafted = event.getRecipe().getResult().getType();
 
         giveReward(player, GrindingCategory.CRAFT, crafted.toString());
@@ -56,21 +56,27 @@ public class GrindingListener implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onBreed(EntityBreedEvent event) {
+        if (!(event.getBreeder() instanceof Player)) return;
+
+        giveReward((Player) event.getBreeder(), GrindingCategory.BREED, event.getEntityType().toString());
+    }
+
     private void giveReward(Player player, GrindingCategory category, String identifier) {
         if (player.getGameMode() == GameMode.CREATIVE) return;
-        Set<String> keys = LaBoulangerieMmo.PLUGIN.getConfig()
-                .getConfigurationSection("talent-grinding").getKeys(false);
+        Set<String> keys =
+                LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding").getKeys(false);
 
         keys.stream().forEach(talentName -> {
             if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null) return;
 
-            ConfigurationSection section =
-                    LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection(
-                            "talent-grinding." + talentName + "." + category.toString());
+            ConfigurationSection section = LaBoulangerieMmo.PLUGIN.getConfig()
+                    .getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
             if (section == null) return;
 
-            if (section.getKeys(false).contains(identifier))
-                LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, section.getDouble(identifier));
+            if (section.getKeys(false).contains(identifier)) LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
+                    .getPlayer(player).incrementXp(talentName, section.getDouble(identifier));
         });
     }
 }
