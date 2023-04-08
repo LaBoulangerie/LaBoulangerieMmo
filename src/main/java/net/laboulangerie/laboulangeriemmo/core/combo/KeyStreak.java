@@ -15,8 +15,7 @@ public class KeyStreak {
         keyQueue.add(key3);
     }
 
-    public KeyStreak() {
-    }
+    public KeyStreak() {}
 
     /**
      * @param key
@@ -34,16 +33,15 @@ public class KeyStreak {
      * Used only when the period between key press matters
      * 
      * @param key
-     * @param timer the runnable which will invalid this streak if the period
-     *              between keys is too long
+     * @param timer the runnable which will invalid this streak if the period between keys is too
+     *        long
      * @return true if the streak is full
      */
     public boolean addKey(ComboKey key, BukkitRunnable timer) {
         // the previous timer is reset and replaced with the new one
         // the parent context should handle creating a new runner that will empty the
         // streak when expired
-        if (previousTimer != null)
-            previousTimer.cancel();
+        if (previousTimer != null) previousTimer.cancel();
         previousTimer = timer;
         if (addKey(key)) {
             timer.cancel();
@@ -63,8 +61,8 @@ public class KeyStreak {
     }
 
     /**
-     * Empty the key streak, called when the period between key press is to long,
-     * this should be managed by the parent context
+     * Empty the key streak, called when the period between key press is to long, this should be
+     * managed by the parent context
      */
     public void fail() {
         keyQueue.clear();

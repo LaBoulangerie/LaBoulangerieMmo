@@ -22,7 +22,8 @@ public class Dodging extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
-        return event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.RIGHT));
+        return event.getKeyStreak()
+                .match(new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.RIGHT));
     }
 
     @Override
@@ -31,15 +32,12 @@ public class Dodging extends AbilityExecutor {
         org.bukkit.entity.Player player = event.getPlayer();
         Player human = (Player) ((CraftPlayer) event.getPlayer()).getHandle();
         /**
-         * See ItemTrident.java in craftbukkit or TridentItem.java in paper
-         * Mapping:
-         * k -> power (originally the riptide level)
-         * f -> xRot
-         * f1 -> yRot
+         * See ItemTrident.java in craftbukkit or TridentItem.java in paper Mapping: k -> power
+         * (originally the riptide level) f -> xRot f1 -> yRot
          */
         float power = 1;
         float xRot = human.getYRot();
-        float yRot = Math.max(human.getXRot()-15, -90);
+        float yRot = Math.max(human.getXRot() - 15, -90);
         float f2 = -Mth.sin(xRot * 0.017453292F) * Mth.cos(yRot * 0.017453292F);
         float f3 = -Mth.sin(yRot * 0.017453292F);
         float f4 = Mth.cos(xRot * 0.017453292F) * Mth.cos(yRot * 0.017453292F);

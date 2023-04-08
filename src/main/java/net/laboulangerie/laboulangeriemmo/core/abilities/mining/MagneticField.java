@@ -36,6 +36,7 @@ public class MagneticField extends AbilityExecutor {
         } else if (level >= getTier(1)) {
             radius = 10;
         }
-        new MagneticFieldTask(player.getLocation(), radius, player, colorize).runTask(LaBoulangerieMmo.PLUGIN);
+        new MagneticFieldTask(player.getLocation(), radius, player, colorize)
+                .runTask(LaBoulangerieMmo.PLUGIN);
     }
 }

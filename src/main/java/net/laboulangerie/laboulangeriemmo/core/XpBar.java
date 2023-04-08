@@ -21,18 +21,19 @@ public class XpBar {
         if (!config.getBoolean("enable-xp-bar", true)) return;
 
         List<TagResolver.Single> placeholders = Arrays.asList(
-            Placeholder.parsed("talent", talent.getDisplayName()),
-            Placeholder.parsed("level", Integer.toString(talent.getLevel())),
-            Placeholder.parsed("xp", LaBoulangerieMmo.formatter.format(talent.getXp() - talent.getLevelXp())),
-            Placeholder.parsed("max_xp", LaBoulangerieMmo.formatter.format(talent.getXpToNextLevel()))
-        );
-        
+                Placeholder.parsed("talent", talent.getDisplayName()),
+                Placeholder.parsed("level", Integer.toString(talent.getLevel())),
+                Placeholder.parsed("xp",
+                        LaBoulangerieMmo.formatter.format(talent.getXp() - talent.getLevelXp())),
+                Placeholder.parsed("max_xp",
+                        LaBoulangerieMmo.formatter.format(talent.getXpToNextLevel())));
+
         final BossBar bossbar = BossBar.bossBar(
-                MiniMessage.miniMessage().deserialize(config.getString("lang.bar.format"), TagResolver.resolver(placeholders)),
+                MiniMessage.miniMessage().deserialize(config.getString("lang.bar.format"),
+                        TagResolver.resolver(placeholders)),
                 (float) (((talent.getXp() - talent.getLevelXp()) / talent.getXpToNextLevel())),
                 BossBar.Color.valueOf(config.getString("lang.bar.color")),
-                BossBar.Overlay.valueOf(config.getString("lang.bar.style"))
-        );
+                BossBar.Overlay.valueOf(config.getString("lang.bar.style")));
 
         final Player player = Bukkit.getPlayer(mmoPlayer.getUniqueId());
         if (!player.isOnline()) return;

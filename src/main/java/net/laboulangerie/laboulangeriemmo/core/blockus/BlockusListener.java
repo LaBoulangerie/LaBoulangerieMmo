@@ -31,7 +31,9 @@ public class BlockusListener implements Listener {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
-        if (LaBoulangerieMmo.PLUGIN.getConfig().getStringList("blockus-ignored-blocks").contains(block.getType().toString())) return;
+        if (LaBoulangerieMmo.PLUGIN.getConfig().getStringList("blockus-ignored-blocks")
+                .contains(block.getType().toString()))
+            return;
 
         Blockus blockus = new Blockus(block);
         blockus.putMetadata("laboulangerie:placed", player.getUniqueId().toString());
@@ -42,52 +44,56 @@ public class BlockusListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPistonExtend(BlockPistonExtendEvent event) {
         if (event.isCancelled()) return;
-        BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
+        BlockusDataHolder dataHolder =
+                LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
 
-        event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
-            MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
+        event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed"))
+                .forEach(block -> {
+                    MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
 
-            block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
-            dataHolder.removeBlockus(dataHolder.getBlockus(block));
+                    block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
+                    dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
-            Blockus blockus = new Blockus(block.getLocation().add(vec));
-            blockus.putMetadata("laboulangerie:placed", value.asString());
-            dataHolder.addBlockus(blockus);
+                    Blockus blockus = new Blockus(block.getLocation().add(vec));
+                    blockus.putMetadata("laboulangerie:placed", value.asString());
+                    dataHolder.addBlockus(blockus);
 
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    blockus.markAsBlockus();
-                }
-            }.runTaskLater(LaBoulangerieMmo.PLUGIN, 0);
-        });
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            blockus.markAsBlockus();
+                        }
+                    }.runTaskLater(LaBoulangerieMmo.PLUGIN, 0);
+                });
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPistonRetract(BlockPistonRetractEvent event) {
         if (event.isCancelled()) return;
-        BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
+        BlockusDataHolder dataHolder =
+                LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
 
-        event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
-            MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
+        event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed"))
+                .forEach(block -> {
+                    MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
 
-            block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
-            dataHolder.removeBlockus(dataHolder.getBlockus(block));
+                    block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
+                    dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
-            Blockus blockus = new Blockus(block.getLocation().add(vec));
-            blockus.putMetadata("laboulangerie:placed", value.asString());
-            dataHolder.addBlockus(blockus);
-            blockus.markAsBlockus();
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
+                    Blockus blockus = new Blockus(block.getLocation().add(vec));
+                    blockus.putMetadata("laboulangerie:placed", value.asString());
+                    dataHolder.addBlockus(blockus);
                     blockus.markAsBlockus();
-                }
-            }.runTaskLater(LaBoulangerieMmo.PLUGIN, 0);
-        });
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            blockus.markAsBlockus();
+                        }
+                    }.runTaskLater(LaBoulangerieMmo.PLUGIN, 0);
+                });
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -129,10 +135,10 @@ public class BlockusListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onTreeGrow(StructureGrowEvent event) {
         if (event.isCancelled()) return;
-    	for(BlockState blockState : event.getBlocks()) {
-    		Block block = blockState.getBlock();
+        for (BlockState blockState : event.getBlocks()) {
+            Block block = blockState.getBlock();
             unMark(block);
-    	}
+        }
     }
 
     /**
@@ -141,10 +147,10 @@ public class BlockusListener implements Listener {
      * @param block
      */
     private void unMark(Block block) {
-        if (!block.hasMetadata("laboulangerie:placed"))
-            return;
+        if (!block.hasMetadata("laboulangerie:placed")) return;
         block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
-        BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
+        BlockusDataHolder dataHolder =
+                LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         dataHolder.removeBlockus(dataHolder.getBlockus(block));
     }
 }

@@ -25,8 +25,8 @@ public class XpCountDown extends BukkitRunnable {
             talentToCountDown.put(key, talentToCountDown.get(key) - 1);
 
             if (talentToCountDown.get(key) == 0) {
-                Bukkit.getPluginManager()
-                        .callEvent(new XpCountDownFinishedEvent(player.getTalent(key), player, talentToXp.get(key)));
+                Bukkit.getPluginManager().callEvent(new XpCountDownFinishedEvent(
+                        player.getTalent(key), player, talentToXp.get(key)));
                 talentToXp.put(key, 0.0);
             }
         });

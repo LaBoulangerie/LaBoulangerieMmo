@@ -25,7 +25,7 @@ public class PostProcessingEnabler implements TypeAdapterFactory {
             public T read(JsonReader in) throws IOException {
                 T obj = delegate.read(in);
                 if (obj instanceof PostProcessable) {
-                    ((PostProcessable)obj).postProcess();
+                    ((PostProcessable) obj).postProcess();
                 }
                 return obj;
             }

@@ -35,10 +35,9 @@ import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager
 public class MmoCommand implements CommandExecutor, TabCompleter {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias,
-            @NotNull String[] args) {
-        if (args.length == 0)
-            return false;
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd,
+            @NotNull String alias, @NotNull String[] args) {
+        if (args.length == 0) return false;
 
         FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
@@ -84,11 +83,13 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
         if (args[0].equalsIgnoreCase("xp") && args.length >= 4) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(Bukkit.getPlayerUniqueId(args[1]));
-            if (player == null || LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player) == null) {
+            if (player == null || LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
+                    .getOfflinePlayer(player) == null) {
                 sender.sendMessage("§4Impossible de récupérer le joueur: " + args[1]);
                 return false;
             }
-            MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
+            MmoPlayer mmoPlayer =
+                    LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
             Talent talent = mmoPlayer.getTalent(args[3]);
             if (talent == null) {
                 sender.sendMessage("§4" + args[1] + " n'as pas le talent " + args[3]);
@@ -97,21 +98,20 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
             if (args[2].equalsIgnoreCase("see")) {
                 sender.sendMessage(
-                        "§a" + args[1] + ": §b"
-                                + args[3] + ": §rlvl §e" + talent.getLevel()
+                        "§a" + args[1] + ": §b" + args[3] + ": §rlvl §e" + talent.getLevel()
                                 + "§r, lvl's xp §e" + (talent.getXp() - talent.getLevelXp())
                                 + "§r, total xp §e" + talent.getXp());
                 return true;
             }
 
-            if (args.length < 5)
-                return false;
+            if (args.length < 5) return false;
 
             Double amount = null;
             try {
                 amount = Double.parseDouble(args[4]);
             } catch (Exception e) {
-                sender.sendMessage("§4L'argument §e" + args[4] + " §4n'est pas un nombre décimal valide.");
+                sender.sendMessage(
+                        "§4L'argument §e" + args[4] + " §4n'est pas un nombre décimal valide.");
                 return true;
             }
 
@@ -157,9 +157,11 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
         if (args[0].equalsIgnoreCase("blockus")) {
             if (args.length < 2) {
-                sender.sendMessage("§bIl y a §e"
-                        + LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockuses().size()
-                        + " §bblockus");
+                sender.sendMessage(
+                        "§bIl y a §e"
+                                + LaBoulangerieMmo.PLUGIN.getBlockusDataManager()
+                                        .getBlockusDataHolder().getBlockuses().size()
+                                + " §bblockus");
                 return true;
             }
             if (!(sender instanceof Player)) {
@@ -175,25 +177,29 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             Block block = result.getHitBlock();
 
             if (args[1].equalsIgnoreCase("isBlockus")) {
-                player.sendMessage(block.hasMetadata("laboulangerie:placed") ? "§aLe bloc visé est un blockus"
-                        : "§eLe bloc visé n'est pas un blockus");
+                player.sendMessage(
+                        block.hasMetadata("laboulangerie:placed") ? "§aLe bloc visé est un blockus"
+                                : "§eLe bloc visé n'est pas un blockus");
                 return true;
             }
             if (args[1].equalsIgnoreCase("mark")) {
                 Blockus blockus = new Blockus(block);
                 blockus.putMetadata("laboulangerie:placed", player.getUniqueId());
                 blockus.markAsBlockus();
-                LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus);
+                LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder()
+                        .addBlockus(blockus);
                 player.sendMessage("§aLe bloc visé est maintenant un blockus");
                 return true;
             }
             if (args[1].equalsIgnoreCase("unmark")) {
                 if (!block.hasMetadata("laboulangerie:placed")) {
-                    sender.sendMessage("§eLe bloc visé n'est pas un blockus impossible de le dé-marquer");
+                    sender.sendMessage(
+                            "§eLe bloc visé n'est pas un blockus impossible de le dé-marquer");
                     return true;
                 }
                 block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
-                BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
+                BlockusDataHolder dataHolder =
+                        LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
                 dataHolder.removeBlockus(dataHolder.getBlockus(block));
                 player.sendMessage("§aLe bloc visé n'est plus un blockus");
                 return true;
@@ -204,7 +210,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 try {
                     LeaderBoardManager.getInstance().freeAllMaps();
                 } catch (IOException e) {
-                    LaBoulangerieMmo.PLUGIN.getLogger().severe("Unable to free the maps :" + e.getMessage());
+                    LaBoulangerieMmo.PLUGIN.getLogger()
+                            .severe("Unable to free the maps :" + e.getMessage());
                 }
                 return true;
             }
@@ -214,7 +221,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 try {
                     id = Integer.valueOf(args[2]);
                 } catch (NumberFormatException e) {
-                    sender.sendMessage("§4The id: " + args[2]+" cannot be converted to an integer!");
+                    sender.sendMessage(
+                            "§4The id: " + args[2] + " cannot be converted to an integer!");
                     return true;
                 }
                 HashMap<String, Double> toSort = getLeaderBoardPretenders(sender, args[3]);
@@ -232,12 +240,10 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 HashMap<String, Double> toSort = getLeaderBoardPretenders(sender, args[2]);
                 if (toSort == null) return true;
                 try {
-                    LeaderBoardManager.getInstance().createLeaderBoard(
-                        toSort,
-                        "           §16;Classement du metier " + args[2] +":", "xp",
-                        2, 2
-                    )
-                    .stream().forEach(id -> player.getInventory().addItem(LeaderBoardManager.getInstance().getMapItem(id)));
+                    LeaderBoardManager.getInstance().createLeaderBoard(toSort,
+                            "           §16;Classement du metier " + args[2] + ":", "xp", 2, 2)
+                            .stream().forEach(id -> player.getInventory()
+                                    .addItem(LeaderBoardManager.getInstance().getMapItem(id)));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -250,8 +256,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd,
             @NotNull String alias, @NotNull String[] args) {
-        if (args.length == 1)
-            return Arrays.asList("xp", "reload", "rl", "blockus", "leaderboards", "xpboost");
+        if (args.length == 1) return Arrays.asList("xp", "reload", "rl", "blockus", "leaderboards", "xpboost");
         if (args[0].equalsIgnoreCase("xp")) {
             switch (args.length) {
                 default:
@@ -264,13 +269,13 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                     UUID uuid = Bukkit.getPlayerUniqueId(args[1]);
                     if (uuid == null) break;
                     OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
-                    MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
+                    MmoPlayer mmoPlayer =
+                            LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(player);
 
                     return mmoPlayer.streamTalents().get().map(talent -> talent.getTalentId())
                             .collect(Collectors.toList());
                 case 5:
-                    if (args[2].equalsIgnoreCase("see"))
-                        return Arrays.asList("");
+                    if (args[2].equalsIgnoreCase("see")) return Arrays.asList("");
                     return Arrays.asList("10", "1000", "1000000");
             }
         }
@@ -278,7 +283,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             return Arrays.asList("isBlockus", "mark", "unmark");
         if (args[0].equalsIgnoreCase("leaderboards") && args.length == 2)
             return Arrays.asList("updateMap", "freeAllMaps", "create");
-        if (args.length == 3 && args[0].equalsIgnoreCase("leaderboards") && args[1].equalsIgnoreCase("create"))
+        if (args.length == 3 && args[0].equalsIgnoreCase("leaderboards")
+                && args[1].equalsIgnoreCase("create"))
             return Arrays.asList("mining", "thehunter", "woodcutting", "farmer");
 
         if (args[0].equalsIgnoreCase("xpboost")) {
@@ -308,7 +314,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         return Arrays.asList("mining", "thehunter", "woodcutting", "farmer").contains(name);
     }
 
-    private HashMap<String, Double> getLeaderBoardPretenders(CommandSender sender, String leaderboardName) {
+    private HashMap<String, Double> getLeaderBoardPretenders(CommandSender sender,
+            String leaderboardName) {
         if (!isValidLeaderBoards(leaderboardName)) {
             sender.sendMessage("§4Invalid leader board: " + leaderboardName);
             return null;
@@ -317,9 +324,11 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
 
         for (File file : folder.listFiles()) // Load all players
-            LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])));
+            LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(
+                    Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])));
 
         return (HashMap<String, Double>) LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().stream()
-            .collect(Collectors.toMap((p) -> p.getName(), (p) -> p.getTalent(leaderboardName).getXp()));
+                .collect(Collectors.toMap((p) -> p.getName(),
+                        (p) -> p.getTalent(leaderboardName).getXp()));
     }
 }

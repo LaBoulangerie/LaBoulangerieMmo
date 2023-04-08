@@ -33,6 +33,7 @@ public class BlockusDataHolder implements Serializable {
     }
 
     private String getId(Location loc) {
-        return loc.getBlockX() + ";" + loc.getBlockY() + ";" + loc.getBlockZ() + ";" + loc.getWorld().getUID().toString();
+        return loc.getBlockX() + ";" + loc.getBlockY() + ";" + loc.getBlockZ() + ";"
+                + loc.getWorld().getUID().toString();
     }
 }

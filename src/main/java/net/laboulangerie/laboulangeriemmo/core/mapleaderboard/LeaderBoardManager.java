@@ -34,20 +34,22 @@ public class LeaderBoardManager implements Listener {
         try {
             dataFile = new MapDataSave(dataFolder.getPath() + "/mapdata.yml");
         } catch (IOException e) {
-            LaBoulangerieMmo.PLUGIN.getLogger().severe("Unable to load save data of the leaderboard maps: " + e.getMessage());
+            LaBoulangerieMmo.PLUGIN.getLogger()
+                    .severe("Unable to load save data of the leaderboard maps: " + e.getMessage());
             return;
         }
         loadMaps();
     }
 
     public static LeaderBoardManager getInstance() {
-        if (instance == null)
-            instance = new LeaderBoardManager(new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "/maps/"));
+        if (instance == null) instance =
+                new LeaderBoardManager(new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "/maps/"));
         return instance;
     }
 
     @SuppressWarnings("deprecation")
-    public List<Integer> createLeaderBoard(HashMap<String, Double> pretenders, String title, String unit, int width, int height) throws IOException {
+    public List<Integer> createLeaderBoard(HashMap<String, Double> pretenders, String title,
+            String unit, int width, int height) throws IOException {
         if (width <= 0 || height <= 0)
             throw new IllegalArgumentException("Dimensions cannot be negative or null");
         if (width > 10 || height > 10)
@@ -57,22 +59,27 @@ public class LeaderBoardManager implements Listener {
         for (byte x = 0; x < width; x++) {
             for (byte y = 0; y < height; y++) {
                 MapView mapView = null;
-                if (unusedMaps.size() > 0) {// Maps are in limited amount so we reuse maps has much has possible
+                if (unusedMaps.size() > 0) {// Maps are in limited amount so we reuse maps has much
+                                            // has possible
                     mapView = Bukkit.getMap(unusedMaps.get(0));
                     unusedMaps.remove(0);
-                }else {
+                } else {
                     mapView = Bukkit.createMap(Bukkit.getWorlds().get(0));
                 }
-        
-                for (MapRenderer defaultRenderer : mapView.getRenderers())//Clean potential ancient Renderers
+
+                for (MapRenderer defaultRenderer : mapView.getRenderers())// Clean potential ancient
+                                                                          // Renderers
                     mapView.removeRenderer(defaultRenderer);
-        
+
                 mapView.addRenderer(new LeaderBoardRenderer(pretenders, title, unit, x, y));
                 mapView.setScale(Scale.FARTHEST);
                 mapView.setTrackingPosition(false);
-        
+
                 createdMaps.add(mapView.getId());
-                rendererProvider.store(mapView.getId(), (LeaderBoardRenderer) mapView.getRenderers().get(0)); //Store the rendered to restore it on restart
+                rendererProvider.store(mapView.getId(),
+                        (LeaderBoardRenderer) mapView.getRenderers().get(0)); // Store the rendered
+                                                                              // to restore it on
+                                                                              // restart
             }
         }
         usedMaps.addAll(createdMaps);
@@ -82,6 +89,7 @@ public class LeaderBoardManager implements Listener {
 
     /**
      * Frees a map so we can reuse it later because minecraft has a limited number of maps
+     * 
      * @param id
      * @throws IOException
      */
@@ -94,15 +102,17 @@ public class LeaderBoardManager implements Listener {
     }
 
     /**
-     * Update the renderer of the map 
+     * Update the renderer of the map
+     * 
      * @param id
      * @throws IllegalArgumentException if {@code id} is invalid
      */
     @SuppressWarnings("deprecation")
-    public void updateMap(Integer id, HashMap<String, Double> pretenders) throws IllegalArgumentException {
+    public void updateMap(Integer id, HashMap<String, Double> pretenders)
+            throws IllegalArgumentException {
         if (!usedMaps.contains(id)) throw new IllegalArgumentException("No map with id: " + id);
 
-        for (MapRenderer renderer : Bukkit.getMap(id).getRenderers()) {            
+        for (MapRenderer renderer : Bukkit.getMap(id).getRenderers()) {
             if (renderer instanceof LeaderBoardRenderer) {
                 ((LeaderBoardRenderer) renderer).update(pretenders);
                 break;
@@ -123,6 +133,7 @@ public class LeaderBoardManager implements Listener {
 
     /**
      * /!\ Frees all maps, debug purpose only
+     * 
      * @throws IOException
      */
     public void freeAllMaps() throws IOException {
@@ -133,13 +144,11 @@ public class LeaderBoardManager implements Listener {
     }
 
     private void loadMaps() {
-        if (getData().contains("used"))
-            usedMaps = getData().getIntegerList("used");
+        if (getData().contains("used")) usedMaps = getData().getIntegerList("used");
         else
             usedMaps = new ArrayList<>();
-        
-        if (getData().contains("unused"))
-            unusedMaps = getData().getIntegerList("unused");
+
+        if (getData().contains("unused")) unusedMaps = getData().getIntegerList("unused");
         else
             unusedMaps = new ArrayList<>();
     }
@@ -161,7 +170,8 @@ public class LeaderBoardManager implements Listener {
     @EventHandler
     public void onMapInit(MapInitializeEvent event) {
         if (usedMaps.contains(event.getMap().getId())) {
-            for (MapRenderer defaultRenderer : event.getMap().getRenderers())//Clean potential ancient Renderers
+            for (MapRenderer defaultRenderer : event.getMap().getRenderers())// Clean potential
+                                                                             // ancient Renderers
                 event.getMap().removeRenderer(defaultRenderer);
             event.getMap().addRenderer(rendererProvider.provide(event.getMap().getId()));
         }
@@ -180,8 +190,7 @@ public class LeaderBoardManager implements Listener {
 
         private void ensureFileExists() throws IOException {
             dataFile = new File(name);
-            if (!dataFile.exists())
-                dataFile.createNewFile();
+            if (!dataFile.exists()) dataFile.createNewFile();
         }
 
         public FileConfiguration getSave() {

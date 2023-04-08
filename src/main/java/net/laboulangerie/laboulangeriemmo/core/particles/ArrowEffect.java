@@ -22,7 +22,7 @@ public class ArrowEffect extends Effect {
 
     @Override
     public void run() {
-        for(FireArrow fa : FireArrow.fireArrow) {
+        for (FireArrow fa : FireArrow.fireArrow) {
             if (fa.getArrow() == entity) {
                 fireArrow = fa;
             }
@@ -40,7 +40,8 @@ public class ArrowEffect extends Effect {
 
         if (fireArrow == null || fireArrow.getAbilityLevel() == 1)
             world.spawnParticle(Particle.FLAME, entity.getLocation(), 0, 0, 0, 0, 8);
-        if (((AbstractArrow) entity).isInBlock() || ((AbstractArrow) entity).getFireTicks() == 0 || ((AbstractArrow) entity).isDead())
+        if (((AbstractArrow) entity).isInBlock() || ((AbstractArrow) entity).getFireTicks() == 0
+                || ((AbstractArrow) entity).isDead())
             cancel();
     }
 
@@ -57,7 +58,8 @@ public class ArrowEffect extends Effect {
 
             final Location temp = location.clone().add(v);
 
-            location.getWorld().spawnParticle(Particle.FLAME, (float) temp.getX(), (float) temp.getY(), (float) temp.getZ(), 0);
+            location.getWorld().spawnParticle(Particle.FLAME, (float) temp.getX(),
+                    (float) temp.getY(), (float) temp.getZ(), 0);
         }
     }
 
