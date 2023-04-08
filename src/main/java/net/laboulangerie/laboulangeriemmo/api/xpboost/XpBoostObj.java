@@ -21,6 +21,7 @@ public class XpBoostObj {
 
     private final UUID uid;
     private boolean alreadyShownBossBar = false;
+    private boolean initShownBossBar = true;
     private final BossBar bossBar;
     public MmoPlayer author;
     public TalentArchetype talent;
@@ -42,8 +43,10 @@ public class XpBoostObj {
                 stopBoost();
             }
             if (!this.alreadyShownBossBar) {
-                for (Player p : Bukkit.getOnlinePlayers())
-                    p.showBossBar(this.bossBar);
+                if(this.initShownBossBar){
+                    for (Player p : Bukkit.getOnlinePlayers())
+                        p.showBossBar(this.bossBar);
+                }
                 this.alreadyShownBossBar = true;
             } else {
                 updateTitle();
@@ -124,6 +127,24 @@ public class XpBoostObj {
 
     public BossBar getBossBar() {
         return bossBar;
+    }
+
+    public void hideBossBar() {
+        for (Player p : Bukkit.getOnlinePlayers())
+            p.hideBossBar(this.bossBar);
+    }
+
+    public void showBossBar() {
+        for (Player p : Bukkit.getOnlinePlayers())
+            p.showBossBar(this.bossBar);
+    }
+
+    public boolean isInitShownBossBar() {
+        return initShownBossBar;
+    }
+
+    public void setInitShownBossBar(boolean initShownBossBarBar) {
+        this.initShownBossBar = initShownBossBarBar;
     }
 
 }
