@@ -12,12 +12,14 @@ public class XpBoostManager {
 
     public List<XpBoostObj> list = new ArrayList<XpBoostObj>();
 
-    public XpBoostObj add(MmoPlayer mmoPlayer, TalentArchetype talentArchetype, double boost, int time) {
+    public XpBoostObj add(MmoPlayer mmoPlayer, TalentArchetype talentArchetype, double boost,
+            int time) {
         XpBoostObj xpBoostObj = new XpBoostObj(mmoPlayer, talentArchetype, boost, time);
         list.forEach(item -> {
-            if(item.getTalent().equals(xpBoostObj.getTalent())) {
-                if (item.getBoost() < xpBoostObj.getBoost() && item.getTime() > xpBoostObj.getTime() ||
-                    item.getTime() < xpBoostObj.getTime() && item.getBoost() < xpBoostObj.getBoost() ) {
+            if (item.getTalent().equals(xpBoostObj.getTalent())) {
+                if (item.getBoost() < xpBoostObj.getBoost() && item.getTime() > xpBoostObj.getTime()
+                        || item.getTime() < xpBoostObj.getTime()
+                                && item.getBoost() < xpBoostObj.getBoost()) {
                     item.hideBossBar();
                 } else {
                     xpBoostObj.setInitShowBossBar(false);
@@ -33,7 +35,7 @@ public class XpBoostManager {
         return list;
     }
 
-    public XpBoostObj getBoost(String talentIdentifier){
+    public XpBoostObj getBoost(String talentIdentifier) {
         return getBoost(talentIdentifier, "boost");
     }
 
@@ -42,13 +44,17 @@ public class XpBoostManager {
 
         for (XpBoostObj xpBoostObj : getList()) {
             if (xpBoostObj.getTalent().identifier.equalsIgnoreCase(talentIdentifier)) {
-                if (target == null) target = xpBoostObj;
+                if (target == null)
+                    target = xpBoostObj;
                 else {
-                    if(key.equalsIgnoreCase("boost")){
-                        if (xpBoostObj.getBoost() > target.getBoost() && xpBoostObj.getBoost() != target.getBoost()) target = xpBoostObj;
+                    if (key.equalsIgnoreCase("boost")) {
+                        if (xpBoostObj.getBoost() > target.getBoost()
+                                && xpBoostObj.getBoost() != target.getBoost())
+                            target = xpBoostObj;
                     }
-                    if(key.equalsIgnoreCase("timeLeft")){
-                        if (xpBoostObj.getTime() < target.getTime()) target = xpBoostObj;
+                    if (key.equalsIgnoreCase("timeLeft")) {
+                        if (xpBoostObj.getTime() < target.getTime())
+                            target = xpBoostObj;
                     }
                 }
             }
@@ -68,25 +74,24 @@ public class XpBoostManager {
             }
         }
 
-        if(talentXpBoostRemove != null){
+        if (talentXpBoostRemove != null) {
             XpBoostObj higher = getBoost(talentXpBoostRemove.identifier);
             XpBoostObj timeLeft = getBoost(talentXpBoostRemove.identifier, "timeLeft");
             TalentArchetype finalTalentXpBoostRemove = talentXpBoostRemove;
             list.forEach(item -> {
-                if(item.getTalent().equals(finalTalentXpBoostRemove)) {
+                if (item.getTalent().equals(finalTalentXpBoostRemove)) {
                     if (higher == null && item.getTime() > timeLeft.getTime()) {
                         item.hideBossBar();
-                    } else {
-                        assert higher != null;
-                        if (item.getBoost() < higher.getBoost()) {
-                            item.hideBossBar();
-                        } else {
-                            item.showBossBar();
-                        }
+                        return;
                     }
+                    assert higher != null;
+                    if (item.getBoost() < higher.getBoost()) {
+                        item.hideBossBar();
+                    } else {
+                        item.showBossBar();
+                    }   
                 }
             });
         }
-
     }
 }

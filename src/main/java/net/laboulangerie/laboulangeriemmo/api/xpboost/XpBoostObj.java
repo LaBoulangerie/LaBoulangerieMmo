@@ -39,7 +39,7 @@ public class XpBoostObj {
     }
 
     public void startBoost() {
-        if(this.initShowBossBar){
+        if (this.initShowBossBar) {
             this.shownBar = true;
             for (Player p : Bukkit.getOnlinePlayers())
                 p.showBossBar(this.bossBar);
@@ -53,7 +53,8 @@ public class XpBoostObj {
 
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(2);
-            float progress = Float.parseFloat(df.format((float) this.time / totalTime).replace(",", "."));
+            float progress = Float
+                    .parseFloat(df.format((float) this.time / totalTime).replace(",", "."));
             this.bossBar.progress(progress);
 
             this.time--;
@@ -82,14 +83,14 @@ public class XpBoostObj {
 
         FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
-        List<TagResolver.Single> placeholders = Arrays.asList(
-                Placeholder.parsed("boost", this.getFormattedBoost()),
-                Placeholder.parsed("talent", talent.displayName),
-                Placeholder.parsed("author", this.author.getName()),
-                Placeholder.parsed("time", timeString));
+        List<TagResolver.Single> placeholders =
+                Arrays.asList(Placeholder.parsed("boost", this.getFormattedBoost()),
+                        Placeholder.parsed("talent", talent.displayName),
+                        Placeholder.parsed("author", this.author.getName()),
+                        Placeholder.parsed("time", timeString));
 
-        Component newTitle = MiniMessage.miniMessage().deserialize(config.getString("lang.xp_boost.bar_title"),
-                TagResolver.resolver(placeholders));
+        Component newTitle = MiniMessage.miniMessage().deserialize(
+                config.getString("lang.xp_boost.bar_title"), TagResolver.resolver(placeholders));
 
         if (this.bossBar != null)
             this.bossBar.name(newTitle);
