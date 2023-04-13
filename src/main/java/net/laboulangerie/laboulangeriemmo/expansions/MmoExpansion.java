@@ -48,14 +48,16 @@ public class MmoExpansion extends PlaceholderExpansion {
         }
 
         if (params.equalsIgnoreCase("palier_colored")) {
-            List<String> colors = LaBoulangerieMmo.PLUGIN.getConfig().getStringList("palier-coloration");
+            List<String> colors =
+                    LaBoulangerieMmo.PLUGIN.getConfig().getStringList("palier-coloration");
             Integer maxPalier = 400; // TODO : make max talent lvl configurable
             Integer palier = mmoPlayer.getPalier();
             // This float cast in necessary, thanks java
             float progress = ((float) palier) / maxPalier;
 
-            return String.format(Locale.US, "<transition:" + String.join(":", colors) +
-                    ":%.2f>%d</transition>", progress, palier);
+            return String.format(Locale.US,
+                    "<transition:" + String.join(":", colors) + ":%.2f>%d</transition>", progress,
+                    palier);
         }
 
         String talentId = params.split("_")[0];

@@ -24,7 +24,8 @@ public class ExpInBottle extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
         ItemStack item = event.getItem();
-        return event.getPlayer().isSneaking() && item != null && item.getType() == Material.GLASS_BOTTLE;
+        return event.getPlayer().isSneaking() && item != null
+                && item.getType() == Material.GLASS_BOTTLE;
     }
 
     @Override
@@ -34,10 +35,8 @@ public class ExpInBottle extends AbilityExecutor {
         int pointsToSubtract = 100; // tier 1
         int currentExp = Utils.getPlayerExp(player);
 
-        if (level >= getTier(2))
-            pointsToSubtract = 300; // tier 3
-        else if (level >= getTier(1))
-            pointsToSubtract = 200; // tier 2
+        if (level >= getTier(2)) pointsToSubtract = 300; // tier 3
+        else if (level >= getTier(1)) pointsToSubtract = 200; // tier 2
 
         if (currentExp >= pointsToSubtract) {
             Utils.changePlayerExp(player, -pointsToSubtract);
@@ -46,8 +45,7 @@ public class ExpInBottle extends AbilityExecutor {
             ItemMeta itemMeta = item.getItemMeta();
             itemMeta.lore(Arrays.asList(Component.text("Quantité: " + pointsToSubtract + " xp")));
             item.setItemMeta(itemMeta);
-            event.getItem()
-                .setAmount(event.getItem().getAmount() - 1);
+            event.getItem().setAmount(event.getItem().getAmount() - 1);
 
             if (player.getInventory().firstEmpty() != -1) {
                 player.getInventory().addItem(item);

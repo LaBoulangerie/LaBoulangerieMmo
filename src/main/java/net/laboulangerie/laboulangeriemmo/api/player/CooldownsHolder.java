@@ -18,30 +18,40 @@ public class CooldownsHolder {
     }
 
     public long getCooldown(AbilityArchetype ability, String talentId) {
-        return ability.cooldownUnit.convert(new Date().getTime() - cooldowns.get(getId(ability, talentId)).getTime(),
+        return ability.cooldownUnit.convert(
+                new Date().getTime() - cooldowns.get(getId(ability, talentId)).getTime(),
                 TimeUnit.MILLISECONDS);
     }
 
     public List<Long> getCooldowns(String abilityId) {
-        return cooldowns.entrySet().stream().filter(entry -> entry.getKey().endsWith("/" + abilityId)).map(entry -> {
-            AbilityArchetype archetype = LaBoulangerieMmo.talentsRegistry.getTalent(entry.getKey().split("/")[0]).abilitiesArchetypes.get(entry.getKey().split("/")[1]);
-            return archetype.cooldownUnit.convert(new Date().getTime() - entry.getValue().getTime(),
-                TimeUnit.MILLISECONDS);
-        }).collect(Collectors.toList());
+        return cooldowns.entrySet().stream()
+                .filter(entry -> entry.getKey().endsWith("/" + abilityId)).map(entry -> {
+                    AbilityArchetype archetype = LaBoulangerieMmo.talentsRegistry
+                            .getTalent(entry.getKey().split("/")[0]).abilitiesArchetypes
+                                    .get(entry.getKey().split("/")[1]);
+                    return archetype.cooldownUnit.convert(
+                            new Date().getTime() - entry.getValue().getTime(),
+                            TimeUnit.MILLISECONDS);
+                }).collect(Collectors.toList());
     }
 
     public HashMap<AbilityArchetype, Long> getArchetypeCooldowns(String abilityId) {
-        return (HashMap<AbilityArchetype, Long>) cooldowns.entrySet().stream().filter(entry -> entry.getKey().endsWith("/" + abilityId)).collect(Collectors.toMap(
-            e -> LaBoulangerieMmo.talentsRegistry.getTalent(e.getKey().split("/")[0]).abilitiesArchetypes.get(e.getKey().split("/")[1]),
-            Entry::getValue
-        )).entrySet().stream().collect(Collectors.toMap(
-            Entry::getKey,
-            e -> e.getKey().cooldownUnit.convert(new Date().getTime() - e.getValue().getTime(), TimeUnit.MILLISECONDS)
-        ));
+        return (HashMap<AbilityArchetype, Long>) cooldowns.entrySet().stream()
+                .filter(entry -> entry.getKey().endsWith("/" + abilityId))
+                .collect(Collectors.toMap(e -> LaBoulangerieMmo.talentsRegistry
+                        .getTalent(e.getKey().split("/")[0]).abilitiesArchetypes
+                                .get(e.getKey().split("/")[1]),
+                        Entry::getValue))
+                .entrySet().stream()
+                .collect(Collectors.toMap(Entry::getKey,
+                        e -> e.getKey().cooldownUnit.convert(
+                                new Date().getTime() - e.getValue().getTime(),
+                                TimeUnit.MILLISECONDS)));
     }
 
     public boolean isCooldownElapsed(AbilityArchetype ability, String talentId) {
-        return cooldowns.get(getId(ability, talentId)) == null || getCooldown(ability, talentId) >= ability.cooldown;
+        return cooldowns.get(getId(ability, talentId)) == null
+                || getCooldown(ability, talentId) >= ability.cooldown;
     }
 
     public void startCooldown(AbilityArchetype ability, String talentId) {
@@ -50,19 +60,24 @@ public class CooldownsHolder {
 
     /**
      * Checks if the specified ability has been used in the specified talent
+     * 
      * @param ability The ability to check
      * @param talentId The talent in which the ability must have been used
      */
     public boolean hasUsed(AbilityArchetype ability, String talentId) {
         return cooldowns.get(getId(ability, talentId)) != null;
     }
+
     /**
      * Checks if the specified ability has been used no matter the talent
+     * 
      * @param abilityId The ability to check
      */
     public boolean hasUsed(String abilityId) {
-        return cooldowns.keySet().stream().filter(key -> key.endsWith("/" + abilityId)).findFirst().isPresent();
+        return cooldowns.keySet().stream().filter(key -> key.endsWith("/" + abilityId)).findFirst()
+                .isPresent();
     }
+
     private String getId(AbilityArchetype ability, String talentId) {
         return talentId + "/" + ability.identifier;
     }

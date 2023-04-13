@@ -18,33 +18,11 @@ public class Timber extends AbilityExecutor {
     }
 
     // Relative coordinates of every neighbours that we want to check
-    private static int[][] relCoordinates = {
-            { 1, 0, 0 },
-            { -1, 0, 0 },
-            { 0, 0, 1 },
-            { 0, 0, -1 },
-            { 1, 0, 1 },
-            { 1, 0, -1 },
-            { -1, 0, 1 },
-            { -1, 0, -1 },
-            { 0, 1, 0 },
-            { 1, 1, 0 },
-            { -1, 1, 0 },
-            { 0, 1, 1 },
-            { 0, 1, -1 },
-            { 1, 1, 1 },
-            { 1, 1, -1 },
-            { -1, 1, 1 },
-            { -1, 1, -1 },
-            { 1, -1, 0 },
-            { -1, -1, 0 },
-            { 0, -1, 1 },
-            { 0, -1, -1 },
-            { 1, -1, 1 },
-            { 1, -1, -1 },
-            { -1, -1, 1 },
-            { -1, -1, -1 }
-    };
+    private static int[][] relCoordinates =
+            {{1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1}, {1, 0, 1}, {1, 0, -1}, {-1, 0, 1},
+                    {-1, 0, -1}, {0, 1, 0}, {1, 1, 0}, {-1, 1, 0}, {0, 1, 1}, {0, 1, -1}, {1, 1, 1},
+                    {1, 1, -1}, {-1, 1, 1}, {-1, 1, -1}, {1, -1, 0}, {-1, -1, 0}, {0, -1, 1},
+                    {0, -1, -1}, {1, -1, 1}, {1, -1, -1}, {-1, -1, 1}, {-1, -1, -1}};
 
     private int range = 5;
 
@@ -56,7 +34,8 @@ public class Timber extends AbilityExecutor {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
 
-        return block != null && Tag.LOGS.isTagged(block.getType()) && !(block.hasMetadata("laboulangerie:placed"));
+        return block != null && Tag.LOGS.isTagged(block.getType())
+                && !(block.hasMetadata("laboulangerie:placed"));
     }
 
     @Override
@@ -74,10 +53,14 @@ public class Timber extends AbilityExecutor {
             public void run() {
                 Location loc = block.getLocation();
                 for (int[] coordinate : Timber.relCoordinates) {
-                    Location neighbourLoc = loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
+                    Location neighbourLoc =
+                            loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
                     Block neighbour = neighbourLoc.getBlock();
 
-                    if ((neighbour.getType() == Material.getMaterial(initType.toString().replace("_WOOD", "_LOG")) || neighbour.getType() == Material.getMaterial(initType.toString().replace("_LOG", "_WOOD")))
+                    if ((neighbour.getType() == Material
+                            .getMaterial(initType.toString().replace("_WOOD", "_LOG"))
+                            || neighbour.getType() == Material
+                                    .getMaterial(initType.toString().replace("_LOG", "_WOOD")))
                             && neighbour.getY() >= initLocation.getBlockY()
                             && Math.abs(neighbour.getX() - initLocation.getBlockX()) <= range
                             && Math.abs(neighbour.getZ() - initLocation.getBlockZ()) <= range) {

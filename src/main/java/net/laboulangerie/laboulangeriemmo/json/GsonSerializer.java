@@ -11,11 +11,8 @@ public class GsonSerializer {
     private Gson gson;
 
     public GsonSerializer() {
-        gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .serializeNulls()
-                .registerTypeAdapterFactory(new PostProcessingEnabler())
-                .create();
+        gson = new GsonBuilder().setPrettyPrinting().serializeNulls()
+                .registerTypeAdapterFactory(new PostProcessingEnabler()).create();
     }
 
     public String serialize(GsonSerializable serializable) {

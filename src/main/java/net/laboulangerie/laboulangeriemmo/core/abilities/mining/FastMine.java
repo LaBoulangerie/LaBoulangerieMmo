@@ -21,7 +21,8 @@ public class FastMine extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
-        return event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.RIGHT, ComboKey.LEFT));
+        return event.getKeyStreak()
+                .match(new KeyStreak(ComboKey.LEFT, ComboKey.RIGHT, ComboKey.LEFT));
     }
 
     @Override
@@ -40,8 +41,10 @@ public class FastMine extends AbilityExecutor {
             duration = 20;
             amplifier = 1;
         }
-        player.sendMessage("§eVous gagnez Haste " + (amplifier + 1) + " pendant " + duration + " secondes");
-        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, duration * 20, amplifier, true));
+        player.sendMessage(
+                "§eVous gagnez Haste " + (amplifier + 1) + " pendant " + duration + " secondes");
+        player.addPotionEffect(
+                new PotionEffect(PotionEffectType.FAST_DIGGING, duration * 20, amplifier, true));
         EffectRegistry.playEffect("default", player);
     }
 }

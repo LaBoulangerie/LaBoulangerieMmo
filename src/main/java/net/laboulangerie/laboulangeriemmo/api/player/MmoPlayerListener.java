@@ -23,8 +23,7 @@ public class MmoPlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (mmoPlayerManager.getPlayer(player) == null)
-            mmoPlayerManager.loadPlayerData(player);
+        if (mmoPlayerManager.getPlayer(player) == null) mmoPlayerManager.loadPlayerData(player);
         MarkedBlocksManager.manager().setupTeams(player);
     }
 
@@ -40,11 +39,11 @@ public class MmoPlayerListener implements Listener {
         Block block = event.getBlock();
 
         MmoPlayer mmoPlayer = mmoPlayerManager.getPlayer(player);
-        MmoPlayerBreakBlockEvent breakBlockEvent = new MmoPlayerBreakBlockEvent(player, mmoPlayer, block);
+        MmoPlayerBreakBlockEvent breakBlockEvent =
+                new MmoPlayerBreakBlockEvent(player, mmoPlayer, block);
         LaBoulangerieMmo.PLUGIN.getServer().getPluginManager().callEvent(breakBlockEvent);
     }
 
     @EventHandler
-    public void onPlayerEarnsXp(PlayerEarnsXpEvent event) {
-    }
+    public void onPlayerEarnsXp(PlayerEarnsXpEvent event) {}
 }

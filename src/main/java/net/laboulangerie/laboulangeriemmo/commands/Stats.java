@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
+import java.util.stream.Stream;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -18,16 +18,15 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
-
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 
 public class Stats implements TabExecutor {
     /**
-     * per talent list of players classed by their xp
-     * cleared every 2 minutes
+     * per talent list of players classed by their xp cleared every 2 minutes
      */
     private static Map<String, List<MmoPlayer>> talentTopCache = new HashMap<>();
+    private List<MmoPlayer> orderedPlayers;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
@@ -35,14 +34,10 @@ public class Stats implements TabExecutor {
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("leaderboard")) {
                 if (args.length == 1) return false;
-                if (LaBoulangerieMmo.talentsRegistry.getTalent(args[1]) == null) {
-                    sender.sendMessage("§4Invalid talent.");
-                    return true;
-                }
                 int page = 0;
                 if (args.length > 2) {
                     try {
-                        page = Integer.parseInt(args[2])-1;
+                        page = Integer.parseInt(args[2]) - 1;
                         if (page < 0) {
                             sender.sendMessage("§4Invalid page number");
                             return true;
@@ -52,28 +47,46 @@ public class Stats implements TabExecutor {
                         return true;
                     }
                 }
-                if (talentTopCache.get(args[1]) == null) {
-                    File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
-    
-                    talentTopCache.put(args[1], List.of(folder.listFiles()).stream().map(file -> 
-                        LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0])))
-                    ).sorted((v1, v2) ->  ((Double) v2.getTalent(args[1]).getXp()).compareTo(v1.getTalent(args[1]).getXp())).collect(Collectors.toList()));
+
+                File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
+                Stream<MmoPlayer> listAllPlayers = List.of(folder.listFiles()).stream()
+                        .map(file -> LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(
+                                Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0]))));
+
+                if (args[1].equalsIgnoreCase("all")) {
+                    orderedPlayers =
+                            listAllPlayers.sorted((v1, v2) -> ((Integer) v2.getPalier()).compareTo(v1.getPalier()))
+                                    .collect(Collectors.toList());
+                } else if (talentTopCache.get(args[1]) == null) {
+                    if (LaBoulangerieMmo.talentsRegistry.getTalent(args[1]) == null) {
+                        sender.sendMessage("§4Invalid talent.");
+                        return true;
+                    }
+                    talentTopCache
+                            .put(args[1],
+                                    listAllPlayers
+                                            .sorted((v1, v2) -> ((Double) v2.getTalent(args[1]).getXp())
+                                                    .compareTo(v1.getTalent(args[1]).getXp()))
+                                            .collect(Collectors.toList()));
 
                     scheduleCacheClear(args[1]);
+                    orderedPlayers = talentTopCache.get(args[1]);
                 }
-                List<MmoPlayer> orderedPlayers = talentTopCache.get(args[1]);
 
-                sender.sendMessage("§3----------§8[Page §7" + (page+1) + "§8]§3----------");
-                for (int i = page*10; i < (orderedPlayers.size() < (page+1) *10 ? orderedPlayers.size() : (page+1) *10); i++) {
+                sender.sendMessage("§3----------§8[Page §7" + (page + 1) + "§8]§3----------");
+                for (int i = page * 10; i < (Math.min(orderedPlayers.size(), (page + 1) * 10)); i++) {
                     MmoPlayer player = orderedPlayers.get(i);
-                    sender.sendMessage("§e" + (i+1) + ". §a" + player.getName() + " §6- §3level §9" + player.getTalent(args[1]).getLevel());
+                    sender.sendMessage("§e" + (i + 1) + ". §a" + player.getName() + " §6- "
+                            + (!args[1].equalsIgnoreCase("all") ? "§3level §9" + player.getTalent(args[1]).getLevel()
+                                    : "§3Palier §9" + player.getPalier()));
                 }
-                
+
                 return true;
             }
 
             if (!sender.hasPermission("laboulangeriemmo.stats.see")) {
-                sender.sendMessage(ChatColor.GOLD + "[LaBoulangerieMmo] §4You don't have the permission to see other's stats.");
+                sender.sendMessage(
+                        ChatColor.GOLD + "[LaBoulangerieMmo] §4You don't have the permission to see other's stats.");
                 return true;
             }
             UUID uuid = Bukkit.getPlayerUniqueId(args[0]);
@@ -114,25 +127,27 @@ public class Stats implements TabExecutor {
 
         if (args.length == 1) {
             suggestions.add("leaderboard");
-            if (sender.hasPermission("laboulangeriemmo.stats.see"))
-                suggestions.addAll(Bukkit.getOnlinePlayers().stream().map(p -> p.getName()).collect(Collectors.toList()));
-        }else if (args[0].equalsIgnoreCase("leaderboard")) {
+            if (sender.hasPermission("laboulangeriemmo.stats.see")) suggestions
+                    .addAll(Bukkit.getOnlinePlayers().stream().map(p -> p.getName()).collect(Collectors.toList()));
+        } else if (args[0].equalsIgnoreCase("leaderboard")) {
             switch (args.length) {
                 case 2:
-                     suggestions = new ArrayList<>(LaBoulangerieMmo.talentsRegistry.getTalents().keySet());
-                break;
+                    suggestions = new ArrayList<>(LaBoulangerieMmo.talentsRegistry.getTalents().keySet());
+                    suggestions.add("all");
+                    break;
                 case 3:
                     suggestions = Arrays.asList("1", "2", "3", "4", "5");
-                break;
+                    break;
                 default:
             }
         }
-        return suggestions.stream().filter(str -> str.startsWith(args[args.length == 0 ? 0 : args.length-1]))
-            .collect(Collectors.toList());
+        return suggestions.stream().filter(str -> str.startsWith(args[args.length == 0 ? 0 : args.length - 1]))
+                .collect(Collectors.toList());
     }
 
     /**
      * Clear the entry for the specified talent in {@code talentTopCache} in 1 minute
+     * 
      * @param talent
      */
     private void scheduleCacheClear(String talent) {
@@ -141,6 +156,6 @@ public class Stats implements TabExecutor {
             public void run() {
                 talentTopCache.remove(talent);
             }
-        }.runTaskLater(LaBoulangerieMmo.PLUGIN, 20*60);
+        }.runTaskLater(LaBoulangerieMmo.PLUGIN, 20 * 60);
     }
 }

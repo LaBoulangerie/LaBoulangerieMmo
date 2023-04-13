@@ -12,7 +12,7 @@ import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
 import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 
-public class ThickTree extends AbilityExecutor{
+public class ThickTree extends AbilityExecutor {
 
     public ThickTree(AbilityArchetype archetype) {
         super(archetype);
@@ -22,8 +22,11 @@ public class ThickTree extends AbilityExecutor{
     public boolean shouldTrigger(Event baseEvent) {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
         Block block = event.getPlayer().getTargetBlock(5);
-        return new KeyStreak(ComboKey.RIGHT, ComboKey.RIGHT, ComboKey.LEFT).match(event.getKeyStreak())
-                && block.getType() != null && block.getType() == Material.JUNGLE_SAPLING || block.getType() == Material.BIRCH_SAPLING || block.getType() == Material.SPRUCE_SAPLING;
+        return new KeyStreak(ComboKey.RIGHT, ComboKey.RIGHT, ComboKey.LEFT)
+                .match(event.getKeyStreak()) && block.getType() != null
+                && block.getType() == Material.JUNGLE_SAPLING
+                || block.getType() == Material.BIRCH_SAPLING
+                || block.getType() == Material.SPRUCE_SAPLING;
     }
 
     @Override
@@ -33,16 +36,16 @@ public class ThickTree extends AbilityExecutor{
         World world = block.getWorld();
         TreeType treeType = null;
         switch (block.getType()) {
-            case SPRUCE_SAPLING :
+            case SPRUCE_SAPLING:
                 treeType = TreeType.MEGA_REDWOOD;
                 break;
             case JUNGLE_SAPLING:
                 treeType = TreeType.JUNGLE;
                 break;
-            case BIRCH_SAPLING :
+            case BIRCH_SAPLING:
                 treeType = TreeType.TALL_BIRCH;
                 break;
-            default :
+            default:
                 event.getPlayer().sendMessage("Ceci n'est pas un sapling valable");
                 return;
         }

@@ -14,7 +14,7 @@ import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 /**
  * Called just after a player used an ability
  */
-public class MmoPlayerUseAbilityEvent extends Event{
+public class MmoPlayerUseAbilityEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
     private MmoPlayer mmoPlayer;
@@ -23,7 +23,8 @@ public class MmoPlayerUseAbilityEvent extends Event{
     private AbilityTrigger trigger;
     private Event triggerEvent;
 
-    public MmoPlayerUseAbilityEvent(MmoPlayer mmoPlayer, AbilityArchetype ability, AbilityExecutor executor, Event triggerEvent, AbilityTrigger trigger) {
+    public MmoPlayerUseAbilityEvent(MmoPlayer mmoPlayer, AbilityArchetype ability,
+            AbilityExecutor executor, Event triggerEvent, AbilityTrigger trigger) {
         this.mmoPlayer = mmoPlayer;
         this.ability = ability;
         this.executor = executor;
@@ -32,16 +33,40 @@ public class MmoPlayerUseAbilityEvent extends Event{
     }
 
     @Override
-    public @NotNull HandlerList getHandlers() { return handlers; }
-    public static HandlerList getHandlerList() { return handlers; }
-    public MmoPlayer getMmoPlayer() { return mmoPlayer; }
-    public AbilityTrigger getAbilityTrigger() { return trigger; }
-    public AbilityArchetype getAbility() { return ability; }
-    public AbilityExecutor getExecutor() { return executor; }
+    public @NotNull HandlerList getHandlers() {
+        return handlers;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    public MmoPlayer getMmoPlayer() {
+        return mmoPlayer;
+    }
+
+    public AbilityTrigger getAbilityTrigger() {
+        return trigger;
+    }
+
+    public AbilityArchetype getAbility() {
+        return ability;
+    }
+
+    public AbilityExecutor getExecutor() {
+        return executor;
+    }
+
     /**
      * The event that triggered the ability can be cast according to the {@code AbilityTrigger} used
+     * 
      * @return the event that triggered the ability
      */
-    public Event getTriggerEvent() { return triggerEvent; }
-    public Player getPlayer() { return Bukkit.getPlayer(mmoPlayer.getUniqueId()); }
+    public Event getTriggerEvent() {
+        return triggerEvent;
+    }
+
+    public Player getPlayer() {
+        return Bukkit.getPlayer(mmoPlayer.getUniqueId());
+    }
 }

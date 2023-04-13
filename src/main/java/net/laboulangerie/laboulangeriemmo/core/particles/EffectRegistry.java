@@ -10,7 +10,8 @@ import org.bukkit.entity.Entity;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class EffectRegistry {
-    private static Map<String, Class<? extends Effect>> particles = new HashMap<String, Class<? extends Effect>>();
+    private static Map<String, Class<? extends Effect>> particles =
+            new HashMap<String, Class<? extends Effect>>();
 
     public static void registerParticlesEffects() {
         particles.put("default", HelixEffect.class);
@@ -19,33 +20,35 @@ public class EffectRegistry {
         particles.put("invisible-particles", InvisibleParticles.class);
     }
 
-    public static Effect getNewEffect(String effectName, Entity entity) throws IllegalArgumentException {
+    public static Effect getNewEffect(String effectName, Entity entity)
+            throws IllegalArgumentException {
         Class<? extends Effect> effectAsClass = particles.get(effectName);
         if (effectAsClass == null)
             throw new IllegalArgumentException("Effect " + effectName + " doesn't exists!");
 
         try {
             return effectAsClass.getConstructor(Entity.class).newInstance(entity);
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-                | NoSuchMethodException | SecurityException e) {
-            LaBoulangerieMmo.PLUGIN.getLogger()
-                    .severe("Tried to instantiate an Effect with an invalid argument for the constructor!");
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            LaBoulangerieMmo.PLUGIN.getLogger().severe(
+                    "Tried to instantiate an Effect with an invalid argument for the constructor!");
             e.printStackTrace();
             return null;
         }
     }
 
-    public static Effect getNewEffect(String effectName, Location location) throws IllegalArgumentException {
+    public static Effect getNewEffect(String effectName, Location location)
+            throws IllegalArgumentException {
         Class<? extends Effect> effectAsClass = particles.get(effectName);
         if (effectAsClass == null)
             throw new IllegalArgumentException("Effect " + effectName + "doesn't exists!");
 
         try {
             return effectAsClass.getConstructor(Location.class).newInstance(location);
-        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
-                | NoSuchMethodException | SecurityException e) {
-            LaBoulangerieMmo.PLUGIN.getLogger()
-                    .severe("Tried to instantiate an Effect with an invalid argument for the constructor!");
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            LaBoulangerieMmo.PLUGIN.getLogger().severe(
+                    "Tried to instantiate an Effect with an invalid argument for the constructor!");
             e.printStackTrace();
             return null;
         }

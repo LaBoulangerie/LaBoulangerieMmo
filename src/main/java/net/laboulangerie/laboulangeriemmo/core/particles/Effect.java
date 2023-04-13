@@ -12,8 +12,7 @@ public abstract class Effect extends BukkitRunnable {
     protected Location location;
     protected World world;
     /**
-     * delay between each call of the run() method in the default implementation of
-     * startEffect()
+     * delay between each call of the run() method in the default implementation of startEffect()
      */
     protected int period = 1;
 

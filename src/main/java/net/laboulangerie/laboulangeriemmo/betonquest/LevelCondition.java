@@ -21,8 +21,8 @@ public class LevelCondition extends Condition {
     @Override
     protected Boolean execute(String playerID) throws QuestRuntimeException {
         MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
-            .getPlayer(Bukkit.getPlayer(UUID.fromString(playerID)));
-        if (mmoPlayer == null) return false; //Shouldn't happen but just in case
+                .getPlayer(Bukkit.getPlayer(UUID.fromString(playerID)));
+        if (mmoPlayer == null) return false; // Shouldn't happen but just in case
 
         String talentName = "";
         try {
@@ -32,5 +32,5 @@ public class LevelCondition extends Condition {
         }
         return instruction.getAllNumbers().get(0) <= mmoPlayer.getTalent(talentName).getLevel();
     }
-    
+
 }

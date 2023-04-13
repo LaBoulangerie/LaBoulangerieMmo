@@ -40,8 +40,7 @@ public class GrindingListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityKill(EntityDeathEvent event) {
-        if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player))
-            return;
+        if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player)) return;
 
         giveReward(event.getEntity().getKiller(), GrindingCategory.KILL,
                 event.getEntity().getType().toString());
@@ -50,8 +49,7 @@ public class GrindingListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCraft(CraftItemEvent event) {
         Player player = (Player) event.getWhoClicked();
-        if (event.isCancelled() || !(event.getWhoClicked() instanceof Player))
-            return;
+        if (event.isCancelled() || !(event.getWhoClicked() instanceof Player)) return;
         Material crafted = event.getRecipe().getResult().getType();
 
         giveReward(player, GrindingCategory.CRAFT, crafted.toString());
@@ -72,6 +70,7 @@ public class GrindingListener implements Listener {
     private void giveReward(Player player, GrindingCategory category, String identifier) {
         if (player.getGameMode() == GameMode.CREATIVE)
             return;
+
         Set<String> keys = LaBoulangerieMmo.PLUGIN.getConfig()
                 .getConfigurationSection("talent-grinding").getKeys(false);
 
@@ -82,6 +81,7 @@ public class GrindingListener implements Listener {
             ConfigurationSection section =
                     LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection(
                             "talent-grinding." + talentName + "." + category.toString());
+
             if (section == null)
                 return;
 

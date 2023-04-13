@@ -48,8 +48,8 @@ public class ServerListener implements Listener {
     public void onExpBottle(ExpBottleEvent event) {
         ItemStack bottle = event.getEntity().getItem();
         ItemMeta meta = bottle.getItemMeta();
-        if (meta.hasLore() && PlainTextComponentSerializer.plainText()
-                .serialize(meta.lore().get(0)).startsWith("Quantité:")) {
+        if (meta.hasLore() && PlainTextComponentSerializer.plainText().serialize(meta.lore().get(0))
+                .startsWith("Quantité:")) {
 
             int expPoints = Integer.parseInt(PlainTextComponentSerializer.plainText()
                     .serialize(meta.lore().get(0)).split("Quantité: ")[1].split(" ")[0]);
@@ -59,33 +59,39 @@ public class ServerListener implements Listener {
 
     /**
      * Apply knockback and damages when hitting an entity withe the DODGE ability
+     * 
      * @param event
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onRiptideHit(EntityDamageByEntityEvent event) {
-        if (event.isCancelled() || !(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity))
+        if (event.isCancelled() || !(event.getDamager() instanceof Player)
+                || !(event.getEntity() instanceof LivingEntity))
             return;
         Player player = (Player) event.getDamager();
 
-        if (!player.isRiptiding())
-            return;
+        if (!player.isRiptiding()) return;
 
         MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player);
 
-        if (mmoPlayer == null) { //Shouldn't be possible but why not
-            LaBoulangerieMmo.PLUGIN.getLogger().warning("Player : " + player.getName() + " doesn't have a MmoPlayer instance!");
+        if (mmoPlayer == null) { // Shouldn't be possible but why not
+            LaBoulangerieMmo.PLUGIN.getLogger().warning(
+                    "Player : " + player.getName() + " doesn't have a MmoPlayer instance!");
             return;
         }
 
-        Optional<Entry<AbilityArchetype, Long>> ability = mmoPlayer.getCooldowns().getArchetypeCooldowns("dodging")
-            .entrySet().stream().filter(e -> e.getValue() <= 1).findFirst(); // 1 is the duration of the spin attack
+        Optional<Entry<AbilityArchetype, Long>> ability =
+                mmoPlayer.getCooldowns().getArchetypeCooldowns("dodging").entrySet().stream()
+                        .filter(e -> e.getValue() <= 1).findFirst(); // 1 is the duration of the
+                                                                     // spin attack
 
         if (ability.isEmpty()) return;
 
         if (Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) > 0)
-            event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) + (ability.get().getKey().getTier(1) > player.getLevel() ? 1 : 4 ));
+            event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand())
+                    + (ability.get().getKey().getTier(1) > player.getLevel() ? 1 : 4));
 
-        event.getEntity().setVelocity(player.getLocation().getDirection().multiply(ability.get().getKey().getTier(1) > player.getLevel() ? 3 : 5));
+        event.getEntity().setVelocity(player.getLocation().getDirection()
+                .multiply(ability.get().getKey().getTier(1) > player.getLevel() ? 3 : 5));
     }
 
     @EventHandler
@@ -106,19 +112,21 @@ public class ServerListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onProjectileShoot(EntityShootBowEvent event) {
-        if (event.getProjectile().getFireTicks() > 0) EffectRegistry.playEffect("arrow", event.getProjectile());
+        if (event.getProjectile().getFireTicks() > 0)
+            EffectRegistry.playEffect("arrow", event.getProjectile());
 
-        if (event.getEntity() instanceof Player player &&
-                event.getProjectile() instanceof AbstractArrow arrow &&
-                event.getBow().hasItemMeta() &&
-                event.getBow().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))
+        if (event.getEntity() instanceof Player player
+                && event.getProjectile() instanceof AbstractArrow arrow
+                && event.getBow().hasItemMeta()
+                && event.getBow().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))
             FireArrow.shoot(player, arrow);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onProjectileHit(ProjectileHitEvent event) {
         if (event.isCancelled()) return;
-        if (event.getEntity() instanceof AbstractArrow arrow && arrow.getShooter() instanceof Player player)
+        if (event.getEntity() instanceof AbstractArrow arrow
+                && arrow.getShooter() instanceof Player player)
             FireBow.onArrowHit(player, arrow, event.getHitBlock(), event.getHitEntity());
     }
 }

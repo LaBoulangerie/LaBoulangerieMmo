@@ -21,12 +21,13 @@ public class MinecraftExpMultiplier extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
-        if (event.getBlock().hasMetadata("laboulangerie:placed"))
-            return false;
-        List<Material> ores = Arrays.asList(Material.COAL_ORE, Material.DIAMOND_ORE, Material.REDSTONE_ORE,
-                Material.LAPIS_ORE, Material.EMERALD_ORE, Material.DEEPSLATE_COAL_ORE, Material.DEEPSLATE_DIAMOND_ORE,
-                Material.DEEPSLATE_REDSTONE_ORE, Material.DEEPSLATE_LAPIS_ORE, Material.DEEPSLATE_EMERALD_ORE,
-                Material.NETHER_GOLD_ORE, Material.NETHER_QUARTZ_ORE);
+        if (event.getBlock().hasMetadata("laboulangerie:placed")) return false;
+        List<Material> ores =
+                Arrays.asList(Material.COAL_ORE, Material.DIAMOND_ORE, Material.REDSTONE_ORE,
+                        Material.LAPIS_ORE, Material.EMERALD_ORE, Material.DEEPSLATE_COAL_ORE,
+                        Material.DEEPSLATE_DIAMOND_ORE, Material.DEEPSLATE_REDSTONE_ORE,
+                        Material.DEEPSLATE_LAPIS_ORE, Material.DEEPSLATE_EMERALD_ORE,
+                        Material.NETHER_GOLD_ORE, Material.NETHER_QUARTZ_ORE);
 
         return block != null && !(event.getExpToDrop() == 0) && ores.contains(block.getType());
     }

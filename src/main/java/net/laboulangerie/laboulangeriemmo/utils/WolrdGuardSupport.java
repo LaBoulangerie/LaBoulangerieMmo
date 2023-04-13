@@ -26,22 +26,20 @@ public class WolrdGuardSupport {
         try {
             registry.register(USE_ABILITY_FLAG);
         } catch (IllegalStateException e) {
-            LaBoulangerieMmo.PLUGIN.getLogger().severe("Unable to register our custom flag, caused by incorrect load order:");
+            LaBoulangerieMmo.PLUGIN.getLogger()
+                    .severe("Unable to register our custom flag, caused by incorrect load order:");
             LaBoulangerieMmo.PLUGIN.getLogger().severe(e.getMessage());
         } catch (FlagConflictException e) {
-            LaBoulangerieMmo.PLUGIN.getLogger().severe("Unable to register our custom flag due to a conflict with another plugin!");
+            LaBoulangerieMmo.PLUGIN.getLogger().severe(
+                    "Unable to register our custom flag due to a conflict with another plugin!");
         }
     }
-    
+
     public static boolean isOperationPermitted(Player player) {
         RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
         RegionQuery query = container.createQuery();
-        ApplicableRegionSet set = query.getApplicableRegions(
-            BukkitAdapter.adapt(player.getLocation())
-        );
-        return set.testState(
-            WorldGuardPlugin.inst().wrapPlayer(player),
-            USE_ABILITY_FLAG
-        );
+        ApplicableRegionSet set =
+                query.getApplicableRegions(BukkitAdapter.adapt(player.getLocation()));
+        return set.testState(WorldGuardPlugin.inst().wrapPlayer(player), USE_ABILITY_FLAG);
     }
 }

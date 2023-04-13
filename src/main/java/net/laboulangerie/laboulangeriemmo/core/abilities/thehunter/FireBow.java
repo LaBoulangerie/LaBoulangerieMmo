@@ -35,15 +35,17 @@ public class FireBow extends AbilityExecutor {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
 
         boolean hasFlameBow = event.getPlayer().getInventory().contains(Material.BOW)
-            && event.getPlayer().getInventory().all(Material.BOW).values().stream()
-                .map(item -> item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))
-                .reduce(false, (result, hasEnchant)-> (result == true) || hasEnchant);
+                && event.getPlayer().getInventory().all(Material.BOW).values().stream()
+                        .map(item -> item.hasItemMeta()
+                                && item.getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))
+                        .reduce(false, (result, hasEnchant) -> (result == true) || hasEnchant);
 
-        return new KeyStreak(ComboKey.RIGHT, ComboKey.LEFT, ComboKey.LEFT).match(event.getKeyStreak())
-            && hasFlameBow
-            && !FireArrow.fireArrow.stream()
-                .filter(fireArrow -> fireArrow.getShooter().getUniqueId().equals(event.getPlayer().getUniqueId()))
-                .findAny().isPresent();
+        return new KeyStreak(ComboKey.RIGHT, ComboKey.LEFT, ComboKey.LEFT)
+                .match(event.getKeyStreak())
+                && hasFlameBow
+                && !FireArrow.fireArrow.stream().filter(fireArrow -> fireArrow.getShooter()
+                        .getUniqueId().equals(event.getPlayer().getUniqueId())).findAny()
+                        .isPresent();
     }
 
     @Override
@@ -63,7 +65,8 @@ public class FireBow extends AbilityExecutor {
         FireArrow fireArrow = null;
 
         for (FireArrow fa : FireArrow.fireArrow)
-            if (fa.getShooter().getUniqueId().equals(player.getUniqueId()) && arrow == fa.getArrow())
+            if (fa.getShooter().getUniqueId().equals(player.getUniqueId())
+                    && arrow == fa.getArrow())
                 fireArrow = fa;
 
         if (fireArrow == null) return;
@@ -78,16 +81,20 @@ public class FireBow extends AbilityExecutor {
         final int level = fireArrow.getAbilityLevel();
 
         if (level == 1) putFire(entity.getLocation());
-        if (level == 2) explosion(fireArrow.getShooter(), entity.getLocation(), SMALL_EXPLOSION_POWER);
-        if (level == 3) explosion(fireArrow.getShooter(), entity.getLocation(), LARGE_EXPLOSION_POWER);
+        if (level == 2)
+            explosion(fireArrow.getShooter(), entity.getLocation(), SMALL_EXPLOSION_POWER);
+        if (level == 3)
+            explosion(fireArrow.getShooter(), entity.getLocation(), LARGE_EXPLOSION_POWER);
     }
 
     private static void onBlockHit(FireArrow fireArrow, Block block) {
         final int level = fireArrow.getAbilityLevel();
 
         if (level == 1) putFire(block.getLocation());
-        if (level == 2) explosion(fireArrow.getShooter(), block.getLocation(), SMALL_EXPLOSION_POWER);
-        if (level == 3) explosion(fireArrow.getShooter(), block.getLocation(), LARGE_EXPLOSION_POWER);
+        if (level == 2)
+            explosion(fireArrow.getShooter(), block.getLocation(), SMALL_EXPLOSION_POWER);
+        if (level == 3)
+            explosion(fireArrow.getShooter(), block.getLocation(), LARGE_EXPLOSION_POWER);
     }
 
     private static void putFire(Location location) {
@@ -97,7 +104,8 @@ public class FireBow extends AbilityExecutor {
         for (int x = location.getBlockX() - 1; x <= location.getBlockX() + 1; x++)
             for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++)
                 for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++)
-                    if (world.getBlockAt(x, y, z).getType().equals(Material.AIR) && RNG.nextInt(4) < 3)
+                    if (world.getBlockAt(x, y, z).getType().equals(Material.AIR)
+                            && RNG.nextInt(4) < 3)
                         world.getBlockAt(x, y, z).setType(Material.FIRE);
     }
 

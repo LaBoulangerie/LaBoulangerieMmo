@@ -22,8 +22,7 @@ public class DoubleDropLog extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
-        if (event.getBlock().hasMetadata("laboulangerie:placed"))
-            return false;
+        if (event.getBlock().hasMetadata("laboulangerie:placed")) return false;
         return block != null && Tag.LOGS.isTagged(block.getType());
     }
 
@@ -40,15 +39,13 @@ public class DoubleDropLog extends AbilityExecutor {
         int find_nearest_int = min_number + random_chance.nextInt(max_number);
         boolean shouldDouble = false;
 
-        if (level >= getTier(2) && find_nearest_int <= 80)
-            shouldDouble = true;
-        else if (level >= getTier(1) && find_nearest_int <= 40)
-            shouldDouble = true;
-        else if (find_nearest_int <= 10)
-            shouldDouble = true;
+        if (level >= getTier(2) && find_nearest_int <= 80) shouldDouble = true;
+        else if (level >= getTier(1) && find_nearest_int <= 40) shouldDouble = true;
+        else if (find_nearest_int <= 10) shouldDouble = true;
 
         if (shouldDouble) {
-            block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation().toCenterLocation().add(0, -0.2 , 0), 5, 0.1, 0.1, 0.1);
+            block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY,
+                    block.getLocation().toCenterLocation().add(0, -0.2, 0), 5, 0.1, 0.1, 0.1);
             block.getWorld().dropItemNaturally(block.getLocation(), item);
         }
     }

@@ -11,7 +11,11 @@ lang:
         level-up: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> ! Vous gagnez <aqua><reward></aqua>
         level-up-no-reward: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> !
         xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
+        xp_up_boost: "<bold><aqua> BOOST x<boost></aqua></bold>"
         combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
+    xp_boost:
+        bar_title: "<aqua><bold>XP Boost x<boost></bold> <yellow>-</yellow> <talent> <yellow>-</yellow> <author> <yellow>-</yellow> <time></aqua>"
+        notif: "<yellow><aqua><author></aqua> vient d'activer un boost <aqua><bold>x<boost></bold></aqua> pour le métier <aqua><talent></aqua> !"
 
 #Whether or not to display a boss bar showing player's progression when gaining xp
 enable-xp-bar: true

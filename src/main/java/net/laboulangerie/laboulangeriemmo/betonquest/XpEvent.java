@@ -21,8 +21,8 @@ public class XpEvent extends QuestEvent {
     @Override
     protected Void execute(String playerID) throws QuestRuntimeException {
         MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
-            .getPlayer(Bukkit.getPlayer(UUID.fromString(playerID)));
-        if (mmoPlayer == null) return null; //Shouldn't happen but just in case
+                .getPlayer(Bukkit.getPlayer(UUID.fromString(playerID)));
+        if (mmoPlayer == null) return null; // Shouldn't happen but just in case
 
         String talentName = "";
         String rawValue = "";
@@ -36,7 +36,8 @@ public class XpEvent extends QuestEvent {
         try {
             value = Double.parseDouble(rawValue.substring(1));
         } catch (NumberFormatException error) {
-            throw new QuestRuntimeException("Unable to parse given value to a decimal number", error);
+            throw new QuestRuntimeException("Unable to parse given value to a decimal number",
+                    error);
         }
         switch (rawValue.charAt(0)) {
             case '+':
@@ -46,9 +47,10 @@ public class XpEvent extends QuestEvent {
                 mmoPlayer.getTalent(talentName).decrementXp(value);
                 break;
             default:
-                throw new QuestRuntimeException("Unknown operation: "+rawValue.charAt(0)+", should be either '+' or '-'");
+                throw new QuestRuntimeException("Unknown operation: " + rawValue.charAt(0)
+                        + ", should be either '+' or '-'");
         }
         return null;
     }
-    
+
 }
