@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.type.CaveVinesPlant;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -26,12 +27,18 @@ public class GrindingListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
         if (block.hasMetadata("laboulangerie:placed")) return;
+        
         if (block.getState().getBlockData() instanceof Ageable) {
             Ageable ageable = ((Ageable) block.getState().getBlockData());
             if (ageable.getAge() != ageable.getMaximumAge() && !LaBoulangerieMmo.PLUGIN.getConfig()
                     .getStringList("ageable-ignored-blocks").contains(block.getType().toString()))
                 return;
         }
+
+        // Cave vines with berries check
+        if (block.getType() == Material.CAVE_VINES_PLANT && !((CaveVinesPlant) block.getBlockData()).isBerries()) 
+            return;
+
         giveReward(event.getPlayer(), GrindingCategory.BREAK, block.getType().toString());
     }
 

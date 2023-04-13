@@ -321,6 +321,8 @@ talent-grinding:
             TWISTING_VINES_PLANT: 2
             WEEPING_VINES: 2
             WEEPING_VINES_PLANT: 2
+            # with berries
+            CAVE_VINES_PLANT: 4
         first_craft:
             IRON_AXE: 50
             DIAMOND_AXE: 100
