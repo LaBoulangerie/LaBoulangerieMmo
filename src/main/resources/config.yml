@@ -327,41 +327,41 @@ talent-grinding:
             NETHERITE_AXE: 200
     hunter:
         kill:
-            ZOMBIE: 3
-            ZOMBIE_VILLAGER: 5
-            HUSK: 7
-            SKELETON: 3
+            ZOMBIE: 8
+            ZOMBIE_VILLAGER: 10
+            HUSK: 12
+            SKELETON: 8
             STRAY: 5.75
-            CREEPER: 4
+            CREEPER: 10
             DROWNED: 3.25
             ENDERMAN: 0.5
             ENDERMITE: 9
-            WITCH: 7
-            WITHER_SKELETON: 8
-            PHANTOM: 3
-            GUARDIAN: 5
-            ELDER_GUARDIAN: 10
+            WITCH: 12
+            WITHER_SKELETON: 13
+            PHANTOM: 8
+            GUARDIAN: 10
+            ELDER_GUARDIAN: 15
             EVOKER: 2.5
-            GHAST: 6
-            HOGLIN: 4.5
-            MAGMA_CUBE: 1.5
-            PIGLIN_BRUTE: 5
-            PIGLIN: 4
+            GHAST: 11
+            HOGLIN: 9.5
+            MAGMA_CUBE: 5.5
+            PIGLIN_BRUTE: 14
+            PIGLIN: 9
             ZOMBIFIED_PIGLIN: 1.5
-            RAVAGER: 13
-            SILVERFISH: 1.5
-            SHULKER: 5
+            RAVAGER: 15
+            SILVERFISH: 6.5
+            SHULKER: 10
             PILLAGER: 6
-            SLIME: 1
+            SLIME: 6
             VEX: 4
             VINDICATOR: 4
             ZOGLIN: 6
             ENDER_DRAGON: 150
             WITHER: 50
-            WARDEN: 100
-            CAVE_SPIDER: 4
-            SPIDER: 3.5
-            BLAZE: 3
+            WARDEN: 170
+            CAVE_SPIDER: 10
+            SPIDER: 8.5
+            BLAZE: 8
         first_craft:
             IRON_SWORD: 50
             DIAMOND_SWORD: 100
