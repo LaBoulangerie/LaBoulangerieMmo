@@ -39,8 +39,8 @@ talents:
                     - 75
             fast-smelt:
                 display_name: Fast smelt
-                cooldown: 1
-                unit: HOURS
+                cooldown: 30
+                unit: MINUTES
                 level: 85
                 effect: default
                 log: true
