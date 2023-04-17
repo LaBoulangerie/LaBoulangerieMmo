@@ -187,9 +187,9 @@ talents:
                 effect: default
                 log: false
                 tiers:
-                  - 5
-                  - 40
-                  - 75
+                    - 5
+                    - 40
+                    - 75
             better-apple-drop:
                 display_name: Better apple drop
                 cooldown: 0
@@ -198,9 +198,9 @@ talents:
                 effect: default
                 log: false
                 tiers:
-                  - 5
-                  - 40
-                  - 75
+                    - 5
+                    - 40
+                    - 75
             timber:
                 display_name: Timber!!!
                 cooldown: 5
@@ -209,9 +209,9 @@ talents:
                 effect: default
                 log: true
                 tiers:
-                  - 35
-                  - 65
-                  - 95
+                    - 35
+                    - 65
+                    - 95
             strip:
                 display_name: Strip
                 cooldown: 10
@@ -387,6 +387,28 @@ talent-grinding:
             BROWN_MUSHROOM: 1
             RED_MUSHROOM: 1
             CHORUS_FLOWER: 3
+        breed:
+            HORSE: 2
+            DONKEY: 3
+            COW: 1
+            GOAT: 4
+            MOOSHROOM: 5
+            SHEEP: 1
+            PIG: 1
+            CHICKEN: 0.5
+            WOLF: 2
+            CAT: 2
+            OCELOT: 3
+            AXOLOTL: 4
+            LLAMA: 2
+            RABBIT: 2
+            TURTLE: 3
+            PANDA: 4
+            FOX: 4
+            BEE: 2
+            STRIDER: 4
+            HOGLIN: 4
+            FROG: 3
         first_craft:
             IRON_HOE: 50
             DIAMOND_HOE: 100
