@@ -61,10 +61,11 @@ public class Timber extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
-        if (!event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.LEFT))) return false; // We do this check first to avoid ray casting for nothing
+        if (!event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.LEFT)))
+            return false; // We do this check first to avoid ray casting for nothing
 
         player = event.getPlayer();
-        block = player.getTargetBlock(4);        
+        block = player.getTargetBlock(4);
 
         return block != null && Tag.LOGS.isTagged(block.getType()) && !(block.hasMetadata("laboulangerie:placed"));
     }
@@ -73,7 +74,8 @@ public class Timber extends AbilityExecutor {
     public void trigger(Event baseEvent, int level) {
         initType = block.getType();
         initLocation = block.getLocation();
-        GrindingListener.giveReward(((ComboCompletedEvent) baseEvent).getPlayer(), GrindingCategory.BREAK, block.getType().toString());
+        GrindingListener.giveReward(((ComboCompletedEvent) baseEvent).getPlayer(), GrindingCategory.BREAK,
+                block.getType().toString(), false);
         block.breakNaturally();
         breakNeighbours(block);
     }
@@ -87,12 +89,15 @@ public class Timber extends AbilityExecutor {
                     Location neighbourLoc = loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
                     Block neighbour = neighbourLoc.getBlock();
 
-                    if ((neighbour.getType() == Material.getMaterial(initType.toString().replace("_WOOD", "_LOG")) || neighbour.getType() == Material.getMaterial(initType.toString().replace("_LOG", "_WOOD")))
+                    if ((neighbour.getType() == Material.getMaterial(initType.toString().replace("_WOOD", "_LOG"))
+                            || neighbour.getType() == Material
+                                    .getMaterial(initType.toString().replace("_LOG", "_WOOD")))
                             && neighbour.getY() >= initLocation.getBlockY()
                             && Math.abs(neighbour.getX() - initLocation.getBlockX()) <= range
                             && Math.abs(neighbour.getZ() - initLocation.getBlockZ()) <= range) {
                         // Give xp for breaking the block
-                        GrindingListener.giveReward(player, GrindingCategory.BREAK, neighbour.getType().toString());
+                        GrindingListener.giveReward(player, GrindingCategory.BREAK, neighbour.getType().toString(),
+                                false);
                         neighbour.breakNaturally(null, true); // Drop the item and spawn block particles
                         // Break neighbours of neighbour recursively
                         breakNeighbours(neighbour);

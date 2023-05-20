@@ -24,6 +24,7 @@ import net.laboulangerie.laboulangeriemmo.utils.MythicMobsSupport;
 
 public class GrindingListener implements Listener {
     private static FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+
     public GrindingListener() {
     }
 
@@ -52,10 +53,13 @@ public class GrindingListener implements Listener {
         if (LaBoulangerieMmo.MYTHICMOBS_SUPPORT) {
             try {
                 isMythicMob = MythicMobsSupport.tryToGiveMythicReward(event.getEntity(), event.getEntity().getKiller());
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
 
-        if (!isMythicMob) giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString(), event.getEntity().getEntitySpawnReason() == SpawnReason.SPAWNER);
+        if (!isMythicMob)
+            giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString(),
+                    event.getEntity().getEntitySpawnReason() == SpawnReason.SPAWNER);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
