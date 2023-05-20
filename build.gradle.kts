@@ -70,7 +70,7 @@ dependencies {
     compileOnly("com.palmergames.bukkit.towny:towny:0.98.2.0")
     compileOnly("pl.betoncraft:betonquest:1.12.9")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8-SNAPSHOT")
-    compileOnly("io.lumine:Mythic-Dist:5.2.3")
+    compileOnly("io.lumine:Mythic-Dist:5.2.6")
 }
 
 group = "net.laboulangerie"

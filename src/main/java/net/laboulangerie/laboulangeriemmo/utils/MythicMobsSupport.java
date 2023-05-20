@@ -15,7 +15,9 @@ public class MythicMobsSupport {
         Optional<ActiveMob> mythicMob = MythicBukkit.inst().getMobManager().getActiveMob(entity.getUniqueId());
 
         if (mythicMob.isPresent()) {
-            GrindingListener.giveReward(killer, GrindingCategory.KILL, "mythicmobs:" + mythicMob.get().getName(), false);
+            GrindingListener.giveReward(killer, GrindingCategory.KILL,
+                    "mythicmobs:" + mythicMob.get().getType().getInternalName(),
+                    false);
         }
         return mythicMob.isPresent();
     }
