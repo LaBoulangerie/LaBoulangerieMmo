@@ -7,12 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.AbstractStructure;
@@ -21,22 +19,19 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.utility.MinecraftReflection;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher;
+import com.comphenix.protocol.wrappers.WrappedDataValue;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher.WrappedDataWatcherObject;
-
 import net.minecraft.world.entity.EntityType;
 
 public class MarkedBlocksManager {
     private static MarkedBlocksManager INSTANCE = null;
     private Map<Block, BlockWatcher> markedBlocks = new HashMap<Block, BlockWatcher>();
     private int idCount = 100000;
-    private String[] teamsIdentifier = {"DIAMOND_ORE", "IRON_ORE", "COAL_ORE", "GOLD_ORE",
-            "LAPIS_ORE", "REDSTONE_ORE", "EMERALD_ORE", "COPPER_ORE", "ANCIENT_DEBRIS",
-            "NETHER_GOLD_ORE", "BUDDING_AMETHYST"};
-    private ChatColor[] teamsColor = {ChatColor.AQUA, ChatColor.GRAY, ChatColor.BLACK,
-            ChatColor.YELLOW, ChatColor.DARK_BLUE, ChatColor.RED, ChatColor.GREEN, ChatColor.GOLD,
-            ChatColor.DARK_GRAY, ChatColor.YELLOW, ChatColor.DARK_PURPLE};
+    private String[] teamsIdentifier = {"DIAMOND_ORE", "IRON_ORE", "COAL_ORE", "GOLD_ORE", "LAPIS_ORE", "REDSTONE_ORE",
+            "EMERALD_ORE", "COPPER_ORE", "ANCIENT_DEBRIS", "NETHER_GOLD_ORE", "BUDDING_AMETHYST"};
+    private ChatColor[] teamsColor =
+            {ChatColor.AQUA, ChatColor.GRAY, ChatColor.BLACK, ChatColor.YELLOW, ChatColor.DARK_BLUE, ChatColor.RED,
+                    ChatColor.GREEN, ChatColor.GOLD, ChatColor.DARK_GRAY, ChatColor.YELLOW, ChatColor.DARK_PURPLE};
 
     public void markBlock(Block block, Player player) {
         BlockWatcher blockWatcher = markedBlocks.get(block);
@@ -60,8 +55,7 @@ public class MarkedBlocksManager {
         BlockWatcher blockWatcher = markedBlocks.get(block);
         if (blockWatcher == null) return;
 
-        blockWatcher.getWatchers().stream()
-                .forEach(p -> removeShulker(p, blockWatcher.getEntityId()));
+        blockWatcher.getWatchers().stream().forEach(p -> removeShulker(p, blockWatcher.getEntityId()));
         markedBlocks.remove(block);
     }
 
@@ -87,19 +81,18 @@ public class MarkedBlocksManager {
                 .write(10, (byte) 0) // yaw
                 .write(11, (byte) 0); // yaw
 
-        PacketContainer shulkerMetadata =
-                new PacketContainer(PacketType.Play.Server.ENTITY_METADATA);
-        StructureModifier<Object> metadataMods = shulkerMetadata.getModifier();
+        PacketContainer shulkerMetadata = new PacketContainer(PacketType.Play.Server.ENTITY_METADATA);
 
-        metadataMods.write(0, id);
+        shulkerMetadata.getIntegers().write(0, id);
 
-        WrappedDataWatcher watcher = new WrappedDataWatcher();
-        watcher.setObject(new WrappedDataWatcherObject(0, Registry.get(Byte.class)),
-                (byte) (0x20 | 0x40)); // 0x20
-                                       // invisible
-                                       // 0x40
-                                       // glowing
-        shulkerMetadata.getWatchableCollectionModifier().write(0, watcher.getWatchableObjects());
+        // 0x20 = invisible, 0x40 = glowing
+        shulkerMetadata.getDataValueCollectionModifier().write(
+            0,
+            Arrays.asList(new WrappedDataValue(
+                0,
+                Registry.get(Byte.class), (byte) (0x20 | 0x40)
+            )
+        ));
 
         ProtocolLibrary.getProtocolManager().sendServerPacket(player, spawnShulker);
         ProtocolLibrary.getProtocolManager().sendServerPacket(player, shulkerMetadata);
@@ -114,15 +107,9 @@ public class MarkedBlocksManager {
 
     public void colorize(Block block, Player player) {
         BlockWatcher blockWatcher = markedBlocks.get(block);
-        if (blockWatcher == null || block.getType() == Material.NETHER_QUARTZ_ORE) return; // Quartz
-                                                                                           // is
-                                                                                           // white
-                                                                                           // no
-                                                                                           // need
-                                                                                           // for a
-                                                                                           // team
-        String teamId = block.getType().toString().startsWith("DEEPSLATE_")
-                ? block.getType().toString().substring(10)
+        // Quartz is white no need for a team
+        if (blockWatcher == null || block.getType() == Material.NETHER_QUARTZ_ORE) return;
+        String teamId = block.getType().toString().startsWith("DEEPSLATE_") ? block.getType().toString().substring(10)
                 : block.getType().toString();
 
         PacketContainer updateTeam = new PacketContainer(PacketType.Play.Server.SCOREBOARD_TEAM);
@@ -146,11 +133,9 @@ public class MarkedBlocksManager {
                     .write(1, "never"); // collisions rules
             struct.getIntegers().write(0, 0x02); // flags
             struct.getChatComponents().write(0, WrappedChatComponent.fromText(""))
-                    .write(1, WrappedChatComponent.fromText(""))
-                    .write(2, WrappedChatComponent.fromText(""));
-            struct.getEnumModifier(ChatColor.class,
-                    MinecraftReflection.getMinecraftClass("EnumChatFormat"))
-                    .write(0, teamsColor[i]);
+                    .write(1, WrappedChatComponent.fromText("")).write(2, WrappedChatComponent.fromText(""));
+            struct.getEnumModifier(ChatColor.class, MinecraftReflection.getMinecraftClass("EnumChatFormat")).write(0,
+                    teamsColor[i]);
 
             team.getOptionalStructures().write(0, Optional.of((InternalStructure) struct));
             ProtocolLibrary.getProtocolManager().sendServerPacket(player, team);
