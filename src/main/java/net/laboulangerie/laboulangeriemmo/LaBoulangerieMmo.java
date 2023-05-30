@@ -41,6 +41,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public static AbilitiesRegistry abilitiesRegistry = null;
     public static boolean WORLDGUARD_SUPPORT = false;
     public static DecimalFormat formatter;
+    public static int COMBO_LENGTH = 3;
 
     private GsonSerializer serializer;
     private BlockusDataManager blockusDataManager;
@@ -61,8 +62,8 @@ public class LaBoulangerieMmo extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        formatter = (DecimalFormat) NumberFormat
-                .getNumberInstance(Locale.forLanguageTag(getConfig().getString("locale")));
+        formatter =
+                (DecimalFormat) NumberFormat.getNumberInstance(Locale.forLanguageTag(getConfig().getString("locale")));
         formatter.applyPattern("#.##");
         if (!setupEconomy()) {
             getLogger().log(Level.SEVERE, "Can't load the plugin, Vault isn't present");
@@ -79,8 +80,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         LaBoulangerieMmo.talentsRegistry = new TalentsRegistry();
         talentsRegistry.init();
 
-        blockusDataManager =
-                new BlockusDataManager(getDataFolder().getPath() + "/blockus/blockus.dat");
+        blockusDataManager = new BlockusDataManager(getDataFolder().getPath() + "/blockus/blockus.dat");
         mmoPlayerManager = new MmoPlayerManager();
         xpBoostManager = new XpBoostManager();
 
@@ -140,10 +140,9 @@ public class LaBoulangerieMmo extends JavaPlugin {
     }
 
     private void registerListeners() {
-        Arrays.asList(new ServerListener(), new MmoPlayerListener(), new GrindingListener(),
-                new AbilitiesDispatcher(), new MmoListener(), new BlockusListener(),
-                new XpBoostListener(), LeaderBoardManager.getInstance(), new ComboDispatcher())
-                .forEach(l -> getServer().getPluginManager().registerEvents(l, this));
+        Arrays.asList(new ServerListener(), new MmoPlayerListener(), new GrindingListener(), new AbilitiesDispatcher(),
+                new MmoListener(), new BlockusListener(), new XpBoostListener(), LeaderBoardManager.getInstance(),
+                new ComboDispatcher()).forEach(l -> getServer().getPluginManager().registerEvents(l, this));
     }
 
     public MmoPlayerManager getMmoPlayerManager() {
@@ -160,8 +159,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) return false;
-        RegisteredServiceProvider<Economy> rsp =
-                getServer().getServicesManager().getRegistration(Economy.class);
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;
         }

@@ -32,10 +32,8 @@ public class AbilitiesDispatcher implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onClick(PlayerInteractEvent event) {
-        if (event.useInteractedBlock() == Result.DENY && event.useItemInHand() == Result.DENY)
-            return;
-        MmoPlayer player =
-                LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
+        if (event.useInteractedBlock() == Result.DENY && event.useItemInHand() == Result.DENY) return;
+        MmoPlayer player = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer());
 
         switch (event.getAction()) {
             case LEFT_CLICK_AIR:
@@ -58,59 +56,57 @@ public class AbilitiesDispatcher implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onConsumeItem(PlayerItemConsumeEvent event) {
         if (event.isCancelled()) return;
-        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()),
-                event, AbilityTrigger.EAT);
+        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event,
+                AbilityTrigger.EAT);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockPlace(BlockPlaceEvent event) {
         if (event.isCancelled()) return;
-        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()),
-                event, AbilityTrigger.PLACE);
+        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event,
+                AbilityTrigger.PLACE);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockBreak(BlockBreakEvent event) {
         if (event.isCancelled()) return;
-        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()),
-                event, AbilityTrigger.BREAK);
+        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event,
+                AbilityTrigger.BREAK);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onClickEntity(PlayerInteractEntityEvent event) {
         if (event.isCancelled()) return;
-        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()),
-                event, AbilityTrigger.RIGHT_CLICK_ENTITY);
+        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event,
+                AbilityTrigger.RIGHT_CLICK_ENTITY);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onHurtEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && !event.isCancelled())
-            triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(
-                    (Player) event.getDamager()), event, AbilityTrigger.LEFT_CLICK_ENTITY);
+            triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) event.getDamager()), event,
+                    AbilityTrigger.LEFT_CLICK_ENTITY);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onComboCompleted(ComboCompletedEvent event) {
-        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()),
-                event, AbilityTrigger.COMBO);
+        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event,
+                AbilityTrigger.COMBO);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityBreed(EntityBreedEvent event) {
-        if (event.isCancelled() || event.getBreeder() == null
-                || !(event.getBreeder() instanceof Player))
-            return;
-        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
-                .getPlayer((Player) event.getBreeder()), event, AbilityTrigger.BREED);
+        if (event.isCancelled() || event.getBreeder() == null || !(event.getBreeder() instanceof Player)) return;
+        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) event.getBreeder()), event,
+                AbilityTrigger.BREED);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onItemHeld(PlayerItemHeldEvent event) {
         if (event.isCancelled()) return;
         if (event.getPlayer().getInventory().getItem(event.getNewSlot()) == null) return;
-        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()),
-                event, AbilityTrigger.HOLD_ITEM);
+        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(event.getPlayer()), event,
+                AbilityTrigger.HOLD_ITEM);
     }
 
     public void triggerAbility(MmoPlayer player, Event event, AbilityTrigger trigger) {
@@ -127,42 +123,36 @@ public class AbilitiesDispatcher implements Listener {
                                                                                       // so the
                                                                                       // combo is
                                                                                       // refused
-                    && !talentArchetype.comboItems.contains(((ComboCompletedEvent) event)
-                            .getPlayer().getInventory().getItemInMainHand().getType())) {
+                    && !talentArchetype.comboItems.contains(
+                            ((ComboCompletedEvent) event).getPlayer().getInventory().getItemInMainHand().getType())) {
                 return;
             }
             talentArchetype.abilitiesArchetypes.values().stream()
                     .filter(abilityArchetype -> LaBoulangerieMmo.abilitiesRegistry
                             .getTriggerForAbility(abilityArchetype.identifier) == trigger)
-                    .filter(abilityArchetype -> player.canUseAbility(abilityArchetype,
-                            talentArchetype.identifier))
+                    .filter(abilityArchetype -> player.canUseAbility(abilityArchetype, talentArchetype.identifier))
                     .forEach(abilityArchetype -> {
                         AbilityExecutor executor;
                         try {
-                            executor = LaBoulangerieMmo.abilitiesRegistry
-                                    .newAbilityExecutor(abilityArchetype);
-                        } catch (InstantiationException | IllegalAccessException
-                                | IllegalArgumentException | InvocationTargetException
-                                | NoSuchMethodException | SecurityException e) {
+                            executor = LaBoulangerieMmo.abilitiesRegistry.newAbilityExecutor(abilityArchetype);
+                        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 
                             Player bukkitPlayer = Bukkit.getPlayer(player.getUniqueId());
-                            bukkitPlayer.sendMessage(
-                                    "§4An error occurred when trying to execute the ability '"
-                                            + abilityArchetype.identifier
-                                            + "', please report this to an administrator!");
+                            bukkitPlayer.sendMessage("§4An error occurred when trying to execute the ability '"
+                                    + abilityArchetype.identifier + "', please report this to an administrator!");
                             LaBoulangerieMmo.PLUGIN.getLogger()
                                     .severe("An error occurred when trying to execute the ability '"
-                                            + abilityArchetype.identifier + "' for player '"
-                                            + bukkitPlayer.getName() + "'!");
+                                            + abilityArchetype.identifier + "' for player '" + bukkitPlayer.getName()
+                                            + "'!");
                             e.printStackTrace();
                             return;
                         }
                         if (executor.shouldTrigger(event)) {
-                            executor.trigger(event,
-                                    player.getTalent(talentArchetype.identifier).getLevel());
+                            executor.trigger(event, player.getTalent(talentArchetype.identifier).getLevel());
                             player.useAbility(abilityArchetype, talentArchetype);
-                            Bukkit.getPluginManager().callEvent(new MmoPlayerUseAbilityEvent(player,
-                                    abilityArchetype, executor, event, trigger));
+                            Bukkit.getPluginManager().callEvent(
+                                    new MmoPlayerUseAbilityEvent(player, abilityArchetype, executor, event, trigger));
                         }
                     });
         });
