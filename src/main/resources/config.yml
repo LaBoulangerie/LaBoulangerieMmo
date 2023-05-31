@@ -12,8 +12,10 @@ lang:
         level-up-no-reward: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> !
         level-up-title: <bold><gradient:yellow:green>↑ LEVEL UP ↑
         level-up-subtitle: <aqua>Niveau <level> <talent>
+        ability-unlocked: <yellow>Habilité <aqua><ability></aqua> débloquée !
+        ability-upgrade: <yellow>Habilité <aqua><ability></aqua> amélioré au <aqua>Tier <tier></aqua> !
         xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
-        xp_up_boost: "<bold><aqua> BOOST x<boost></aqua></bold>"
+        xp_up_boost: <bold><aqua> BOOST x<boost></aqua></bold>
         combo_toggle: <yellow>Vous avez <aqua><state></aqua> les combos.
     xp_boost:
         bar_title: "<aqua><bold>XP Boost x<boost></bold> <yellow>-</yellow> <talent> <yellow>-</yellow> <author> <yellow>-</yellow> <time></aqua>"

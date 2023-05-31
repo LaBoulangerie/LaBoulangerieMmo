@@ -18,7 +18,9 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.title.Title;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
+import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
 import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
 import net.laboulangerie.laboulangeriemmo.core.XpBar;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
@@ -33,6 +35,7 @@ public class MmoListener implements Listener {
 
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
         Talent talent = event.getTalent();
+        TalentArchetype talentArchetype = LaBoulangerieMmo.talentsRegistry.getTalent(talent.getTalentId());
 
         Component prefix = MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"));
 
@@ -72,8 +75,25 @@ public class MmoListener implements Listener {
         }
 
         LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, amount);
-
         resolvers.add(Placeholder.parsed("reward", LaBoulangerieMmo.ECONOMY.format(amount)));
+
+        // Check for unlocked ability tiers
+        for (AbilityArchetype abilityArchetype : talentArchetype.abilitiesArchetypes.values()) {
+            for (int i = 0; i < abilityArchetype.tiers.size(); i++) {
+                Integer tierLevel = abilityArchetype.tiers.get(i);
+                if (tierLevel == talent.getLevel()) {
+                    String unlockedString = i == 0 ? config.getString("lang.messages.ability-unlocked")
+                            : config.getString("lang.messages.ability-upgrade");
+
+                    resolvers.add(Placeholder.parsed("ability", abilityArchetype.displayName));
+                    resolvers.add(Placeholder.parsed("tier", Integer.toString(i + 1)));
+
+                    Component unlockedComponent =
+                            MiniMessage.miniMessage().deserialize(unlockedString, TagResolver.resolver(resolvers));
+                    player.sendMessage(prefix.append(unlockedComponent));
+                }
+            }
+        }
 
         Component lvlUpComponent = MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level-up"),
                 TagResolver.resolver(resolvers));
