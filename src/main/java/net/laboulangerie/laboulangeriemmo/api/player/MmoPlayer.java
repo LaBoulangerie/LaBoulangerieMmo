@@ -47,8 +47,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         uniqueId = player.getUniqueId();
         name = player.getName();
 
-        talents = (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry
-                .generateTalentsDataHolder();
+        talents = (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry.generateTalentsDataHolder();
 
         cooldownsHolder = new CooldownsHolder();
         xpCountdown = new XpCountDown(this);
@@ -81,18 +80,14 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         if (ability.shouldLog) {
             EffectRegistry.playEffect(ability.effect, player);
 
-            List<TagResolver.Single> placeholders =
-                    Arrays.asList(Placeholder.parsed("ability", ability.displayName),
-                            Placeholder.parsed("cooldown", Integer.toString(ability.cooldown)),
-                            Placeholder.parsed("unit",
-                                    ability.cooldownUnit.toString().toLowerCase()),
-                            Placeholder.parsed("talent", talent.displayName));
+            List<TagResolver.Single> placeholders = Arrays.asList(Placeholder.parsed("ability", ability.displayName),
+                    Placeholder.parsed("cooldown", Integer.toString(ability.cooldown)),
+                    Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase()),
+                    Placeholder.parsed("talent", talent.displayName));
 
-            player.sendMessage(
-                    MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                            .append(MiniMessage.miniMessage().deserialize(
-                                    config.getString("lang.messages.ability_log"),
-                                    TagResolver.resolver(placeholders))));
+            player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
+                    .append(MiniMessage.miniMessage().deserialize(config.getString("lang.messages.ability_log"),
+                            TagResolver.resolver(placeholders))));
         }
     }
 
@@ -118,7 +113,9 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     public void incrementXp(String talentId, double amount) {
         if (getTalent(talentId) == null) talents.put(talentId, new Talent(talentId));
 
-        if (getTalent(talentId).getLevel() >= 100) {
+        int maxTalentLevel = config.getInt("max-talent-level", 100);
+
+        if (getTalent(talentId).getLevel() >= maxTalentLevel) {
             return;
         }
         PlayerEarnsXpEvent playerEarnsXpEvent = new PlayerEarnsXpEvent(amount, talentId, this);
@@ -166,8 +163,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         for (Resident resident : town.getResidents()) {
             if (resident != null) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
-                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
-                        .getOfflinePlayer(offlinePlayer);
+                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
                 townTotal += mmoPlayer.getPalier();
             }
         }
@@ -179,8 +175,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
         for (Resident resident : town.getResidents()) {
             if (resident != null) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(resident.getUUID());
-                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
-                        .getOfflinePlayer(offlinePlayer);
+                MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(offlinePlayer);
                 Talent talent = mmoPlayer.getTalent(talentName);
                 townTotal += talent.getLevel();
             }
@@ -207,9 +202,8 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     @Override
     public void postProcess() {
         HashMap<String, Talent> newTalents =
-                (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry
-                        .generateTalentsDataHolder();
-        newTalents.entrySet().forEach(entry -> talents.merge(entry.getKey(), entry.getValue(),
-                (newVal, oldVal) -> newVal));
+                (HashMap<String, Talent>) LaBoulangerieMmo.talentsRegistry.generateTalentsDataHolder();
+        newTalents.entrySet()
+                .forEach(entry -> talents.merge(entry.getKey(), entry.getValue(), (newVal, oldVal) -> newVal));
     }
 }

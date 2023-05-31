@@ -430,3 +430,5 @@ palier-coloration:
     - "#F78200"
     - "#E23838"
     - "#973999"
+
+max-talent-level: 100
