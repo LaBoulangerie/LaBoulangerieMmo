@@ -115,16 +115,9 @@ public class AbilitiesDispatcher implements Listener {
             return;
 
         LaBoulangerieMmo.talentsRegistry.getTalents().values().forEach(talentArchetype -> {
-            if (trigger == AbilityTrigger.COMBO && talentArchetype.comboItems != null // Player
-                                                                                      // doesn't
-                                                                                      // have the
-                                                                                      // right item
-                                                                                      // in his hand
-                                                                                      // so the
-                                                                                      // combo is
-                                                                                      // refused
-                    && !talentArchetype.comboItems.contains(
-                            ((ComboCompletedEvent) event).getPlayer().getInventory().getItemInMainHand().getType())) {
+            // Player doesn't have the right item in his hand so the combo is refused
+            if (trigger == AbilityTrigger.COMBO && talentArchetype.comboItems != null && !talentArchetype.comboItems
+                    .contains(((ComboCompletedEvent) event).getPlayer().getInventory().getItemInMainHand().getType())) {
                 return;
             }
             talentArchetype.abilitiesArchetypes.values().stream()

@@ -10,9 +10,11 @@ lang:
         ability_log: <yellow>Vous avez utilisé <aqua><ability></aqua>, cooldown de <aqua><cooldown> <unit></aqua>
         level-up: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> ! Vous gagnez <aqua><reward></aqua>
         level-up-no-reward: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> !
+        level-up-title: <bold><gradient:yellow:green>↑ LEVEL UP ↑
+        level-up-subtitle: <aqua>Niveau <level> <talent>
         xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
         xp_up_boost: "<bold><aqua> BOOST x<boost></aqua></bold>"
-        combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
+        combo_toggle: <yellow>Vous avez <aqua><state></aqua> les combos.
     xp_boost:
         bar_title: "<aqua><bold>XP Boost x<boost></bold> <yellow>-</yellow> <talent> <yellow>-</yellow> <author> <yellow>-</yellow> <time></aqua>"
         notif: "<yellow><aqua><author></aqua> vient d'activer un boost <aqua><bold>x<boost></bold></aqua> pour le métier <aqua><talent></aqua> !"
