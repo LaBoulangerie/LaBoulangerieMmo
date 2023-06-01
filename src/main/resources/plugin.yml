@@ -17,7 +17,11 @@ commands:
     combo:
         permission: laboulangeriemmo.combo
         description: Toggle on/off the combo system
-        usage: /mmo ?[on|off|toggle]
+        usage: /combo ?[on|off|toggle]
+    talent:
+        permission: laboulangeriemmo.talent
+        description: View talent's abilities and tier progression
+        usage: /talent <talent>
     townymmo:
 permissions:
     laboulangeriemmo.stats:

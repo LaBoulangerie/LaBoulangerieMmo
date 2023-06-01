@@ -26,14 +26,13 @@ public class Combo implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd,
-            @NotNull String alias, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias,
+            @NotNull String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4This command is reserved to players!");
             return true;
         }
-        MmoPlayer mmoPlayer =
-                LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) sender);
+        MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer((Player) sender);
         Boolean state;
 
         if (args.length == 0) { // we want to do the toggle behavior if no parameter is passed
@@ -43,15 +42,14 @@ public class Combo implements CommandExecutor, TabCompleter {
         if (args.length == 1 && !Arrays.asList("on", "off", "toggle").contains(args[0])) {
             return false;
         }
-        state = args[0].equals("on") ? true
-                : args[0].equals("off") ? false : !mmoPlayer.hasEnabledCombo();
+        state = args[0].equals("on") ? true : args[0].equals("off") ? false : !mmoPlayer.hasEnabledCombo();
         mmoPlayer.setEnableCombo(state);
 
-        sender.sendMessage(MiniMessage.miniMessage()
-                .deserialize(LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.prefix"))
-                .append(MiniMessage.miniMessage().deserialize(
-                        LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.messages.combo_toggle"),
-                        Placeholder.parsed("state", state == true ? "activé" : "désactivé"))));
+        sender.sendMessage(
+                MiniMessage.miniMessage().deserialize(LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.prefix"))
+                        .append(MiniMessage.miniMessage().deserialize(
+                                LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.messages.combo_toggle"),
+                                Placeholder.parsed("state", state ? "activé" : "désactivé"))));
         return true;
     }
 }
