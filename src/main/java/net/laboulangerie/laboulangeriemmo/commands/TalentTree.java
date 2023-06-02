@@ -67,9 +67,26 @@ public class TalentTree implements CommandExecutor, TabCompleter {
         // Set talent item in the top middle
         talentTreeInv.setItem(invColums / 2, getTalentItem(talentArchetype, talent));
 
-        // Add all ability tiers, starting from the third row
+        // Add all ability tiers
         int offset = Math.round((float) invColums / abilities.size());
-        int columnTop = invColums * 2;
+        // If it works it works
+        // TODO tho : Make a little algo that calculate space like CSS' space-between property
+        // Something like :
+        // N°items | Row
+        // 1 | ----x----
+        // 2 | ---x-x---
+        // 3 | --x-x-x--
+        // 4 | -x-x-x-x-
+        // 5 | -x-xxx-x- this is were it begins to be tricky
+        // 6 | -xxx-xxx-
+        // 7 | -xxxxxxx-
+        // ...
+        int margin = (int) Math.floor(Math.floor((float) invColums / abilities.size()) / 2);
+        System.out.println(offset);
+        System.out.println(margin);
+
+        // Starting from the third row
+        int columnTop = invColums * 2 + margin;
         for (AbilityArchetype ability : abilities) {
             if (ability.hasTiers()) {
                 int pos = columnTop;
