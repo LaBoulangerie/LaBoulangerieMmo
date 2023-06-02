@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 
 import net.laboulangerie.laboulangeriemmo.commands.*;
+import net.laboulangerie.laboulangeriemmo.commands.talenttree.TalentTree;
 import net.laboulangerie.laboulangeriemmo.listener.*;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
