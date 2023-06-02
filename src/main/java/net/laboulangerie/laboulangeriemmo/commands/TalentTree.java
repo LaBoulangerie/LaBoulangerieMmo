@@ -1,10 +1,8 @@
 package net.laboulangerie.laboulangeriemmo.commands;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
-import java.util.AbstractMap.SimpleEntry;
 import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,6 +13,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -59,27 +58,6 @@ public class TalentTree implements CommandExecutor, TabCompleter {
         List<AbilityArchetype> abilities =
                 talentArchetype.abilitiesArchetypes.values().stream().collect(Collectors.toList());
 
-        List<SimpleEntry<AbilityArchetype, Integer>> abilitiesTiers = new ArrayList<>();
-
-        // Separate tiers from ability
-        for (AbilityArchetype abilityArchetype : abilities) {
-            if (abilityArchetype.hasTiers()) {
-                for (int i = 0; i < abilityArchetype.tiers.size(); i++) {
-                    abilitiesTiers.add(new SimpleEntry<>(abilityArchetype, i));
-                }
-            } else {
-                abilitiesTiers.add(new SimpleEntry<>(abilityArchetype, -1));
-            }
-        }
-
-        // Sort ability by level
-        abilitiesTiers.sort(Comparator.comparingInt((entry) -> {
-            AbilityArchetype abilityArchetype = entry.getKey();
-            int tier = entry.getValue();
-
-            if (tier == -1) return abilityArchetype.requiredLevel;
-            return abilityArchetype.getTier(tier);
-        }));
 
         int invColums = 9;
         Component invTitle = MiniMessage.miniMessage().deserialize(talentTreeConfig.getString("title"),
@@ -90,17 +68,27 @@ public class TalentTree implements CommandExecutor, TabCompleter {
         talentTreeInv.setItem(invColums / 2, getTalentItem(talentArchetype, talent));
 
         // Add all ability tiers, starting from the third row
-        int location = invColums * 2;
-        for (SimpleEntry<AbilityArchetype, Integer> e : abilitiesTiers) {
-            talentTreeInv.setItem(location, getAbilityItemDescriptor(e.getKey(), e.getValue()));
-            location++;
+        int offset = Math.round((float) invColums / abilities.size());
+        int columnTop = invColums * 2;
+        for (AbilityArchetype ability : abilities) {
+            if (ability.hasTiers()) {
+                int pos = columnTop;
+                for (int i = 0; i < ability.tiers.size(); i++) {
+                    talentTreeInv.setItem(pos, getAbilityItemDescriptor(ability, i, talent));
+                    // Next row
+                    pos += invColums;
+                }
+            } else {
+                talentTreeInv.setItem(columnTop, getAbilityItemDescriptor(ability, -1, talent));
+            }
+            columnTop += offset;
         }
 
         player.openInventory(talentTreeInv);
         return true;
     }
 
-    ItemStack getAbilityItemDescriptor(AbilityArchetype ability, Integer tier) {
+    ItemStack getAbilityItemDescriptor(AbilityArchetype ability, Integer tier, Talent talent) {
         ConfigurationSection itemConfig =
                 LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-tree.ability-item");
 
@@ -108,14 +96,19 @@ public class TalentTree implements CommandExecutor, TabCompleter {
 
         List<TagResolver.Single> resolvers = new ArrayList<>();
         resolvers.add(Placeholder.unparsed("ability", ability.displayName));
-        resolvers.add(Placeholder.unparsed("tier", Integer.toString(tier)));
+        resolvers.add(Placeholder.unparsed("tier", Integer.toString(tier + 1)));
         resolvers.add(Placeholder.unparsed("description", ability.description));
         resolvers.add(Placeholder.unparsed("cooldown-value", Integer.toString(ability.cooldown)));
         resolvers.add(Placeholder.unparsed("cooldown-unit", ability.cooldownUnit.toString().toLowerCase()));
         int requiredLevel = ability.hasTiers() ? ability.getTier(tier) : ability.requiredLevel;
         resolvers.add(Placeholder.unparsed("required-level", Integer.toString(requiredLevel)));
+        String isUnlockedColor = talent.getLevel() >= requiredLevel ? "<green>" : "<red>";
+        resolvers.add(Placeholder.parsed("is-unlocked-color", isUnlockedColor));
 
-        return getItemFromConfig(abilityMat, itemConfig, resolvers);
+        int amount = ability.hasTiers() ? tier + 1 : 1;
+        ItemStack abilityItem = getItemFromConfig(abilityMat, itemConfig, resolvers, ability.hasTiers());
+        abilityItem.setAmount(amount);
+        return abilityItem;
     }
 
     ItemStack getTalentItem(TalentArchetype talentArchetype, Talent talent) {
@@ -131,13 +124,19 @@ public class TalentTree implements CommandExecutor, TabCompleter {
         resolvers.add(Placeholder.unparsed("level", Integer.toString(talent.getLevel())));
         resolvers.add(Placeholder.unparsed("xp", String.format("%.2f", talent.getXp())));
 
-        return getItemFromConfig(talentMat, itemConfig, resolvers);
+        return getItemFromConfig(talentMat, itemConfig, resolvers, false);
     }
 
-    ItemStack getItemFromConfig(Material material, ConfigurationSection config, List<TagResolver.Single> resolvers) {
+    ItemStack getItemFromConfig(Material material, ConfigurationSection config, List<TagResolver.Single> resolvers,
+            boolean hasTiers) {
         Component itemName =
                 MiniMessage.miniMessage().deserialize(config.getString("name"), TagResolver.resolver(resolvers))
                         .decoration(TextDecoration.ITALIC, TextDecoration.State.FALSE);
+
+        if (config.isSet("with-tier") && hasTiers) {
+            itemName = itemName.append(MiniMessage.miniMessage().deserialize(config.getString("with-tier"),
+                    TagResolver.resolver(resolvers)));
+        }
 
         List<Component> loreComponents =
                 config.getStringList("lore").stream()
@@ -150,6 +149,7 @@ public class TalentTree implements CommandExecutor, TabCompleter {
 
         itemMeta.displayName(itemName);
         itemMeta.lore(loreComponents);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 
         item.setItemMeta(itemMeta);
 

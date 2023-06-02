@@ -34,7 +34,7 @@ enable-talents: true
 
 talents:
     miner:
-        display_name: Mineur
+        display_name: ⛏ Mineur
         abilities:
             fast-mine:
                 display_name: Pioche Aiguisée
@@ -88,7 +88,7 @@ talents:
             - WOODEN_PICKAXE
             - NETHERITE_PICKAXE
     hunter:
-        display_name: Chasseur
+        display_name: 🗡 Chasseur
         abilities:
             dodging:
                 display_name: Bélier
@@ -150,7 +150,7 @@ talents:
             - WOODEN_SWORD
             - NETHERITE_SWORD
     farmer:
-        display_name: Fermier
+        display_name: ✂ Fermier
         abilities:
             nature-touch:
                 display_name: Jeunes Pousses
@@ -211,7 +211,7 @@ talents:
             - WOODEN_HOE
             - NETHERITE_HOE
     lumberjack:
-        display_name: Bûcheron
+        display_name: 🪓 Bûcheron
         abilities:
             double-drop-log:
                 display_name: Grosses Bûches
@@ -468,7 +468,7 @@ palier-coloration:
 max-talent-level: 100
 
 talent-tree:
-    title: Compétences <talent> <player>
+    title: <talent> <player>
     # Placeholders: talent, level, xp
     talent-item:
         name: <bold><aqua><talent>
@@ -478,9 +478,9 @@ talent-tree:
     # Placeholders: ability, tier, description, cooldown-value, cooldown-unit, required-level
     ability-item:
         name: <bold><yellow><ability>
-        with-tier: <yellow>Tier <tier>
+        with-tier: <aqua> <tier>
         lore:
             - <gray><description>
             - ""
             - <yellow>Cooldown <aqua><cooldown-value> <cooldown-unit>
-            - <yellow>Niveau <aqua><required-level> requis
+            - "<is-unlocked-color>[Niveau <required-level>]"
