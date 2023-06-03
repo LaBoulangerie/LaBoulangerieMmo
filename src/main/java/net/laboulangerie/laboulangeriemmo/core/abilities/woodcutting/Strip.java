@@ -20,11 +20,10 @@ public class Strip extends AbilityExecutor {
     }
 
     // Relative coordinates of every neighbours that we want to check
-    private static int[][] relCoordinates =
-            {{1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1}, {1, 0, 1}, {1, 0, -1}, {-1, 0, 1},
-                    {-1, 0, -1}, {0, 1, 0}, {1, 1, 0}, {-1, 1, 0}, {0, 1, 1}, {0, 1, -1}, {1, 1, 1},
-                    {1, 1, -1}, {-1, 1, 1}, {-1, 1, -1}, {1, -1, 0}, {-1, -1, 0}, {0, -1, 1},
-                    {0, -1, -1}, {1, -1, 1}, {1, -1, -1}, {-1, -1, 1}, {-1, -1, -1}};
+    private static int[][] relCoordinates = {{1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1}, {1, 0, 1}, {1, 0, -1},
+            {-1, 0, 1}, {-1, 0, -1}, {0, 1, 0}, {1, 1, 0}, {-1, 1, 0}, {0, 1, 1}, {0, 1, -1}, {1, 1, 1}, {1, 1, -1},
+            {-1, 1, 1}, {-1, 1, -1}, {1, -1, 0}, {-1, -1, 0}, {0, -1, 1}, {0, -1, -1}, {1, -1, 1}, {1, -1, -1},
+            {-1, -1, 1}, {-1, -1, -1}};
 
     private int range = 5;
 
@@ -37,16 +36,14 @@ public class Strip extends AbilityExecutor {
         Block block = event.getClickedBlock();
 
         return event.getPlayer().isSneaking() && event.getItem() != null
-                && event.getItem().getType().toString().endsWith("_AXE")
-                && Tag.LOGS.isTagged(block.getType())
-                && !block.getType().toString().startsWith("STRIPPED")
-                && !(block.hasMetadata("laboulangerie:placed"));
+                && event.getItem().getType().toString().endsWith("_AXE") && Tag.LOGS.isTagged(block.getType())
+                && !block.getType().toString().startsWith("STRIPPED") && !(block.hasMetadata("laboulangerie:placed"));
     }
 
     @Override
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
-        Block initBlock = event.getPlayer().getTargetBlock(5);
+        Block initBlock = event.getPlayer().getTargetBlockExact(5);
         initType = initBlock.getType();
         initLocation = initBlock.getLocation();
         initBlock.setType(Material.getMaterial("STRIPPED_" + initBlock.getType().toString()));
@@ -59,12 +56,10 @@ public class Strip extends AbilityExecutor {
             public void run() {
                 Location loc = block.getLocation();
                 for (int[] coordinate : Strip.relCoordinates) {
-                    Location neighbourLoc =
-                            loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
+                    Location neighbourLoc = loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
                     Block neighbour = neighbourLoc.getBlock();
 
-                    if ((neighbour.getType() == Material
-                            .getMaterial(initType.toString().replace("_WOOD", "_LOG"))
+                    if ((neighbour.getType() == Material.getMaterial(initType.toString().replace("_WOOD", "_LOG"))
                             || neighbour.getType() == Material
                                     .getMaterial(initType.toString().replace("_LOG", "_WOOD")))
                             && neighbour.getY() >= initLocation.getBlockY()
@@ -72,8 +67,8 @@ public class Strip extends AbilityExecutor {
                             && Math.abs(neighbour.getZ() - initLocation.getBlockZ()) <= range) {
                         // Change to stripped variant and preserve rotation, getAsString() returns
                         // something like: minecraft:oak_log[axis=y]
-                        String direction = "minecraft:stripped_"
-                                + neighbour.getBlockData().getAsString().split("minecraft:")[1];
+                        String direction =
+                                "minecraft:stripped_" + neighbour.getBlockData().getAsString().split("minecraft:")[1];
                         neighbour.setBlockData(Bukkit.getServer().createBlockData(direction));
 
                         // Break neighbours of neighbour recursively
