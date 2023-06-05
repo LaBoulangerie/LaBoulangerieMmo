@@ -57,8 +57,6 @@ talents:
                 description: Cuit le contenu d'un four instantanément
                 cooldown: 30
                 unit: MINUTES
-                cooldown: 1
-                unit: HOURS
                 level: 85
                 effect: default
                 log: true

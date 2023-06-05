@@ -55,6 +55,7 @@ public class GrindingListener implements Listener {
             try {
                 isMythicMob = MythicMobsSupport.tryToGiveMythicReward(event.getEntity(), event.getEntity().getKiller());
             } catch (Exception e) {
+                LaBoulangerieMmo.PLUGIN.getLogger().warning("MythicMobs reward failed: '" + e);
             }
         }
 
