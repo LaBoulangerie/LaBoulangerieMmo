@@ -79,19 +79,27 @@ public class MmoListener implements Listener {
 
         // Check for unlocked ability tiers
         for (AbilityArchetype abilityArchetype : talentArchetype.abilitiesArchetypes.values()) {
-            for (int i = 0; i < abilityArchetype.tiers.size(); i++) {
-                Integer tierLevel = abilityArchetype.tiers.get(i);
-                if (tierLevel == talent.getLevel()) {
-                    String unlockedString = i == 0 ? config.getString("lang.messages.ability-unlocked")
-                            : config.getString("lang.messages.ability-upgrade");
+            boolean isUnlocked = false;
+            String unlockedString = config.getString("lang.messages.ability-unlocked");
+            resolvers.add(Placeholder.parsed("ability", abilityArchetype.displayName));
 
-                    resolvers.add(Placeholder.parsed("ability", abilityArchetype.displayName));
-                    resolvers.add(Placeholder.parsed("tier", Integer.toString(i + 1)));
-
-                    Component unlockedComponent =
-                            MiniMessage.miniMessage().deserialize(unlockedString, TagResolver.resolver(resolvers));
-                    player.sendMessage(prefix.append(unlockedComponent));
+            if (!abilityArchetype.hasTiers() && abilityArchetype.requiredLevel == talent.getLevel()) {
+                isUnlocked = true;
+            } else {
+                for (int i = 0; i < abilityArchetype.tiers.size(); i++) {
+                    Integer tierLevel = abilityArchetype.tiers.get(i);
+                    if (tierLevel == talent.getLevel()) {
+                        isUnlocked = true;
+                        if (i != 0) unlockedString = config.getString("lang.messages.ability-upgrade");
+                        resolvers.add(Placeholder.parsed("tier", Integer.toString(i + 1)));
+                    }
                 }
+            }
+
+            if (isUnlocked) {
+                Component unlockedComponent =
+                        MiniMessage.miniMessage().deserialize(unlockedString, TagResolver.resolver(resolvers));
+                player.sendMessage(prefix.append(unlockedComponent));
             }
         }
 
