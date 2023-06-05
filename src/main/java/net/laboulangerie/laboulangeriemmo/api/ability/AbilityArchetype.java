@@ -3,10 +3,13 @@ package net.laboulangerie.laboulangeriemmo.api.ability;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import org.bukkit.Material;
 
 public class AbilityArchetype {
     public String identifier;
     public String displayName;
+    public String description;
+    public Material displayItem;
     public boolean shouldLog;
     public TimeUnit cooldownUnit;
     public int cooldown;
@@ -28,7 +31,11 @@ public class AbilityArchetype {
      * @return Tier's required level or highest tier's one or requiredLevel if no tier is defined
      */
     public Integer getTier(int tier) {
-        if (tiers.size() == 0) return requiredLevel;
+        if (!hasTiers()) return requiredLevel;
         return tiers.size() > tier ? tiers.get(tier) : tiers.get(tiers.size() - 1);
+    }
+
+    public Boolean hasTiers() {
+        return tiers.size() != 0;
     }
 }

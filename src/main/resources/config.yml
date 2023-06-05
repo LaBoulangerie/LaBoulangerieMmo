@@ -10,14 +10,25 @@ lang:
         ability_log: <yellow>Vous avez utilisé <aqua><ability></aqua>, cooldown de <aqua><cooldown> <unit></aqua>
         level-up: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> ! Vous gagnez <aqua><reward></aqua>
         level-up-no-reward: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> !
+        level-up-title: <bold><gradient:yellow:green>↑ LEVEL UP ↑
+        level-up-subtitle: <aqua>Niveau <level> <talent>
+        ability-unlocked: <yellow>Habilité <aqua><ability></aqua> débloquée !
+        ability-upgrade: <yellow>Habilité <aqua><ability></aqua> amélioré au <aqua>Tier <tier></aqua> !
         xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
-        xp_up_boost: "<bold><aqua> BOOST x<boost></aqua></bold>"
-        combo_toggle: <yellow>Vous avez <aqua><state></aqua> <yellow>les combos.
+        xp_up_boost: <bold><aqua> BOOST x<boost></aqua></bold>
+        combo_toggle: <yellow>Vous avez <aqua><state></aqua> les combos.
     xp_boost:
         bar_title: "<aqua><bold>XP Boost x<boost></bold> <yellow>-</yellow> <talent> <yellow>-</yellow> <author> <yellow>-</yellow> <time></aqua>"
         notif: "<yellow><aqua><author></aqua> vient d'activer un boost <aqua><bold>x<boost></bold></aqua> pour le métier <aqua><talent></aqua> !"
     ability-use-cooldown: <gold>You must wait <gray><duration> <unit></gray> before using <aqua><ability></aqua>.
 
+    combo:
+        delimiter: " - "
+        empty: "<gray>?</gray>"
+        # Names matching the ComboKey enum in lowercase.
+        left: "<gold>G</gold>"
+        right: "<gold>D</gold>"
+        shift: "<gold>S</gold>"
 #Whether or not to display a boss bar showing player's progression when gaining xp
 enable-xp-bar: true
 #Whether or not the talents should be enabled
@@ -25,10 +36,12 @@ enable-talents: true
 
 talents:
     miner:
-        display_name: Miner
+        display_name: ⛏ Mineur
         abilities:
             fast-mine:
-                display_name: Fast mine
+                display_name: Pioche Aiguisée
+                display_item: GOLDEN_PICKAXE
+                description: Donne célérité
                 cooldown: 15
                 unit: MINUTES
                 level: 15
@@ -39,21 +52,29 @@ talents:
                     - 45
                     - 75
             fast-smelt:
-                display_name: Fast smelt
+                display_name: Cuisson Instantanée
+                display_item: FURNACE
+                description: Cuit le contenu d'un four instantanément
                 cooldown: 30
                 unit: MINUTES
+                cooldown: 1
+                unit: HOURS
                 level: 85
                 effect: default
                 log: true
             minecraft-exp-multiplier:
-                display_name: Minecraft xp multiplier
+                display_name: Brossage Minutieux
+                display_item: EXPERIENCE_BOTTLE
+                description: Donne davantage d'XP en récoltant des minerais
                 cooldown: 1
                 unit: SECONDS
                 level: 5
                 effect: default
                 log: false
             magnetic-field:
-                display_name: Magnetic field
+                display_name: Champ Magnétique
+                display_item: COMPASS
+                description: Donne une surbrillance aux minerais alentour
                 cooldown: 30
                 unit: MINUTES
                 level: 35
@@ -71,10 +92,12 @@ talents:
             - WOODEN_PICKAXE
             - NETHERITE_PICKAXE
     hunter:
-        display_name: Hunter
+        display_name: 🗡 Chasseur
         abilities:
             dodging:
-                display_name: Dodging
+                display_name: Bélier
+                display_item: GOAT_HORN
+                description: Projection rapide, fait des dégâts sur son passage
                 cooldown: 5
                 unit: MINUTES
                 level: 25
@@ -85,7 +108,9 @@ talents:
                     - 60
                     - 95
             exp-in-bottle:
-                display_name: Xp in bottle
+                display_name: Mise en Bouteille
+                display_item: EXPERIENCE_BOTTLE
+                description: Mets de l'experience dans une bouteille
                 cooldown: 0
                 unit: SECONDS
                 level: 5
@@ -96,7 +121,9 @@ talents:
                     - 30
                     - 40
             fire-bow:
-                display_name: Fire bow
+                display_name: Flèche Enflammée
+                display_item: BOW
+                description: Lance une flèche enflammée, fait des dégâts à l'atterissage
                 cooldown: 15
                 unit: MINUTES
                 level: 15
@@ -107,7 +134,9 @@ talents:
                     - 30
                     - 70
             hiding:
-                display_name: Hiding
+                display_name: Camouflage
+                display_item: GLASS
+                description: Rend le joueur invisible
                 cooldown: 25
                 unit: MINUTES
                 level: 50
@@ -125,10 +154,12 @@ talents:
             - WOODEN_SWORD
             - NETHERITE_SWORD
     farmer:
-        display_name: Farmer
+        display_name: ✂ Fermier
         abilities:
             nature-touch:
-                display_name: Nature touch
+                display_name: Jeunes Pousses
+                display_item: WHEAT_SEEDS
+                description: Replante les cultures automatiquement après leur récolte
                 cooldown: 15
                 unit: MINUTES
                 level: 5
@@ -139,7 +170,9 @@ talents:
                     - 30
                     - 70
             better-bonemeal:
-                display_name: Better bonemeal
+                display_name: Engrais Naturel
+                display_item: BONE_MEAL
+                description: Fais pousser tout ce qu'il y a autour du joueur
                 cooldown: 15
                 unit: MINUTES
                 level: 15
@@ -150,7 +183,9 @@ talents:
                     - 45
                     - 100
             animal-twins:
-                display_name: Animal twins
+                display_name: Jumeaux
+                display_item: WHEAT
+                description: Donne des jumeaux à la reproduction
                 cooldown: 1
                 unit: SECONDS
                 level: 20
@@ -161,7 +196,9 @@ talents:
                     - 55
                     - 80
             tasty-bread:
-                display_name: Tasty bread
+                display_name: Pain Aléchant
+                display_item: BREAD
+                description: Tout les animaux deviennent attirés par le pain
                 cooldown: 1
                 unit: SECONDS
                 level: 10
@@ -178,10 +215,12 @@ talents:
             - WOODEN_HOE
             - NETHERITE_HOE
     lumberjack:
-        display_name: Lumberjack
+        display_name: 🪓 Bûcheron
         abilities:
             double-drop-log:
-                display_name: Double drop log
+                display_name: Grosses Bûches
+                display_item: OAK_LOG
+                description: Double le drop de bûches et pommes
                 cooldown: 0
                 unit: SECONDS
                 level: 5
@@ -193,6 +232,8 @@ talents:
                     - 75
             better-apple-drop:
                 display_name: Better apple drop
+                display_item: APPLE
+                description: AAAAAAAAAPPLE
                 cooldown: 0
                 unit: SECONDS
                 level: 5
@@ -203,7 +244,9 @@ talents:
                     - 40
                     - 75
             timber:
-                display_name: Timber!!!
+                display_name: Timber
+                display_item: GOLDEN_AXE
+                description: Bûches adjacentes sont cassées
                 cooldown: 5
                 unit: MINUTES
                 level: 35
@@ -214,14 +257,18 @@ talents:
                     - 65
                     - 95
             strip:
-                display_name: Strip
+                display_name: Écorçage
+                display_item: STRIPPED_OAK_LOG
+                description: Ecorce les bûches adjacentes
                 cooldown: 10
                 unit: MINUTES
                 level: 50
                 effect: default
                 log: true
             thick-tree:
-                display_name: Thick tree
+                display_name: Haricot Magique
+                display_item: JUNGLE_SAPLING
+                description: Fait pousser un grand arbre (Acajou, Sapin, Chêne noir) avec une seule pousse
                 cooldown: 15
                 unit: MINUTES
                 level: 10
@@ -322,6 +369,8 @@ talent-grinding:
             TWISTING_VINES_PLANT: 2
             WEEPING_VINES: 2
             WEEPING_VINES_PLANT: 2
+            # with berries
+            CAVE_VINES_PLANT: 4
         first_craft:
             IRON_AXE: 50
             DIAMOND_AXE: 100
@@ -445,3 +494,23 @@ palier-coloration:
     - "#F78200"
     - "#E23838"
     - "#973999"
+
+max-talent-level: 100
+
+talent-tree:
+    title: <talent> <player>
+    # Placeholders: talent, level, xp
+    talent-item:
+        name: <bold><aqua><talent>
+        lore:
+            - <yellow>Niveau <aqua><level></aqua>
+            - <yellow>XP <aqua><xp></aqua>
+    # Placeholders: ability, tier, description, cooldown-value, cooldown-unit, required-level
+    ability-item:
+        name: <bold><yellow><ability>
+        with-tier: <aqua> <tier>
+        lore:
+            - <gray><description>
+            - ""
+            - <yellow>Cooldown <aqua><cooldown-value> <cooldown-unit>
+            - "<is-unlocked-color>[Niveau <required-level>]"

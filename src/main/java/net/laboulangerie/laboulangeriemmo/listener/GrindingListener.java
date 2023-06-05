@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.type.CaveVinesPlant;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -37,6 +38,11 @@ public class GrindingListener implements Listener {
                     .getStringList("ageable-ignored-blocks").contains(block.getType().toString()))
                 return;
         }
+
+        // Cave vines with berries check
+        if (block.getType() == Material.CAVE_VINES_PLANT && !((CaveVinesPlant) block.getBlockData()).isBerries())
+            return;
+
         giveReward(event.getPlayer(), GrindingCategory.BREAK, block.getType().toString(), false);
     }
 

@@ -7,6 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
@@ -21,7 +22,8 @@ public class Combo implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String alias,
+            @NotNull String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4This command is reserved to players!");
             return true;
@@ -43,7 +45,7 @@ public class Combo implements CommandExecutor, TabCompleter {
                 MiniMessage.miniMessage().deserialize(LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.prefix"))
                         .append(MiniMessage.miniMessage().deserialize(
                                 LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.messages.combo_toggle"),
-                                Placeholder.parsed("state", state == true ? "activé" : "désactivé"))));
+                                Placeholder.parsed("state", state ? "activé" : "désactivé"))));
         return true;
     }
 }

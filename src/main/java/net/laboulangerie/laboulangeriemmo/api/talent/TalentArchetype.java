@@ -13,8 +13,8 @@ public class TalentArchetype {
     public String identifier;
     public Map<String, AbilityArchetype> abilitiesArchetypes = new HashMap<>();
     /**
-     * The list of possible items the player must be holding to accept a combo for this talent, null
-     * means no limitation.
+     * The list of possible items the player must be holding to accept a combo for this talent, null means no
+     * limitation.
      */
     public List<Material> comboItems = null;
 }
