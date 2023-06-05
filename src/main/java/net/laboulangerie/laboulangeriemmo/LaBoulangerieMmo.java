@@ -40,6 +40,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public static TalentsRegistry talentsRegistry = null;
     public static AbilitiesRegistry abilitiesRegistry = null;
     public static boolean WORLDGUARD_SUPPORT = false;
+    public static boolean MYTHICMOBS_SUPPORT = false;
     public static DecimalFormat formatter;
 
     private GsonSerializer serializer;
@@ -54,7 +55,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
             WolrdGuardSupport.enableSupport();
             WORLDGUARD_SUPPORT = true;
-            getLogger().info("Hooked in WorldGuard!");
+            getLogger().info("Hooked into WorldGuard!");
         }
     }
 
@@ -68,6 +69,11 @@ public class LaBoulangerieMmo extends JavaPlugin {
             getLogger().log(Level.SEVERE, "Can't load the plugin, Vault isn't present");
             getServer().getPluginManager().disablePlugin(this);
             return;
+        }
+
+        if (getServer().getPluginManager().getPlugin("MythicMobs") != null) {
+            MYTHICMOBS_SUPPORT = true;
+            getLogger().info("Hooked into MythicMobs!");
         }
 
         serializer = new GsonSerializer();

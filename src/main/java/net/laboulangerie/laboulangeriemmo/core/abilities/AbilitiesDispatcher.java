@@ -132,18 +132,14 @@ public class AbilitiesDispatcher implements Listener {
                 return;
             }
             talentArchetype.abilitiesArchetypes.values().stream()
-                    .filter(abilityArchetype -> LaBoulangerieMmo.abilitiesRegistry
-                            .getTriggerForAbility(abilityArchetype.identifier) == trigger)
-                    .filter(abilityArchetype -> player.canUseAbility(abilityArchetype,
-                            talentArchetype.identifier))
-                    .forEach(abilityArchetype -> {
-                        AbilityExecutor executor;
-                        try {
-                            executor = LaBoulangerieMmo.abilitiesRegistry
-                                    .newAbilityExecutor(abilityArchetype);
-                        } catch (InstantiationException | IllegalAccessException
-                                | IllegalArgumentException | InvocationTargetException
-                                | NoSuchMethodException | SecurityException e) {
+            .filter(abilityArchetype -> LaBoulangerieMmo.abilitiesRegistry.getTriggerForAbility(abilityArchetype.identifier) == trigger)
+            .filter(abilityArchetype -> player.canUseAbility(abilityArchetype, talentArchetype.identifier, true))
+            .forEach(abilityArchetype -> {
+                AbilityExecutor executor;
+                try {
+                    executor = LaBoulangerieMmo.abilitiesRegistry.newAbilityExecutor(abilityArchetype);
+                } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 
                             Player bukkitPlayer = Bukkit.getPlayer(player.getUniqueId());
                             bukkitPlayer.sendMessage(

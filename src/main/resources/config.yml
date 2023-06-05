@@ -16,6 +16,7 @@ lang:
     xp_boost:
         bar_title: "<aqua><bold>XP Boost x<boost></bold> <yellow>-</yellow> <talent> <yellow>-</yellow> <author> <yellow>-</yellow> <time></aqua>"
         notif: "<yellow><aqua><author></aqua> vient d'activer un boost <aqua><bold>x<boost></bold></aqua> pour le métier <aqua><talent></aqua> !"
+    ability-use-cooldown: <gold>You must wait <gray><duration> <unit></gray> before using <aqua><ability></aqua>.
 
 #Whether or not to display a boss bar showing player's progression when gaining xp
 enable-xp-bar: true
@@ -414,11 +415,10 @@ talent-grinding:
             DIAMOND_HOE: 100
             NETHERITE_HOE: 200
 
-
 #Define money rewards when a player levels up in one talent
 level-up-rewards:
     miner:
-#       "level": reward # "*" means every levels, its stacked with the specific level reward
+        #       "level": reward # "*" means every levels, its stacked with the specific level reward
         "*": 1.0% #If you add a %, the money given will be the percentage of the xp you have accumulated over time
         "50": 30
 rewards-rounding-method: "no" # Round rewards defined above, accepted values no, closest, up, down
@@ -434,6 +434,10 @@ ageable-ignored-blocks:
     - WEEPING_VINES_PLANT
     - WEEPING_VINES
     - SUGAR_CANE
+# This will subtract the specified xp from the xp given by mobs originating from spawners
+decrease-spawner-mobs-by:
+#    "*": 5.0 # Will subtract 5 xp to every spawner mobs
+#   "SPIDER": 1.5 # This has priority over the global selector "*"
 
 palier-coloration:
     - "#5EBD3E"
