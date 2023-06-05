@@ -43,7 +43,7 @@ public class Timber extends AbilityExecutor {
             return false; // We do this check first to avoid ray casting for nothing
 
         player = event.getPlayer();
-        block = player.getTargetBlock(4);
+        block = player.getTargetBlockExact(4);
 
         return block != null && Tag.LOGS.isTagged(block.getType())
                 && !(block.hasMetadata("laboulangerie:placed"));
