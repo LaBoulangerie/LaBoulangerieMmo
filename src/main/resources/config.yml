@@ -13,8 +13,8 @@ lang:
         level-up-title: <bold><gradient:yellow:green>↑ LEVEL UP ↑
         level-up-subtitle: <aqua>Niveau <level> <talent>
         ability-unlocked: <yellow>Habilité <aqua><ability></aqua> débloquée !
-        ability-upgrade: <yellow>Habilité <aqua><ability></aqua> amélioré au <aqua>Tier <tier></aqua> !
-        xp_up: <yellow>Vous avez gagné <aqua><xp>xp</aqua> en <talent>
+        ability-upgrade: <yellow>Habilité <aqua><ability></aqua> améliorée au <aqua>Tier <tier></aqua> !
+        xp_up: <yellow>+<aqua><xp>xp</aqua> en <talent>
         xp_up_boost: <bold><aqua> BOOST x<boost></aqua></bold>
         combo_toggle: <yellow>Vous avez <aqua><state></aqua> les combos.
     xp_boost:
