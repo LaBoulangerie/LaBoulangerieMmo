@@ -33,8 +33,7 @@ public class KeyStreak {
      * Used only when the period between key press matters
      * 
      * @param key
-     * @param timer the runnable which will invalid this streak if the period between keys is too
-     *        long
+     * @param timer the runnable which will invalid this streak if the period between keys is too long
      * @return true if the streak is full
      */
     public boolean addKey(ComboKey key, BukkitRunnable timer) {
@@ -61,10 +60,10 @@ public class KeyStreak {
     }
 
     /**
-     * Empty the key streak, called when the period between key press is to long, this should be
-     * managed by the parent context
+     * Empty the key streak, called when the period between key press is to long, this should be managed by the parent
+     * context
      */
-    public void fail() {
+    public void clear() {
         keyQueue.clear();
     }
 

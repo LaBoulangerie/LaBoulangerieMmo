@@ -1,5 +1,6 @@
 package net.laboulangerie.laboulangeriemmo.listener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,13 +10,17 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.title.Title;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
+import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
 import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
 import net.laboulangerie.laboulangeriemmo.core.XpBar;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
@@ -26,32 +31,35 @@ public class MmoListener implements Listener {
 
     @EventHandler
     public void onLevelUp(PlayerLevelUpEvent event) {
+        FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+
         Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
         Talent talent = event.getTalent();
+        TalentArchetype talentArchetype = LaBoulangerieMmo.talentsRegistry.getTalent(talent.getTalentId());
 
-        if (!LaBoulangerieMmo.PLUGIN.getConfig()
-                .isSet("level-up-rewards." + talent.getTalentId())) {
-            List<TagResolver.Single> placeholders =
-                    Arrays.asList(Placeholder.parsed("level", Integer.toString(talent.getLevel())),
-                            Placeholder.parsed("talent", talent.getDisplayName()));
+        Component prefix = MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"));
 
-            player.sendMessage(
-                    MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                            .append(MiniMessage.miniMessage().deserialize(
-                                    config.getString("lang.messages.level-up-no-reward"),
-                                    TagResolver.resolver(placeholders))));
+        List<TagResolver.Single> resolvers = new ArrayList<>();
+        resolvers.add(Placeholder.parsed("level", Integer.toString(talent.getLevel())));
+        resolvers.add(Placeholder.parsed("talent", talent.getDisplayName()));
+
+        if (!config.isSet("level-up-rewards." + talent.getTalentId())) {
+            Component noRewardComponent = MiniMessage.miniMessage()
+                    .deserialize(config.getString("lang.messages.level-up-no-reward"), TagResolver.resolver(resolvers));
+
+            player.sendMessage(prefix.append(noRewardComponent));
             return;
         }
 
-        double amount = processMoneyAmount(LaBoulangerieMmo.PLUGIN.getConfig()
-                .getString("level-up-rewards." + talent.getTalentId() + ".*"), talent.getLevelXp());
+        double amount = processMoneyAmount(config.getString("level-up-rewards." + talent.getTalentId() + ".*"),
+                talent.getLevelXp());
+
         amount += processMoneyAmount(
-                LaBoulangerieMmo.PLUGIN.getConfig().getString(
-                        "level-up-rewards." + talent.getTalentId() + "." + talent.getLevel()),
+                config.getString("level-up-rewards." + talent.getTalentId() + "." + talent.getLevel()),
                 talent.getLevelXp());
 
         if (amount == 0) return;
-        switch (LaBoulangerieMmo.PLUGIN.getConfig().getString("rewards-rounding-method", "no")) {
+        switch (config.getString("rewards-rounding-method", "no")) {
             case "closest":
                 amount = Math.round(amount);
                 break;
@@ -65,17 +73,50 @@ public class MmoListener implements Listener {
             default:
                 break;
         }
+
         LaBoulangerieMmo.ECONOMY.depositPlayer((OfflinePlayer) player, amount);
+        resolvers.add(Placeholder.parsed("reward", LaBoulangerieMmo.ECONOMY.format(amount)));
 
-        List<TagResolver.Single> placeholders = Arrays.asList(
-                Placeholder.parsed("level", Integer.toString(talent.getLevel())),
-                Placeholder.parsed("talent", talent.getDisplayName()),
-                Placeholder.parsed("reward", LaBoulangerieMmo.formatter.format(amount) + "$"));
+        // Check for unlocked ability tiers
+        for (AbilityArchetype abilityArchetype : talentArchetype.abilitiesArchetypes.values()) {
+            boolean isUnlocked = false;
+            String unlockedString = config.getString("lang.messages.ability-unlocked");
+            resolvers.add(Placeholder.parsed("ability", abilityArchetype.displayName));
 
-        player.sendMessage(MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"))
-                .append(MiniMessage.miniMessage().deserialize(
-                        config.getString("lang.messages.level-up"),
-                        TagResolver.resolver(placeholders))));
+            if (!abilityArchetype.hasTiers() && abilityArchetype.requiredLevel == talent.getLevel()) {
+                isUnlocked = true;
+            } else {
+                for (int i = 0; i < abilityArchetype.tiers.size(); i++) {
+                    Integer tierLevel = abilityArchetype.tiers.get(i);
+                    if (tierLevel == talent.getLevel()) {
+                        isUnlocked = true;
+                        if (i != 0) unlockedString = config.getString("lang.messages.ability-upgrade");
+                        resolvers.add(Placeholder.parsed("tier", Integer.toString(i + 1)));
+                    }
+                }
+            }
+
+            if (isUnlocked) {
+                Component unlockedComponent =
+                        MiniMessage.miniMessage().deserialize(unlockedString, TagResolver.resolver(resolvers));
+                player.sendMessage(prefix.append(unlockedComponent));
+            }
+        }
+
+        Component lvlUpComponent = MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level-up"),
+                TagResolver.resolver(resolvers));
+        player.sendMessage(prefix.append(lvlUpComponent));
+
+        Component titleComponent =
+                MiniMessage.miniMessage().deserialize(config.getString("lang.messages.level-up-title"));
+        Component subTitleComponent = MiniMessage.miniMessage()
+                .deserialize(config.getString("lang.messages.level-up-subtitle"), TagResolver.resolver(resolvers));
+
+        Title lvlUpTitle = Title.title(titleComponent, subTitleComponent);
+        player.showTitle(lvlUpTitle);
+
+        Sound lvlUpSound = Sound.sound(Key.key("ui.toast.challenge_complete"), Sound.Source.AMBIENT, 1, 1);
+        player.playSound(lvlUpSound);
     }
 
     @EventHandler
@@ -84,19 +125,20 @@ public class MmoListener implements Listener {
         if (player == null) return;
         XpBar.displayBar(event.getTalent(), event.getPlayer());
 
-        List<TagResolver.Single> placeholders = Arrays.asList(
-                Placeholder.parsed("xp", LaBoulangerieMmo.formatter.format(event.getAmount())),
-                Placeholder.parsed("talent", event.getTalent().getDisplayName()));
+        List<TagResolver.Single> placeholders =
+                Arrays.asList(Placeholder.parsed("xp", LaBoulangerieMmo.formatter.format(event.getAmount())),
+                        Placeholder.parsed("talent", event.getTalent().getDisplayName()));
 
         Component prefix = MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"));
         Component message = MiniMessage.miniMessage().deserialize(config.getString("lang.messages.xp_up"),
-            TagResolver.resolver(placeholders));
+                TagResolver.resolver(placeholders));
 
         XpBoostObj xpBoost = LaBoulangerieMmo.PLUGIN.getXpBoostManager().getBoost(event.getTalent().getTalentId());
 
         if (xpBoost != null) {
             TagResolver.Single boostPlaceholder = Placeholder.parsed("boost", xpBoost.getFormattedBoost());
-            Component boostMessage = MiniMessage.miniMessage().deserialize(config.getString("lang.messages.xp_up_boost"), boostPlaceholder);
+            Component boostMessage = MiniMessage.miniMessage()
+                    .deserialize(config.getString("lang.messages.xp_up_boost"), boostPlaceholder);
             message = message.append(boostMessage);
         }
 

@@ -4,13 +4,18 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.api.player.GrindingCategory;
+import net.laboulangerie.laboulangeriemmo.core.combo.ComboKey;
+import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
+import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
+import net.laboulangerie.laboulangeriemmo.listener.GrindingListener;
 
 public class Timber extends AbilityExecutor {
     public Timber(AbilityArchetype archetype) {
@@ -28,11 +33,17 @@ public class Timber extends AbilityExecutor {
 
     private Material initType;
     private Location initLocation;
+    private Block block;
+    private Player player;
 
     @Override
     public boolean shouldTrigger(Event baseEvent) {
-        BlockBreakEvent event = (BlockBreakEvent) baseEvent;
-        Block block = event.getBlock();
+        ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
+        if (!event.getKeyStreak().match(new KeyStreak(ComboKey.LEFT, ComboKey.LEFT, ComboKey.LEFT)))
+            return false; // We do this check first to avoid ray casting for nothing
+
+        player = event.getPlayer();
+        block = player.getTargetBlockExact(4);
 
         return block != null && Tag.LOGS.isTagged(block.getType())
                 && !(block.hasMetadata("laboulangerie:placed"));
@@ -40,11 +51,12 @@ public class Timber extends AbilityExecutor {
 
     @Override
     public void trigger(Event baseEvent, int level) {
-        BlockBreakEvent event = (BlockBreakEvent) baseEvent;
-        Block initBlock = event.getBlock();
-        initType = initBlock.getType();
-        initLocation = initBlock.getLocation();
-        breakNeighbours(initBlock);
+        initType = block.getType();
+        initLocation = block.getLocation();
+        GrindingListener.giveReward(((ComboCompletedEvent) baseEvent).getPlayer(), GrindingCategory.BREAK,
+                block.getType().toString(), false);
+        block.breakNaturally();
+        breakNeighbours(block);
     }
 
     private void breakNeighbours(Block block) {
@@ -57,15 +69,16 @@ public class Timber extends AbilityExecutor {
                             loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
                     Block neighbour = neighbourLoc.getBlock();
 
-                    if ((neighbour.getType() == Material
-                            .getMaterial(initType.toString().replace("_WOOD", "_LOG"))
+                    if ((neighbour.getType() == Material.getMaterial(initType.toString().replace("_WOOD", "_LOG"))
                             || neighbour.getType() == Material
                                     .getMaterial(initType.toString().replace("_LOG", "_WOOD")))
                             && neighbour.getY() >= initLocation.getBlockY()
                             && Math.abs(neighbour.getX() - initLocation.getBlockX()) <= range
                             && Math.abs(neighbour.getZ() - initLocation.getBlockZ()) <= range) {
-                        // Drop the item and spawn block particles
-                        neighbour.breakNaturally(null, true);
+                        // Give xp for breaking the block
+                        GrindingListener.giveReward(player, GrindingCategory.BREAK, neighbour.getType().toString(),
+                                false);
+                        neighbour.breakNaturally(null, true); // Drop the item and spawn block particles
                         // Break neighbours of neighbour recursively
                         breakNeighbours(neighbour);
                     }

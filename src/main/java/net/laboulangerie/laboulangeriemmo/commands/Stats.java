@@ -10,14 +10,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 
@@ -30,6 +32,8 @@ public class Stats implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
+        FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+
         OfflinePlayer source = null;
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("leaderboard")) {
@@ -85,8 +89,10 @@ public class Stats implements TabExecutor {
             }
 
             if (!sender.hasPermission("laboulangeriemmo.stats.see")) {
+                Component prefix = MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"));
+
                 sender.sendMessage(
-                        ChatColor.GOLD + "[LaBoulangerieMmo] §4You don't have the permission to see other's stats.");
+                        prefix.append(Component.text("You don't have the permission to see other's stats.")));
                 return true;
             }
             UUID uuid = Bukkit.getPlayerUniqueId(args[0]);

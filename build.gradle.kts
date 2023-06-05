@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     `maven-publish`
-    id("io.papermc.paperweight.userdev") version "1.3.5"
+    id("io.papermc.paperweight.userdev") version "1.5.4"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -27,10 +27,6 @@ repositories {
     }
 
     maven {
-        url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-    }
-
-    maven {
         url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     }
 
@@ -49,22 +45,28 @@ repositories {
     maven {
         url = uri("https://repo.codemc.io/repository/maven-public/")
     }
+
     maven {
         url = uri("https://maven.enginehub.org/repo/")
+    }
+
+    maven {
+        url = uri("https://mvn.lumine.io/repository/maven-public/")
     }
 }
 
 dependencies {
-    paperDevBundle("1.19-R0.1-SNAPSHOT")
+    paperDevBundle("1.19.4-R0.1-SNAPSHOT")
     implementation("com.github.luben:zstd-jni:1.5.0-4")
-    implementation("net.kyori:adventure-text-minimessage:4.11.0-SNAPSHOT")
-    compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
+    implementation("net.kyori:adventure-api:4.13.1")
+    paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
-    compileOnly("me.clip:placeholderapi:2.11.1")
-    compileOnly("com.palmergames.bukkit.towny:towny:0.98.2.0")
-    compileOnly("pl.betoncraft:betonquest:1.12.9")
+    compileOnly("me.clip:placeholderapi:2.11.3")
+    compileOnly("com.palmergames.bukkit.towny:towny:0.99.0.0")
+    compileOnly("pl.betoncraft:betonquest:1.12.10")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8-SNAPSHOT")
+    compileOnly("io.lumine:Mythic-Dist:5.2.6")
 }
 
 group = "net.laboulangerie"

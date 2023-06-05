@@ -4,7 +4,7 @@ main: net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
 api-version: 1.19
 authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco, BlackoutBurst, SunshineDev]
 depend: [ProtocolLib, Vault]
-softdepend: [PlaceholderAPI, Towny, BetonQuest, WorldGuard]
+softdepend: [PlaceholderAPI, Towny, BetonQuest, WorldGuard, MythicMobs]
 commands:
     stats:
         permission: laboulangeriemmo.stats
@@ -17,7 +17,11 @@ commands:
     combo:
         permission: laboulangeriemmo.combo
         description: Toggle on/off the combo system
-        usage: /mmo ?[on|off|toggle]
+        usage: /combo ?[on|off|toggle]
+    talent:
+        permission: laboulangeriemmo.talent
+        description: View talent's abilities and tier progression
+        usage: /talent <talent>
     townymmo:
 permissions:
     laboulangeriemmo.stats:

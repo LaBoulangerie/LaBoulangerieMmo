@@ -8,8 +8,6 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.awt.Color;
 
-import java.awt.Color;
-
 import org.bukkit.entity.Player;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapRenderer;

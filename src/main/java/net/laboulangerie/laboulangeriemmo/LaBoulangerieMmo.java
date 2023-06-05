@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 
 import net.laboulangerie.laboulangeriemmo.commands.*;
+import net.laboulangerie.laboulangeriemmo.commands.talenttree.TalentTree;
 import net.laboulangerie.laboulangeriemmo.listener.*;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,7 +41,9 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public static TalentsRegistry talentsRegistry = null;
     public static AbilitiesRegistry abilitiesRegistry = null;
     public static boolean WORLDGUARD_SUPPORT = false;
+    public static boolean MYTHICMOBS_SUPPORT = false;
     public static DecimalFormat formatter;
+    public static int COMBO_LENGTH = 3;
 
     private GsonSerializer serializer;
     private BlockusDataManager blockusDataManager;
@@ -54,20 +57,25 @@ public class LaBoulangerieMmo extends JavaPlugin {
         if (getServer().getPluginManager().getPlugin("WorldGuard") != null) {
             WolrdGuardSupport.enableSupport();
             WORLDGUARD_SUPPORT = true;
-            getLogger().info("Hooked in WorldGuard!");
+            getLogger().info("Hooked into WorldGuard!");
         }
     }
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        formatter = (DecimalFormat) NumberFormat
-                .getNumberInstance(Locale.forLanguageTag(getConfig().getString("locale")));
+        formatter =
+                (DecimalFormat) NumberFormat.getNumberInstance(Locale.forLanguageTag(getConfig().getString("locale")));
         formatter.applyPattern("#.##");
         if (!setupEconomy()) {
             getLogger().log(Level.SEVERE, "Can't load the plugin, Vault isn't present");
             getServer().getPluginManager().disablePlugin(this);
             return;
+        }
+
+        if (getServer().getPluginManager().getPlugin("MythicMobs") != null) {
+            MYTHICMOBS_SUPPORT = true;
+            getLogger().info("Hooked into MythicMobs!");
         }
 
         serializer = new GsonSerializer();
@@ -79,8 +87,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         LaBoulangerieMmo.talentsRegistry = new TalentsRegistry();
         talentsRegistry.init();
 
-        blockusDataManager =
-                new BlockusDataManager(getDataFolder().getPath() + "/blockus/blockus.dat");
+        blockusDataManager = new BlockusDataManager(getDataFolder().getPath() + "/blockus/blockus.dat");
         mmoPlayerManager = new MmoPlayerManager();
         xpBoostManager = new XpBoostManager();
 
@@ -91,6 +98,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         getCommand("stats").setExecutor(new Stats());
         getCommand("mmo").setExecutor(new MmoCommand());
         getCommand("combo").setExecutor(new Combo());
+        getCommand("talent").setExecutor(new TalentTree());
 
         EffectRegistry.registerParticlesEffects();
 
@@ -140,10 +148,9 @@ public class LaBoulangerieMmo extends JavaPlugin {
     }
 
     private void registerListeners() {
-        Arrays.asList(new ServerListener(), new MmoPlayerListener(), new GrindingListener(),
-                new AbilitiesDispatcher(), new MmoListener(), new BlockusListener(),
-                new XpBoostListener(), LeaderBoardManager.getInstance(), new ComboDispatcher())
-                .forEach(l -> getServer().getPluginManager().registerEvents(l, this));
+        Arrays.asList(new ServerListener(), new MmoPlayerListener(), new GrindingListener(), new AbilitiesDispatcher(),
+                new MmoListener(), new BlockusListener(), new XpBoostListener(), LeaderBoardManager.getInstance(),
+                new ComboDispatcher()).forEach(l -> getServer().getPluginManager().registerEvents(l, this));
     }
 
     public MmoPlayerManager getMmoPlayerManager() {
@@ -160,8 +167,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) return false;
-        RegisteredServiceProvider<Economy> rsp =
-                getServer().getServicesManager().getRegistration(Economy.class);
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;
         }
