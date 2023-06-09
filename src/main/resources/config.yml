@@ -166,7 +166,7 @@ talents:
                 display_item: WHEAT_SEEDS
                 description: Replante les cultures automatiquement après leur récolte
                 instruction: Passif
-                cooldown: 15
+                cooldown: 0
                 unit: MINUTES
                 level: 5
                 effect: default
