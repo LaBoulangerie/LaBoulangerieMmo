@@ -45,7 +45,6 @@ public class DoubleDropLog extends AbilityExecutor {
         if (level >= getTier(2) && random <= TIER_3_CHANCE) shouldDrop = true;
         else if (level >= getTier(1) && random <= TIER_2_CHANCE) shouldDrop = true;
         else if (random <= TIER_1_CHANCE) shouldDrop = true;
-        System.out.println(shouldDrop);
 
         if (shouldDrop) {
             Location location = block.getLocation();
