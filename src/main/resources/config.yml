@@ -254,16 +254,6 @@ talents:
                     - 35
                     - 65
                     - 95
-            strip:
-                display_name: Écorçage
-                display_item: STRIPPED_OAK_LOG
-                description: Ecorce les bûches adjacentes
-                instruction: Accroupi + clique gauche sur une bûche
-                cooldown: 10
-                unit: MINUTES
-                level: 50
-                effect: default
-                log: true
             thick-tree:
                 display_name: Haricot Magique
                 display_item: JUNGLE_SAPLING

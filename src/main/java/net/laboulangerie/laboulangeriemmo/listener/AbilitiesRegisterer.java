@@ -18,7 +18,6 @@ import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.ExpInBottle;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.FireBow;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.Hiding;
 import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.DoubleDropLog;
-import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.Strip;
 import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.ThickTree;
 import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.Timber;
 
@@ -42,7 +41,6 @@ public class AbilitiesRegisterer implements Listener {
         event.getRegistry().registerAbility("hiding", Hiding.class, AbilityTrigger.COMBO);
 
         event.getRegistry().registerAbility("double-drop-log", DoubleDropLog.class, AbilityTrigger.BREAK);
-        event.getRegistry().registerAbility("strip", Strip.class, AbilityTrigger.LEFT_CLICK_BLOCK);
         event.getRegistry().registerAbility("timber", Timber.class, AbilityTrigger.COMBO);
         event.getRegistry().registerAbility("thick-tree", ThickTree.class, AbilityTrigger.COMBO);
     }
