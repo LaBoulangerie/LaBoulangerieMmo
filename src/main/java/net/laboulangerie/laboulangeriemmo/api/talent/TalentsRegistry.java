@@ -98,8 +98,9 @@ public class TalentsRegistry {
                          * Key is the field's name in the config and the value is its name in AbilityArchetype
                          */
                         Map<String, String> requiredFields = Map.of("display_name", "displayName", "display_item",
-                                "displayItem", "description", "description", "cooldown", "cooldown", "unit",
-                                "cooldownUnit", "level", "requiredLevel", "effect", "effect", "log", "shouldLog");
+                                "displayItem", "description", "description", "instruction", "instruction", "cooldown",
+                                "cooldown", "unit", "cooldownUnit", "level", "requiredLevel", "effect", "effect", "log",
+                                "shouldLog");
 
                         // go through all abilities
                         for (String abilityId : abilities.getKeys(false)) {

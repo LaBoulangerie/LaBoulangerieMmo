@@ -9,6 +9,7 @@ public class AbilityArchetype {
     public String identifier;
     public String displayName;
     public String description;
+    public String instruction;
     public Material displayItem;
     public boolean shouldLog;
     public TimeUnit cooldownUnit;
