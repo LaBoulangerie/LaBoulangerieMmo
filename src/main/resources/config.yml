@@ -228,19 +228,6 @@ talents:
                     - 5
                     - 40
                     - 75
-            better-apple-drop:
-                display_name: Better apple drop
-                display_item: APPLE
-                description: AAAAAAAAAPPLE
-                cooldown: 0
-                unit: SECONDS
-                level: 5
-                effect: default
-                log: false
-                tiers:
-                    - 5
-                    - 40
-                    - 75
             timber:
                 display_name: Timber
                 display_item: GOLDEN_AXE

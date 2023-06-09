@@ -1,7 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting;
 
-import java.util.Random;
-
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -14,6 +14,10 @@ import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 
 public class DoubleDropLog extends AbilityExecutor {
 
+    private final static float TIER_3_CHANCE = 0.8f;
+    private final static float TIER_2_CHANCE = 0.4f;
+    private final static float TIER_1_CHANCE = 0.1f;
+
     public DoubleDropLog(AbilityArchetype archetype) {
         super(archetype);
     }
@@ -23,7 +27,7 @@ public class DoubleDropLog extends AbilityExecutor {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
         if (event.getBlock().hasMetadata("laboulangerie:placed")) return false;
-        return block != null && Tag.LOGS.isTagged(block.getType());
+        return block != null && (Tag.LOGS.isTagged(block.getType()) || block.getType() == Material.OAK_LEAVES);
     }
 
     @Override
@@ -31,22 +35,23 @@ public class DoubleDropLog extends AbilityExecutor {
 
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
-        ItemStack item = new ItemStack(block.getType());
+        ItemStack droppedItem = new ItemStack(block.getType());
 
-        int max_number = 100;
-        int min_number = 1;
-        Random random_chance = new Random();
-        int find_nearest_int = min_number + random_chance.nextInt(max_number);
-        boolean shouldDouble = false;
+        if (block.getType() == Material.OAK_LEAVES) droppedItem = new ItemStack(Material.APPLE);
 
-        if (level >= getTier(2) && find_nearest_int <= 80) shouldDouble = true;
-        else if (level >= getTier(1) && find_nearest_int <= 40) shouldDouble = true;
-        else if (find_nearest_int <= 10) shouldDouble = true;
+        float random = (float) Math.random();
+        boolean shouldDrop = false;
 
-        if (shouldDouble) {
-            block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY,
-                    block.getLocation().toCenterLocation().add(0, -0.2, 0), 5, 0.1, 0.1, 0.1);
-            block.getWorld().dropItemNaturally(block.getLocation(), item);
+        if (level >= getTier(2) && random <= TIER_3_CHANCE) shouldDrop = true;
+        else if (level >= getTier(1) && random <= TIER_2_CHANCE) shouldDrop = true;
+        else if (random <= TIER_1_CHANCE) shouldDrop = true;
+        System.out.println(shouldDrop);
+
+        if (shouldDrop) {
+            Location location = block.getLocation();
+            location.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location.toCenterLocation().add(0, -0.2, 0), 5,
+                    0.1, 0.1, 0.1);
+            location.getWorld().dropItemNaturally(location, droppedItem);
         }
     }
 }
