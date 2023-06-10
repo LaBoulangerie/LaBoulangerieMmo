@@ -254,6 +254,20 @@ talents:
                     - 35
                     - 65
                     - 95
+            stun:
+                display_name: Étourdissement
+                display_item: NETHER_STAR
+                description: Chance d'étourdir sa victime
+                instruction: Passif
+                cooldown: 1
+                unit: SECONDS
+                level: 20
+                effect: default
+                log: false
+                tiers:
+                    - 20
+                    - 50
+                    - 85
             thick-tree:
                 display_name: Haricot Magique
                 display_item: JUNGLE_SAPLING
