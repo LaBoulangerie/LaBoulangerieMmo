@@ -12,6 +12,7 @@ import com.destroystokyo.paper.MaterialSetTag;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
+import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 
 public class Stun extends AbilityExecutor {
 
@@ -69,6 +70,7 @@ public class Stun extends AbilityExecutor {
         } else if (random <= TIER_1_CHANCE) shouldStun = true;
 
         if (shouldStun) {
+            EffectRegistry.playEffect("stun", entity);
             entity.addPotionEffect(reducedJumpEffect);
             entity.addPotionEffect(slownessEffect);
             if (shouldBlind) entity.addPotionEffect(blindnessEffect);
