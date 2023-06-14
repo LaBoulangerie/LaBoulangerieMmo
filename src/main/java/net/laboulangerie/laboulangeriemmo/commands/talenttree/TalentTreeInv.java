@@ -84,6 +84,7 @@ public class TalentTreeInv implements InventoryHolder {
         abilityResolvers.add(Placeholder.unparsed("ability", ability.displayName));
         abilityResolvers.add(Placeholder.unparsed("tier", Integer.toString(tier + 1)));
         abilityResolvers.add(Placeholder.unparsed("description", ability.description));
+        abilityResolvers.add(Placeholder.unparsed("instruction", ability.instruction));
         abilityResolvers.add(Placeholder.unparsed("cooldown-value", Integer.toString(ability.cooldown)));
         abilityResolvers.add(Placeholder.unparsed("cooldown-unit", ability.cooldownUnit.toString().toLowerCase()));
 

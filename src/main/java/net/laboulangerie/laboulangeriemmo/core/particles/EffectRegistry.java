@@ -18,6 +18,7 @@ public class EffectRegistry {
         particles.put("trail", TrailEffect.class);
         particles.put("arrow", ArrowEffect.class);
         particles.put("invisible-particles", InvisibleParticles.class);
+        particles.put("stun", StunEffect.class);
     }
 
     public static Effect getNewEffect(String effectName, Entity entity)

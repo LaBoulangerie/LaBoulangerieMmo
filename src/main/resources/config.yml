@@ -55,6 +55,7 @@ talents:
                 display_name: Cuisson Instantanée
                 display_item: FURNACE
                 description: Cuit le contenu d'un four instantanément
+                instruction: Clique gauche sur un haut fourneau avec du charbon
                 cooldown: 30
                 unit: MINUTES
                 level: 85
@@ -64,6 +65,7 @@ talents:
                 display_name: Brossage Minutieux
                 display_item: EXPERIENCE_BOTTLE
                 description: Donne davantage d'XP en récoltant des minerais
+                instruction: Passif
                 cooldown: 1
                 unit: SECONDS
                 level: 5
@@ -73,6 +75,7 @@ talents:
                 display_name: Champ Magnétique
                 display_item: COMPASS
                 description: Donne une surbrillance aux minerais alentour
+                instruction: Accroupi + clique droit avec une boussole
                 cooldown: 30
                 unit: MINUTES
                 level: 35
@@ -96,6 +99,7 @@ talents:
                 display_name: Bélier
                 display_item: GOAT_HORN
                 description: Projection rapide, fait des dégâts sur son passage
+                instruction: Combo G - G - D
                 cooldown: 5
                 unit: MINUTES
                 level: 25
@@ -109,6 +113,7 @@ talents:
                 display_name: Mise en Bouteille
                 display_item: EXPERIENCE_BOTTLE
                 description: Mets de l'experience dans une bouteille
+                instruction: Accroupi + clique droit avec une fiole vide
                 cooldown: 0
                 unit: SECONDS
                 level: 5
@@ -122,6 +127,7 @@ talents:
                 display_name: Flèche Enflammée
                 display_item: BOW
                 description: Lance une flèche enflammée, fait des dégâts à l'atterissage
+                instruction: Combo D - G - G puis tirer avec un arc enchanté Flamme
                 cooldown: 15
                 unit: MINUTES
                 level: 15
@@ -135,6 +141,7 @@ talents:
                 display_name: Camouflage
                 display_item: GLASS
                 description: Rend le joueur invisible
+                instruction: Combo G - D - D
                 cooldown: 25
                 unit: MINUTES
                 level: 50
@@ -158,7 +165,8 @@ talents:
                 display_name: Jeunes Pousses
                 display_item: WHEAT_SEEDS
                 description: Replante les cultures automatiquement après leur récolte
-                cooldown: 15
+                instruction: Passif
+                cooldown: 0
                 unit: MINUTES
                 level: 5
                 effect: default
@@ -171,6 +179,7 @@ talents:
                 display_name: Engrais Naturel
                 display_item: BONE_MEAL
                 description: Fais pousser tout ce qu'il y a autour du joueur
+                instruction: Accroupi + clique droit avec de la poudre d'os
                 cooldown: 15
                 unit: MINUTES
                 level: 15
@@ -184,6 +193,7 @@ talents:
                 display_name: Jumeaux
                 display_item: WHEAT
                 description: Donne des jumeaux à la reproduction
+                instruction: Passif
                 cooldown: 1
                 unit: SECONDS
                 level: 20
@@ -197,6 +207,7 @@ talents:
                 display_name: Pain Aléchant
                 display_item: BREAD
                 description: Tout les animaux deviennent attirés par le pain
+                instruction: Passif
                 cooldown: 1
                 unit: SECONDS
                 level: 10
@@ -219,19 +230,7 @@ talents:
                 display_name: Grosses Bûches
                 display_item: OAK_LOG
                 description: Double le drop de bûches et pommes
-                cooldown: 0
-                unit: SECONDS
-                level: 5
-                effect: default
-                log: false
-                tiers:
-                    - 5
-                    - 40
-                    - 75
-            better-apple-drop:
-                display_name: Better apple drop
-                display_item: APPLE
-                description: AAAAAAAAAPPLE
+                instruction: Passif
                 cooldown: 0
                 unit: SECONDS
                 level: 5
@@ -245,6 +244,7 @@ talents:
                 display_name: Timber
                 display_item: GOLDEN_AXE
                 description: Bûches adjacentes sont cassées
+                instruction: Combo G - G - G
                 cooldown: 5
                 unit: MINUTES
                 level: 35
@@ -254,19 +254,25 @@ talents:
                     - 35
                     - 65
                     - 95
-            strip:
-                display_name: Écorçage
-                display_item: STRIPPED_OAK_LOG
-                description: Ecorce les bûches adjacentes
-                cooldown: 10
-                unit: MINUTES
-                level: 50
+            stun:
+                display_name: Étourdissement
+                display_item: NETHER_STAR
+                description: Chance d'étourdir sa victime
+                instruction: Passif
+                cooldown: 1
+                unit: SECONDS
+                level: 20
                 effect: default
-                log: true
+                log: false
+                tiers:
+                    - 20
+                    - 50
+                    - 85
             thick-tree:
                 display_name: Haricot Magique
                 display_item: JUNGLE_SAPLING
                 description: Fait pousser un grand arbre (Acajou, Sapin, Chêne noir) avec une seule pousse
+                instruction: Combo D - D - G
                 cooldown: 15
                 unit: MINUTES
                 level: 10
@@ -509,6 +515,7 @@ talent-tree:
         with-tier: <aqua> <tier>
         lore:
             - <gray><description>
+            - <dark_purple><instruction>
             - ""
             - <yellow>Cooldown <aqua><cooldown-value> <cooldown-unit>
             - "<is-unlocked-color>[Niveau <required-level>]"
