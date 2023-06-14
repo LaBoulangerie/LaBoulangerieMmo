@@ -1,11 +1,11 @@
 package net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import com.destroystokyo.paper.MaterialSetTag;
@@ -33,9 +33,10 @@ public class Stun extends AbilityExecutor {
         if (!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof LivingEntity)) return false;
 
         Player player = (Player) event.getDamager();
-        Material heldItemMat = player.getInventory().getItem(player.getInventory().getHeldItemSlot()).getType();
+        ItemStack heldItem = player.getInventory().getItem(player.getInventory().getHeldItemSlot());
+        if (heldItem == null) return false;
 
-        return event.isCritical() && MaterialSetTag.ITEMS_AXES.isTagged(heldItemMat);
+        return event.isCritical() && MaterialSetTag.ITEMS_AXES.isTagged(heldItem.getType());
     }
 
     @Override
