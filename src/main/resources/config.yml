@@ -42,6 +42,7 @@ talents:
                 display_name: Pioche Aiguisée
                 display_item: GOLDEN_PICKAXE
                 description: Donne célérité
+                instruction: Combo G - D - G
                 cooldown: 15
                 unit: MINUTES
                 level: 15
