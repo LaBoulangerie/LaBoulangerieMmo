@@ -16,8 +16,7 @@ public class MythicMobsSupport {
 
         if (mythicMob.isPresent()) {
             GrindingListener.giveReward(killer, GrindingCategory.KILL,
-                    "mythicmobs:" + mythicMob.get().getType().getInternalName(),
-                    false);
+                    "MYTHICMOBS_" + mythicMob.get().getType().getInternalName().toUpperCase(), false);
         }
         return mythicMob.isPresent();
     }

@@ -19,13 +19,24 @@ LaBoulangerieMmo provides some new conditions and events for BetonQuest.
 
 All LaBoulangerieMmo related keywords are prefixed with `lbmmo_`.
 
-- Check if a player has more than a required level: `lbmmo_level <talent> <level>`
-> `lbmmo_level miner 50` verifies if the player's miner level is greater or equal to 50.
+-   Check if a player has more than a required level: `lbmmo_level <talent> <level>`
 
-- Give or take xp: `lbmmo_xp <talent> <level>`
-> `lbmmo_xp miner +50` will give to the player 50 xp in the miner talent
+    > `lbmmo_level miner 50` verifies if the player's miner level is greater or equal to 50.
+
+-   Give or take xp: `lbmmo_xp <talent> <level>`
+    > `lbmmo_xp miner +50` will give to the player 50 xp in the miner talent
 
 > `lbmmo_xp miner -50` will take from the player 50 xp in the miner talent
+
+## MythicMobs integration
+
+You can set MythicMobs-specific xp values by prefixing `MYTHICMOBS_` to the mob's uppercased name.
+
+Example: if you want to set 100xp for a MythicMobs mob with identifier `capitaine_zombie`, it will be:
+
+```yml
+MYTHICMOBS_CAPITAINE_ZOMBIE: 100
+```
 
 ## Building from sources
 
@@ -38,6 +49,7 @@ The generated JARs are located in `build/libs/`, the one you should use is `LaBo
 ## API
 
 Our API is distributed as a maven package, you can find out how to add it to your maven project [here.](https://github.com/LaBoulangerie/LaBoulangerieMmo/packages/1356101)
+
 ### Leaderboards
 
 > **/!\ This is still in a very early stage**
@@ -55,17 +67,18 @@ Creating a leaderboard:
 List<Integer> mapsId = LeaderBoardManager.getInstance().createLeaderBoard(pretenders, title, unit, width, height)
 ```
 
-- `HashMap<String, Double> pretenders` is a map where the key is a "pretender" or an element of your leaderboard and the value is the amount that will be used to sort it. (example: key: "Bob", value: "10.9")
-All the pretenders will be sorted and displayed in descending order.
+-   `HashMap<String, Double> pretenders` is a map where the key is a "pretender" or an element of your leaderboard and the value is the amount that will be used to sort it. (example: key: "Bob", value: "10.9")
+    All the pretenders will be sorted and displayed in descending order.
 
-- `String title` will be displayed at the top of the map.
-- `String unit` is the unit of the value used to sort the pretenders, it will displayed after value of each pretender.
-- `int width` defines how many maps are combined vertically in order to display the leaderboard. (must be between 0 and 10)
-- `int height` defines how many maps are combined horizontally in order to display the leaderboard. (must be between 0 and 10)
+-   `String title` will be displayed at the top of the map.
+-   `String unit` is the unit of the value used to sort the pretenders, it will displayed after value of each pretender.
+-   `int width` defines how many maps are combined vertically in order to display the leaderboard. (must be between 0 and 10)
+-   `int height` defines how many maps are combined horizontally in order to display the leaderboard. (must be between 0 and 10)
 
 `List<Integer> mapsId` is contains the id of all the maps used in this leaderboard, you will need them if you want to update or delete the leaderboard or if you want to give them to a player.
 
 You can do so with:
+
 ```java
 mapsId.stream().forEach(id -> player.getInventory().addItem(LeaderBoardManager.getInstance().getMapItem(id)));
 ```
@@ -75,10 +88,12 @@ If you want to update your leaderboard with an updated list of pretenders, you c
 ```java
 mapsId.stream().forEach(id -> player.getInventory().addItem(LeaderBoardManager.getInstance().updateMap(id, newPretenders)));
 ```
-- `HashMap<String, Double> newPretenders` is the new map of pretenders.
-- `Integer id` is the id of one map of the leaderboard, each will remember which part of the pretenders it has to display.
+
+-   `HashMap<String, Double> newPretenders` is the new map of pretenders.
+-   `Integer id` is the id of one map of the leaderboard, each will remember which part of the pretenders it has to display.
 
 Finally you can delete your leaderboard by marking all its maps as "free":
+
 ```java
 mapsId.stream().forEach(id -> LeaderBoardManager.getInstance().freeMap(id));
 ```
