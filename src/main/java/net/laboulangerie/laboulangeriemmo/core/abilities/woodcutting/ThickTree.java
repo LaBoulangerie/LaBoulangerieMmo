@@ -22,9 +22,9 @@ public class ThickTree extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         ComboCompletedEvent event = (ComboCompletedEvent) baseEvent;
         Block block = event.getPlayer().getTargetBlockExact(5);
-        return new KeyStreak(ComboKey.RIGHT, ComboKey.RIGHT, ComboKey.LEFT).match(event.getKeyStreak())
-                && block != null && block.getType() == Material.JUNGLE_SAPLING
-                || block.getType() == Material.BIRCH_SAPLING || block.getType() == Material.SPRUCE_SAPLING;
+        return new KeyStreak(ComboKey.RIGHT, ComboKey.RIGHT, ComboKey.LEFT).match(event.getKeyStreak()) && block != null
+                && (block.getType() == Material.JUNGLE_SAPLING || block.getType() == Material.BIRCH_SAPLING
+                        || block.getType() == Material.SPRUCE_SAPLING);
     }
 
     @Override
