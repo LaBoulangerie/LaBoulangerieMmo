@@ -43,6 +43,7 @@ public class BlockusDataManager {
     }
 
     public void writeBlockuses() throws IOException {
+        if (blockusDataHolder == null) return;
         Files.copy(Paths.get(blockusFile.getPath()), Paths.get(blockusFile.getPath() + ".end"),
                 StandardCopyOption.REPLACE_EXISTING);
         BlockusOutputStream bos = new BlockusOutputStream(blockusFile);
