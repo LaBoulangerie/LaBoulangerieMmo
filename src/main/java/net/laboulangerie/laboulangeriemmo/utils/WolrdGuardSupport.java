@@ -32,7 +32,7 @@ public class WolrdGuardSupport {
         } catch (FlagConflictException e) {
             Flag<?> existing = registry.get("ability-use");
 
-            if (existing instanceof StateFlag) USE_ABILITY_FLAG = (StateFlag) existing
+            if (existing instanceof StateFlag) USE_ABILITY_FLAG = (StateFlag) existing;
             else {
                 LaBoulangerieMmo.PLUGIN.getLogger().severe(
                         "Unable to register our custom flag due to a conflict with another plugin!");
