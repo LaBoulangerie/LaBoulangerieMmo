@@ -8,11 +8,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
 import java.util.logging.Level;
-
-import com.github.luben.zstd.Zstd;
-
 import org.jetbrains.annotations.NotNull;
-
+import com.github.luben.zstd.Zstd;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class BlockusOutputStream extends FileOutputStream {

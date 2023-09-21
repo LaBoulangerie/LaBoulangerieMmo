@@ -6,14 +6,9 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.logging.Level;
-
-import net.laboulangerie.laboulangeriemmo.commands.*;
-import net.laboulangerie.laboulangeriemmo.commands.talenttree.TalentTree;
-import net.laboulangerie.laboulangeriemmo.listener.*;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilitiesRegistry;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerListener;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerManager;
@@ -21,15 +16,26 @@ import net.laboulangerie.laboulangeriemmo.api.talent.TalentsRegistry;
 import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostManager;
 import net.laboulangerie.laboulangeriemmo.betonquest.LevelCondition;
 import net.laboulangerie.laboulangeriemmo.betonquest.XpEvent;
+import net.laboulangerie.laboulangeriemmo.commands.Combo;
+import net.laboulangerie.laboulangeriemmo.commands.MmoCommand;
+import net.laboulangerie.laboulangeriemmo.commands.Stats;
+import net.laboulangerie.laboulangeriemmo.commands.TownyMmo;
+import net.laboulangerie.laboulangeriemmo.commands.talenttree.TalentTree;
 import net.laboulangerie.laboulangeriemmo.core.abilities.AbilitiesDispatcher;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusDataManager;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusListener;
+import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusManager;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusRestoration;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboDispatcher;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.expansions.MmoExpansion;
 import net.laboulangerie.laboulangeriemmo.json.GsonSerializer;
+import net.laboulangerie.laboulangeriemmo.listener.AbilitiesRegisterer;
+import net.laboulangerie.laboulangeriemmo.listener.GrindingListener;
+import net.laboulangerie.laboulangeriemmo.listener.MmoListener;
+import net.laboulangerie.laboulangeriemmo.listener.ServerListener;
+import net.laboulangerie.laboulangeriemmo.listener.XpBoostListener;
 import net.laboulangerie.laboulangeriemmo.utils.WolrdGuardSupport;
 import net.milkbowl.vault.economy.Economy;
 import pl.betoncraft.betonquest.BetonQuest;
@@ -46,7 +52,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public static int COMBO_LENGTH = 3;
 
     private GsonSerializer serializer;
-    private BlockusDataManager blockusDataManager;
+    private BlockusManager blockusDataManager;
     private MmoPlayerManager mmoPlayerManager;
 
     private XpBoostManager xpBoostManager;
@@ -161,7 +167,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
         return xpBoostManager;
     }
 
-    public BlockusDataManager getBlockusDataManager() {
+    public BlockusManager getBlockusDataManager() {
         return blockusDataManager;
     }
 
