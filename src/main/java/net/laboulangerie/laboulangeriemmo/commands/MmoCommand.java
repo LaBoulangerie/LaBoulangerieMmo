@@ -2,15 +2,14 @@ package net.laboulangerie.laboulangeriemmo.commands;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
-import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -22,26 +21,43 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.util.RayTraceResult;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
+import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
+import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
 import net.laboulangerie.laboulangeriemmo.core.blockus.Blockus;
-import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusDataHolder;
 import net.laboulangerie.laboulangeriemmo.core.blockus.redis.RedisBlockusHolder;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
 
 public class MmoCommand implements CommandExecutor, TabCompleter {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd,
-            @NotNull String alias, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
         if (args.length == 0) return false;
 
         FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
+        if (args[0].equalsIgnoreCase("merge")) {
+            int i = 0;
+            Map<String, Blockus> blockuses = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockuses();
+            for (Iterator<Blockus> iterator = blockuses.values().iterator(); iterator.hasNext();) {
+                i++;
+                Blockus blockus = iterator.next();
+                LaBoulangerieMmo.PLUGIN.getBlockusHolder().addBlockus(blockus);
+                if (i == 500) {
+                    sender.sendMessage("Migrated 500 more blockuses!");
+                    i=0;
+                }
+            }
+            sender.sendMessage("Completed merge successfully!");
+            return true;
+        }
         if(args[0].equalsIgnoreCase("xpboost") && args.length >= 6) {
             if(args[1].equalsIgnoreCase("add")) {
                 OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(args[2]);
@@ -160,9 +176,12 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             if (args.length < 2) {
                 sender.sendMessage(
                         "§bIl y a §e"
-                                + LaBoulangerieMmo.PLUGIN.getBlockusDataManager()
-                                        .getBlockusDataHolder().getBlockuses().size()
-                                + " §bblockus");
+                                + LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockuses().size()
+                                + " §bblockus dans le cache");
+                sender.sendMessage(
+                        "§bIl y a §e"
+                                + LaBoulangerieMmo.PLUGIN.getBlockusHolder().getTotalBlockuses()
+                                + " §bblockus au total");
                 return true;
             }
             if (!(sender instanceof Player)) {
@@ -185,7 +204,6 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             }
             if (args[1].equalsIgnoreCase("mark")) {
                 Blockus blockus = new Blockus(block);
-                blockus.markAsBlockus();
                 LaBoulangerieMmo.PLUGIN.getBlockusHolder()
                         .addBlockus(blockus);
                 player.sendMessage("§aLe bloc visé est maintenant un blockus");
@@ -253,8 +271,8 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command cmd,
-            @NotNull String alias, @NotNull String[] args) {
+    public @Nullable List<String> onTabComplete(CommandSender sender, Command cmd,
+            String alias, String[] args) {
         if (args.length == 1) return Arrays.asList("xp", "reload", "rl", "blockus", "leaderboards", "xpboost");
         if (args[0].equalsIgnoreCase("xp")) {
             switch (args.length) {

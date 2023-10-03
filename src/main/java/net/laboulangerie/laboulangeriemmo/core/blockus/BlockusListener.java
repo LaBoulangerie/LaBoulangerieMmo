@@ -32,7 +32,6 @@ public class BlockusListener implements Listener {
             return;
 
         Blockus blockus = new Blockus(block);
-        blockus.markAsBlockus();
         LaBoulangerieMmo.PLUGIN.getBlockusHolder().addBlockus(blockus);
     }
 
@@ -46,14 +45,13 @@ public class BlockusListener implements Listener {
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
-            dataHolder.addBlockus(blockus);
-
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    blockus.markAsBlockus();
+                    dataHolder.addBlockus(blockus);
                 }
             }.runTaskLater(LaBoulangerieMmo.PLUGIN, 0);
+            
         });
     }
 
@@ -67,13 +65,11 @@ public class BlockusListener implements Listener {
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
-            dataHolder.addBlockus(blockus);
-            blockus.markAsBlockus();
 
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    blockus.markAsBlockus();
+                    dataHolder.addBlockus(blockus);
                 }
             }.runTaskLater(LaBoulangerieMmo.PLUGIN, 0);
         });

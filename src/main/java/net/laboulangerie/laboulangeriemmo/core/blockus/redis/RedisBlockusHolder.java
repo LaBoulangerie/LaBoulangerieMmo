@@ -45,4 +45,8 @@ public class RedisBlockusHolder {
         return loc.getBlockX() + ";" + loc.getBlockY() + ";" + loc.getBlockZ() + ";"
                 + loc.getWorld().getUID().toString();
     }
+
+    public int getTotalBlockuses() {
+        return jedis.hgetAll("blockus").size();
+    }
 }
