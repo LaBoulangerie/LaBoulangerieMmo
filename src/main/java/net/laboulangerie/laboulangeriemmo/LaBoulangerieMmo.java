@@ -26,6 +26,7 @@ import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusDataManager;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusListener;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusManager;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusRestoration;
+import net.laboulangerie.laboulangeriemmo.core.blockus.redis.RedisBlockusHolder;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboDispatcher;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
@@ -53,6 +54,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     private GsonSerializer serializer;
     private BlockusManager blockusDataManager;
+    private RedisBlockusHolder blockusHolder = new RedisBlockusHolder();
     private MmoPlayerManager mmoPlayerManager;
 
     private XpBoostManager xpBoostManager;
@@ -170,6 +172,8 @@ public class LaBoulangerieMmo extends JavaPlugin {
     public BlockusManager getBlockusDataManager() {
         return blockusDataManager;
     }
+
+    public RedisBlockusHolder getBlockusHolder() { return blockusHolder; }
 
     private boolean setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) return false;

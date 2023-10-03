@@ -30,6 +30,7 @@ import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 import net.laboulangerie.laboulangeriemmo.core.blockus.Blockus;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusDataHolder;
+import net.laboulangerie.laboulangeriemmo.core.blockus.redis.RedisBlockusHolder;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
 
 public class MmoCommand implements CommandExecutor, TabCompleter {
@@ -178,26 +179,26 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
             if (args[1].equalsIgnoreCase("isBlockus")) {
                 player.sendMessage(
-                    LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null ? "§aLe bloc visé est un blockus"
+                    LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) != null ? "§aLe bloc visé est un blockus"
                                 : "§eLe bloc visé n'est pas un blockus");
                 return true;
             }
             if (args[1].equalsIgnoreCase("mark")) {
                 Blockus blockus = new Blockus(block);
                 blockus.markAsBlockus();
-                LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder()
+                LaBoulangerieMmo.PLUGIN.getBlockusHolder()
                         .addBlockus(blockus);
                 player.sendMessage("§aLe bloc visé est maintenant un blockus");
                 return true;
             }
             if (args[1].equalsIgnoreCase("unmark")) {
-                if (LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) == null) {
+                if (LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) == null) {
                     sender.sendMessage(
                             "§eLe bloc visé n'est pas un blockus impossible de le dé-marquer");
                     return true;
                 }
-                BlockusDataHolder dataHolder =
-                        LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
+                RedisBlockusHolder dataHolder =
+                        LaBoulangerieMmo.PLUGIN.getBlockusHolder();
                 dataHolder.removeBlockus(dataHolder.getBlockus(block));
                 player.sendMessage("§aLe bloc visé n'est plus un blockus");
                 return true;

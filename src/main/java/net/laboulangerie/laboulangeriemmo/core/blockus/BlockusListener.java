@@ -18,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import com.destroystokyo.paper.event.block.BlockDestroyEvent;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.core.blockus.redis.RedisBlockusHolder;
 
 public class BlockusListener implements Listener {
 
@@ -32,16 +33,16 @@ public class BlockusListener implements Listener {
 
         Blockus blockus = new Blockus(block);
         blockus.markAsBlockus();
-        LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus);
+        LaBoulangerieMmo.PLUGIN.getBlockusHolder().addBlockus(blockus);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPistonExtend(BlockPistonExtendEvent event) {
         if (event.isCancelled()) return;
-        BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
+        RedisBlockusHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusHolder();
         Vector vec = event.getDirection().getDirection();
 
-        event.getBlocks().stream().filter(block -> LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null).forEach(block -> {
+        event.getBlocks().stream().filter(block -> LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) != null).forEach(block -> {
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
@@ -59,10 +60,10 @@ public class BlockusListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPistonRetract(BlockPistonRetractEvent event) {
         if (event.isCancelled()) return;
-        BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
+        RedisBlockusHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusHolder();
         Vector vec = event.getDirection().getDirection();
 
-        event.getBlocks().stream().filter(block -> LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null).forEach(block -> {
+        event.getBlocks().stream().filter(block -> LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) != null).forEach(block -> {
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
@@ -129,8 +130,8 @@ public class BlockusListener implements Listener {
      * @param block
      */
     private void unMark(Block block) {
-        if (LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) == null) return;
-        BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
+        if (LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) == null) return;
+        RedisBlockusHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusHolder();
         dataHolder.removeBlockus(dataHolder.getBlockus(block));
     }
 }

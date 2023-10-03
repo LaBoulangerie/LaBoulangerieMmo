@@ -3,8 +3,15 @@ package net.laboulangerie.laboulangeriemmo.core.blockus.redis;
 import java.io.IOException;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusDataHolder;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusManager;
+import redis.clients.jedis.JedisPooled;
 
 public class RedisBlockusManager implements BlockusManager {
+    JedisPooled jedis;
+
+    public RedisBlockusManager() {
+        jedis = new JedisPooled("localhost", 6379);
+
+    }
 
     @Override
     public void writeBlockuses() throws IOException {
