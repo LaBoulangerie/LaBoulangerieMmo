@@ -20,6 +20,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.RayTraceResult;
 import org.jetbrains.annotations.Nullable;
 import net.kyori.adventure.text.Component;
@@ -44,18 +45,26 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
         FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
         if (args[0].equalsIgnoreCase("merge")) {
-            int i = 0;
-            Map<String, Blockus> blockuses = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockuses();
-            for (Iterator<Blockus> iterator = blockuses.values().iterator(); iterator.hasNext();) {
-                i++;
-                Blockus blockus = iterator.next();
-                LaBoulangerieMmo.PLUGIN.getBlockusHolder().addBlockus(blockus);
-                if (i == 500) {
-                    sender.sendMessage("Migrated 500 more blockuses!");
-                    i=0;
+            new BukkitRunnable() {
+
+                @Override
+                public void run() {
+                    int i = 0;
+                    Map<String, Blockus> blockuses = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockuses();
+                    for (Iterator<Blockus> iterator = blockuses.values().iterator(); iterator.hasNext();) {
+                        i++;
+                        Blockus blockus = iterator.next();
+                        LaBoulangerieMmo.PLUGIN.getBlockusHolder().addBlockus(blockus);
+                        if (i == 5000) {
+                            LaBoulangerieMmo.PLUGIN.getLogger().info("Migrated 5000 more blockuses!");
+                            i=0;
+                        }
+                    }
+                    
+                    LaBoulangerieMmo.PLUGIN.getLogger().info("Completed merge successfully!");
                 }
-            }
-            sender.sendMessage("Completed merge successfully!");
+                
+            }.runTaskAsynchronously(LaBoulangerieMmo.PLUGIN);
             return true;
         }
         if(args[0].equalsIgnoreCase("xpboost") && args.length >= 6) {

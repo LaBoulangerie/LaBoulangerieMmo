@@ -18,7 +18,7 @@ public class RedisBlockusHolder {
 
     public void addBlockus(Blockus blockus) {
         blockuses.put(blockus.getId(), blockus);
-        jedis.hset("blockus", blockus.getId(), "dummy");
+        jedis.hset("blockus", blockus.getId(), "d");
     }
 
     public void removeBlockus(Blockus blockus) {

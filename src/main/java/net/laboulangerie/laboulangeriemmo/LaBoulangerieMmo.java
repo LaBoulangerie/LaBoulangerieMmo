@@ -24,7 +24,6 @@ import net.laboulangerie.laboulangeriemmo.core.abilities.AbilitiesDispatcher;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusDataManager;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusListener;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusManager;
-import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusRestoration;
 import net.laboulangerie.laboulangeriemmo.core.blockus.redis.RedisBlockusHolder;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboDispatcher;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
@@ -97,9 +96,6 @@ public class LaBoulangerieMmo extends JavaPlugin {
         blockusDataManager = new BlockusDataManager(getDataFolder().getPath() + "/blockus/blockus.dat");
         mmoPlayerManager = new MmoPlayerManager();
         xpBoostManager = new XpBoostManager();
-
-        BlockusRestoration blockusRestoration = new BlockusRestoration();
-        blockusRestoration.runTaskLater(this, 20);
 
         registerListeners();
         getCommand("stats").setExecutor(new Stats());
