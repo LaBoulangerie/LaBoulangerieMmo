@@ -7,7 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
-
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 
@@ -21,7 +21,7 @@ public class MinecraftExpMultiplier extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
-        if (event.getBlock().hasMetadata("laboulangerie:placed")) return false;
+        if (LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null) return false;
         List<Material> ores =
                 Arrays.asList(Material.COAL_ORE, Material.DIAMOND_ORE, Material.REDSTONE_ORE,
                         Material.LAPIS_ORE, Material.EMERALD_ORE, Material.DEEPSLATE_COAL_ORE,

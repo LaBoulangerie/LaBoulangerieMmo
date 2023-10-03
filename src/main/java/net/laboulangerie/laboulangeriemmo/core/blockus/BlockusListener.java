@@ -2,7 +2,6 @@ package net.laboulangerie.laboulangeriemmo.core.blockus;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -15,12 +14,9 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.TNTPrimeEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.world.StructureGrowEvent;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-
 import com.destroystokyo.paper.event.block.BlockDestroyEvent;
-
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class BlockusListener implements Listener {
@@ -28,7 +24,6 @@ public class BlockusListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlace(BlockPlaceEvent event) {
         if (event.isCancelled()) return;
-        Player player = event.getPlayer();
         Block block = event.getBlock();
 
         if (LaBoulangerieMmo.PLUGIN.getConfig().getStringList("blockus-ignored-blocks")
@@ -36,7 +31,6 @@ public class BlockusListener implements Listener {
             return;
 
         Blockus blockus = new Blockus(block);
-        blockus.putMetadata("laboulangerie:placed", player.getUniqueId().toString());
         blockus.markAsBlockus();
         LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().addBlockus(blockus);
     }
@@ -47,14 +41,10 @@ public class BlockusListener implements Listener {
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
 
-        event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
-            MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
-
-            block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
+        event.getBlocks().stream().filter(block -> LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null).forEach(block -> {
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
-            blockus.putMetadata("laboulangerie:placed", value.asString());
             dataHolder.addBlockus(blockus);
 
             new BukkitRunnable() {
@@ -72,14 +62,10 @@ public class BlockusListener implements Listener {
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         Vector vec = event.getDirection().getDirection();
 
-        event.getBlocks().stream().filter(block -> block.hasMetadata("laboulangerie:placed")).forEach(block -> {
-            MetadataValue value = block.getMetadata("laboulangerie:placed").get(0);
-
-            block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
+        event.getBlocks().stream().filter(block -> LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null).forEach(block -> {
             dataHolder.removeBlockus(dataHolder.getBlockus(block));
 
             Blockus blockus = new Blockus(block.getLocation().add(vec));
-            blockus.putMetadata("laboulangerie:placed", value.asString());
             dataHolder.addBlockus(blockus);
             blockus.markAsBlockus();
 
@@ -143,8 +129,7 @@ public class BlockusListener implements Listener {
      * @param block
      */
     private void unMark(Block block) {
-        if (!block.hasMetadata("laboulangerie:placed")) return;
-        block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
+        if (LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) == null) return;
         BlockusDataHolder dataHolder = LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
         dataHolder.removeBlockus(dataHolder.getBlockus(block));
     }

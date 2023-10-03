@@ -178,13 +178,12 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
 
             if (args[1].equalsIgnoreCase("isBlockus")) {
                 player.sendMessage(
-                        block.hasMetadata("laboulangerie:placed") ? "§aLe bloc visé est un blockus"
+                    LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null ? "§aLe bloc visé est un blockus"
                                 : "§eLe bloc visé n'est pas un blockus");
                 return true;
             }
             if (args[1].equalsIgnoreCase("mark")) {
                 Blockus blockus = new Blockus(block);
-                blockus.putMetadata("laboulangerie:placed", player.getUniqueId());
                 blockus.markAsBlockus();
                 LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder()
                         .addBlockus(blockus);
@@ -192,12 +191,11 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
             if (args[1].equalsIgnoreCase("unmark")) {
-                if (!block.hasMetadata("laboulangerie:placed")) {
+                if (LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) == null) {
                     sender.sendMessage(
                             "§eLe bloc visé n'est pas un blockus impossible de le dé-marquer");
                     return true;
                 }
-                block.removeMetadata("laboulangerie:placed", LaBoulangerieMmo.PLUGIN);
                 BlockusDataHolder dataHolder =
                         LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder();
                 dataHolder.removeBlockus(dataHolder.getBlockus(block));

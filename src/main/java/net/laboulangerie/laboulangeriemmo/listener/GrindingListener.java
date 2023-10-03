@@ -30,7 +30,7 @@ public class GrindingListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
-        if (block.hasMetadata("laboulangerie:placed")) return;
+        if (LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null) return;
 
         if (block.getState().getBlockData() instanceof Ageable) {
             Ageable ageable = ((Ageable) block.getState().getBlockData());
