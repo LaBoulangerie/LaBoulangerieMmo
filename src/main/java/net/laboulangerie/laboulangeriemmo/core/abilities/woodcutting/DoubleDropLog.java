@@ -26,7 +26,7 @@ public class DoubleDropLog extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
-        if (LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null) return false;
+        if (LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) != null) return false;
         return block != null && (Tag.LOGS.isTagged(block.getType()) || block.getType() == Material.OAK_LEAVES);
     }
 

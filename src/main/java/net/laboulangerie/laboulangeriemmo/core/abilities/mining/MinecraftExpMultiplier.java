@@ -21,7 +21,7 @@ public class MinecraftExpMultiplier extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
-        if (LaBoulangerieMmo.PLUGIN.getBlockusDataManager().getBlockusDataHolder().getBlockus(block) != null) return false;
+        if (LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) != null) return false;
         List<Material> ores =
                 Arrays.asList(Material.COAL_ORE, Material.DIAMOND_ORE, Material.REDSTONE_ORE,
                         Material.LAPIS_ORE, Material.EMERALD_ORE, Material.DEEPSLATE_COAL_ORE,
