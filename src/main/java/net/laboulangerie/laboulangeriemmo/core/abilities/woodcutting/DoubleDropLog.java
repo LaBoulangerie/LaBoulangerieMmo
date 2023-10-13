@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
-
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 
@@ -26,7 +26,7 @@ public class DoubleDropLog extends AbilityExecutor {
     public boolean shouldTrigger(Event baseEvent) {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         Block block = event.getBlock();
-        if (event.getBlock().hasMetadata("laboulangerie:placed")) return false;
+        if (LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) != null) return false;
         return block != null && (Tag.LOGS.isTagged(block.getType()) || block.getType() == Material.OAK_LEAVES);
     }
 

@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
-public class BlockusDataManager {
+public class BlockusDataManager implements BlockusManager {
 
     private File blockusFile;
 

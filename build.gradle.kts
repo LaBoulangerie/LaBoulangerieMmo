@@ -59,6 +59,7 @@ dependencies {
     paperDevBundle("1.19.4-R0.1-SNAPSHOT")
     implementation("com.github.luben:zstd-jni:1.5.0-4")
     implementation("net.kyori:adventure-api:4.13.1")
+    implementation("redis.clients:jedis:4.3.1")
     paperweight.paperDevBundle("1.19.4-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")

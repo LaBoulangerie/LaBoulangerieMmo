@@ -46,7 +46,7 @@ public class Timber extends AbilityExecutor {
         block = player.getTargetBlockExact(4);
 
         return block != null && Tag.LOGS.isTagged(block.getType())
-                && !(block.hasMetadata("laboulangerie:placed"));
+            && LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) == null;
     }
 
     @Override

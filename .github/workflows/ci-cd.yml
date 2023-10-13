@@ -47,12 +47,12 @@ jobs:
           name: laboulangeriemmo
       - name: Clone Plugins Project
         run: |
-          git config --global user.email "ci@laboulangerie.net"
-          git config --global user.name "ci"
-          git clone https://ci:${{ secrets.GH_TOKEN }}@git.laboulangerie.net/ci/plugins.git
+          git config --global user.email "${{ secrets.GH_EMAIL }}"
+          git config --global user.name "${{ secrets.GH_USER }}"
+          git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/LaBoulangerie/Plugins.git
           mv *.jar LaBoulangerieMmo.jar
-          cp **.jar plugins/
-          cd plugins/
+          cp **.jar Plugins/
+          cd Plugins/
           git add .
           git commit -m "workflow $GITHUB_RUN_ID from $GITHUB_REPOSITORY"
-          git push https://ci:${{ secrets.GH_TOKEN }}@git.laboulangerie.net/ci/plugins.git HEAD:master
+          git push https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/LaBoulangerie/Plugins.git HEAD:master
