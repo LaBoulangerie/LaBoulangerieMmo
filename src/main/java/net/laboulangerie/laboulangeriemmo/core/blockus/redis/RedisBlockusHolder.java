@@ -33,7 +33,7 @@ public class RedisBlockusHolder {
             && jedis.hexists("blockus", getId(block.getLocation()))) {
                 blockus = new Blockus(block);
                 blockuses.put(blockus.getId(), blockus);
-        };
+        }
         return blockus;
     }
 
