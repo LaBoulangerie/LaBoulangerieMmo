@@ -7,27 +7,27 @@ lang:
         format: "<yellow><aqua><talent></aqua> lvl <level> | <aqua><xp></aqua>/<aqua><max_xp>xp</aqua>"
         delay: 200
     messages:
-        ability_log: <yellow>Vous avez utilisé <aqua><ability></aqua>, cooldown de <aqua><cooldown> <unit></aqua>
-        level-up: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> ! Vous gagnez <aqua><reward></aqua>
-        level-up-no-reward: <yellow>Vous êtes passé au niveau <aqua><level> <talent></aqua> !
+        ability_log: <yellow>You used <aqua><ability></aqua>, cooldown for <aqua><cooldown> <unit></aqua>
+        level-up: <yellow>You reached level <aqua><level> <talent></aqua> ! You earned <aqua><reward></aqua>
+        level-up-no-reward: <yellow>You reached level <aqua><level> <talent></aqua> !
         level-up-title: <bold><gradient:yellow:green>↑ LEVEL UP ↑
-        level-up-subtitle: <aqua>Niveau <level> <talent>
+        level-up-subtitle: <aqua>Level <level> <talent>
         ability-unlocked: <yellow>Habilité <aqua><ability></aqua> débloquée !
         ability-upgrade: <yellow>Habilité <aqua><ability></aqua> améliorée au <aqua>Tier <tier></aqua> !
-        xp_up: <yellow>+<aqua><xp>xp</aqua> en <talent>
+        xp_up: <yellow>+<aqua><xp>xp</aqua> as <talent>
         xp_up_boost: <bold><aqua> BOOST x<boost></aqua></bold>
-        combo_toggle: <yellow>Vous avez <aqua><state></aqua> les combos.
+        combo_toggle: <yellow>You <aqua><state></aqua> combos.
+        ability-use-cooldown: <gold>You must wait <gray><duration> <unit></gray> before using <aqua><ability></aqua>.
     xp_boost:
         bar_title: "<aqua><bold>XP Boost x<boost></bold> <yellow>-</yellow> <talent> <yellow>-</yellow> <author> <yellow>-</yellow> <time></aqua>"
         notif: "<yellow><aqua><author></aqua> vient d'activer un boost <aqua><bold>x<boost></bold></aqua> pour le métier <aqua><talent></aqua> !"
-    ability-use-cooldown: <gold>You must wait <gray><duration> <unit></gray> before using <aqua><ability></aqua>.
 
     combo:
         delimiter: " - "
         empty: "<gray>?</gray>"
         # Names matching the ComboKey enum in lowercase.
-        left: "<gold>G</gold>"
-        right: "<gold>D</gold>"
+        left: "<gold>L</gold>"
+        right: "<gold>R</gold>"
         shift: "<gold>S</gold>"
 #Whether or not to display a boss bar showing player's progression when gaining xp
 enable-xp-bar: true
