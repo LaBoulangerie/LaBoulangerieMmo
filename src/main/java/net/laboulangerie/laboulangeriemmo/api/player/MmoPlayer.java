@@ -5,19 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-
 import com.google.common.base.Supplier;
 import com.palmergames.bukkit.towny.TownyUniverse;
 import com.palmergames.bukkit.towny.object.Nation;
 import com.palmergames.bukkit.towny.object.Resident;
 import com.palmergames.bukkit.towny.object.Town;
-
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -97,26 +94,33 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
                 && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
     }
 
-    public boolean canUseAbility(AbilityArchetype ability, String talentId, boolean showTimer) {
-        if (!cooldownsHolder.isCooldownElapsed(ability, talentId) && showTimer && Bukkit.getPlayer(uniqueId).isOnline()) {
-            List<TagResolver.Single> placeholders = Arrays.asList(
-                Placeholder.parsed("ability", ability.displayName),
-                Placeholder.parsed("duration", String.valueOf(cooldownsHolder.getCooldown(ability, talentId))),
-                Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase()),
-                Placeholder.parsed("talent", LaBoulangerieMmo.talentsRegistry.getTalent(talentId).displayName)
-            );
-            Bukkit.getPlayer(uniqueId).sendMessage(
-                MiniMessage.miniMessage().deserialize(
-                    LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.messages.ability-use-cooldown"),
-                    TagResolver.resolver(placeholders)
-                )
-            );
-            return false;
-        }
-        return cooldownsHolder.isCooldownElapsed(ability, talentId)
-            && talents.get(talentId).getLevel() >= ability.requiredLevel
-            && Bukkit.getPlayer(uniqueId).getGameMode() != GameMode.CREATIVE;
-    }
+    // public boolean canUseAbility(AbilityArchetype ability, String talentId) {
+    //     Player player = Bukkit.getPlayer(uniqueId);
+    //     if (talents.get(talentId).getLevel() < ability.requiredLevel || player.getGameMode() == GameMode.CREATIVE)
+    //         return false;
+
+    //     if (!cooldownsHolder.isCooldownElapsed(ability, talentId)) {
+    //         if (
+    //             ability.shouldLog &&
+    //             LaBoulangerieMmo.abilitiesRegistry.getTriggerForAbility(ability.identifier) != AbilityTrigger.COMBO
+    //         ) {
+    //             List<TagResolver.Single> placeholders = Arrays.asList(
+    //                 Placeholder.parsed("ability", ability.displayName),
+    //                 Placeholder.parsed("duration", String.valueOf(ability.cooldown - cooldownsHolder.getCooldown(ability, talentId))),
+    //                 Placeholder.parsed("unit", ability.cooldownUnit.toString().toLowerCase()),
+    //                 Placeholder.parsed("talent", LaBoulangerieMmo.talentsRegistry.getTalent(talentId).displayName)
+    //             );
+    //             player.sendMessage(
+    //                 MiniMessage.miniMessage().deserialize(
+    //                     LaBoulangerieMmo.PLUGIN.getConfig().getString("lang.messages.ability-use-cooldown"),
+    //                     TagResolver.resolver(placeholders)
+    //                 )
+    //             );
+    //         }
+    //         return false;
+    //     }
+    //     return true;
+    // }
 
     public String getName() {
         return name;
