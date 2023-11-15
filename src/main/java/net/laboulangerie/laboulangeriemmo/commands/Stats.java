@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,7 +38,8 @@ public class Stats implements TabExecutor {
         OfflinePlayer source = null;
         if (args.length > 0) {
             if (args[0].equalsIgnoreCase("leaderboard")) {
-                if (args.length == 1) return false;
+                if (args.length == 1)
+                    return false;
                 int page = 0;
                 if (args.length > 2) {
                     try {
@@ -55,12 +57,13 @@ public class Stats implements TabExecutor {
                 File folder = new File(LaBoulangerieMmo.PLUGIN.getDataFolder(), "players/");
                 Stream<MmoPlayer> listAllPlayers = List.of(folder.listFiles()).stream()
                         .map(file -> LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(
-                                Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0]))));
+                                Bukkit.getOfflinePlayer(UUID.fromString(file.getName().split(".json")[0]))))
+                        .filter(Objects::isNull);
 
                 if (args[1].equalsIgnoreCase("all")) {
-                    orderedPlayers =
-                            listAllPlayers.sorted((v1, v2) -> ((Integer) v2.getPalier()).compareTo(v1.getPalier()))
-                                    .collect(Collectors.toList());
+                    orderedPlayers = listAllPlayers
+                            .sorted((v1, v2) -> ((Integer) v2.getPalier()).compareTo(v1.getPalier()))
+                            .collect(Collectors.toList());
                 } else if (talentTopCache.get(args[1]) == null) {
                     if (LaBoulangerieMmo.talentsRegistry.getTalent(args[1]) == null) {
                         sender.sendMessage("§4Invalid talent.");
@@ -105,7 +108,8 @@ public class Stats implements TabExecutor {
         if (source == null && !(sender instanceof Player)) {
             sender.sendMessage("§4You must be in game to use this command!");
             return true;
-        } else if (source == null) source = (OfflinePlayer) sender;
+        } else if (source == null)
+            source = (OfflinePlayer) sender;
 
         MmoPlayer mmoSource = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getOfflinePlayer(source);
         sendStatsTo(sender, mmoSource);
@@ -133,8 +137,9 @@ public class Stats implements TabExecutor {
 
         if (args.length == 1) {
             suggestions.add("leaderboard");
-            if (sender.hasPermission("laboulangeriemmo.stats.see")) suggestions
-                    .addAll(Bukkit.getOnlinePlayers().stream().map(p -> p.getName()).collect(Collectors.toList()));
+            if (sender.hasPermission("laboulangeriemmo.stats.see"))
+                suggestions
+                        .addAll(Bukkit.getOnlinePlayers().stream().map(p -> p.getName()).collect(Collectors.toList()));
         } else if (args[0].equalsIgnoreCase("leaderboard")) {
             switch (args.length) {
                 case 2:
@@ -152,7 +157,8 @@ public class Stats implements TabExecutor {
     }
 
     /**
-     * Clear the entry for the specified talent in {@code talentTopCache} in 1 minute
+     * Clear the entry for the specified talent in {@code talentTopCache} in 1
+     * minute
      * 
      * @param talent
      */
