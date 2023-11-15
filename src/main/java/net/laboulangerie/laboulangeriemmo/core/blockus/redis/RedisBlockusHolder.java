@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.core.blockus.Blockus;
 import redis.clients.jedis.JedisPooled;
 
@@ -13,7 +16,8 @@ public class RedisBlockusHolder {
 
     public RedisBlockusHolder() {
         blockuses = new HashMap<>();
-        jedis = new JedisPooled("localhost", 6379);
+        FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
+        jedis = new JedisPooled("localhost", config.getInt("redis.port"));
     }
 
     public void addBlockus(Blockus blockus) {

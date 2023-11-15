@@ -34,6 +34,9 @@ enable-xp-bar: true
 #Whether or not the talents should be enabled
 enable-talents: true
 
+redis:
+    port: 6379
+
 talents:
     miner:
         display_name: ⛏ Mineur
