@@ -1,16 +1,9 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    id("java-library")
     `maven-publish`
     id("io.papermc.paperweight.userdev") version "1.5.9"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
 }
 
 repositories {
@@ -77,7 +70,7 @@ dependencies {
 }
 
 group = "net.laboulangerie"
-version = "2.3.0"
+version = "2.3.1"
 description = "LaBoulangerieMmo"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
