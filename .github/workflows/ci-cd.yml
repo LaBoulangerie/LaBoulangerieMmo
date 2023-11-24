@@ -7,7 +7,6 @@ on:
     paths-ignore:
       - 'README.md'
       - '.gitignore'
-      - '.github/workflows/maven-publish.yml'
 
 jobs:
   build:
@@ -47,12 +46,13 @@ jobs:
           name: laboulangeriemmo
       - name: Clone Plugins Project
         run: |
-          git config --global user.email "${{ secrets.GH_EMAIL }}"
-          git config --global user.name "${{ secrets.GH_USER }}"
-          git clone https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/LaBoulangerie/Plugins.git
+          git config --global user.name "octocroissant[bot]"
+          git config --global user.email 149737708+octocroissant[bot]@users.noreply.github.com
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git clone https://octocroissant[bot]:${{ secrets.PAT_TOKEN }}@github.com/LaBoulangerie/Server.git
           mv *.jar LaBoulangerieMmo.jar
-          cp **.jar Plugins/
-          cd Plugins/
+          cp **.jar Server/plugins/
+          cd Server
           git add .
-          git commit -m "workflow $GITHUB_RUN_ID from $GITHUB_REPOSITORY"
-          git push https://${{ secrets.GH_USER }}:${{ secrets.GH_TOKEN }}@github.com/LaBoulangerie/Plugins.git HEAD:master
+          git commit -m "Update artifact from $GITHUB_REPOSITORY"
+          git push
