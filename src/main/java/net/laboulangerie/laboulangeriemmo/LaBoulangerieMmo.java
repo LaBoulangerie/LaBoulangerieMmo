@@ -52,7 +52,7 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     private GsonSerializer serializer;
     private BlockusManager blockusDataManager;
-    private RedisBlockusHolder blockusHolder = new RedisBlockusHolder();
+    private RedisBlockusHolder blockusHolder;
     private MmoPlayerManager mmoPlayerManager;
 
     private XpBoostManager xpBoostManager;
@@ -65,13 +65,15 @@ public class LaBoulangerieMmo extends JavaPlugin {
             WORLDGUARD_SUPPORT = true;
             getLogger().info("Hooked into WorldGuard!");
         }
+
+        this.blockusHolder = new RedisBlockusHolder();
     }
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        formatter =
-                (DecimalFormat) NumberFormat.getNumberInstance(Locale.forLanguageTag(getConfig().getString("locale")));
+        formatter = (DecimalFormat) NumberFormat
+                .getNumberInstance(Locale.forLanguageTag(getConfig().getString("locale")));
         formatter.applyPattern("#.##");
         if (!setupEconomy()) {
             getLogger().log(Level.SEVERE, "Can't load the plugin, Vault isn't present");
@@ -130,7 +132,8 @@ public class LaBoulangerieMmo extends JavaPlugin {
                 e.printStackTrace();
             }
         }
-        if (mmoPlayerManager != null) mmoPlayerManager.savePlayersData();
+        if (mmoPlayerManager != null)
+            mmoPlayerManager.savePlayersData();
         getLogger().info("Plugin Disabled");
     }
 
@@ -156,10 +159,13 @@ public class LaBoulangerieMmo extends JavaPlugin {
         return blockusDataManager;
     }
 
-    public RedisBlockusHolder getBlockusHolder() { return blockusHolder; }
+    public RedisBlockusHolder getBlockusHolder() {
+        return blockusHolder;
+    }
 
     private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) return false;
+        if (getServer().getPluginManager().getPlugin("Vault") == null)
+            return false;
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null) {
             return false;
