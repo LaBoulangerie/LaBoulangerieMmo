@@ -6,6 +6,7 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
@@ -23,11 +24,11 @@ public class Timber extends AbilityExecutor {
     }
 
     // Relative coordinates of every neighbours that we want to check
-    private static int[][] relCoordinates =
-            {{1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1}, {1, 0, 1}, {1, 0, -1}, {-1, 0, 1},
-                    {-1, 0, -1}, {0, 1, 0}, {1, 1, 0}, {-1, 1, 0}, {0, 1, 1}, {0, 1, -1}, {1, 1, 1},
-                    {1, 1, -1}, {-1, 1, 1}, {-1, 1, -1}, {1, -1, 0}, {-1, -1, 0}, {0, -1, 1},
-                    {0, -1, -1}, {1, -1, 1}, {1, -1, -1}, {-1, -1, 1}, {-1, -1, -1}};
+    private static int[][] relCoordinates = { { 1, 0, 0 }, { -1, 0, 0 }, { 0, 0, 1 }, { 0, 0, -1 }, { 1, 0, 1 },
+            { 1, 0, -1 }, { -1, 0, 1 },
+            { -1, 0, -1 }, { 0, 1, 0 }, { 1, 1, 0 }, { -1, 1, 0 }, { 0, 1, 1 }, { 0, 1, -1 }, { 1, 1, 1 },
+            { 1, 1, -1 }, { -1, 1, 1 }, { -1, 1, -1 }, { 1, -1, 0 }, { -1, -1, 0 }, { 0, -1, 1 },
+            { 0, -1, -1 }, { 1, -1, 1 }, { 1, -1, -1 }, { -1, -1, 1 }, { -1, -1, -1 } };
 
     private int range = 5;
 
@@ -46,7 +47,7 @@ public class Timber extends AbilityExecutor {
         block = player.getTargetBlockExact(4);
 
         return block != null && Tag.LOGS.isTagged(block.getType())
-            && LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) == null;
+                && LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) == null;
     }
 
     @Override
@@ -65,8 +66,7 @@ public class Timber extends AbilityExecutor {
             public void run() {
                 Location loc = block.getLocation();
                 for (int[] coordinate : Timber.relCoordinates) {
-                    Location neighbourLoc =
-                            loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
+                    Location neighbourLoc = loc.clone().add(coordinate[0], coordinate[1], coordinate[2]);
                     Block neighbour = neighbourLoc.getBlock();
 
                     if ((neighbour.getType() == Material.getMaterial(initType.toString().replace("_WOOD", "_LOG"))
@@ -75,10 +75,23 @@ public class Timber extends AbilityExecutor {
                             && neighbour.getY() >= initLocation.getBlockY()
                             && Math.abs(neighbour.getX() - initLocation.getBlockX()) <= range
                             && Math.abs(neighbour.getZ() - initLocation.getBlockZ()) <= range) {
+                        // Check if it's in blockus registry
+                        if (LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(neighbour) != null) {
+                            continue;
+                        }
+
+                        // Try to break the block
+                        BlockBreakEvent breakEvent = new BlockBreakEvent(neighbour, player);
+                        LaBoulangerieMmo.PLUGIN.getServer().getPluginManager().callEvent(breakEvent);
+                        if (breakEvent.isCancelled()) {
+                            continue;
+                        }
+
                         // Give xp for breaking the block
                         GrindingListener.giveReward(player, GrindingCategory.BREAK, neighbour.getType().toString(),
                                 false);
-                        neighbour.breakNaturally(null, true); // Drop the item and spawn block particles
+                        // Drop the item and spawn block particles
+                        neighbour.breakNaturally(null, true);
                         // Break neighbours of neighbour recursively
                         breakNeighbours(neighbour);
                     }
