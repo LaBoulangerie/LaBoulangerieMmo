@@ -13,7 +13,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.Event;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow.FireArrow;
@@ -55,8 +58,10 @@ public class FireBow extends AbilityExecutor {
 
         int abilityLevel = 1;
 
-        if (level >= getTier(2)) abilityLevel = 3;
-        else if (level >= getTier(1)) abilityLevel = 2;
+        if (level >= getTier(2))
+            abilityLevel = 3;
+        else if (level >= getTier(1))
+            abilityLevel = 2;
 
         FireArrow.fireArrow.add(new FireArrow(player, abilityLevel));
     }
@@ -69,10 +74,13 @@ public class FireBow extends AbilityExecutor {
                     && arrow == fa.getArrow())
                 fireArrow = fa;
 
-        if (fireArrow == null) return;
+        if (fireArrow == null)
+            return;
 
-        if (entity != null) onEntityHit(fireArrow, entity);
-        else if (block != null) onBlockHit(fireArrow, block);
+        if (entity != null)
+            onEntityHit(fireArrow, entity);
+        else if (block != null)
+            onBlockHit(fireArrow, block);
 
         FireArrow.fireArrow.remove(fireArrow);
     }
@@ -80,7 +88,8 @@ public class FireBow extends AbilityExecutor {
     private static void onEntityHit(FireArrow fireArrow, Entity entity) {
         final int level = fireArrow.getAbilityLevel();
 
-        if (level == 1) putFire(entity.getLocation());
+        if (level == 1)
+            putFire(entity.getLocation(), fireArrow.getShooter());
         if (level == 2)
             explosion(fireArrow.getShooter(), entity.getLocation(), SMALL_EXPLOSION_POWER);
         if (level == 3)
@@ -90,14 +99,15 @@ public class FireBow extends AbilityExecutor {
     private static void onBlockHit(FireArrow fireArrow, Block block) {
         final int level = fireArrow.getAbilityLevel();
 
-        if (level == 1) putFire(block.getLocation());
+        if (level == 1)
+            putFire(block.getLocation(), fireArrow.getShooter());
         if (level == 2)
             explosion(fireArrow.getShooter(), block.getLocation(), SMALL_EXPLOSION_POWER);
         if (level == 3)
             explosion(fireArrow.getShooter(), block.getLocation(), LARGE_EXPLOSION_POWER);
     }
 
-    private static void putFire(Location location) {
+    private static void putFire(Location location, Player player) {
         final World world = location.getWorld();
         final Random RNG = new Random();
 
@@ -105,8 +115,22 @@ public class FireBow extends AbilityExecutor {
             for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++)
                 for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++)
                     if (world.getBlockAt(x, y, z).getType().equals(Material.AIR)
-                            && RNG.nextInt(4) < 3)
+                            && RNG.nextInt(4) < 3) {
+
+                        Block block = world.getBlockAt(x, y, z);
+                        Block blockBelow = world.getBlockAt(x, y - 1, z);
+
+                        BlockPlaceEvent placeEvent = new BlockPlaceEvent(block, block.getState(), blockBelow,
+                                player.getInventory().getItemInMainHand(),
+                                player, true, EquipmentSlot.HAND);
+                        LaBoulangerieMmo.PLUGIN.getServer().getPluginManager().callEvent(placeEvent);
+
+                        if (placeEvent.isCancelled()) {
+                            continue;
+                        }
+
                         world.getBlockAt(x, y, z).setType(Material.FIRE);
+                    }
     }
 
     private static void explosion(Player shooter, Location location, int power) {
