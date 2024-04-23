@@ -56,11 +56,11 @@ repositories {
 }
 
 dependencies {
-    paperDevBundle("1.20.2-R0.1-SNAPSHOT")
+    paperDevBundle("1.20.4-R0.1-SNAPSHOT")
     implementation("com.github.luben:zstd-jni:1.5.0-4")
     implementation("net.kyori:adventure-api:4.14.0")
     implementation("redis.clients:jedis:4.3.1")
-    paperweight.paperDevBundle("1.20.2-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly("me.clip:placeholderapi:2.11.4")

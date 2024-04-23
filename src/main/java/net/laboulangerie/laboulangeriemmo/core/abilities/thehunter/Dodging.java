@@ -1,7 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter;
 
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
