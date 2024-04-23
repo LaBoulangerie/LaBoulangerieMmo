@@ -7,6 +7,7 @@ import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 
@@ -37,7 +38,8 @@ public class NatureTouch extends AbilityExecutor {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         final Block block = event.getBlock();
         Material cropMaterial = block.getType();
-        Ageable ageable = (Ageable) block.getBlockData();
+        BlockData blockData = block.getBlockData();
+        Ageable ageable = (Ageable) blockData;
 
         // Crop didnt finish to grow
         if (ageable.getAge() != ageable.getMaximumAge())
@@ -57,8 +59,8 @@ public class NatureTouch extends AbilityExecutor {
             Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
                 public void run() {
                     Block updatedBlock = block;
-                    if (block.getBlockData() instanceof Bisected) {
-                        Bisected bisected = (Bisected) block.getBlockData();
+                    if (blockData instanceof Bisected) {
+                        Bisected bisected = (Bisected) blockData;
                         if (bisected.getHalf() == Bisected.Half.TOP) {
                             updatedBlock = block.getRelative(0, -1, 0);
                         }
