@@ -6,6 +6,8 @@ import org.bukkit.Particle;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.Bisected;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 
@@ -36,24 +38,39 @@ public class NatureTouch extends AbilityExecutor {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         final Block block = event.getBlock();
         Material cropMaterial = block.getType();
-        Ageable ageable = (Ageable) block.getBlockData();
+        BlockData blockData = block.getBlockData();
+        Ageable ageable = (Ageable) blockData;
 
         // Crop didnt finish to grow
-        if (ageable.getAge() != ageable.getMaximumAge()) return;
+        if (ageable.getAge() != ageable.getMaximumAge())
+            return;
 
         float random = (float) Math.random();
         boolean shouldReplant = false;
 
-        if (level >= getTier(2) && random <= TIER_3_CHANCE) shouldReplant = true;
-        else if (level >= getTier(1) && random <= TIER_2_CHANCE) shouldReplant = true;
-        else if (random <= TIER_1_CHANCE) shouldReplant = true;
+        if (level >= getTier(2) && random <= TIER_3_CHANCE)
+            shouldReplant = true;
+        else if (level >= getTier(1) && random <= TIER_2_CHANCE)
+            shouldReplant = true;
+        else if (random <= TIER_1_CHANCE)
+            shouldReplant = true;
 
         if (shouldReplant) {
             Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
                 public void run() {
-                    block.setType(cropMaterial);
-                    block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY,
-                            block.getLocation().toCenterLocation().add(0, -0.2, 0), 5, 0.1, 0.1, 0.1);
+                    Block updatedBlock = block;
+                    if (blockData instanceof Bisected) {
+                        Bisected bisected = (Bisected) blockData;
+                        if (bisected.getHalf() == Bisected.Half.TOP) {
+                            updatedBlock = block.getRelative(0, -1, 0);
+                        }
+                    }
+
+                    updatedBlock.setType(cropMaterial);
+                    updatedBlock.getWorld().spawnParticle(
+                            Particle.VILLAGER_HAPPY,
+                            updatedBlock.getLocation().toCenterLocation().add(0, -0.2, 0),
+                            5, 0.1, 0.1, 0.1);
                 }
             }, 1L);
         }

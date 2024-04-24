@@ -1,7 +1,5 @@
 package net.laboulangerie.laboulangeriemmo.core.abilities.farmer;
 
-import java.util.Random;
-
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
@@ -11,6 +9,10 @@ import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 
 public class AnimalTwins extends AbilityExecutor {
+
+    private final static float TIER_3_CHANCE = 1f;
+    private final static float TIER_2_CHANCE = 0.4f;
+    private final static float TIER_1_CHANCE = 0.1f;
 
     public AnimalTwins(AbilityArchetype archetype) {
         super(archetype);
@@ -26,24 +28,13 @@ public class AnimalTwins extends AbilityExecutor {
         EntityBreedEvent event = (EntityBreedEvent) baseEvent;
         Entity entity = event.getEntity();
 
-        int max_number = 100;
-        int min_number = 1;
-        Random random_chance = new Random();
-        int find_nearest_int = min_number + random_chance.nextInt(max_number);
+        float random = (float) Math.random();
 
-        if (level >= getTier(2)) {
-            Animals animal =
-                    (Animals) entity.getWorld().spawnEntity(entity.getLocation(), entity.getType());
-            animal.setBaby();
-        } else if (level >= getTier(1) && find_nearest_int <= 40) {
-            Animals animal =
-                    (Animals) entity.getWorld().spawnEntity(entity.getLocation(), entity.getType());
-            animal.setBaby();
-        } else if (find_nearest_int <= 10) {
-            Animals animal =
-                    (Animals) entity.getWorld().spawnEntity(entity.getLocation(), entity.getType());
+        if (level >= getTier(2) && random <= TIER_3_CHANCE
+                || (level >= getTier(1) && random <= TIER_2_CHANCE)
+                || (random <= TIER_1_CHANCE)) {
+            Animals animal = (Animals) entity.getWorld().spawnEntity(entity.getLocation(), entity.getType());
             animal.setBaby();
         }
-
     }
 }
