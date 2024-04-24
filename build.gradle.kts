@@ -39,7 +39,7 @@ repositories {
     }
 
     maven {
-        url = uri("https://betonquest.org/nexus/repository/betonquest/")
+        url = uri("https://nexus.betonquest.org/repository/betonquest/")
     }
 
     maven {
