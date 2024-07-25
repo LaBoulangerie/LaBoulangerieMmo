@@ -5,6 +5,11 @@ api-version: 1.19
 authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco, BlackoutBurst, SunshineDev]
 depend: [ProtocolLib, Vault]
 softdepend: [PlaceholderAPI, Towny, BetonQuest, WorldGuard, MythicMobs]
+
+libraries:
+    - redis.clients:jedis:5.1.3
+    - com.github.luben:zstd-jni:1.5.0-4
+
 commands:
     stats:
         permission: laboulangeriemmo.stats
