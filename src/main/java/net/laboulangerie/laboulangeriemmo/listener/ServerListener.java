@@ -18,6 +18,7 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -133,6 +134,15 @@ public class ServerListener implements Listener {
         Inventory inventory = event.getClickedInventory();
 
         if (inventory == null || !(inventory.getHolder() instanceof TalentTreeInv)) return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onInventoryDrag(InventoryDragEvent event) {
+        Inventory inventory = event.getInventory();
+
+        if (inventory == null || !(inventory.getHolder() instanceof TalentTreeInv))
+            return;
         event.setCancelled(true);
     }
 }
