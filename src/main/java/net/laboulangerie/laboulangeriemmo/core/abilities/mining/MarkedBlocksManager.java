@@ -7,20 +7,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.AbstractStructure;
-import com.comphenix.protocol.events.InternalStructure;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.reflect.StructureModifier;
-import com.comphenix.protocol.utility.MinecraftReflection;
+import com.comphenix.protocol.wrappers.EnumWrappers.ChatFormatting;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import com.comphenix.protocol.wrappers.WrappedDataValue;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
+import com.comphenix.protocol.wrappers.WrappedTeamParameters;
 import net.minecraft.world.entity.EntityType;
 
 public class MarkedBlocksManager {
@@ -29,9 +27,9 @@ public class MarkedBlocksManager {
     private int idCount = 100000;
     private String[] teamsIdentifier = {"DIAMOND_ORE", "IRON_ORE", "COAL_ORE", "GOLD_ORE", "LAPIS_ORE", "REDSTONE_ORE",
             "EMERALD_ORE", "COPPER_ORE", "ANCIENT_DEBRIS", "NETHER_GOLD_ORE", "BUDDING_AMETHYST"};
-    private ChatColor[] teamsColor =
-            {ChatColor.AQUA, ChatColor.GRAY, ChatColor.BLACK, ChatColor.YELLOW, ChatColor.DARK_BLUE, ChatColor.RED,
-                    ChatColor.GREEN, ChatColor.GOLD, ChatColor.DARK_GRAY, ChatColor.YELLOW, ChatColor.DARK_PURPLE};
+    private ChatFormatting[] teamsColor =
+            {ChatFormatting.AQUA, ChatFormatting.GRAY, ChatFormatting.BLACK, ChatFormatting.YELLOW, ChatFormatting.DARK_BLUE, ChatFormatting.RED,
+                    ChatFormatting.GREEN, ChatFormatting.GOLD, ChatFormatting.DARK_GRAY, ChatFormatting.YELLOW, ChatFormatting.DARK_PURPLE};
 
     public void markBlock(Block block, Player player) {
         BlockWatcher blockWatcher = markedBlocks.get(block);
@@ -124,20 +122,20 @@ public class MarkedBlocksManager {
     public void setupTeams(Player player) { // https://github.com/lucko/helper/blob/master/helper/src/main/java/me/lucko/helper/scoreboard/PacketScoreboardTeam.java
         for (int i = 0; i < teamsIdentifier.length; i++) {
             PacketContainer team = new PacketContainer(PacketType.Play.Server.SCOREBOARD_TEAM);
-            AbstractStructure struct = team.getOptionalStructures().readSafely(0).get();
 
             team.getStrings().write(0, teamsIdentifier[i]); // team id
             team.getIntegers().write(0, 0x0);// Mode: 0 = CREATE
 
-            struct.getStrings().write(0, "always") // name tag visibility rules
-                    .write(1, "never"); // collisions rules
-            struct.getIntegers().write(0, 0x02); // flags
-            struct.getChatComponents().write(0, WrappedChatComponent.fromText(""))
-                    .write(1, WrappedChatComponent.fromText("")).write(2, WrappedChatComponent.fromText(""));
-            struct.getEnumModifier(ChatColor.class, MinecraftReflection.getMinecraftClass("EnumChatFormat")).write(0,
-                    teamsColor[i]);
-
-            team.getOptionalStructures().write(0, Optional.of((InternalStructure) struct));
+            WrappedTeamParameters params = WrappedTeamParameters.newBuilder()
+                .nametagVisibility("always")
+                .collisionRule("never")
+                .displayName(WrappedChatComponent.fromText(""))
+                .suffix(WrappedChatComponent.fromText(""))
+                .prefix(WrappedChatComponent.fromText(""))
+                .color(this.teamsColor[i])
+                .options(0x02).build();
+            team.getOptionalTeamParameters().write(0, Optional.of(params));
+            team.getSpecificModifier(Collection.class).write(0, Collections.emptyList()); // entities
             ProtocolLibrary.getProtocolManager().sendServerPacket(player, team);
         }
     }
