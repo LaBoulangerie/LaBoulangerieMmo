@@ -61,7 +61,7 @@ dependencies {
     compileOnly("com.github.luben:zstd-jni:1.5.0-4")
     compileOnly("redis.clients:jedis:5.1.3")
     paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.3.0")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.palmergames.bukkit.towny:towny:0.100.4.0")
