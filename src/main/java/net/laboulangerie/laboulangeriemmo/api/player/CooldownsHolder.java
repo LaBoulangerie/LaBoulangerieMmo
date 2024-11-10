@@ -3,10 +3,8 @@ package net.laboulangerie.laboulangeriemmo.api.player;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 
@@ -35,18 +33,15 @@ public class CooldownsHolder {
                 }).collect(Collectors.toList());
     }
 
-    public HashMap<AbilityArchetype, Long> getArchetypeCooldowns(String abilityId) {
-        return (HashMap<AbilityArchetype, Long>) cooldowns.entrySet().stream()
+    /**
+     * Maps every talent that has this ability to the last time it was used for each of them
+     * @param abilityId
+     * @return key is the talent identifier associated to this instance of the ability and value is the time elapsed since it's last use
+     */
+    public HashMap<String, Long> getTimeSinceUsed(String abilityId) {
+        return (HashMap<String, Long>) cooldowns.entrySet().stream()
                 .filter(entry -> entry.getKey().endsWith("/" + abilityId))
-                .collect(Collectors.toMap(e -> LaBoulangerieMmo.talentsRegistry
-                        .getTalent(e.getKey().split("/")[0]).abilitiesArchetypes
-                                .get(e.getKey().split("/")[1]),
-                        Entry::getValue))
-                .entrySet().stream()
-                .collect(Collectors.toMap(Entry::getKey,
-                        e -> e.getKey().cooldownUnit.convert(
-                                new Date().getTime() - e.getValue().getTime(),
-                                TimeUnit.MILLISECONDS)));
+                .collect(Collectors.toMap(e -> e.getKey().split("/")[0],  e -> new Date().getTime()-e.getValue().getTime()));
     }
 
     public boolean isCooldownElapsed(AbilityArchetype ability, String talentId) {

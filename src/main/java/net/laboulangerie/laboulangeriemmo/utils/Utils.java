@@ -1,32 +1,26 @@
 package net.laboulangerie.laboulangeriemmo.utils;
 
-import org.bukkit.craftbukkit.v1_20_R2.inventory.CraftItemStack;
+import java.util.Collection;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import com.google.common.collect.Multimap;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class Utils {
     public static double getAttackDamage(Player player, ItemStack itemStack) {
+        double damages = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE).getValue();
 
-        net.minecraft.world.item.ItemStack craftItemStack =
-                CraftItemStack.asNMSCopy(player.getInventory().getItem(player.getInventory().getHeldItemSlot()));
-        net.minecraft.world.item.Item item = craftItemStack.getItem();
-        double damages = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE).getValue() - 7;
-        if (item instanceof net.minecraft.world.item.SwordItem || item instanceof net.minecraft.world.item.TieredItem
-                || item instanceof net.minecraft.world.item.TridentItem) {
+        Multimap<Attribute, AttributeModifier> attributesMap = itemStack.getType().getDefaultAttributeModifiers(EquipmentSlot.HAND);
+        Collection<AttributeModifier> modifiers = attributesMap.get(Attribute.GENERIC_ATTACK_DAMAGE);
+        if (!modifiers.isEmpty()) {
+            damages += ((AttributeModifier) modifiers.toArray()[0]).getAmount() + 0.7;
+        }
 
-            Multimap<Attribute, AttributeModifier> attributes =
-                    craftItemStack.getItem().getDefaultAttributeModifiers(EquipmentSlot.MAINHAND);
-            damages += ((AttributeModifier) attributes.get(Attributes.ATTACK_DAMAGE).toArray()[0]).getAmount() + 1;
-
-            if (itemStack.getEnchantmentLevel(Enchantment.DAMAGE_ALL) != 0) {
-                damages += 0.5 * itemStack.getEnchantmentLevel(Enchantment.DAMAGE_ALL) + 0.5;
-            }
+        if (itemStack.getEnchantmentLevel(Enchantment.SHARPNESS) != 0) {
+            damages += 0.5 * itemStack.getEnchantmentLevel(Enchantment.SHARPNESS) + 0.5;
         }
 
         return damages;
