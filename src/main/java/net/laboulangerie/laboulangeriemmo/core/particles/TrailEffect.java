@@ -13,7 +13,7 @@ public class TrailEffect extends Effect {
 
     @Override
     public void run() {
-        world.spawnParticle(Particle.FIREWORKS_SPARK, entity.getLocation(), 0, 0, 0, 0, 8);
+        world.spawnParticle(Particle.FIREWORK, entity.getLocation(), 0, 0, 0, 0, 8);
         i++;
         if (i == 4) cancel();
     }

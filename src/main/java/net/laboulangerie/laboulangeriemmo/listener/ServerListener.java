@@ -118,7 +118,7 @@ public class ServerListener implements Listener {
         if (event.getProjectile().getFireTicks() > 0) EffectRegistry.playEffect("arrow", event.getProjectile());
 
         if (event.getEntity() instanceof Player player && event.getProjectile() instanceof AbstractArrow arrow
-                && event.getBow().hasItemMeta() && event.getBow().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))
+                && event.getBow().hasItemMeta() && event.getBow().getItemMeta().hasEnchant(Enchantment.FLAME))
             FireArrow.shoot(player, arrow);
     }
 

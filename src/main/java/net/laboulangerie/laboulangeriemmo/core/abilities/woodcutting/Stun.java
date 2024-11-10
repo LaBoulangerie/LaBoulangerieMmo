@@ -50,19 +50,19 @@ public class Stun extends AbilityExecutor {
         boolean shouldStun = false;
         boolean shouldBlind = false;
         int durationSeconds = 2;
-        PotionEffect slownessEffect = new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 1, true,
+        PotionEffect slownessEffect = new PotionEffect(PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 1, true,
                 false);
 
         if (level >= getTier(2) && random <= TIER_3_CHANCE) {
             shouldStun = true;
             shouldBlind = true;
             durationSeconds = 3;
-            slownessEffect = new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 3, true, false);
+            slownessEffect = new PotionEffect(PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 3, true, false);
         } else if (level >= getTier(1) && random <= TIER_2_CHANCE) {
             shouldStun = true;
             shouldBlind = true;
             durationSeconds = 5;
-            slownessEffect = new PotionEffect(PotionEffectType.SLOW, PotionEffect.INFINITE_DURATION, 2, true, false);
+            slownessEffect = new PotionEffect(PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 2, true, false);
 
         } else if (random <= TIER_1_CHANCE)
             shouldStun = true;
@@ -76,8 +76,8 @@ public class Stun extends AbilityExecutor {
             Bukkit.getScheduler().runTaskLater(LaBoulangerieMmo.PLUGIN, new Runnable() {
                 @Override
                 public void run() {
-                    entity.removePotionEffect(PotionEffectType.JUMP);
-                    entity.removePotionEffect(PotionEffectType.SLOW);
+                    entity.removePotionEffect(PotionEffectType.JUMP_BOOST);
+                    entity.removePotionEffect(PotionEffectType.SLOWNESS);
                     entity.removePotionEffect(PotionEffectType.BLINDNESS);
                 }
             }, durationSeconds * 20);

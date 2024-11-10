@@ -68,7 +68,7 @@ public class NatureTouch extends AbilityExecutor {
 
                     updatedBlock.setType(cropMaterial);
                     updatedBlock.getWorld().spawnParticle(
-                            Particle.VILLAGER_HAPPY,
+                            Particle.HAPPY_VILLAGER,
                             updatedBlock.getLocation().toCenterLocation().add(0, -0.2, 0),
                             5, 0.1, 0.1, 0.1);
                 }
