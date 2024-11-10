@@ -1,7 +1,7 @@
 package net.laboulangerie.laboulangeriemmo.core.abilities.thehunter;
 
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.event.Event;
 import org.bukkit.util.Vector;
 
@@ -12,6 +12,7 @@ import net.laboulangerie.laboulangeriemmo.core.combo.KeyStreak;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 public class Dodging extends AbilityExecutor {
 
@@ -49,7 +50,7 @@ public class Dodging extends AbilityExecutor {
         f4 *= f6 / f5;
 
         player.setVelocity(new Vector((double) f2, (double) f3, (double) f4));
-        human.startAutoSpinAttack(20);
+        human.startAutoSpinAttack(20, 20, ItemStack.EMPTY);
         player.getWorld().playSound(player.getLocation(), Sound.ITEM_TRIDENT_RIPTIDE_1, 1, 1);
     }
 }
