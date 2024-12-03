@@ -65,8 +65,8 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.palmergames.bukkit.towny:towny:0.100.4.0")
-    compileOnly("pl.betoncraft:betonquest:1.12.10")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9-SNAPSHOT")
+    compileOnly("org.betonquest:betonquest:2.1.3")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.12")
     compileOnly("io.lumine:Mythic-Dist:5.4.1")
 }
 
