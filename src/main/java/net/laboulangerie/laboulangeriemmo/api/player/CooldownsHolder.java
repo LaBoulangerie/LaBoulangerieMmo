@@ -7,8 +7,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
+import net.laboulangerie.laboulangeriemmo.core.json.GsonSerializable;
 
-public class CooldownsHolder {
+public class CooldownsHolder implements GsonSerializable {
     private HashMap<String, Date> cooldowns;
 
     public CooldownsHolder() {
@@ -75,5 +76,21 @@ public class CooldownsHolder {
 
     private String getId(AbilityArchetype ability, String talentId) {
         return talentId + "/" + ability.identifier;
+    }
+
+    public HashMap<String, Date> getCooldowns() {
+        return cooldowns;
+    }
+
+    /**
+     * Intended for internal use (data deserialisation)
+     * 
+     * Will set the cooldowns to match the given { @link HashMap } if the
+     * internal one is empty. 
+     * @param cooldowns
+     */
+    public void setCooldowns(HashMap<String, Date> cooldowns) {
+        if (!this.cooldowns.isEmpty()) return;
+        this.cooldowns = cooldowns;
     }
 }

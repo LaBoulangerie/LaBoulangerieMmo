@@ -1,4 +1,4 @@
-package net.laboulangerie.laboulangeriemmo.core;
+package net.laboulangerie.laboulangeriemmo.core.json;
 
 import java.io.IOException;
 

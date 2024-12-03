@@ -14,8 +14,7 @@ import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 import org.bukkit.map.MinecraftFont;
 import org.jetbrains.annotations.NotNull;
-
-import net.laboulangerie.laboulangeriemmo.json.GsonSerializable;
+import net.laboulangerie.laboulangeriemmo.core.json.GsonSerializable;
 
 public class LeaderBoardRenderer extends MapRenderer implements GsonSerializable {
     private transient boolean done = false;

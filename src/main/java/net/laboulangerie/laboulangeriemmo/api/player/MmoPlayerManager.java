@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Level;
 import java.util.stream.Stream;
 
 import com.google.gson.JsonSyntaxException;
@@ -13,7 +14,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
-import net.laboulangerie.laboulangeriemmo.json.GsonSerializer;
+import net.laboulangerie.laboulangeriemmo.core.json.GsonSerializer;
 import net.laboulangerie.laboulangeriemmo.utils.FileUtils;
 
 public class MmoPlayerManager {
@@ -65,8 +66,9 @@ public class MmoPlayerManager {
                 playersMap.put(uniqueId, mmoPlayer);
             }
         } catch (JsonSyntaxException e) {
-            MmoPlayer mmoPlayer = new MmoPlayer(player);
-            playersMap.put(uniqueId, mmoPlayer);
+            LaBoulangerieMmo.PLUGIN.getLogger().log(Level.SEVERE, "Failed to load player data, disabling plugin to preserve saves's integrity.");
+            e.printStackTrace();
+            Bukkit.getPluginManager().disablePlugin(LaBoulangerieMmo.PLUGIN);
         }
     }
 
