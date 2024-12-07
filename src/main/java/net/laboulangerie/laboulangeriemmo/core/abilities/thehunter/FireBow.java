@@ -37,7 +37,7 @@ public class FireBow extends AbilityExecutor {
         boolean hasFlameBow = event.getPlayer().getInventory().contains(Material.BOW)
                 && event.getPlayer().getInventory().all(Material.BOW).values().stream()
                         .map(item -> item.hasItemMeta()
-                                && item.getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))
+                                && item.getItemMeta().hasEnchant(Enchantment.FLAME))
                         .reduce(false, (result, hasEnchant) -> (result == true) || hasEnchant);
 
         return new KeyStreak(ComboKey.RIGHT, ComboKey.LEFT, ComboKey.LEFT)
@@ -111,7 +111,7 @@ public class FireBow extends AbilityExecutor {
 
     private static void explosion(Player shooter, Location location, int power) {
         final World world = location.getWorld();
-        TNTPrimed tnt = (TNTPrimed) world.spawnEntity(location, EntityType.PRIMED_TNT);
+        TNTPrimed tnt = (TNTPrimed) world.spawnEntity(location, EntityType.TNT);
         tnt.setIsIncendiary(true);
         tnt.setSource(shooter);
         tnt.setFuseTicks(0);

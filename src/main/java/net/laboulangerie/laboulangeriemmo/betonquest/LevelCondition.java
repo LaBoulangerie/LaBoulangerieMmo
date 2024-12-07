@@ -1,36 +1,26 @@
 package net.laboulangerie.laboulangeriemmo.betonquest;
 
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-
+import org.betonquest.betonquest.api.profiles.Profile;
+import org.betonquest.betonquest.api.quest.condition.PlayerCondition;
+import org.betonquest.betonquest.exceptions.QuestRuntimeException;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
-import pl.betoncraft.betonquest.Instruction;
-import pl.betoncraft.betonquest.api.Condition;
-import pl.betoncraft.betonquest.exceptions.InstructionParseException;
-import pl.betoncraft.betonquest.exceptions.QuestRuntimeException;
 
-public class LevelCondition extends Condition {
-
-    @SuppressWarnings("deprecation")
-    public LevelCondition(Instruction instruction) {
-        super(instruction);
+public class LevelCondition implements PlayerCondition {
+    private String talentName;
+    private int level;
+    public LevelCondition(String talentName, int level) {
+        this.talentName = talentName;
+        this.level = level;
     }
-
+    
     @Override
-    protected Boolean execute(String playerID) throws QuestRuntimeException {
+    public boolean check(Profile profile) throws QuestRuntimeException {
         MmoPlayer mmoPlayer = LaBoulangerieMmo.PLUGIN.getMmoPlayerManager()
-                .getPlayer(Bukkit.getPlayer(UUID.fromString(playerID)));
+                .getPlayer(profile.getPlayer().getPlayer());
         if (mmoPlayer == null) return false; // Shouldn't happen but just in case
-
-        String talentName = "";
-        try {
-            talentName = instruction.getPart(1);
-        } catch (InstructionParseException e) {
-            e.printStackTrace();
-        }
-        return instruction.getAllNumbers().get(0) <= mmoPlayer.getTalent(talentName).getLevel();
+    
+        return level <= mmoPlayer.getTalent(talentName).getLevel();
     }
 
 }

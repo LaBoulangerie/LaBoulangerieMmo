@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     `maven-publish`
-    id("io.papermc.paperweight.userdev") version "1.5.10"
+    id("io.papermc.paperweight.userdev") version "1.7.3"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
@@ -56,22 +56,22 @@ repositories {
 }
 
 dependencies {
-    paperDevBundle("1.20.2-R0.1-SNAPSHOT")
-    implementation("net.kyori:adventure-api:4.14.0")
+    paperDevBundle("1.21.1-R0.1-SNAPSHOT")
+    implementation("net.kyori:adventure-api:4.17.0")
     compileOnly("com.github.luben:zstd-jni:1.5.0-4")
     compileOnly("redis.clients:jedis:5.1.3")
-    paperweight.paperDevBundle("1.20.2-R0.1-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.3.0")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
-    compileOnly("me.clip:placeholderapi:2.11.4")
-    compileOnly("com.palmergames.bukkit.towny:towny:0.100.0.0")
-    compileOnly("pl.betoncraft:betonquest:1.12.10")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.9-SNAPSHOT")
+    compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("com.palmergames.bukkit.towny:towny:0.100.4.0")
+    compileOnly("org.betonquest:betonquest:2.1.3")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.12")
     compileOnly("io.lumine:Mythic-Dist:5.4.1")
 }
 
 group = "net.laboulangerie"
-version = "2.3.1"
+version = "2.3.2"
 description = "LaBoulangerieMmo"
 java.sourceCompatibility = JavaVersion.VERSION_17
 

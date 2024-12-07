@@ -22,7 +22,7 @@ public class StunEffect extends Effect {
         double x = radius * Math.cos(i * 0.2);
         double z = radius * Math.sin(i * 0.2);
 
-        world.spawnParticle(Particle.VILLAGER_ANGRY, location.getX() + x, livingEntity.getEyeLocation().getY() - 0.25,
+        world.spawnParticle(Particle.ANGRY_VILLAGER, location.getX() + x, livingEntity.getEyeLocation().getY() - 0.25,
                 location.getZ() + z, 1, 0, 0, 0);
 
         i++;

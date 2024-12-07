@@ -6,6 +6,13 @@ import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.logging.Level;
+import org.betonquest.betonquest.BetonQuest;
+import org.betonquest.betonquest.Instruction;
+import org.betonquest.betonquest.api.quest.PlayerQuestFactory;
+import org.betonquest.betonquest.api.quest.condition.PlayerCondition;
+import org.betonquest.betonquest.api.quest.condition.PlayerConditionFactory;
+import org.betonquest.betonquest.api.quest.event.Event;
+import org.betonquest.betonquest.exceptions.InstructionParseException;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilitiesRegistry;
@@ -26,10 +33,10 @@ import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusListener;
 import net.laboulangerie.laboulangeriemmo.core.blockus.BlockusManager;
 import net.laboulangerie.laboulangeriemmo.core.blockus.redis.RedisBlockusHolder;
 import net.laboulangerie.laboulangeriemmo.core.combo.ComboDispatcher;
+import net.laboulangerie.laboulangeriemmo.core.json.GsonSerializer;
 import net.laboulangerie.laboulangeriemmo.core.mapleaderboard.LeaderBoardManager;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.expansions.MmoExpansion;
-import net.laboulangerie.laboulangeriemmo.json.GsonSerializer;
 import net.laboulangerie.laboulangeriemmo.listener.AbilitiesRegisterer;
 import net.laboulangerie.laboulangeriemmo.listener.GrindingListener;
 import net.laboulangerie.laboulangeriemmo.listener.MmoListener;
@@ -37,7 +44,6 @@ import net.laboulangerie.laboulangeriemmo.listener.ServerListener;
 import net.laboulangerie.laboulangeriemmo.listener.XpBoostListener;
 import net.laboulangerie.laboulangeriemmo.utils.WolrdGuardSupport;
 import net.milkbowl.vault.economy.Economy;
-import pl.betoncraft.betonquest.BetonQuest;
 
 public class LaBoulangerieMmo extends JavaPlugin {
     public static LaBoulangerieMmo PLUGIN;
@@ -115,8 +121,31 @@ public class LaBoulangerieMmo extends JavaPlugin {
         }
 
         if (getServer().getPluginManager().getPlugin("BetonQuest") != null) {
-            BetonQuest.getInstance().registerConditions("lbmmo_level", LevelCondition.class);
-            BetonQuest.getInstance().registerEvents("lbmmo_xp", XpEvent.class);
+            BetonQuest.getInstance().getQuestRegistries().getConditionTypes().register("lbmmo_level", new PlayerConditionFactory() {
+                @Override
+                public PlayerCondition parsePlayer(Instruction instruction) throws InstructionParseException {
+                    int level;
+                    try {
+                        level = Integer.parseInt(instruction.getPart(2));
+                    } catch (Exception e) {
+                        throw new InstructionParseException("You didn't pass an integer value to lbmmo_level condition");
+                    }
+                    return new LevelCondition(instruction.getPart(1), level);
+                }
+            }, null);
+            BetonQuest.getInstance().getQuestRegistries().getEventTypes().register("lbmmo_xp", new PlayerQuestFactory<Event>() {
+                @Override
+                public Event parsePlayer(Instruction instruction) throws InstructionParseException {
+                    char op = instruction.getPart(2).charAt(0);
+                    double xp;
+                    try {
+                        xp = Double.parseDouble(instruction.getPart(2).substring(1));
+                    } catch (Exception e) {
+                        throw new InstructionParseException("You didn't pass a decimal value to lbmmo_level condition");
+                    }
+                    return new XpEvent(instruction.getPart(0), op, xp);
+                }
+            });
             getLogger().info("Hooked in BetonQuest!");
         }
 

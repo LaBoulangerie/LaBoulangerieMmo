@@ -1,10 +1,9 @@
-package net.laboulangerie.laboulangeriemmo.json;
+package net.laboulangerie.laboulangeriemmo.core.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
-
-import net.laboulangerie.laboulangeriemmo.core.PostProcessingEnabler;
+import net.laboulangerie.laboulangeriemmo.api.player.CooldownsHolder;
 
 public class GsonSerializer {
 
@@ -12,7 +11,9 @@ public class GsonSerializer {
 
     public GsonSerializer() {
         gson = new GsonBuilder().setPrettyPrinting().serializeNulls()
-                .registerTypeAdapterFactory(new PostProcessingEnabler()).create();
+            .registerTypeAdapterFactory(new PostProcessingEnabler())
+            .registerTypeAdapter(CooldownsHolder.class, new DateSerializer())
+            .create();
     }
 
     public String serialize(GsonSerializable serializable) {

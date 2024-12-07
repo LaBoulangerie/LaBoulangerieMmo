@@ -26,10 +26,11 @@ public class InvisibleParticles extends Effect {
         if (block.getType().equals(Material.AIR)) return;
 
         printLocation.getWorld()
-                .spawnParticle(
-                        Particle.TOWN_AURA, new Location(printLocation.getWorld(),
-                                printLocation.getX(), printLocation.getY(), printLocation.getZ()),
-                        5);
+            .spawnParticle(
+                Particle.MYCELIUM, new Location(printLocation.getWorld(),
+                printLocation.getX(), printLocation.getY(), printLocation.getZ()),
+                5
+            );
     }
 
 }

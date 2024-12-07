@@ -83,18 +83,18 @@ public class ServerListener implements Listener {
             return;
         }
 
-        Optional<Entry<AbilityArchetype, Long>> ability = mmoPlayer.getCooldowns().getArchetypeCooldowns("dodging")
-                .entrySet().stream().filter(e -> e.getValue() <= 1).findFirst(); // 1 is the duration of the
-                                                                                 // spin attack
+        Optional<Entry<String, Long>> ability = mmoPlayer.getCooldowns().getTimeSinceUsed("dodging")
+                .entrySet().stream().filter(e -> e.getValue() <= 1000).findFirst(); // 1000 is the duration of the spin attack
 
         if (ability.isEmpty()) return;
 
+        AbilityArchetype archetype = LaBoulangerieMmo.talentsRegistry.getTalent(ability.get().getKey()).abilitiesArchetypes.get("dodging");
         if (Utils.getAttackDamage(player, player.getInventory().getItemInMainHand()) > 0)
             event.setDamage(Utils.getAttackDamage(player, player.getInventory().getItemInMainHand())
-                    + (ability.get().getKey().getTier(1) > player.getLevel() ? 1 : 4));
+                    + (archetype.getTier(1) > player.getLevel() ? 1 : 4));
 
         event.getEntity().setVelocity(player.getLocation().getDirection()
-                .multiply(ability.get().getKey().getTier(1) > player.getLevel() ? 3 : 5));
+                .multiply(archetype.getTier(1) > player.getLevel() ? 3 : 5));
     }
 
     @EventHandler
@@ -118,7 +118,7 @@ public class ServerListener implements Listener {
         if (event.getProjectile().getFireTicks() > 0) EffectRegistry.playEffect("arrow", event.getProjectile());
 
         if (event.getEntity() instanceof Player player && event.getProjectile() instanceof AbstractArrow arrow
-                && event.getBow().hasItemMeta() && event.getBow().getItemMeta().hasEnchant(Enchantment.ARROW_FIRE))
+                && event.getBow().hasItemMeta() && event.getBow().getItemMeta().hasEnchant(Enchantment.FLAME))
             FireArrow.shoot(player, arrow);
     }
 

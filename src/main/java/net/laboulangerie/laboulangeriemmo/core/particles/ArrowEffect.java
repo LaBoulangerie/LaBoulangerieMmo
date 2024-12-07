@@ -34,7 +34,7 @@ public class ArrowEffect extends Effect {
         }
 
         if (fireArrow != null && fireArrow.getAbilityLevel() == 2) {
-            world.spawnParticle(Particle.FIREWORKS_SPARK, entity.getLocation(), 0, 0, 0, 0, 8);
+            world.spawnParticle(Particle.FIREWORK, entity.getLocation(), 0, 0, 0, 0, 8);
             createHelix(fireArrow.getArrow().getLocation(), 2, 0.5f);
         }
 

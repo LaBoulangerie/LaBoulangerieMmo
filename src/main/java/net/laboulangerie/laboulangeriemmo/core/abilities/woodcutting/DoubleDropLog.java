@@ -48,7 +48,7 @@ public class DoubleDropLog extends AbilityExecutor {
 
         if (shouldDrop) {
             Location location = block.getLocation();
-            location.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location.toCenterLocation().add(0, -0.2, 0), 5,
+            location.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, location.toCenterLocation().add(0, -0.2, 0), 5,
                     0.1, 0.1, 0.1);
             location.getWorld().dropItemNaturally(location, droppedItem);
         }

@@ -22,12 +22,12 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.talent.Talent;
 import net.laboulangerie.laboulangeriemmo.api.talent.TalentArchetype;
-import net.laboulangerie.laboulangeriemmo.core.PostProcessingEnabler;
 import net.laboulangerie.laboulangeriemmo.core.XpCountDown;
+import net.laboulangerie.laboulangeriemmo.core.json.GsonSerializable;
+import net.laboulangerie.laboulangeriemmo.core.json.PostProcessingEnabler;
 import net.laboulangerie.laboulangeriemmo.core.particles.EffectRegistry;
 import net.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
-import net.laboulangerie.laboulangeriemmo.json.GsonSerializable;
 
 public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostProcessable {
     private transient FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();

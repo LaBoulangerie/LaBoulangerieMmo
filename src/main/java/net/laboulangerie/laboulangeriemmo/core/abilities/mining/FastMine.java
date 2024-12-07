@@ -44,7 +44,7 @@ public class FastMine extends AbilityExecutor {
         player.sendMessage(
                 "§eVous gagnez Haste " + (amplifier + 1) + " pendant " + duration + " secondes");
         player.addPotionEffect(
-                new PotionEffect(PotionEffectType.FAST_DIGGING, duration * 20, amplifier, true));
+                new PotionEffect(PotionEffectType.HASTE, duration * 20, amplifier, true));
         EffectRegistry.playEffect("default", player);
     }
 }
