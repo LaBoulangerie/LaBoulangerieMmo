@@ -52,6 +52,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     }
 
     public MmoPlayer() {
+        cooldownsHolder = new CooldownsHolder();
         xpCountdown = new XpCountDown(this);
         xpCountdown.start();
     }
