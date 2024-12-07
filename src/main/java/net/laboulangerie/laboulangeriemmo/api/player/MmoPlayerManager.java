@@ -58,7 +58,11 @@ public class MmoPlayerManager {
 
         try {
             File file = new File(playersFolder, uniqueId + ".json");
-            if (!file.exists()) throw new JsonSyntaxException("hacky");
+            if (!file.exists()) {
+                MmoPlayer mmoPlayer = new MmoPlayer(player);
+                playersMap.put(uniqueId, mmoPlayer);
+                return;
+            }
             String json = FileUtils.read(file);
 
             if (!json.equals("")) {
