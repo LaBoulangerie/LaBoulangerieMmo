@@ -73,7 +73,7 @@ dependencies {
 group = "net.laboulangerie"
 version = "2.3.2"
 description = "LaBoulangerieMmo"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 tasks {
   // Configure reobfJar to run when invoking the build task
@@ -82,7 +82,7 @@ tasks {
   }
   compileJava {
     options.encoding = Charsets.UTF_8.name()
-    options.release.set(17)
+    options.release.set(21)
   }
   javadoc {
     options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
