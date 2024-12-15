@@ -4,7 +4,7 @@ plugins {
     java
     `maven-publish`
     id("io.papermc.paperweight.userdev") version "1.7.3"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.gradleup.shadow") version "8.3.5"
 }
 
 repositories {
@@ -55,6 +55,12 @@ repositories {
     }
 }
 
+configurations {
+    "compileClasspath" {
+        resolutionStrategy.force("com.google.guava:guava:33.2.1-jre")
+    }
+}
+
 dependencies {
     paperDevBundle("1.21.1-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-api:4.17.0")
@@ -73,7 +79,7 @@ dependencies {
 group = "net.laboulangerie"
 version = "2.3.2"
 description = "LaBoulangerieMmo"
-java.sourceCompatibility = JavaVersion.VERSION_17
+java.sourceCompatibility = JavaVersion.VERSION_21
 
 tasks {
   // Configure reobfJar to run when invoking the build task
@@ -82,7 +88,7 @@ tasks {
   }
   compileJava {
     options.encoding = Charsets.UTF_8.name()
-    options.release.set(17)
+    options.release.set(21)
   }
   javadoc {
     options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
