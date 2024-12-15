@@ -4,7 +4,7 @@ plugins {
     java
     `maven-publish`
     id("io.papermc.paperweight.userdev") version "1.7.3"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.gradleup.shadow") version "8.3.5"
 }
 
 repositories {
