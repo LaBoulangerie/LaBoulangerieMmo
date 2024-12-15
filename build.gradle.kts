@@ -55,6 +55,12 @@ repositories {
     }
 }
 
+configurations {
+    "compileClasspath" {
+        resolutionStrategy.force("com.google.guava:guava:33.2.1-jre")
+    }
+}
+
 dependencies {
     paperDevBundle("1.21.1-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-api:4.17.0")
