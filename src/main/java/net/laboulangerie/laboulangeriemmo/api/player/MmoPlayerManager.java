@@ -68,6 +68,9 @@ public class MmoPlayerManager {
             if (!json.equals("")) {
                 MmoPlayer mmoPlayer = (MmoPlayer) serializer.deserialize(json, MmoPlayer.class);
                 playersMap.put(uniqueId, mmoPlayer);
+            } else {
+                MmoPlayer mmoPlayer = new MmoPlayer(player);
+                playersMap.put(uniqueId, mmoPlayer);
             }
         } catch (JsonSyntaxException e) {
             LaBoulangerieMmo.PLUGIN.getLogger().log(Level.SEVERE, "Failed to load player data, disabling plugin to preserve saves's integrity.");
