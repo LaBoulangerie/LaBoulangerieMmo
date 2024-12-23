@@ -89,7 +89,7 @@ public class GrindingListener implements Listener {
         Set<String> keys =
                 LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding").getKeys(false);
 
-        keys.stream().forEach(talentName -> {
+        for (String talentName : keys) {
             if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null) return;
 
             FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
@@ -111,6 +111,6 @@ public class GrindingListener implements Listener {
                 }
                 LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, xpAmount);
             }
-        });
+        }
     }
 }
