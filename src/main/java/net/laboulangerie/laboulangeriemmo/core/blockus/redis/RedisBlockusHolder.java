@@ -50,7 +50,7 @@ public class RedisBlockusHolder {
                 + loc.getWorld().getUID().toString();
     }
 
-    public int getTotalBlockuses() {
-        return jedis.hgetAll("blockus").size();
+    public long getTotalBlockuses() {
+        return jedis.hlen("blockus");
     }
 }
