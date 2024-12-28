@@ -90,14 +90,14 @@ public class GrindingListener implements Listener {
                 LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding").getKeys(false);
 
         for (String talentName : keys) {
-            if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null) return;
+            if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null) continue;
 
             FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
             ConfigurationSection section = LaBoulangerieMmo.PLUGIN.getConfig()
                     .getConfigurationSection("talent-grinding." + talentName + "." + category.toString());
 
-            if (section == null) return;
+            if (section == null) continue;
 
             if (section.getKeys(false).contains(identifier)) {
                 double xpAmount = section.getDouble(identifier);
