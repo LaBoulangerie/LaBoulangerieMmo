@@ -1,0 +1,110 @@
+# =============================================================================
+# RÉFÉRENCE D'UN FICHIER MÉTIER
+# =============================================================================
+# job: hunter                         # Obligatoire : identifiant exact du métier.
+# rules:                              # Obligatoire : règles nommées librement.
+#   exemple_complet:
+#     enabled: false                  # Optionnel, true par défaut.
+#     action: KILL                    # Obligatoire : voir les 5 actions ci-dessous.
+#     conditions:                     # Optionnel : aucun filtre si absent.
+#       block-types: [OAK_LOG]        # Materials source (actions de blocs).
+#       block-tags: ["#minecraft:logs"] # Tags de blocs ; le # est optionnel.
+#       entity-types: [SKELETON]      # EntityType Vanilla (KILL ou BREED).
+#       mythic-mobs: [SkeletonKing]   # Noms internes MythicMobs.
+#       tool-types: [DIAMOND_AXE]     # Materials tenus en main principale.
+#       tool-tags: ["#minecraft:axes"] # Tags d'items ; le # est optionnel.
+#       enchantments:                 # Enchantement requis -> niveau minimum.
+#         sharpness: 2                # Namespace minecraft par défaut.
+#       worlds: [world]               # Mondes autorisés.
+#       excluded-worlds: [farm_world] # Mondes interdits, prioritaires.
+#       biomes: [PLAINS]              # Biomes autorisés.
+#       excluded-biomes: [DESERT]     # Biomes interdits, prioritaires.
+#       permissions:                  # Le joueur doit posséder TOUTES les permissions.
+#         - laboulangeriemmo.loot.example
+#       spawn-reasons: [NATURAL]      # SpawnReason Paper (actions sur entités).
+#       adult: true                   # true=adulte, false=bébé (KILL ou BREED).
+#     loot:
+#       item: reinforced_bone         # Identifiant déclaré dans items.yml.
+#       amount: 1                     # Quantité fixe strictement positive.
+#       # Variante : amount: { min: 1, max: 3 } (bornes incluses).
+#       chance-profile: mastery_rare  # Profil déclaré dans chances.yml.
+#       # Variantes remplaçant chance-profile :
+#       # chance: 2.5                 # Pourcentage fixe entre 0 et 100.
+#       # chance:
+#       #   default: 0
+#       #   levels: { 10: 1.0, 75: 5.0 }
+#     anti-farm:                      # Surcharge optionnelle de settings.yml.
+#       allow-creative: false
+#       allow-placed-blocks: false
+#       allow-spawner-mobs: false
+#
+# Actions : BLOCK_BREAK (bloc hors culture mûre), HARVEST (culture mûre),
+# LOG_STRIP (écorçage réussi), KILL (mort attribuée au joueur), BREED (reproduction).
+# Les valeurs d'une liste sont reliées par OU ; les familles de conditions par ET.
+# block-types + block-tags forment un filtre OU, comme tool-types + tool-tags.
+# Une condition non pertinente pour l'action empêche la règle de correspondre.
+# Les règles correspondantes font chacune un tirage indépendant.
+# =============================================================================
+
+job: hunter
+
+rules:
+  reinforced_bone_from_skeleton:
+    enabled: true
+    action: KILL
+    conditions:
+      entity-types: [SKELETON, STRAY, BOGGED]
+    loot:
+      item: reinforced_bone
+      amount: 1
+      chance:
+        default: 0
+        levels: { 9: 0.30, 36: 0.45, 67: 0.65, 93: 0.85 }
+
+  toxic_gland:
+    enabled: true
+    action: KILL
+    conditions:
+      entity-types: [SPIDER, CAVE_SPIDER]
+    loot:
+      item: toxic_gland
+      amount: 1
+      chance:
+        default: 0
+        levels: { 26: 0.35, 54: 0.55, 81: 0.80 }
+
+  spectral_eye:
+    enabled: true
+    action: KILL
+    conditions:
+      entity-types: [ENDERMAN, PHANTOM]
+    loot:
+      item: spectral_eye
+      amount: 1
+      chance:
+        default: 0
+        levels: { 52: 0.60, 73: 0.90, 96: 1.25 }
+
+  monstrous_heart:
+    enabled: true
+    action: KILL
+    conditions:
+      entity-types: [RAVAGER, ELDER_GUARDIAN, WARDEN, WITHER]
+    loot:
+      item: monstrous_heart
+      amount: 1
+      chance:
+        default: 0
+        levels: { 84: 3.00, 94: 4.50, 100: 6.00 }
+
+  vex_armor_trim:
+    enabled: true
+    action: KILL
+    conditions:
+      entity-types: [PILLAGER, VINDICATOR, EVOKER, ILLUSIONER]
+    loot:
+      item: vex_armor_trim
+      amount: 1
+      chance:
+        default: 0
+        levels: { 100: 0.10 }

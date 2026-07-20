@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.utils.Utils;
@@ -23,9 +23,11 @@ public class ExpInBottle extends AbilityExecutor {
     @Override
     public boolean shouldTrigger(Event baseEvent) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
+        Player player = event.getPlayer();
         ItemStack item = event.getItem();
-        return event.getPlayer().isSneaking() && item != null
-                && item.getType() == Material.GLASS_BOTTLE;
+        return player.isSneaking() && item != null
+                && item.getType() == Material.GLASS_BOTTLE
+                && player.getInventory().contains(Material.LAPIS_LAZULI);
     }
 
     @Override
@@ -41,9 +43,12 @@ public class ExpInBottle extends AbilityExecutor {
         if (currentExp >= pointsToSubtract) {
             Utils.changePlayerExp(player, -pointsToSubtract);
 
+            // Consommer 1 lapis
+            player.getInventory().removeItem(new ItemStack(Material.LAPIS_LAZULI, 1));
+
             ItemStack item = new ItemStack(Material.EXPERIENCE_BOTTLE);
             ItemMeta itemMeta = item.getItemMeta();
-            itemMeta.lore(Arrays.asList(Component.text("Quantité: " + pointsToSubtract + " xp")));
+            itemMeta.lore(Arrays.asList(LegacyComponentSerializer.legacySection().deserialize("§r§6xp: " + pointsToSubtract)));
             item.setItemMeta(itemMeta);
             event.getItem().setAmount(event.getItem().getAmount() - 1);
 

@@ -11,10 +11,10 @@ import com.google.common.collect.Multimap;
 
 public class Utils {
     public static double getAttackDamage(Player player, ItemStack itemStack) {
-        double damages = player.getAttribute(org.bukkit.attribute.Attribute.GENERIC_ATTACK_DAMAGE).getValue();
+        double damages = player.getAttribute(org.bukkit.attribute.Attribute.ATTACK_DAMAGE).getValue();
 
         Multimap<Attribute, AttributeModifier> attributesMap = itemStack.getType().getDefaultAttributeModifiers(EquipmentSlot.HAND);
-        Collection<AttributeModifier> modifiers = attributesMap.get(Attribute.GENERIC_ATTACK_DAMAGE);
+        Collection<AttributeModifier> modifiers = attributesMap.get(Attribute.ATTACK_DAMAGE);
         if (!modifiers.isEmpty()) {
             damages += ((AttributeModifier) modifiers.toArray()[0]).getAmount() + 0.7;
         }

@@ -15,77 +15,42 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketContainer;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.EnumWrappers.PlayerDigType;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
-import net.minecraft.world.inventory.ClickType;
 
 public class ComboDispatcher implements Listener {
     private Map<Player, KeyStreak> comboStreaks = new HashMap<Player, KeyStreak>();
-    /**
-     * Used for protocol dark wizardry
-     */
-    private HashMap<UUID, Boolean> shouldCancelNextArmAnimation = new HashMap<UUID, Boolean>();
 
-    public ComboDispatcher() {
-        /*
-         * Minecraft's protocol is fucked up, the only way to detect a left click in the air is to listen for the arm
-         * animation packet but it's also sent when the player drop or start breaking a block, so we ignore the arm
-         * animation following a drop
-         */
-        ProtocolLibrary.getProtocolManager().addPacketListener(
-                new PacketAdapter(LaBoulangerieMmo.PLUGIN, ListenerPriority.MONITOR, PacketType.Play.Client.BLOCK_DIG) {
-                    @Override
-                    public void onPacketReceiving(PacketEvent event) {
-                        PlayerDigType digType = event.getPacket().getPlayerDigTypes().getValues().get(0);
+    private Map<UUID, Long> lastDropTime = new HashMap<>();
+    private Map<UUID, Long> lastInventoryClickTime = new HashMap<>();
+    private Map<UUID, Long> lastBlockDamageTime = new HashMap<>();
 
-                        if (digType == PlayerDigType.DROP_ALL_ITEMS || digType == PlayerDigType.DROP_ITEM
-                                || digType == PlayerDigType.START_DESTROY_BLOCK) {
-                            shouldCancelNextArmAnimation.put(event.getPlayer().getUniqueId(), true);
-                        }
-                    }
-                });
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(LaBoulangerieMmo.PLUGIN,
-                ListenerPriority.MONITOR, PacketType.Play.Client.WINDOW_CLICK) {
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                PacketContainer packet = event.getPacket();
-                /*
-                 * See https://wiki.vg/Protocol#Click_Window if "mode" is throw an item or a full stack of item have
-                 * been dropped from the inventory window. UPDATE SENSITIVE, NMS
-                 */
+    @EventHandler
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        lastDropTime.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
+    }
 
-                Integer button = packet.getIntegers().read(2); // the button field as
-                                                               // defined in the protocol
-                                                               // specification, -999 =
-                                                               // outside the window
-
-                /*
-                 * We have to handle a special case for some obscures reasons whe you click outside the window with an
-                 * empty cursor, the action is labeled as drop but nothing is dropped but when you right or left click
-                 * outside a window and you actually drop an item, the action is labeled as pickup
-                 */
-                if ((packet.getEnumModifier(ClickType.class, ClickType.class).getValues().get(0) == ClickType.THROW
-                        && button != -999)
-                        || (button == -999 && packet.getEnumModifier(ClickType.class, ClickType.class).getValues()
-                                .get(0) == ClickType.PICKUP)) {
-                    shouldCancelNextArmAnimation.put(event.getPlayer().getUniqueId(), true);
-                }
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (event.getWhoClicked() instanceof Player player) {
+            if (event.getClick().name().contains("DROP") || event.getSlot() == -999) {
+                lastInventoryClickTime.put(player.getUniqueId(), System.currentTimeMillis());
             }
-        });
+        }
+    }
+
+    @EventHandler
+    public void onBlockDamage(BlockDamageEvent event) {
+        lastBlockDamageTime.put(event.getPlayer().getUniqueId(), System.currentTimeMillis());
     }
 
     @EventHandler
@@ -95,11 +60,17 @@ public class ComboDispatcher implements Listener {
         if (!isAuthorizeItem(event.getItem())) return;
 
         ComboKey key = null;
-        Boolean shouldCancel = shouldCancelNextArmAnimation.get(event.getPlayer().getUniqueId());
         switch (event.getAction()) {
             case LEFT_CLICK_AIR:
-                if (shouldCancel != null && shouldCancel) {
-                    shouldCancelNextArmAnimation.put(event.getPlayer().getUniqueId(), false);
+                long now = System.currentTimeMillis();
+                UUID uuid = event.getPlayer().getUniqueId();
+                Long dropTime = lastDropTime.get(uuid);
+                Long invTime = lastInventoryClickTime.get(uuid);
+                Long blockTime = lastBlockDamageTime.get(uuid);
+
+                if ((dropTime != null && now - dropTime < 50) ||
+                    (invTime != null && now - invTime < 50) ||
+                    (blockTime != null && now - blockTime < 50)) {
                     return;
                 }
             case LEFT_CLICK_BLOCK:
@@ -168,7 +139,7 @@ public class ComboDispatcher implements Listener {
     private boolean isAuthorizeItem(ItemStack item) {
         AtomicBoolean isAuthorized = new AtomicBoolean(false);
         LaBoulangerieMmo.talentsRegistry.getTalents().values().stream().forEach(talent -> {
-            if (talent.comboItems == null || talent.comboItems.contains(item.getType())) isAuthorized.set(true);
+            if (talent.comboItems != null && talent.comboItems.contains(item.getType())) isAuthorized.set(true);
         });
         return isAuthorized.get();
     }

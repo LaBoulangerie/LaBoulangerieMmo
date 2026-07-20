@@ -1,0 +1,119 @@
+# =============================================================================
+# RÉFÉRENCE D'UN FICHIER MÉTIER
+# =============================================================================
+# job: miner                          # Obligatoire : identifiant exact du métier.
+# rules:                              # Obligatoire : règles nommées librement.
+#   exemple_complet:
+#     enabled: false                  # Optionnel, true par défaut.
+#     action: BLOCK_BREAK             # Obligatoire : voir les 5 actions ci-dessous.
+#     conditions:                     # Optionnel : aucun filtre si absent.
+#       block-types: [DIAMOND_ORE]    # Materials source (actions de blocs).
+#       block-tags: ["#minecraft:diamond_ores"] # Tags de blocs ; # optionnel.
+#       entity-types: [SILVERFISH]    # EntityType Vanilla (KILL ou BREED).
+#       mythic-mobs: [CaveGolem]      # Noms internes MythicMobs.
+#       tool-types: [DIAMOND_PICKAXE] # Materials tenus en main principale.
+#       tool-tags: ["#minecraft:pickaxes"] # Tags d'items ; # optionnel.
+#       enchantments:                 # Enchantement requis -> niveau minimum.
+#         fortune: 2                  # Namespace minecraft par défaut.
+#       worlds: [world]               # Mondes autorisés.
+#       excluded-worlds: [farm_world] # Mondes interdits, prioritaires.
+#       biomes: [DRIPSTONE_CAVES]     # Biomes autorisés.
+#       excluded-biomes: [THE_VOID]   # Biomes interdits, prioritaires.
+#       permissions:                  # Le joueur doit posséder TOUTES les permissions.
+#         - laboulangeriemmo.loot.miner
+#       spawn-reasons: [NATURAL]      # SpawnReason Paper (actions sur entités).
+#       adult: true                   # true=adulte, false=bébé (KILL ou BREED).
+#     loot:
+#       item: dense_mineral_fragment  # Identifiant déclaré dans items.yml.
+#       amount: 1                     # Quantité fixe strictement positive.
+#       # Variante : amount: { min: 1, max: 3 } (bornes incluses).
+#       chance-profile: mastery_rare  # Profil déclaré dans chances.yml.
+#       # Variantes remplaçant chance-profile :
+#       # chance: 2.5                 # Pourcentage fixe entre 0 et 100.
+#       # chance:
+#       #   default: 0
+#       #   levels: { 10: 1.0, 75: 5.0 }
+#     anti-farm:                      # Surcharge optionnelle de settings.yml.
+#       allow-creative: false
+#       allow-placed-blocks: false
+#       allow-spawner-mobs: false
+#
+# Actions : BLOCK_BREAK (bloc hors culture mûre), HARVEST (culture mûre),
+# LOG_STRIP (écorçage réussi), KILL (mort attribuée au joueur), BREED (reproduction).
+# Les valeurs d'une liste sont reliées par OU ; les familles de conditions par ET.
+# block-types + block-tags forment un filtre OU, comme tool-types + tool-tags.
+# Une condition non pertinente pour l'action empêche la règle de correspondre.
+# Les règles correspondantes font chacune un tirage indépendant.
+# =============================================================================
+
+job: miner
+
+rules:
+  geode_shard:
+    enabled: true
+    action: BLOCK_BREAK
+    conditions:
+      block-types:
+        - COAL_ORE
+        - DEEPSLATE_COAL_ORE
+        - COPPER_ORE
+        - DEEPSLATE_COPPER_ORE
+        - IRON_ORE
+        - DEEPSLATE_IRON_ORE
+      tool-tags: ["#minecraft:pickaxes"]
+    loot:
+      item: geode_shard
+      amount: 1
+      chance:
+        default: 0
+        levels: { 7: 0.06, 30: 0.10, 65: 0.16, 92: 0.22 }
+
+  luminous_core:
+    enabled: true
+    action: BLOCK_BREAK
+    conditions:
+      block-types:
+        - REDSTONE_ORE
+        - DEEPSLATE_REDSTONE_ORE
+        - LAPIS_ORE
+        - DEEPSLATE_LAPIS_ORE
+        - NETHER_QUARTZ_ORE
+        - AMETHYST_CLUSTER
+      tool-tags: ["#minecraft:pickaxes"]
+    loot:
+      item: luminous_core
+      amount: 1
+      chance:
+        default: 0
+        levels: { 29: 0.12, 55: 0.20, 82: 0.30 }
+
+  perfect_gem:
+    enabled: true
+    action: BLOCK_BREAK
+    conditions:
+      block-types:
+        - DIAMOND_ORE
+        - DEEPSLATE_DIAMOND_ORE
+        - EMERALD_ORE
+        - DEEPSLATE_EMERALD_ORE
+      tool-tags: ["#minecraft:pickaxes"]
+    loot:
+      item: perfect_gem
+      amount: 1
+      chance:
+        default: 0
+        levels: { 61: 0.75, 80: 1.10, 96: 1.50 }
+
+  primordial_slag:
+    enabled: true
+    action: BLOCK_BREAK
+    conditions:
+      block-types:
+        - ANCIENT_DEBRIS
+      tool-tags: ["#minecraft:pickaxes"]
+    loot:
+      item: primordial_slag
+      amount: 1
+      chance:
+        default: 0
+        levels: { 89: 2.50, 100: 4.00 }

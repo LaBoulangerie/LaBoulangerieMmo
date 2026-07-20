@@ -7,11 +7,9 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
@@ -19,7 +17,6 @@ import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
@@ -31,7 +28,6 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.commands.talenttree.TalentTreeInv;
-import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MarkedBlocksManager;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.FireBow;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow.FireArrow;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.hiding.InvisiblePlayer;
@@ -40,30 +36,22 @@ import net.laboulangerie.laboulangeriemmo.utils.Utils;
 
 public class ServerListener implements Listener {
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onClick(PlayerInteractEvent event) {
-        if (event.getAction() != Action.LEFT_CLICK_BLOCK || event.useItemInHand() == Result.DENY) return;
-
-        MarkedBlocksManager.manager().unmarkBlock(event.getClickedBlock());
-    }
-
     @EventHandler
     public void onExpBottle(ExpBottleEvent event) {
         ItemStack bottle = event.getEntity().getItem();
         ItemMeta meta = bottle.getItemMeta();
         if (meta.hasLore()
-                && PlainTextComponentSerializer.plainText().serialize(meta.lore().get(0)).startsWith("Quantité:")) {
+                && PlainTextComponentSerializer.plainText().serialize(meta.lore().get(0)).startsWith("xp:")) {
 
             int expPoints = Integer.parseInt(
-                    PlainTextComponentSerializer.plainText().serialize(meta.lore().get(0)).split("Quantité: ")[1]
-                            .split(" ")[0]);
+                    PlainTextComponentSerializer.plainText().serialize(meta.lore().get(0)).split("xp: ")[1]);
             event.setExperience(expPoints);
         }
     }
 
     /**
      * Apply knockback and damages when hitting an entity withe the DODGE ability
-     * 
+     *
      * @param event
      */
     @EventHandler(priority = EventPriority.MONITOR)

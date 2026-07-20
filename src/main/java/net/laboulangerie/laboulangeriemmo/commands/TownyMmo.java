@@ -35,11 +35,11 @@ public class TownyMmo implements CommandExecutor, TabCompleter {
         }
         if (args.length == 3) {
             List<String> list = new ArrayList<String>();
-            list.add("total ");
+            list.add("total");
             list.add("farmer");
-            list.add("mining");
-            list.add("woodcutting");
-            list.add("thehunter");
+            list.add("miner");
+            list.add("lumberjack");
+            list.add("hunter");
             return list;
         }
         if (args.length == 4 && args[0].equalsIgnoreCase("town")
@@ -94,9 +94,9 @@ public class TownyMmo implements CommandExecutor, TabCompleter {
                     sender.sendMessage("La ville avec le deuxième plus gros total de pallier est : "
                             + villeDeuxName + " avec ce nombre de palliers : " + villeDeux);
                 }
-                if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer")
-                        || args[2].equalsIgnoreCase("woodcutting")
-                        || args[2].equalsIgnoreCase("thehunter")) {
+                if (args[2].equalsIgnoreCase("miner") || args[2].equalsIgnoreCase("farmer")
+                        || args[2].equalsIgnoreCase("lumberjack")
+                        || args[2].equalsIgnoreCase("hunter")) {
                     int total = 0;
                     int villeUn = 0;
                     String villeUnName = null;
@@ -136,9 +136,9 @@ public class TownyMmo implements CommandExecutor, TabCompleter {
                     sender.sendMessage(
                             "La ville de " + villeUnName + " a un pallier total de : " + total);
                 }
-                if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer")
-                        || args[2].equalsIgnoreCase("woodcutting")
-                        || args[2].equalsIgnoreCase("thehunter")) {
+                if (args[2].equalsIgnoreCase("miner") || args[2].equalsIgnoreCase("farmer")
+                        || args[2].equalsIgnoreCase("lumberjack")
+                        || args[2].equalsIgnoreCase("hunter")) {
                     int total = 0;
                     Town town = TownyUniverse.getInstance().getTown(args[3]);
                     String villeUnName = town.getName();
@@ -180,9 +180,9 @@ public class TownyMmo implements CommandExecutor, TabCompleter {
                                     + nationDeuxName + " avec ce nombre de palliers : "
                                     + nationDeux);
                 }
-                if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer")
-                        || args[2].equalsIgnoreCase("woodcutting")
-                        || args[2].equalsIgnoreCase("thehunter")) {
+                if (args[2].equalsIgnoreCase("miner") || args[2].equalsIgnoreCase("farmer")
+                        || args[2].equalsIgnoreCase("lumberjack")
+                        || args[2].equalsIgnoreCase("hunter")) {
                     int total = 0;
                     int nationUn = 0;
                     String nationUnName = null;
@@ -221,9 +221,9 @@ public class TownyMmo implements CommandExecutor, TabCompleter {
                     sender.sendMessage(
                             "La ville de " + nationUnName + " a un pallier total de : " + total);
                 }
-                if (args[2].equalsIgnoreCase("mining") || args[2].equalsIgnoreCase("farmer")
-                        || args[2].equalsIgnoreCase("woodcutting")
-                        || args[2].equalsIgnoreCase("thehunter")) {
+                if (args[2].equalsIgnoreCase("miner") || args[2].equalsIgnoreCase("farmer")
+                        || args[2].equalsIgnoreCase("lumberjack")
+                        || args[2].equalsIgnoreCase("hunter")) {
                     int total = 0;
                     Nation nation = TownyUniverse.getInstance().getNation(args[3]);
                     String nationUnName = nation.getName();

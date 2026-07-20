@@ -56,12 +56,12 @@ public class Stun extends AbilityExecutor {
         if (level >= getTier(2) && random <= TIER_3_CHANCE) {
             shouldStun = true;
             shouldBlind = true;
-            durationSeconds = 3;
+            durationSeconds = 5;
             slownessEffect = new PotionEffect(PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 3, true, false);
         } else if (level >= getTier(1) && random <= TIER_2_CHANCE) {
             shouldStun = true;
             shouldBlind = true;
-            durationSeconds = 5;
+            durationSeconds = 3;
             slownessEffect = new PotionEffect(PotionEffectType.SLOWNESS, PotionEffect.INFINITE_DURATION, 2, true, false);
 
         } else if (random <= TIER_1_CHANCE)

@@ -1,0 +1,37 @@
+# =============================================================================
+# RÉFÉRENCE DES PROFILS DE CHANCE
+# =============================================================================
+# Toutes les valeurs sont des pourcentages compris entre 0 et 100 inclus.
+# Chaque clé sous "profiles" devient utilisable via "chance-profile".
+#
+# Forme fixe :
+# profiles:
+#   chance_fixe: 2.5                   # 2,5 % à tous les niveaux du métier.
+#
+# Forme par paliers — toutes les clés disponibles :
+#   chance_progressive:
+#     default: 0                       # Optionnel, 0 par défaut avant le premier palier.
+#     levels:                          # Optionnel. Niveau minimum -> nouvelle chance.
+#       10: 1.0
+#       11: 3.0
+#       75: 5.0
+#
+# Le plus grand palier inférieur ou égal au niveau actuel est appliqué. Ainsi,
+# l'exemple donne 0 % au niveau 9, 1 % au niveau 10, 3 % du niveau 11 au niveau
+# 74, puis 5 % à partir du niveau 75.
+# =============================================================================
+
+profiles:
+  mastery_rare:
+    default: 0
+    levels:
+      10: 1.0
+      11: 3.0
+      75: 5.0
+
+  uncommon_mastery:
+    default: 0
+    levels:
+      25: 0.5
+      50: 1.0
+      80: 2.0

@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
@@ -13,7 +14,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.Event;
+import org.bukkit.persistence.PersistentDataType;
 
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.firebow.FireArrow;
@@ -105,16 +108,30 @@ public class FireBow extends AbilityExecutor {
             for (int y = location.getBlockY() - 1; y <= location.getBlockY() + 1; y++)
                 for (int z = location.getBlockZ() - 1; z <= location.getBlockZ() + 1; z++)
                     if (world.getBlockAt(x, y, z).getType().equals(Material.AIR)
-                            && RNG.nextInt(4) < 3)
-                        world.getBlockAt(x, y, z).setType(Material.FIRE);
+                            && RNG.nextInt(4) < 3) {
+                        Block candidate = world.getBlockAt(x, y, z);
+                        if (LaBoulangerieMmo.PLUGIN.getTalentProtection().canIgnite(candidate)) {
+                            candidate.setType(Material.FIRE);
+                        }
+                    }
     }
 
     private static void explosion(Player shooter, Location location, int power) {
         final World world = location.getWorld();
         TNTPrimed tnt = (TNTPrimed) world.spawnEntity(location, EntityType.TNT);
+        tnt.getPersistentDataContainer().set(fireBowTntKey(), PersistentDataType.BYTE, (byte) 1);
         tnt.setIsIncendiary(true);
         tnt.setSource(shooter);
         tnt.setFuseTicks(0);
         tnt.setYield(power);
+    }
+
+    public static boolean isFireBowTnt(Entity entity) {
+        return entity instanceof TNTPrimed && entity.getPersistentDataContainer()
+                .has(fireBowTntKey(), PersistentDataType.BYTE);
+    }
+
+    private static NamespacedKey fireBowTntKey() {
+        return new NamespacedKey(LaBoulangerieMmo.PLUGIN, "fire-bow-tnt");
     }
 }

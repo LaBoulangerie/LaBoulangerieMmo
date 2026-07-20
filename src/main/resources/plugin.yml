@@ -1,16 +1,19 @@
 name: LaBoulangerieMmo
 version: 2.3.2
 main: net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
-api-version: 1.21
+api-version: '1.21.11'
 authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco, BlackoutBurst, SunshineDev]
-depend: [ProtocolLib, Vault]
-softdepend: [PlaceholderAPI, Towny, BetonQuest, WorldGuard, MythicMobs]
+depend: [Vault]
+softdepend: [PlaceholderAPI, Towny, BetonQuest, WorldGuard, MythicMobs, LibsDisguises, Minelet]
 
 libraries:
     - redis.clients:jedis:5.1.3
     - com.github.luben:zstd-jni:1.5.0-4
 
 commands:
+    lbmmo:
+        description: Main command for LaBoulangerieMmo
+        usage: /lbmmo [stats|combo|talent|towny|xp|xpboost|reload|blockus|leaderboards] ...
     stats:
         permission: laboulangeriemmo.stats
         description: See your level and other information

@@ -3,6 +3,7 @@ package net.laboulangerie.laboulangeriemmo.core.abilities;
 import java.lang.reflect.InvocationTargetException;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Result;
@@ -13,6 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -25,6 +27,9 @@ import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
 import net.laboulangerie.laboulangeriemmo.events.ComboCompletedEvent;
 import net.laboulangerie.laboulangeriemmo.events.MmoPlayerUseAbilityEvent;
 import net.laboulangerie.laboulangeriemmo.utils.WolrdGuardSupport;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
 public class AbilitiesDispatcher implements Listener {
 
@@ -109,6 +114,14 @@ public class AbilitiesDispatcher implements Listener {
                 AbilityTrigger.HOLD_ITEM);
     }
 
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onEntityDeath(EntityDeathEvent event) {
+        Player killer = event.getEntity().getKiller();
+        if (killer == null) return;
+        triggerAbility(LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(killer), event,
+                AbilityTrigger.ENTITY_DEATH);
+    }
+
     public void triggerAbility(MmoPlayer player, Event event, AbilityTrigger trigger) {
         if (LaBoulangerieMmo.WORLDGUARD_SUPPORT
                 && !WolrdGuardSupport.isOperationPermitted(Bukkit.getPlayer(player.getUniqueId())))
@@ -116,22 +129,29 @@ public class AbilitiesDispatcher implements Listener {
 
         LaBoulangerieMmo.talentsRegistry.getTalents().values().forEach(talentArchetype -> {
             // Player doesn't have the right item in his hand so the combo is refused
-            if (trigger == AbilityTrigger.COMBO && talentArchetype.comboItems != null && !talentArchetype.comboItems
-                    .contains(((ComboCompletedEvent) event).getPlayer().getInventory().getItemInMainHand().getType())) {
+            if (trigger == AbilityTrigger.COMBO
+                    && (talentArchetype.comboItems == null || !talentArchetype.comboItems
+                            .contains(((ComboCompletedEvent) event).getPlayer().getInventory().getItemInMainHand()
+                                    .getType()))) {
                 return;
             }
             talentArchetype.abilitiesArchetypes.values().stream()
                     .filter(abilityArchetype -> LaBoulangerieMmo.abilitiesRegistry
                             .getTriggerForAbility(abilityArchetype.identifier) == trigger)
-                    .filter(abilityArchetype -> player.canUseAbility(abilityArchetype, talentArchetype.identifier))
                     .forEach(abilityArchetype -> {
+                        Player bukkitPlayer = Bukkit.getPlayer(player.getUniqueId());
+                        if (bukkitPlayer == null || bukkitPlayer.getGameMode() == GameMode.CREATIVE
+                                || player.getTalent(talentArchetype.identifier).getLevel()
+                                        < abilityArchetype.requiredLevel) {
+                            return;
+                        }
+
                         AbilityExecutor executor;
                         try {
                             executor = LaBoulangerieMmo.abilitiesRegistry.newAbilityExecutor(abilityArchetype);
                         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                                 | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 
-                            Player bukkitPlayer = Bukkit.getPlayer(player.getUniqueId());
                             bukkitPlayer.sendMessage("§4An error occurred when trying to execute the ability '"
                                     + abilityArchetype.identifier + "', please report this to an administrator!");
                             LaBoulangerieMmo.PLUGIN.getLogger()
@@ -142,6 +162,25 @@ public class AbilitiesDispatcher implements Listener {
                             return;
                         }
                         if (executor.shouldTrigger(event)) {
+                            if (!player.getCooldowns().isCooldownElapsed(
+                                    abilityArchetype, talentArchetype.identifier)) {
+                                if (trigger == AbilityTrigger.COMBO) {
+                                    long elapsed = player.getCooldowns().getCooldown(
+                                            abilityArchetype, talentArchetype.identifier);
+                                    long remaining = remainingCooldown(abilityArchetype.cooldown, elapsed);
+                                    bukkitPlayer.sendMessage(MiniMessage.miniMessage().deserialize(
+                                            LaBoulangerieMmo.PLUGIN.getConfig().getString(
+                                                    "lang.messages.ability-use-cooldown",
+                                                    "<gold>You must wait <gray><duration> <unit></gray> before using <aqua><ability></aqua>."),
+                                            TagResolver.resolver(
+                                                    Placeholder.parsed("ability", abilityArchetype.displayName),
+                                                    Placeholder.parsed("duration", Long.toString(remaining)),
+                                                    Placeholder.parsed("unit", abilityArchetype.cooldownUnit
+                                                            .toString().toLowerCase()),
+                                                    Placeholder.parsed("talent", talentArchetype.displayName))));
+                                }
+                                return;
+                            }
                             executor.trigger(event, player.getTalent(talentArchetype.identifier).getLevel());
                             player.useAbility(abilityArchetype, talentArchetype);
                             Bukkit.getPluginManager().callEvent(
@@ -150,4 +189,9 @@ public class AbilitiesDispatcher implements Listener {
                     });
         });
     }
+
+    static long remainingCooldown(long configuredCooldown, long elapsedCooldown) {
+        return Math.max(1, configuredCooldown - elapsedCooldown);
+    }
+
 }

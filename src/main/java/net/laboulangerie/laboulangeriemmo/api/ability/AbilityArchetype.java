@@ -9,6 +9,8 @@ public class AbilityArchetype {
     public String identifier;
     public String displayName;
     public String description;
+    /** Optional descriptions matching each entry in {@link #tiers}. */
+    public List<String> tierDescriptions = new ArrayList<>();
     public String instruction;
     public Material displayItem;
     public boolean shouldLog;
@@ -38,5 +40,10 @@ public class AbilityArchetype {
 
     public Boolean hasTiers() {
         return tiers.size() != 0;
+    }
+
+    public String getDescription(int tier) {
+        if (tier >= 0 && tier < tierDescriptions.size()) return tierDescriptions.get(tier);
+        return description;
     }
 }

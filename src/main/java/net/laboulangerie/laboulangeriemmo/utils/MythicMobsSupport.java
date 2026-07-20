@@ -3,21 +3,24 @@ package net.laboulangerie.laboulangeriemmo.utils;
 import java.util.Optional;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 
 import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.core.mobs.ActiveMob;
-import net.laboulangerie.laboulangeriemmo.api.player.GrindingCategory;
-import net.laboulangerie.laboulangeriemmo.listener.GrindingListener;
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.MobHeadsRegistry;
 
 public class MythicMobsSupport {
-    public static boolean tryToGiveMythicReward(Entity entity, Player killer) {
+    public static Optional<MythicMobContext> inspect(Entity entity) {
         Optional<ActiveMob> mythicMob = MythicBukkit.inst().getMobManager().getActiveMob(entity.getUniqueId());
+        if (mythicMob.isEmpty() || !(entity instanceof LivingEntity livingEntity)) return Optional.empty();
 
-        if (mythicMob.isPresent()) {
-            GrindingListener.giveReward(killer, GrindingCategory.KILL,
-                    "MYTHICMOBS_" + mythicMob.get().getType().getInternalName().toUpperCase(), false);
+        Optional<net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.MobVisualProfile> disguise =
+                Optional.empty();
+        if (LaBoulangerieMmo.LIBSDISGUISES_SUPPORT) {
+            disguise = LibsDisguisesSupport.getVisualProfile(entity);
         }
-        return mythicMob.isPresent();
+        return Optional.of(new MythicMobContext(mythicMob.get().getType().getInternalName(),
+                MobHeadsRegistry.getVisualProfile(livingEntity), disguise));
     }
 }
