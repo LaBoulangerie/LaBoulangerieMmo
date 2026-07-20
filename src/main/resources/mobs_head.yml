@@ -1,0 +1,1047 @@
+# Mob Heads Configuration for HuntingTrophy ability
+# Format:
+#   heads:
+#     MOB_TYPE:
+#       - texture: "base64_texture_value"
+#         material: PLAYER_HEAD/PIGLIN_HEAD (optional, defaults to PLAYER_HEAD)
+#         rarity: common/uncommon/rare/epic/legendary
+#         condition: (optional) variant condition like color
+#         name: (optional) display name for the head
+#
+# The texture value is a base64-encoded JSON containing the texture URL.
+# These values are from the AllMobHeads datapack.
+#
+# Rarity multipliers are defined in config.yml under trophy-rarities
+
+heads:
+    # ==================== PASSIFS ====================
+    PIG:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmVlODUxNDg5MmYzZDc4YTMyZTg0NTZmY2JiOGM2MDgxZTIxYjI0NmQ4MmYzOThiZDk2OWZlYzE5ZDNjMjdiMyJ9fX0="
+          rarity: common
+          condition: "TEMPERATE"
+          name: "Tête de Cochon Tempéré"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmExOGQ0MDQzY2Q2YzkwMzg2Njc4ODkxNGZkNTM0MzE1MjgxYWY5ZjI1OWUzNDgzN2UzZTE3NWU1NDVjMmVkZSJ9fX0="
+          rarity: common
+          condition: "COLD"
+          name: "Tête de Cochon Froid"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2JlYmExYTJkNTZlODRmOGU1MWZlZDY2NTlmMmNiN2MxNGZlZDQzODU5YWY1ODQ3Mzc4OTdiZjcwYzAzOTQ3NSJ9fX0="
+          rarity: common
+          condition: "WARM"
+          name: "Tête de Cochon Chaud"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmE3NDFhZDE4NGU3ZDQyYTY3YmJkY2Y4ZDIwMmE2NGZkNWU1YWY4YjViMmVkNTAwMzQ1YzM4N2EwOTE0ZTM0MiJ9fX0="
+          rarity: rare
+          condition: "BABY_TEMPERATE"
+          name: "Tête de bébé Cochon Tempéré"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI0YjY0MDI3MTUxYzA1N2ZiN2I0MDY2MWY2YmYwYWJiYjJhNTE2Njg1ZjMwOGQyMmM2ZjA1ZGZkMWY3ZDc5MSJ9fX0="
+          rarity: rare
+          condition: "BABY_COLD"
+          name: "Tête de bébé Cochon Froid"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGExYzRjYTE4Nzg2MzZlMzA4MDU4MDY5N2YyNWM1NDg2NzEzMWNkM2E2MzcyZjEzZTkwNzM0NGE5NTE5YzkzZiJ9fX0="
+          rarity: rare
+          condition: "BABY_WARM"
+          name: "Tête de bébé Cochon Chaud"
+
+    ARMADILLO:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTg1MmIzM2JhMjk0ZjU2MDA5MDc1MmQxMTNmZTcyOGNiYzdkZDA0MjAyOWEzOGQ1MzgyZDY1YTIxNDYwNjhiNyJ9fX0="
+          rarity: common
+          condition: "NORMAL"
+          name: "Tête de Tatou"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTc4ODMzODQ0MzE5OTA5ZjEyMzg0MDUwMTVkODc0MGFlOTZjNmZiM2ZhNGM3MzllMWNkZmMzNzljZDdlOWE2In19fQ=="
+          rarity: rare
+          condition: "SCARED"
+          name: "Tête de Tatou Effrayé"
+
+    PANDA:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmE3OGU4ODBhY2UxYTYzMjJjNDkzMWU1MjY5MzYxM2EyZGViZjI1ZDI4ZDgxOTU4ODY1ZjQ3NDlmYTk0ZmI0MiJ9fX0="
+          rarity: common
+          condition: "NORMAL"
+          name: "Tête de Panda"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjUwMjkyMDMxY2JmZWFiYjI1ODRiYjU4YzU0ZmYyY2NhNmVhYjRlZWNhZmI2NmNjZTk3NTA1MzBlZDI4ODIxYiJ9fX0="
+          rarity: uncommon
+          condition: "AGGRESSIVE"
+          name: "Tête de Panda Agressif"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTNlNWQzN2E4NDBkNWJhMWRhZDgzMGFiOGE5OWRiYTFhZjFjZjgwMjNiZjRhMTBjZGEzNzg3NDRiOGUyMzA4OCJ9fX0="
+          rarity: uncommon
+          condition: "LAZY"
+          name: "Tête de Panda Paresseux"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTFmZWU1NjEwYTkxZjQxMDYyMTdjMGZmMTQ0YWRjMmI5OTA3ZWMzOWI1NmRkOWM2NmE4YzlmNjY1YTc5YWE5In19fQ=="
+          rarity: uncommon
+          condition: "PLAYFUL"
+          name: "Tête de Panda Joueur"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmQ2MmNjYWViNTY0M2UyYmZmOTdiNTNkOTlhMWYzYzQ1MDIwZTc2YjgxMmJlOWUzZmY5MmJhYThkZWY4ZGJmMSJ9fX0="
+          rarity: uncommon
+          condition: "WORRIED"
+          name: "Tête de Panda Inquiet"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODMwZDdiOTcxOTJjZDkxOWU0MGJkMjNhMjQxN2E1OWU3OGJhYWUzMWUzMzM2OTdjYzYxZDNmOTU4OTE0OGU1ZCJ9fX0="
+          rarity: uncommon
+          condition: "WEAK"
+          name: "Tête de Panda Faible"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzAyOTM4Y2JjZmNhMjY2ZWE2YTRlMzhhNzQ5NmU5NzAzYTNmMTUwNDI2NjAwNmYzNWFiMzY1MWQxYzFhNTc5MSJ9fX0="
+          rarity: rare
+          condition: "BROWN"
+          name: "Tête de Panda Brun"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjMzZjAwZjk2NTZiODk5NjM1YWI1N2ZmNThkMmJmMzAxNDc0MjE2Mzk2N2UxN2ZmMmFiODgyZWJhZTI2NGIyMCJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Panda"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTg5YTNhZTBjMjdkMDBiYzViMzY0NmY4ZjFhYzRiZTNhMGMxNDViN2U3NGEwYTUxYTc1MzA2YjgwYmZkODMyMCJ9fX0="
+          rarity: epic
+          condition: "BABY_BROWN"
+          name: "Tête de bébé Panda Brun"
+
+    COW:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWNjMDRjODFmNzgxYjQ2ZGIxNDJhMTVlYjIzYjA2ZTIxYjhhM2M1NjI3ZDBlOGU3MGU2MWZlMDllZTM3MmY1NCJ9fX0="
+          rarity: common
+          condition: "TEMPERATE"
+          name: "Tête de Vache Tempérée"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGJmNjgyZmExZWNiNjMzZDgzZTE2NGIzODA1OWYxYzU4NDgwZmFlNWNlZWFhODdjOTM0OGMyOWUwYTEyMTU3OCJ9fX0="
+          rarity: common
+          condition: "COLD"
+          name: "Tête de Vache Froide"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzdlZWI0OTMzNWUwM2ZlNzkxMTI5NTA3NWQ2YWUxZThhOWIwOTFmYzZjNDg5NmZkMmNjZWM4MzU5YzEwYjAwNiJ9fX0="
+          rarity: common
+          condition: "WARM"
+          name: "Tête de Vache Chaude"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjZkMGQzNDYwNWI0MzFmOTQwZDI1ZDczYjgxYzY2Nzk0ZGRlMGZlZTE3N2ZhMjU3MDc1OWU0YWEyMTRiOTJkNyJ9fX0="
+          rarity: rare
+          condition: "BABY_TEMPERATE"
+          name: "Tête de bébé Vache Tempérée"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzNkZTAwZmYzODgwZjkzYTRjYTRhOTMzNTA3NDdmOTA0MDQ0NGU0NGIzZjFlODI0MGJjNWM5NzQ0ZTNlMzJmNiJ9fX0="
+          rarity: rare
+          condition: "BABY_COLD"
+          name: "Tête de bébé Vache Froide"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhmN2E3M2Q2MWE3NjJmMGY5Y2JiMDY4NGViYjA0Y2Y1NDkxZWJkMzk2Yjg1OTBkYzBlOGM1MjBhNmRlMGM0NyJ9fX0="
+          rarity: rare
+          condition: "BABY_WARM"
+          name: "Tête de bébé Vache Chaude"
+
+    MOOSHROOM:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmQ0YjNkZTY5OWVlOWU0ODJkN2U1MDZkYmM0YjQ2NDY0YjlhM2U5ZDA3M2NhNzk5NGJjYmNkM2VhYzI1MWE1OSJ9fX0="
+          rarity: uncommon
+          condition: "RED"
+          name: "Tête de Champimeuh Rouge"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGE1OTcwOTJjYjI1ZmU1YTkzMDZiOWFiOGU5OTVmYjJkZjQwYTZhNzZmMzE0NThkZmIyNzAxYzcxYWI5YWFlMyJ9fX0="
+          rarity: rare
+          condition: "BROWN"
+          name: "Tête de Champimeuh Brune"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmU0ZjYwMDc5YTVlNWNjMzdmMjg1NDI2ODFlZjc5MGE5NzRlZDlhMWI1MGY2MThmNDAwMTk0NTJjMTk2MTk5YiJ9fX0="
+          rarity: rare
+          condition: "BABY_RED"
+          name: "Tête de bébé Champimeuh Rouge"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTVhODQ1MjQ5NjI1MGMxMmUyMjdiNWI2Nzk1MzE4OTNmYTUzZWVmYjQ3Zjc1MGYwYTFiMTNiMGJjMjI1YTFhYyJ9fX0="
+          rarity: epic
+          condition: "BABY_BROWN"
+          name: "Tête de bébé Champimeuh Brune"
+
+    SHEEP:
+        # 16 couleurs de moutons
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjkyZGYyMTZlY2QyNzYyNGFjNzcxYmFjZmJmZTAwNmUxZWQ4NGE3OWU5MjcwYmUwZjg4ZTljODc5MWQxZWNlNCJ9fX0="
+          rarity: common
+          condition: "WHITE"
+          name: "Tête de Mouton Blanc"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDI3MTQ0MmQ4YTM3ZGI0OWYwMmE5NGMyOTM1MjY5NDk2MmI1ZDBiZDZiZWEwNWYxZDkzZmUxOWViNGU3MDYwZSJ9fX0="
+          rarity: common
+          condition: "ORANGE"
+          name: "Tête de Mouton Orange"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmUyMjhiMDRlOWI5NzlhMTBiNzBiOGRiNmYzZmIxOTlkZWViNTgxNTk0YTVhYTRhN2ZlYmU5NDhkYjE3MjI4YiJ9fX0="
+          rarity: common
+          condition: "MAGENTA"
+          name: "Tête de Mouton Magenta"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzhlYjBkMTc0Nzk4NzBiMzk3M2U4ZTAwMWI4MmRjZGUyMmVmYzlkMTBjOTA0MTJjNjczM2EwYjEzNjU2NGQxZiJ9fX0="
+          rarity: common
+          condition: "LIGHT_BLUE"
+          name: "Tête de Mouton Bleu Clair"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTJhNTM1NGMyMzBlODYxYWFjNzI3MzRhNDU4MmQxMzE3MDI2NDU0YjgwN2FjMzUzZmMzYTBiZDBkOGM0MjJiYSJ9fX0="
+          rarity: common
+          condition: "YELLOW"
+          name: "Tête de Mouton Jaune"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWNlNDA5MGUxYmNjZjk5MmIzNmRlZjc0YTZkN2QzOTcyYzE3ZGIxYjc1NTU0ZTJjNTA5MjcxNjgwYjhlNzk3NCJ9fX0="
+          rarity: common
+          condition: "LIME"
+          name: "Tête de Mouton Vert Clair"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmU3Y2YxYzU4ZGJiN2MzMjU1Yjk0YzYwNDNmYThmMGQ3NzZjMTM0ZjRkOThiODFjYTMxNDEwOTY1ZjQ3YTI1YSJ9fX0="
+          rarity: uncommon
+          condition: "PINK"
+          name: "Tête de Mouton Rose"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTZjMmEyNzU1YjIwZGRmZjU1MWE2OTAzZjJkYzdlNjFmMTNlYmUzOWIxZDVjYTkyOWM4N2JkODU4M2VjODAxZiJ9fX0="
+          rarity: common
+          condition: "GRAY"
+          name: "Tête de Mouton Gris"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzRhNTliZTYyMGFlOGIzZWUwZGQwZmEyMmM4MGFmZmVkNGEwZjcyOTI5NWNiOGM0MWU3OGVlNzgzZjQ2MzNhZCJ9fX0="
+          rarity: common
+          condition: "LIGHT_GRAY"
+          name: "Tête de Mouton Gris Clair"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjA1NTgzODdiNjY1OGY1ZTlkY2ZmYzcxOTIxNGI2MDNmNjAzYzRiMDRlNzA4YjdhYWJlNzViY2FlOTFlODA0YyJ9fX0="
+          rarity: common
+          condition: "CYAN"
+          name: "Tête de Mouton Cyan"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzQzY2JkYWUxZjIwYTc5MjgxZDNhNzFhZGYyNDJhMzVjOGNjNTg1NjJiNDE1ZjExMjBiY2E5ZDk0Yjc2ZjI1NCJ9fX0="
+          rarity: common
+          condition: "PURPLE"
+          name: "Tête de Mouton Violet"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTM5ZWZjNGI0ZWFkZWM0ODU3NmE1NzAwZWM4MTIzOTU1MTAzMjdlNWQxZTdjMTA4ZmQ4YWJjNzc5NjY4NWFhMyJ9fX0="
+          rarity: common
+          condition: "BLUE"
+          name: "Tête de Mouton Bleu"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTU4MTM3MTVjMmYzNGYwNTY0OWY4ZmEzZWFhYTY3ZjFlZGE1ZTZmOWNmOTMwZmE5YzJlMDQxMmQxZjk3MjhlMSJ9fX0="
+          rarity: common
+          condition: "BROWN"
+          name: "Tête de Mouton Marron"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTc1M2E4ZWMzMmJlOWM1NTBkMWM1NjBhY2I5NDFlZGQ5ZTNiNzNkZGJmMTU4NjkyM2ZiMzdiMjIwYjQ1NTNkZCJ9fX0="
+          rarity: common
+          condition: "GREEN"
+          name: "Tête de Mouton Vert"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTBjZTViNWNhOTE2NWFjNzdhOWMzZTNmNjRkZjBkMzE3MGQ1YWZjZjlkNWE1NTc1ZTNmMGMwZjIxZTQzYjgzIn19fQ=="
+          rarity: common
+          condition: "RED"
+          name: "Tête de Mouton Rouge"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjM0YWM1YjM5OGNmN2M4NmUzZjZmMTg4YTUxMjdkOGIyODNkNzcyYmY1ODg1YzcwZTBjMTMwODA1ZjA2OTk1MCJ9fX0="
+          rarity: common
+          condition: "BLACK"
+          name: "Tête de Mouton Noir"
+        # Agneau (bébé)
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGE4Y2U3MGU5MzhlOWEwODJmZTFjNzAwNTAwYWE1YjQ0MGVjMzFlOWQwNGM5YWQwMDc0NDJjODlmODJjMDQwNCJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Mouton"
+
+    CHICKEN:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2FkM2RkMDA4M2ZhYTY5YTA2MmY5YWQ4MTQxOGY1YTU5NjE4MGJmMTU5MmU0YjhkMTMwM2IyMzBiNjRiYzc5ZSJ9fX0="
+          rarity: common
+          condition: "TEMPERATE"
+          name: "Tête de Poule Tempérée"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTkxMWZjZDhiMjI2YTk4ZjhiNmQ2MDVmZjI3YTg4ZWQ5NzIzMGJiNzE2NzhlNGEwMDY2OTA5NWQ2OWQzZjJiNCJ9fX0="
+          rarity: common
+          condition: "COLD"
+          name: "Tête de Poule Froide"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNThjMjMxYmY0NjRmOWE2YzY3ODZhMjJhNGQxMTllYTVlNTA1NzYyNGM1YTM5MTQ3MGQzNWZhMmI2ZmZhNTE4MyJ9fX0="
+          rarity: common
+          condition: "WARM"
+          name: "Tête de Poule Chaude"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTEyODAxNTE4YzcyOGEzYTk0ZmNjN2ExZDhjODQ4ZjNjY2MzZTJiNDNkODFhMDk5MWZhY2YxY2Q3MWYyN2VhOSJ9fX0="
+          rarity: rare
+          condition: "BABY_TEMPERATE"
+          name: "Tête de Poussin Tempéré"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTEwNTQ4OTNjNjVmZjUxZTVlODljYTFkYTgyZGIwMGU1YWJjNDI3ZmQyNDMwYWRlYTQ5Y2EyMGFlYjYwODNlZSJ9fX0="
+          rarity: rare
+          condition: "BABY_COLD"
+          name: "Tête de Poussin Froid"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2E3MGE2NzAxMzM5NjNkOGUxMmIyZjUzMzc4Mjk4ZDE1MTVkMDRkYzlhYzMwNzY4ODgyYjdlNjAxMjU2NDc4YyJ9fX0="
+          rarity: rare
+          condition: "BABY_WARM"
+          name: "Tête de Poussin Chaud"
+
+    RABBIT:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDE3MDgwMDVmMmU5MmI2OGM0ODNlOTgwMzEwYjAzOTNiM2UxNjMwMTY5NTYxNDQxMzQyNjkzZmE5MDJkYzg1ZSJ9fX0="
+          rarity: uncommon
+          name: "Tête de Lapin"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzc0ZmFmNzczOWYwZTRjYTE1NjIzMWRmOGNhOGFiODFlMTYyZjYxOTVkMmM5ZmQ0MWYyZjNiNjM2ZTdhYjZmNiJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Lapin"
+
+    # ==================== ABEILLES ====================
+    BEE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTlhYzE2ZjI5NmI0NjFkMDVlYTA3ODVkNDc3MDMzZTUyNzM1OGI0ZjMwYzI2NmFhMDJmMDIwMTU3ZmZjYTczNiJ9fX0="
+          rarity: uncommon
+          name: "Tête d'Abeille"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTQwMDIyM2YxZmE1NDc0MWQ0MjFkN2U4MDQ2NDA5ZDVmM2UxNWM3ZjQzNjRiMWI3Mzk5NDAyMDhmM2I2ODZkNCJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY"
+          name: "Tête d'Abeille en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjcyN2QwYWIwM2Y1Y2QwMjJmODcwNWQzZjdmMTMzY2E0OTIwZWFlOGUxZTQ3YjUwNzQ0MzNhMTM3ZTY5MWU0ZSJ9fX0="
+          rarity: rare
+          condition: "POLLINATED"
+          name: "Tête d'Abeille Pollinisée"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTZiNzRlMDUyYjc0Mjg4Nzk5YmE2ZDlmMzVjNWQwMjIxY2Y4YjA0MzMxNTQ3ZWMyZjY4ZDczNTk3YWUyYzliIn19fQ=="
+          rarity: rare
+          condition: "POLLINATED_ANGRY"
+          name: "Tête d'Abeille Pollinisée en Colère"
+
+    # ==================== CHEVRES ====================
+    GOAT:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTY2MjMzNmQ4YWUwOTI0MDdlNThmN2NjODBkMjBmMjBlNzY1MDM1N2E0NTRjZTE2ZTMzMDc2MTlhMDExMDY0OCJ9fX0="
+          rarity: uncommon
+          name: "Tête de Chèvre"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmZlMDAyOGQzOWM5Y2ViYTNjZTU0NTA0ZWU1MzJhNzg3YTExNTI3NjI1MTk0ZDgxZjgyNDE0NDYxOTc1Zjc0MCJ9fX0="
+          rarity: rare
+          condition: "SCREAMING"
+          name: "Tête de Chèvre Hurlante"
+
+    # ==================== LOUPS ====================
+    WOLF:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGYwYjIyMTc4NmYxOTNjMDZkZDE5YTc4NzVhOTAzNjM1MTEzZjg0NTIzOTI3YmI2OTc2NDIzN2ZlMjA3MDNkZSJ9fX0="
+          rarity: uncommon
+          condition: "PALE"
+          name: "Tête de Loup Pâle"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWY3MmJiODk5ODY5Yjc2ZTFhMmIwZDUxMzczNmI4ZDZiZGM1MTM4ZjM3NGE4NTc3ZTFjNWM3NmI3MmZkNDIxOCJ9fX0="
+          rarity: uncommon
+          condition: "WOODS"
+          name: "Tête de Loup des Bois"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTdkZGM1MWZhZWJkYThhOGU5MTAxYTkwMGUxYWVmMzM3ODE5YThkMGUzZTkxNTY2MGY2ZjM3ZGY5YTM5OGE0OSJ9fX0="
+          rarity: uncommon
+          condition: "ASHEN"
+          name: "Tête de Loup Cendré"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjA0NWYyZDQ3YmE1YzQ0YzA2MmRlZjcyNWQ0YTRmOTZlNTc0M2Y4MDJkMWZiNGRjZTliNDI3ZGU5NDc1MjBiMyJ9fX0="
+          rarity: uncommon
+          condition: "BLACK"
+          name: "Tête de Loup Noir"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWY3MTg5N2E2MTgyYjEwMTY2MGFiMjQzOGU0NTBmNTdjZGFkMmIwOGMyMWI0MDU2NzQ5NTU2MTg1YTRlZjg0ZiJ9fX0="
+          rarity: uncommon
+          condition: "CHESTNUT"
+          name: "Tête de Loup Marron"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjcwZWVjZWE3OGZjYzg3ZjgwZTgxMjU3MzM0MjNjOTZhODhiYjYwNDA4YzcwMjVkZDU0OTk4ZDYyOWJlZTUxNCJ9fX0="
+          rarity: uncommon
+          condition: "RUSTY"
+          name: "Tête de Loup Rouille"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjQzZTM0YzMwNjNkMWE1MzAxNmI2MmRhYTViYjE1YjcyMjllOWMwYjc3MjVlYTRlODk1Y2JhYmM1ZmE3ODQwMCJ9fX0="
+          rarity: uncommon
+          condition: "SPOTTED"
+          name: "Tête de Loup Tacheté"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGNjZDBlMGRmZjkyYzA3OWY4NTlhYzVlOTAzNjkyMWI1MjBiNjhiYmQ4MmE4ZTY1ZWZjMzNkZjQ2NmUyZDk2YiJ9fX0="
+          rarity: uncommon
+          condition: "STRIPED"
+          name: "Tête de Loup Rayé"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGM4YWNmNDU1ZjY0ODMyYjZjOWRlYmIwM2EyYzI2MTZkNDI2ZmVhOTllY2E5MTA5OWI2MWZhZThiNmRiODg2OSJ9fX0="
+          rarity: uncommon
+          condition: "SNOWY"
+          name: "Tête de Loup des Neiges"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFhODQ2MTFjOGM4OTU4MzM2ZjY0ZDU4ZGMyMDljN2FiOTU4ZGRkOTlkMmY1ODc2ZGFkNzI2M2Y3MGVjZWIyNyJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY_PALE"
+          name: "Tête de Loup Pâle en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjZmNzcyNWYxZTkwZjE5ZmIyOTUzNjQ0NWM5YjhiZjc1MjNjNWU1YTc1OTQ1MGMyNzBmNjk0OGIxMGI0ZTI4ZiJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY_WOODS"
+          name: "Tête de Loup des Bois en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjFiYTQ5ODUzYTA0YzZmZGIwMTJiN2E3OWEwZjczODNjZDgyMTg0ZDY3MTE3OTE1MmIwZmU5OTI4MDdjMjY0MSJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY_ASHEN"
+          name: "Tête de Loup Cendré en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjg2YjAxMTkyMmYyMGRmMmJiMzAyNzMzNmM0ZDgyN2Q0NjY3NjFkY2VmNTBiN2U3NzMwZmE1Nzc0OWM1NWI2NCJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY_BLACK"
+          name: "Tête de Loup Noir en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzVkYzU5OWJmNzJjMTFlNzA5MTlmMzc0OGIxY2RkYjg1ZTBkZDJhZDA5OWMyY2U1YTVlMmY0NzY3NjBkOTBlMCJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY_CHESTNUT"
+          name: "Tête de Loup Marron en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjA2NmNlZmRhODAzNTQzYjczNmU5NmEzMjY2M2EwODc1NTdmMTI4OWVhMWVkNjBhNTE3NTQxM2NhNjBjODRiYSJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY_RUSTY"
+          name: "Tête de Loup Rouille en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2E0OWFiN2Q3ODk2ZDE3ZjlkNzU0ZmRlYWM4NWFlYWQ0YTVmNjQ5Y2ZmYTllZjNmOTEwMzU2N2UwMjQ5NWY3YSJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY_SPOTTED"
+          name: "Tête de Loup Tacheté en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTYyNjU0MTFlMmE2NTdmZjIzMDQ4Y2JlNDhhZjViNmJhNWU5ZDExY2Q2MjA5N2JmOGY2N2ZlNGNhYzlkZDQ5OSJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY_STRIPED"
+          name: "Tête de Loup Rayé en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWMyOTg2ZjcxYzQ0Zjc3MGQxZmJiYjRjNWIzZWMyOWJlNzdlYTcyYWFhYzZiOTVlYzZkNmQ1MjBiZTZjOTM4YSJ9fX0="
+          rarity: uncommon
+          condition: "ANGRY_SNOWY"
+          name: "Tête de Loup des Neiges en Colère"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ5ZGY3NjUyZDMxYzc5MDA5M2JjMzc5ZDI2NmViMDI3MzhkNGMyMjk2MTcxYmU0NzFlZDdkOGUwMjlkZmU3NiJ9fX0="
+          rarity: rare
+          condition: "BABY_PALE"
+          name: "Tête de Chiot Pâle"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGIwZDEzMDliYzAyOTkwODRmMzg1OWQ4NmEwN2MwNjVhYWUyZTg0OTYzZGZlNDlmOGNiOTYwMTdiNGFmNTU1MSJ9fX0="
+          rarity: rare
+          condition: "BABY_WOODS"
+          name: "Tête de Chiot des Bois"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGI2MGJjNzkzMGRmNGFkMjU5NGUwZDU0Y2Y4OTUzZmMxZGIyZmNiY2UzNDM0NDI5ZWVjM2NiYTk2N2Q3OWIxZiJ9fX0="
+          rarity: rare
+          condition: "BABY_ASHEN"
+          name: "Tête de Chiot Cendré"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzc3MTJmOTUzNzYwZjNmY2RkOGQ4YWFmMGI4MDZmYjY5ZWE1NDI1Y2E0MjVmMDYzM2NmNzUyYTQ0YWFkYjY5MiJ9fX0="
+          rarity: rare
+          condition: "BABY_BLACK"
+          name: "Tête de Chiot Noir"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODJmOTcxNzdiMDgzOTZkYThhMzMxMzU4NjNiNTU1MmJmYTk3OTA4OTI1YmI0MzE5ODg3ODAxMTBiYzE2MWMwMSJ9fX0="
+          rarity: rare
+          condition: "BABY_CHESTNUT"
+          name: "Tête de Chiot Marron"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2VlMzE3NThjZDAwOTc4MmNjMTI2ODAxNTU0NTg4NzdjOGI4YmQyYTlkZDY3NjYyMzI0ZjQxMzcwYjliZjFkZiJ9fX0="
+          rarity: rare
+          condition: "BABY_RUSTY"
+          name: "Tête de Chiot Rouille"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjY1NGFhY2ViOGRiMDE0MmQ5YzE0NjE3OGJjMDVmMzlmOTBkNjAzNDIxY2ZlOTQwMjQ2MDJlOWYyYWQ4ZjkxZiJ9fX0="
+          rarity: rare
+          condition: "BABY_SPOTTED"
+          name: "Tête de Chiot Tacheté"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODg0ODRmMjhjOGNkMGQ4ODMyZjFjMTdmMDU2YmQ5Nzg1ZWYxNWVkNGY2ZDM3ZTBhNzcxYzhhNjE2YjMyODM0NyJ9fX0="
+          rarity: rare
+          condition: "BABY_STRIPED"
+          name: "Tête de Chiot Rayé"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWEzYTc4MmU1ZTg4Nzk2OThhOWNlYmUyZGEyZmVhYzVhYTk2MjZiYzA2MDMwNGJhYjIyNGRkOTNjNWVkNTI0YSJ9fX0="
+          rarity: rare
+          condition: "BABY_SNOWY"
+          name: "Tête de Chiot des Neiges"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ5ZGY3NjUyZDMxYzc5MDA5M2JjMzc5ZDI2NmViMDI3MzhkNGMyMjk2MTcxYmU0NzFlZDdkOGUwMjlkZmU3NiJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de Chiot"
+
+    # ==================== CHATS ====================
+    CAT:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGUyOGQzMGRiM2Y4YzNmZTUwY2E0ZjI2ZjMwNzVlMzZmMDAzYWU4MDI4MTM1YThjZDY5MmYyNGM5YTk4YWUxYiJ9fX0="
+          rarity: rare
+          condition: "TABBY"
+          name: "Tête de Chat Tigre"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGZkMTBjOGU3NWY2NzM5OGM0NzU4N2QyNWZjMTQ2ZjMxMWMwNTNjYzVkMGFlYWI4NzkwYmNlMzZlZTg4ZjVmOCJ9fX0="
+          rarity: rare
+          condition: "ALL_BLACK"
+          name: "Tête de Chat Tuxedo"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjExM2RiZDNjNmEwNzhhMTdiNGVkYjc4Y2UwN2Q4MzZjMzhkYWNlNTAyN2Q0YjBhODNmZDYwZTdjYTdhMGZjYiJ9fX0="
+          rarity: rare
+          condition: "RED"
+          name: "Tête de Chat Roux"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDViM2Y4Y2E0YjNhNTU1Y2NiM2QxOTQ0NDk4MDhiNGM5ZDc4MzMyNzE5NzgwMGQ0ZDY1OTc0Y2M2ODVhZjJlYSJ9fX0="
+          rarity: rare
+          condition: "SIAMESE"
+          name: "Tête de Chat Siamois"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTM4OWUwZDVkM2U4MWY4NGI1NzBlMjk3ODI0NGIzYTczZTVhMjJiY2RiNjg3NGI0NGVmNWQwZjY2Y2EyNGVlYyJ9fX0="
+          rarity: rare
+          condition: "BRITISH_SHORTHAIR"
+          name: "Tête de British Shorthair"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzQwMDk3MjcxYmI2ODBmZTk4MWU4NTllOGJhOTNmZWEyOGI4MTNiMTA0MmJkMjc3ZWEzMzI5YmVjNDkzZWVmMyJ9fX0="
+          rarity: rare
+          condition: "CALICO"
+          name: "Tête de Chat Calico"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmY0MGM3NDYyNjBlZjkxYzk2YjI3MTU5Nzk1ZTg3MTkxYWU3Y2UzZDVmNzY3YmY4Yzc0ZmFhZDk2ODlhZjI1ZCJ9fX0="
+          rarity: rare
+          condition: "PERSIAN"
+          name: "Tête de Chat Persan"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGM3YTQ1ZDI1ODg5ZTNmZGY3Nzk3Y2IyNThlMjZkNGU5NGY1YmMxM2VlZjAwNzk1ZGFmZWYyZTgzZTBhYjUxMSJ9fX0="
+          rarity: rare
+          condition: "RAGDOLL"
+          name: "Tête de Chat Ragdoll"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjFkMTVhYzk1NThlOThiODlhY2E4OWQzODE5NTAzZjFjNTI1NmMyMTk3ZGQzYzM0ZGY1YWFjNGQ3MmU3ZmJlZCJ9fX0="
+          rarity: rare
+          condition: "WHITE"
+          name: "Tête de Chat Blanc"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTBkYjQxMzc2Y2E1N2RmMTBmY2IxNTM5ZTg2NjU0ZWVjZmQzNmQzZmU3NWU4MTc2ODg1ZTkzMTg1ZGYyODBhNSJ9fX0="
+          rarity: rare
+          condition: "JELLIE"
+          name: "Tête de Chat Jellie"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjJjMWU4MWZmMDNlODJhM2U3MWUwY2Q1ZmJlYzYwN2UxMTM2MTA4OWFhNDdmMjkwZDQ2YzhhMmMwNzQ2MGQ5MiJ9fX0="
+          rarity: rare
+          condition: "BLACK"
+          name: "Tête de Chat Noir"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWZiOTZhYjhkNWZkZjM4Mzc1ODAxNmYxZDQyNmNjZDRhNTA4MTY3YWY2NDJlNTZjOWFiNzVhMDUyMDg2MDViMyJ9fX0="
+          rarity: epic
+          condition: "BABY_TABBY"
+          name: "Tête de Chaton Tigre"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmUxNGYwYmNlNzE2YTBkZDFjYjU1M2Q0NzJjMzMxNjZlOGU1ZTk3ZGNiOTViNGFkYzRmMmI4ZmUwNTJkMDMzNCJ9fX0="
+          rarity: epic
+          condition: "BABY_BLACK"
+          name: "Tête de Chaton Tuxedo"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmEyYWQ3MjA0OGM3YTI3M2RkNjljOGY1Njc4ZTY5NDY3NTk1OTAxYjlmYWNlYTMwMTMwNDRmY2NlOGJjNmE0ZiJ9fX0="
+          rarity: epic
+          condition: "BABY_RED"
+          name: "Tête de Chaton Roux"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDdiMmY5NzJjMzZlNWQ1ZmMyNGM3YmQ0MjdjNDVjMGEyMmYwMTQyYmExMDZmNDFiNDA2NTQ2ZTNkZmQ2MDAyNSJ9fX0="
+          rarity: epic
+          condition: "BABY_SIAMESE"
+          name: "Tête de Chaton Siamois"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODg4NGUzYmY3OWJlNTc5YjBlODMxZTYxNGY5ODVkZGEyYmNmZjM2MDU5ZmEwYjAxYzgzZDc4MTYwNWRkNWUzNiJ9fX0="
+          rarity: epic
+          condition: "BABY_BRITISH_SHORTHAIR"
+          name: "Tête de Chaton British Shorthair"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmMwYzFjNDc3NjBjOTdlMzM4YjQ1MjVlMTE2MjI5NDczMThhY2Q4OWU0ZGFlZThhZDEzNDQ2YTEwYjg0OWNlOSJ9fX0="
+          rarity: epic
+          condition: "BABY_CALICO"
+          name: "Tête de Chaton Calico"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzYwNjk4ZGE5ZTMzYWY0MzFjNjVlMDhmZmIxMzM3MDg0ZGJhODZlMzhlNDg0NTJlZTllMzY2Yjg5YWQ3NDdlIn19fQ=="
+          rarity: epic
+          condition: "BABY_PERSIAN"
+          name: "Tête de Chaton Persan"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2JlOTY2ZGRkYzlkOGFlNjViM2E0ODI0ZmZhMzk3ODNmOGJiY2QwNzMwOTIwMmVhZjA2ZTg2ZTNhODg1Y2E0MCJ9fX0="
+          rarity: epic
+          condition: "BABY_RAGDOLL"
+          name: "Tête de Chaton Ragdoll"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTU5YmRmYWRhYjEzMjQxNDM1MzJkMjdhZmRmMGFjNGQ1MThlNTIyZWFjZWM1MGQyNTkxZDQ4NGQyNGM1YzEyMiJ9fX0="
+          rarity: epic
+          condition: "BABY_WHITE"
+          name: "Tête de Chaton Blanc"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmI4MzYwZjc0OWUwYWNkYjRhM2IzZDNhMTBmOTQwMWI2YzllOGNmZDgyZjJiNGQ0N2FhZDlhN2JkMTY5ZDJmNyJ9fX0="
+          rarity: epic
+          condition: "BABY_JELLIE"
+          name: "Tête de Chaton Jellie"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzA4MzdiOWFmYzUzOTkyZGFkYTdkNTYyZTk4MDkwMTk1MGFjYjY3ODkzZTJjZGU2MjA4ZTMzMzE4OGU4MmNkNyJ9fX0="
+          rarity: epic
+          condition: "BABY_ALL_BLACK"
+          name: "Tête de Chaton Noir"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWZiOTZhYjhkNWZkZjM4Mzc1ODAxNmYxZDQyNmNjZDRhNTA4MTY3YWY2NDJlNTZjOWFiNzVhMDUyMDg2MDViMyJ9fX0="
+          rarity: epic
+          condition: "BABY"
+          name: "Tête de Chaton"
+
+    # ==================== RENARD ET OCELOT ====================
+    FOX:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDg5NTRhNDJlNjllMDg4MWFlNmQyNGQ0MjgxNDU5YzE0NGEwZDVhOTY4YWVkMzVkNmQzZDczYTNjNjVkMjZhIn19fQ=="
+          rarity: uncommon
+          name: "Tête de Renard"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDE0MzYzNzdlYjRjNGI0ZTM5ZmIwZTFlZDg4OTlmYjYxZWUxODE0YTkxNjliOGQwODcyOWVmMDFkYzg1ZDFiYSJ9fX0="
+          rarity: rare
+          condition: "SNOW"
+          name: "Tête de Renard Arctique"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDIyMDI2NjRjZjI5ZWNlMDJhYTVkNDcxZTVkM2JlYzNlN2U3YjNmMWZlNjI2Y2IwMjczNGE3MGJjOWRjZjRjOSJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Renard"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTdmZDNkMmNkNjdhYWNmNjY5ZTJjNDZhNzQ5OTFjNWZiMWI0NzJlNTc4MDE3YzIyMzc5ZWVlNGU3YWMxZWNhOCJ9fX0="
+          rarity: rare
+          condition: "BABY_SNOW"
+          name: "Tête de bébé Renard Arctique"
+
+    OCELOT:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTY1N2NkNWMyOTg5ZmY5NzU3MGZlYzRkZGNkYzY5MjZhNjhhMzM5MzI1MGMxYmUxZjBiMTE0YTFkYjEifX19"
+          rarity: uncommon
+          name: "Tête d'Ocelot"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjAzMDdmNWYzZTNmNTYyMzQ0NjZlZmVkNGI1Y2I4YzEwNGU4NGJlNWU4NGQ2MTBlMjRmYzJjY2NhYzIxMjcxZSJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Ocelot"
+
+    # ==================== AXOLOTLS ====================
+    AXOLOTL:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWMxMzhmNDAxYzY3ZmMyZTFlMzg3ZDljOTBhOTY5MTc3MmVlNDg2ZThkZGJmMmVkMzc1ZmM4MzQ4NzQ2ZjkzNiJ9fX0="
+          rarity: uncommon
+          condition: "LUCY"
+          name: "Tête d'Axolotl Rose"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGQ3ZWZlMDIwMTJjZjMxYWUyNzA4ZTdkN2RmMDc5NzI2NTc1YzdlZTg1MDQzMjgxNzVmZTU0NDcwODE4N2RjZSJ9fX0="
+          rarity: uncommon
+          condition: "WILD"
+          name: "Tête d'Axolotl Sauvage"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Y4MGNjMTQ5MmU0NDY2OGNjY2RiNDAxNzhjM2E2Njg5ZThkZmMwZDIzNGU5ODU1M2ZiN2RlYmMyNmZjYWVhYyJ9fX0="
+          rarity: uncommon
+          condition: "GOLD"
+          name: "Tête d'Axolotl Doré"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTFjMmQwYzNiOTZhZDQ1YjQ2NjM4OGUwMjhiMjQ3YWFmZTM2YjI2YjEyYzQxMWVjYjcyZTliNTBlYTIxZTUyYyJ9fX0="
+          rarity: uncommon
+          condition: "CYAN"
+          name: "Tête d'Axolotl Cyan"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTljOTJlNWJmMzk0ZTY0NWVkN2Y4NDEyMmFlZmIyYjc2NzJlMmFjMDU2NzIyY2QxYmFkMjFmMWYxOTk2OWQzOSJ9fX0="
+          rarity: rare
+          condition: "BLUE"
+          name: "Tête d'Axolotl Bleu"
+
+    # ==================== GRENOUILLES ====================
+    FROG:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWYzZTI5ZGQ5NDdhMTc3ODk1ZjYxMjFkMjMzMWI2NWFjM2Y4OTZmZGE0YmRkMTE1MTQ5MWU0MGI4MDQ5NTJhNyJ9fX0="
+          rarity: uncommon
+          condition: "TEMPERATE"
+          name: "Tête de Grenouille Tempérée"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWU5MzEyYjViMmJhYjlhZDUxZWE0YjZhNDA3ZDZkMzkwYmI1MDQzNDA4NzU3Yjk3NmE3NTU2ODk4YWM0M2RlMCJ9fX0="
+          rarity: uncommon
+          condition: "WARM"
+          name: "Tête de Grenouille Chaude"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjdiY2NjYzEyNWE0MTEwNDM0YTg1YzQwYWRhMDM5ZDA1MGYxNGVmN2RiMzRhMzQ0NDA2NzMxMGY4Y2U2OTYwNiJ9fX0="
+          rarity: uncommon
+          condition: "COLD"
+          name: "Tête de Grenouille Froide"
+
+    # ==================== GOLEMS ET AUTRES PASSIFS ====================
+    IRON_GOLEM:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDI3MTkxM2EzZmM4ZjU2YmRmNmI5MGE0YjRlZDZhMDVjNTYyY2UwMDc2YjUzNDRkNDQ0ZmIyYjA0MGFlNTdkIn19fQ=="
+          rarity: rare
+          name: "Tête de Golem de Fer"
+
+    SNOW_GOLEM:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTdlOTgzMWRhZjY4MWY4YzRjNDc3NWNiNDY1M2MzNGJlMjg5OGY4N2VmZDNiNTk4ZDU1NTUxOGYyZmFjNiJ9fX0="
+          rarity: uncommon
+          condition: "PUMPKIN"
+          name: "Tête de Golem de Neige"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWZkZmQxZjc1MzhjMDQwMjU4YmU3YTkxNDQ2ZGE4OWVkODQ1Y2M1ZWY3MjhlYjVlNjkwNTQzMzc4ZmNmNCJ9fX0="
+          rarity: uncommon
+          condition: "NO_PUMPKIN"
+          name: "Tête de Golem de Neige sans Citrouille"
+
+    COPPER_GOLEM:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjQ4ZTBmOWViMjRhMTA2MDA3Mjk0MzhkZDk5OTk3ODM5ZTFhOTllMjc2ZDc2ZTMyZmQ0MzRiZGI1ZjU0Mjk2YyJ9fX0="
+          rarity: rare
+          condition: "UNAFFECTED"
+          name: "Tête de Golem de Cuivre"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmRiMWM0NDViODBhYjliNGM5MWZjYTdjOGNhMzZkMDRiZTZiYWY1ZTI1MDdiYTFiNDE2MTYwYjg5MjVhODk1MyJ9fX0="
+          rarity: rare
+          condition: "EXPOSED"
+          name: "Tête de Golem de Cuivre Exposé"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzRlODViNTJlMzc4ZDM5YzY2N2I4MDQ0OGU1M2ViZmY0ODhjNWYwNmNhZTNhZWEwMGQ5NTcwYmQ2Y2MzMmE5OSJ9fX0="
+          rarity: rare
+          condition: "WEATHERED"
+          name: "Tête de Golem de Cuivre Altéré"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjFiZjI0YWU4ODk1YmZkYjlkMGU3NWZlNGQ0MTVkNzZmOTk0ZGM3YTVmZjM2OGQ5NDE0OWQ3NjU5YzM5NmExYiJ9fX0="
+          rarity: rare
+          condition: "OXIDIZED"
+          name: "Tête de Golem de Cuivre Oxydé"
+
+    SNIFFER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODdhZDkyMGE2NmUzOGNjMzQyNmE1YmZmMDg0NjY3ZTg3NzIxMTY5MTVlMjk4MDk4NTY3YzEzOWYyMjJlMmM0MiJ9fX0="
+          rarity: uncommon
+          name: "Tête de Sniffer"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmZjOTI3NTc4MWY4N2Y0NzNiNjZiMDlmN2VjMGIwNTEwNmYwYjBiOWM4YTg0YjQ1MTM3ZmViMGUzZTUzNGRjZSJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Sniffer"
+
+    ALLAY:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTUwMjk0YTE3NDczMTBmMTA0MTI0YzYzNzNjYzYzOWI3MTJiYWE1N2I3ZDkyNjI5N2I2NDUxODhiN2JiOWFiOSJ9fX0="
+          rarity: rare
+          name: "Tête d'Allay"
+
+    BAT:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmRlNzVhMmNjMWM5NTBlODJmNjJhYmUyMGQ0Mjc1NDM3OWRmYWQ2ZjVmZjU0NmU1OGYxYzA5MDYxODYyYmI5MiJ9fX0="
+          rarity: uncommon
+          name: "Tête de Chauve-Souris"
+
+    POLAR_BEAR:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2QzY2Q4NTQ4ZTdkY2ViNWMyMzk0ZDFiMDBkYTJjNjFmZmMwZGRlNDYyMjliMTA1MDllYjI3YTBkY2IyM2JmYiJ9fX0="
+          rarity: rare
+          name: "Tête d'Ours polaire"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjI0YWU5NGVmNTYyNTczMmIxNTJlOTAwMDgzYzNiMzk4ZmRlOTdiNDIyNjRhODFmOTliOTk5ZDk3OTEyYTc5MCJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Ours polaire"
+
+    CAMEL:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmE0Yzk1YmZhMGI2MTcyMjI1NTM4OTE0MWI1MDVjZjFhMzhiYWQ5YjBlZjU0M2RlNjE5ZjBjYzkyMjFlZDk3NCJ9fX0="
+          rarity: uncommon
+          name: "Tête de Chameau"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmY2NDc4YWMwYTZkYzI1OWUyYjM5YWZlZmQ1NWRiMWM4ZWQzOGMyZDA5N2MyMGYxMjUwOGM5NGU2ODZiODE0YiJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Chameau"
+
+    TURTLE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMGE0MDUwZTdhYWNjNDUzOTIwMjY1OGZkYzMzOWRkMTgyZDdlMzIyZjlmYmNjNGQ1Zjk5YjU3MThhIn19fQ=="
+          rarity: uncommon
+          name: "Tête de Tortue"
+
+    HAPPY_GHAST:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTFhMzZjYjkzZDAxNjc1YzQ2MjJkZDVjOGQ4NzIxMTA5MTFlYzEyYzM3MmU4OWFmYThiYTAzODYyODY3ZjZmYiJ9fX0="
+          rarity: rare
+          name: "Tête de Happy Ghast"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWZmNjAzYjRhZjIxZTMyYjU4NGM1NTgyM2JmNDUxN2ZhZDM4MWE0Nzg0MTdkMTEzYmM2MWFlMmM5ZWNiYTAyMCJ9fX0="
+          rarity: epic
+          condition: "BABY"
+          name: "Tête de bébé Happy Ghast"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2RhZWU4ODM0MTg4ZmVjMWMzMmUxZjYyYzE0ODVmZjk3MmVhOWI3NzE2OTM0MjRlMDEyYjZhYjhhMDcxMzUxYSJ9fX0="
+          rarity: rare
+          condition: "BLACK"
+          name: "Tête de Happy Ghast au Harnais Noir"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWI3ZWY2MDlhYTMyN2Y4OGZkNmRkMjNhNTgxNWQzMmQxYzI3OWViZjIxNDgxYWI1NTM0MGRkMDFiMmM0YmNmMCJ9fX0="
+          rarity: rare
+          condition: "BLUE"
+          name: "Tête de Happy Ghast au Harnais Bleu"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjdlMTJhNTk1OTk5MmNlMTUzY2VkMjM2YWE2NzMyMzk2NTMxODM0ZDAwZjI4M2JjZTE5NTJkMDRmMzU5MWQ5OSJ9fX0="
+          rarity: rare
+          condition: "BROWN"
+          name: "Tête de Happy Ghast au Harnais Marron"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDBjMGU4NjUzNjVkY2QwMjc3NjA3NzE2NjM1NjhlZmZkYzcxMWY3ODEyNDY0ZTBmMmJmNGViZmMyN2FkNmFkZiJ9fX0="
+          rarity: rare
+          condition: "CYAN"
+          name: "Tête de Happy Ghast au Harnais Cyan"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzU0NDVjYjAxZjEyZmIwZTA0MjE3ZjNmZGM1MTc2YmE1YjhlMjQ5NDZiY2VmMDQxZGU3MDRkNzU4MzVhZTVjMyJ9fX0="
+          rarity: rare
+          condition: "GRAY"
+          name: "Tête de Happy Ghast au Harnais Gris"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWQ3MDI2OThmZGI4NTMzMTAwMzRlOTAxZDNiZWFjYWY4MTI0NjljZWY1MGE0NmE5OWYwZmQ0YjFhZTE0NjQ2MiJ9fX0="
+          rarity: rare
+          condition: "GREEN"
+          name: "Tête de Happy Ghast au Harnais Vert"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGE1YzdjZDVhZTljNTBhOGFlYmU5YmJjZGI0NmNmNTczYTMyYmZkMzdlNTM3NmMxMGNhZWNiNDBiZmQ0NjBkYSJ9fX0="
+          rarity: rare
+          condition: "LIGHT_BLUE"
+          name: "Tête de Happy Ghast au Harnais Bleu Clair"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzg2OTVlMTRhNTYzMjYzNTZjMTkwM2E2MWMyNjk2ZmY3NmVjYTNjNDcyZjU4NDVjZDc3MjMxN2Y5Njg4NzJiZCJ9fX0="
+          rarity: rare
+          condition: "LIGHT_GRAY"
+          name: "Tête de Happy Ghast au Harnais Gris Clair"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRiNWE0NzJkY2U5MzUwNWQ0YTQ0MDFhNzRjZTI5ZWNlZTg4ZTMyNjQyOGJjMTAzY2JhZDRkOTM5YWJlZDFiIn19fQ=="
+          rarity: rare
+          condition: "LIME"
+          name: "Tête de Happy Ghast au Harnais Vert Clair"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzg3MzNkZGFlZDEwYTExMGFmYjY4NTlmNGEyMjIwMzlkMmVmMjkyZDIyNGQ3OTA0ZWQ4YjM4YTE1ZmM5ZGQwZCJ9fX0="
+          rarity: rare
+          condition: "MAGENTA"
+          name: "Tête de Happy Ghast au Harnais Magenta"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDgxNGIzMzc3Njc1YmMxZGVhM2M0YzI2NmNkNTVlZGRjNzJlOGE0MTlhMmNiZGI4NWE2NmUzYWM0ZjNjYjI4NyJ9fX0="
+          rarity: rare
+          condition: "ORANGE"
+          name: "Tête de Happy Ghast au Harnais Orange"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWM3OWY5MDgyZjZhYmVlZDk3NTA3NDQ0M2JlOGM4YTc5ZWExMDYwZDYxMDk0ZmY3OWEwNDk4OTM0MDQzMDYyNCJ9fX0="
+          rarity: rare
+          condition: "PINK"
+          name: "Tête de Happy Ghast au Harnais Rose"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTIyY2QxY2M1M2IxNjdhNjkwYTM0MDExY2RjY2Y2NDhjNzkzMzAwMjk3ZWQ4MWQ0MWU5MWMxN2Q2ODMzMTc5In19fQ=="
+          rarity: rare
+          condition: "PURPLE"
+          name: "Tête de Happy Ghast au Harnais Violet"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGVjN2M5MDI2YjA1MTliZTJhZmZkMTMyNWI2MzU5ZWE4ZDk0NjUwY2YzZDQ2YTFlMjUwOGRkMWRmNjQzM2NiNSJ9fX0="
+          rarity: rare
+          condition: "RED"
+          name: "Tête de Happy Ghast au Harnais Rouge"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I5YWMzMDgyNmFmMmI2MzVjZmFkYjA3ZWVlODA5ZmIzMjVhYjA4ZmExNTllODY4Yjk1YzQwN2YwYzcxOGY1MiJ9fX0="
+          rarity: rare
+          condition: "WHITE"
+          name: "Tête de Happy Ghast au Harnais Blanc"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzdkYjVlMjVkNjM0YzQxMzVmMzlhZDM0MTE0NTI4ZjA4NDZhZmNlOThiNzFmYTc4Njc0YTYxMTExNjgwNmI3YyJ9fX0="
+          rarity: rare
+          condition: "YELLOW"
+          name: "Tête de Happy Ghast au Harnais Jaune"
+
+    # ==================== HOSTILES CLASSIQUES ====================
+    BREEZE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTI3NTcyOGFmN2U2YTI5Yzg4MTI1YjY3NWEzOWQ4OGFlOTkxOWJiNjFmZGMyMDAzMzdmZWQ2YWIwYzQ5ZDY1YyJ9fX0="
+          rarity: rare
+          name: "Tête de Breeze"
+
+    CAMEL_HUSK:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2JkN2E5MmE2ZjY3Yjc1MDBkMTZjNGUxMmYyODA1OGVjMjg1OTMxMTU1NmJhMDNiZTJkMWY1ODExNzBmMmRiNiJ9fX0="
+          rarity: rare
+          name: "Tête de Chameau momifié"
+
+    PARCHED:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRhZWNlZmY1ZjI2ZGQ4NDEzYzVjMDM1NDdjMjM0YWMwMzEwOGQxODdhZjBiOWNkODM0YThjZTEyNTk4NTkxYyJ9fX0="
+          rarity: uncommon
+          name: "Tête de Parched"
+
+    SPIDER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzY0MjhjOTBjNDQ3NGMzNWFhZWZkMzk5YWFmMzFkZGVhOGFmMTBhNmM4NGIyMDMwYTYwMDYwODFkOWEzOTg4MSJ9fX0="
+          rarity: uncommon
+          name: "Tête d'Araignée"
+
+    CAVE_SPIDER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2U4NTUzODBiNTQyZGQyMjI2NTk5NzhhOTY3Nzc2NGY5NTM3ZTc5YTZjNTA1MDU4MTEyMDFiODU3MDRlYjcwNSJ9fX0="
+          rarity: uncommon
+          name: "Tête d'Araignée Venimeuse"
+
+    HUSK:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzMzODMxOGJjOTFhMzZjZDVhYjZhYTg4NWM5YTRlZTJiZGFjZGFhNWM2NmIyYTk5ZGZiMGE1NjA5ODNmMjQ4MCJ9fX0="
+          rarity: uncommon
+          name: "Tête de Husk"
+
+    DROWNED:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzNmN2NjZjYxZGJjM2Y5ZmU5YTYzMzNjZGUwYzBlMTQzOTllYjJlZWE3MWQzNGNmMjIzYjNhY2UyMjA1MSJ9fX0="
+          rarity: uncommon
+          name: "Tête de Noyé"
+
+    STRAY:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ5M2ZiNDM1Yjk0ZTBmYzdjZmQxMDRjNzk2MmE5M2Q3ZWJjMjZkZjA2NGUxNTc4OTc3ZDRhZDI5ZGNkMmNmNCJ9fX0="
+          rarity: uncommon
+          name: "Tête de Vagabond"
+
+    BOGGED:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTNiOTAwM2JhMmQwNTU2MmM3NTExOWI4YTYyMTg1YzY3MTMwZTkyODJmN2FjYmFjNGJjMjgyNGMyMWViOTVkOSJ9fX0="
+          rarity: uncommon
+          name: "Tête de Bogged"
+
+    WITCH:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDIwOGVlZWRmNDVkZTZhNDYyMzMxN2RmNzQyN2E5YjVmYWYxM2EyMzIzMDhlM2M5M2VkYWYzMGJjNTAwODBkNSJ9fX0="
+          rarity: rare
+          name: "Tête de Sorcière"
+
+    SLIME:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2UwY2ZmZDRkMzIwNjA2YmNkZGFlNmU5OWRlNWMyNGU1NzQzOGM3OTFkN2QzZmNhMjc1MTRlNDU4MjI5N2VhOCJ9fX0="
+          rarity: uncommon
+          name: "Tête de Slime"
+
+    PHANTOM:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2U5NTE1M2VjMjMyODRiMjgzZjAwZDE5ZDI5NzU2ZjI0NDMxM2EwNjFiNzBhYzAzYjk3ZDIzNmVlNTdiZDk4MiJ9fX0="
+          rarity: rare
+          name: "Tête de Phantom"
+
+    # ==================== ILLAGERS ====================
+    VINDICATOR:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTA0YjEwMzUwMWE0NWNiYmZmOWRhMzY4ZWY5ZTFkYjU1OTE2MTU1YTQ0Y2E4ODEyZjg3MWRmZDYxZGI1YWRlIn19fQ=="
+          rarity: rare
+          name: "Tête de Vindicateur"
+
+    EVOKER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzhhZWNkYTRkNjgyZjJiNjQxNjM1YjU3NmRiN2ViYjZjOGU1YjFhMzMxNzJkMjhmNmE4MWUzMjg3MjkzYzQ3NyJ9fX0="
+          rarity: rare
+          name: "Tête d'Évocateur"
+
+    PILLAGER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmUzOWI0NmY4MWZkNmUxMjYxZTE0ODU4OGNkOWEzOWYxZjA5OWQzMDA1YTExODljN2JmN2IzZjc4MGNkMGU3NyJ9fX0="
+          rarity: uncommon
+          name: "Tête de Pillard"
+
+    RAVAGER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2QyMGJmNTJlYzM5MGEwNzk5Mjk5MTg0ZmM2NzhiZjg0Y2Y3MzJiYjFiZDc4ZmQxYzRiNDQxODU4ZjAyMzVhOCJ9fX0="
+          rarity: rare
+          name: "Tête de Ravageur"
+
+    VEX:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODY5YTdjNmYwYTczNThjNTk0YzI5ZDNkNDJjZjdiNjk2MzhlZjNiNWIzZWMxZjlkMzgxNTBjOGIyYmZmNzgxMyJ9fX0="
+          rarity: rare
+          condition: "NORMAL"
+          name: "Tête de Vex"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmIwYTZhNWY2ZDAwNzMxODVjOTUwYTFiNTc0NDRiYTZhODdmNDM2MWNiMjIxZDg3YjA2Mzc5MDNkYzFjNmU1MiJ9fX0="
+          rarity: rare
+          condition: "ANGRY"
+          name: "Tête de Vex en Colère"
+
+    # ==================== NETHER ====================
+    ZOMBIFIED_PIGLIN:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2VhYmFlY2M1ZmFlNWE4YTQ5Yzg4NjNmZjQ4MzFhYWEyODQxOThmMWEyMzk4ODkwYzc2NWUwYThkZTE4ZGE4YyJ9fX0="
+          rarity: uncommon
+          name: "Tête de Piglin Zombie"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjE4OWIwZTc2Y2JiOTJjMjJkYzdhYTQ3NzhkNzVhMjA2NGM5NmRmYjlmYmQyYjdjNWIxOGEyMDRiNDBmYjY5YiJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Piglin Zombie"
+
+    PIGLIN_BRUTE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTQzNWQzNzM2MjRmNDU1YjlmOWRmODljMTAxODc3Yzc2YzA2Mjg1YjRhZDFlZTQ4NTNiMTE5YzVhNWY4YzUzNSJ9fX0="
+          rarity: rare
+          name: "Tête de Brute Piglin"
+
+    HOGLIN:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWJiOWJjMGYwMWRiZDc2MmEwOGQ5ZTc3YzA4MDY5ZWQ3Yzk1MzY0YWEzMGNhMTA3MjIwODU2MWI3MzBlOGQ3NSJ9fX0="
+          rarity: uncommon
+          name: "Tête de Hoglin"
+
+    ZOGLIN:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2M4YzdjNWQwNTU2Y2Q2NjI5NzE2ZTM5MTg4YjIxZTdjMDQ3NzQ3OWYyNDI1ODdiZjE5ZTBiYzc2YjMyMjU1MSJ9fX0="
+          rarity: rare
+          name: "Tête de Zoglin"
+
+    STRIDER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMThhOWFkZjc4MGVjN2RkNDYyNWM5YzA3NzkwNTJlNmExNWE0NTE4NjY2MjM1MTFlNGM4MmU5NjU1NzE0YjNjMSJ9fX0="
+          rarity: uncommon
+          name: "Tête de Strider"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDdlNGViMGZiNDg5ZDZmMjUwYzYwN2QyOGQ2NzJmMTI3ZWJhZWRlOGUwMDdmYTZjZDM0ZTJiYmMwYzJmYzMzYSJ9fX0="
+          rarity: rare
+          condition: "COLD"
+          name: "Tête de Strider Froid"
+
+    BLAZE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzEyYWQ2MTQ0M2M4NWM4N2ViOWU4ZDg3NGQ4Zjg3MWU5OWE3MzA5OWJiOTlhMjcxNjI1ODhkNGM1Mjg3MzEwZSJ9fX0="
+          rarity: rare
+          name: "Tête de Blaze"
+
+    GHAST:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjRhYjhhMjJlNzY4N2NjNGM3OGYzYjZmZjViMWViMDQ5MTdiNTFjZDNjZDdkYmNlMzYxNzExNjBiM2M3N2NlZCJ9fX0="
+          rarity: rare
+          name: "Tête de Ghast"
+
+    MAGMA_CUBE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGY3ODBiMmZiZmMyNjZiNmQ5N2E4MDIwYjI4MzczNTFkNGM5ZWVkYmJhYmFkMmE4MDQ1MjcyYzMzYzY5MDE1OSJ9fX0="
+          rarity: uncommon
+          name: "Tête de Cube de Magma"
+
+    # ==================== END ====================
+    ENDERMAN:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2E1OWJiMGE3YTMyOTY1YjNkOTBkOGVhZmE4OTlkMTgzNWY0MjQ1MDllYWRkNGU2YjcwOWFkYTUwYjljZiJ9fX0="
+          rarity: rare
+          name: "Tête d'Enderman"
+
+    ENDERMITE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODRhYWZmYTRjMDllMmVhZmI4NWQzNTIyMTIyZGIwYWE0NTg3NGJlYTRlM2Y1ZTc1NjZiNGQxNjZjN2RmOCJ9fX0="
+          rarity: uncommon
+          name: "Tête d'Endermite"
+
+    SHULKER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGI4MDg5YWE3ZGM5MzQ4MWJmNDg2ODNmYzJiYTVhNjZiYzk2Zjk3ZTY2ZGY0OTdkYjgzMTFhOTg0NDAxNDg4In19fQ=="
+          rarity: rare
+          name: "Tête de Shulker"
+
+    # ==================== AQUATIQUE ====================
+    COD:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzg5MmQ3ZGQ2YWFkZjM1Zjg2ZGEyN2ZiNjNkYTRlZGRhMjExZGY5NmQyODI5ZjY5MTQ2MmE0ZmIxY2FiMCJ9fX0="
+          rarity: common
+          name: "Tête de Cabillaud"
+
+    TADPOLE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjIzZWJmMjZiN2E0NDFlMTBhODZmYjVjMmE1ZjNiNTE5MjU4YTVjNWRkZGQ2YTFhNzU1NDlmNTE3MzMyODE1YiJ9fX0="
+          rarity: common
+          name: "Tête de Têtard"
+
+    NAUTILUS:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2JiMzQwZGQzMzAyNjE1MzQ4ZGU1MTYyZmUxNjcwYjljNWM5YzYxNmNkOTJkMmRlOWQ4Mzk4Y2IzM2U4NDJhZSJ9fX0="
+          rarity: common
+          name: "Tête de Nautilus"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmIxNjQ4NDgyNzMzYTdjM2JiODRiZTQ2OGQ1NzVlM2ZiZDNmZjE5MzI4MWIwNzI3ZWFkOGRlYWRlYTYwMjM3YSJ9fX0="
+          rarity: rare
+          condition: "BABY"
+          name: "Tête de bébé Nautilus"
+
+    ZOMBIE_NAUTILUS:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmQ5YTkzMzM3NmRhNDRjMzM5MTMwN2NiOWY0Y2YwM2YxNmYzYTU0ZjQ5NWZkNWExMWJhZDhhMzczZjlkNTcyMCJ9fX0="
+          rarity: uncommon
+          condition: "TEMPERATE"
+          name: "Tête de Nautilus Zombie"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmJlMjUwMWRlZjk0NTQzMTEwY2NjNmNlYmM0ZGVhYzdlZjFlZmYzMmE2MmYwZTMxNzdiMzBiMWZlODgwNTk1YyJ9fX0="
+          rarity: rare
+          condition: "WARM"
+          name: "Tête de Nautilus Zombie Corail"
+
+    SALMON:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGFlYjIxYTI1ZTQ2ODA2Y2U4NTM3ZmJkNjY2ODI4MWNmMTc2Y2VhZmU5NWFmOTBlOTRhNWZkODQ5MjQ4NzgifX19"
+          rarity: common
+          name: "Tête de Saumon"
+
+    TROPICAL_FISH:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTc5ZTQ4ZDgxNGFhM2JjOTg0ZThhNmZkNGZiMTcwYmEwYmI0ODkzZjRiYmViZGU1ZmRmM2Y4Zjg3MWNiMjkyZiJ9fX0="
+          rarity: uncommon
+          name: "Tête de Poisson Tropical"
+
+    PUFFERFISH:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTcxNTI4NzZiYzNhOTZkZDJhMjI5OTI0NWVkYjNiZWVmNjQ3YzhhNTZhYzg4NTNhNjg3YzNlN2I1ZDhiYiJ9fX0="
+          rarity: uncommon
+          name: "Tête de Poisson Globe"
+
+    SQUID:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWRmZTgzMmE4NGViYTI3ODQ0NDkxN2FkNjFjZDFiZGUxNWRiYjM3NDIxMzE2MzZmNmEyOTcwODI5YzBiMDVjYiJ9fX0="
+          rarity: uncommon
+          name: "Tête de Pieuvre"
+
+    GLOW_SQUID:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTczMjdlZTExODEyYjc2NGM3YWRlNzBiMjgyY2NlNGM1OGU2MzViMjAxNTI0NDA4MWQxNDkwNTQzZGE3MjgwZSJ9fX0="
+          rarity: rare
+          name: "Tête de Pieuvre Lumineuse"
+
+    DOLPHIN:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOGU5Njg4Yjk1MGQ4ODBiNTViN2FhMmNmY2Q3NmU1YTBmYTk0YWFjNmQxNmY3OGU4MzNmNzQ0M2VhMjlmZWQzIn19fQ=="
+          rarity: rare
+          name: "Tête de Dauphin"
+
+    GUARDIAN:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjhlNzI1Nzc5YzIzNGM1OTBjY2U4NTRkYjVjMTA0ODVlZDhkOGEzM2ZhOWIyYmRjMzQyNGI2OGJiMTM4MGJlZCJ9fX0="
+          rarity: rare
+          name: "Tête de Gardien"
+
+    ELDER_GUARDIAN:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzBmODY4Y2FmMTljZjIxMjRmMGZlZjk4ZTZiODc3M2QyN2ZiZjQyZDkzYWFiMDZiMjJlZTAzM2IyYWVlNjQ0NyJ9fX0="
+          rarity: rare
+          name: "Tête de Grand Gardien"
+
+    # ==================== BOSS ====================
+    WITHER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2RmNzRlMzIzZWQ0MTQzNjk2NWY1YzU3ZGRmMjgxNWQ1MzMyZmU5OTllNjhmYmI5ZDZjZjVjOGJkNDEzOWYifX19"
+          rarity: legendary
+          name: "Tête de Wither"
+
+    WARDEN:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzZmNzQzNjFmYjAwNDkwYTBhOThlZWI4MTQ1NDRlY2RkNzc1Y2I1NTYzM2RiYjExNGU2MGQyNzAwNGNiMTAyMCJ9fX0="
+          rarity: legendary
+          name: "Tête de Warden"
+
+    # ==================== CHEVAUX ====================
+    HORSE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWNkOGMyNGEzZmQ5MGJjYWU2OWZhMWZhZTA4YmExNmMzN2Y0MmNhZGE3MWQ0NGVkZTJjNjRlMDBjOTE1NzZkOSJ9fX0="
+          rarity: uncommon
+          condition: "WHITE"
+          name: "Tête de Cheval Blanc"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTZiMWQyZjdiMjEzMDk2MzEwNjdlMmVjMjNjMDJlNGYyZDY3Nzc2YzNiNjg3NmZiZDI4YzVhYWM5YmVhNzIyZSJ9fX0="
+          rarity: uncommon
+          condition: "CREAMY"
+          name: "Tête de Cheval Crème"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGM0OGZkYTYyZWMwZDA4MzVlMTIzZDA4MmI1Yzk2MDRkZGIyZjE4MjI0ZjExNTQ5NDllYzdhYWNhMzQ1Mjc2OCJ9fX0="
+          rarity: uncommon
+          condition: "CHESTNUT"
+          name: "Tête de Cheval Alezan"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGJlNWM3ZGE3MTc3ZDExYmUxNDJiZGEzNmZhYTk2MzkyNmQzMDIxNWMwZjBkMjI5NjgwOTNjNGFlMjIxZjE2ZCJ9fX0="
+          rarity: uncommon
+          condition: "BROWN"
+          name: "Tête de Cheval Brun"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWZhM2M5ZWViYjhkNjE3ODlkYTU5ZGM2ZjUzZDZlNTM0YjNlNDQzZTc5ZWZmYzYyYWVmNzViMDA3YjMzNTg4OSJ9fX0="
+          rarity: uncommon
+          condition: "BLACK"
+          name: "Tête de Cheval Noir"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTBlMjE5MTNhZWU4NGFlY2FkZjU0OTcxYzQyY2ZkMzIzNTQzNDI4MzhjOTYyMGUxZTljYTJmZjU5OWFkYTZlYyJ9fX0="
+          rarity: uncommon
+          condition: "GRAY"
+          name: "Tête de Cheval Gris"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODljYjJmOGVlMzc5NjRhYjdlZGIzYWQxNjE0MzY1YzU1M2I5NGI2MGRjODMzYWM0NGZmODkxMzE2ODUxMWRkMyJ9fX0="
+          rarity: uncommon
+          condition: "DARK_BROWN"
+          name: "Tête de Cheval Brun Foncé"
+
+    DONKEY:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2FjNzkwNzQwZGE2NTE2MmNkM2EwNmNmMWZhODY5NzkwZTcyNDE2MzA2NmQzNDlkYmQyNDM0OWFmYWNmYmNhYiJ9fX0="
+          rarity: uncommon
+          name: "Tête d'Âne"
+
+    MULE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWFlMDQ1OTA2Y2ZjY2JjNjQ4N2JlZDRjOGQ1ZDg1ZTZkYWIyOWFhZDE0OWFjOTllYjY2ZjcyNDNjZTRmZmU3NiJ9fX0="
+          rarity: uncommon
+          name: "Tête de Mule"
+
+    SKELETON_HORSE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDhjODZhYWFiYWQ5NTE1MGYwOTIwNDUzMmRmMjQzYmE2MTRlNjdiNTgyZGMwMzllNzI5NmJhNWY0ZjdlNzU5YyJ9fX0="
+          rarity: rare
+          name: "Tête de Cheval Squelette"
+
+    ZOMBIE_HORSE:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjQ2OTM4ZDRmOTliOGEyMTMzOWU4N2U0M2E0NjFmZDg3NDVlNzY2YjQyNTNhMzU3MTkxYTdkZGI0NjMzNDRiMiJ9fX0="
+          rarity: rare
+          name: "Tête de Cheval Zombie"
+
+    # ==================== LAMAS ====================
+    LLAMA:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmFlMjVkZGMyZDI1MzljNTY1ZGZmMmFhNTAwNjAzM2YxNGNjMDYzNzlmZTI4YjA3MzFjN2JkYzY1YmEwZTAxNiJ9fX0="
+          rarity: uncommon
+          condition: "CREAMY"
+          name: "Tête de Lama Crème"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGU3MDNhYjAzMWVkNjY2MjJmMTI5NTdlZjU5YThiNWM4YTI2OWNlYmQxOGY5MzI2MjQ4YjY4YzNiYmUyMDE2MyJ9fX0="
+          rarity: uncommon
+          condition: "WHITE"
+          name: "Tête de Lama Blanc"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2Y4MzI0NjZkY2M3ZDVlNzcwMmNkZWU0Y2Q1NTVkYmQzOTYzN2QyMGFkZjkzNjdmYjAzY2ZkNjg4OGJhYWFlNyJ9fX0="
+          rarity: uncommon
+          condition: "BROWN"
+          name: "Tête de Lama Brun"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmQyZmZjZTlhMTc0ZmUxYzA4NGUyZDgyMDUyMTgyZDk0Zjk1ZWQ0MzZiNzVmZjdlYTdhNGU5NGQ5NGM3MmQ4YSJ9fX0="
+          rarity: uncommon
+          condition: "GRAY"
+          name: "Tête de Lama Gris"
+
+    WANDERING_TRADER:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWYxMzc5YTgyMjkwZDdhYmUxZWZhYWJiYzcwNzEwZmYyZWMwMmRkMzRhZGUzODZiYzAwYzkzMGM0NjFjZjkzMiJ9fX0="
+          rarity: rare
+          name: "Tête de Marchand Ambulant"
+
+    TRADER_LLAMA:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTYzMDdmNDJmYzg4ZWJjMjExZTA0ZWEyYmI0ZDI0N2I3NDI4YjcxMWRmOWE0ZTBjNmQxYjkyMTU4OWU0NDNhMSJ9fX0="
+          rarity: uncommon
+          condition: "CREAMY"
+          name: "Tête de Lama de Marchand Crème"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTVhZDZiNjljYzZiNDc2OWQzNTE2YTBjZTk4Yjk5YjJhNWQ0MDZmZWE0OTEyZGVjNTcwZWE0YTRmMmJjYzBmZiJ9fX0="
+          rarity: uncommon
+          condition: "WHITE"
+          name: "Tête de Lama de Marchand Blanc"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWE0ZWVkODU2OTdjNzhmNDYyYzRlYjU2NTNiMDViNzY1NzZjMTE3OGY3MDRmM2M1Njc2ZjUwNWQ4ZjM5ODNiNCJ9fX0="
+          rarity: uncommon
+          condition: "BROWN"
+          name: "Tête de Lama de Marchand Brun"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBmZGZhNjBjNjI0ZmI2NjdjODMxM2IyZmIxZGFiNDBlMGFkMmU2ZTQ2OWI1NjdiZjU5NmFkMjYzOTIzMTljNSJ9fX0="
+          rarity: uncommon
+          condition: "GRAY"
+          name: "Tête de Lama de Marchand Gris"
+
+    # ==================== PERROQUETS ====================
+    PARROT:
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWQxYTE2OGJjNzJjYjMxNGY3Yzg2ZmVlZjlkOWJjNzYxMjM2NTI0NGNlNjdmMGExMDRmY2UwNDIwMzQzMGMxZCJ9fX0="
+          rarity: uncommon
+          condition: "RED"
+          name: "Tête de Perroquet Rouge"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBlMDNiMTBjMTVlZTU2MDE0MjM4NjdkZmI4YmNiY2JjOTE5Y2E5NmMwZWVhNjMwNzNlYzhlNzk1ZWFiZDA1ZiJ9fX0="
+          rarity: uncommon
+          condition: "BLUE"
+          name: "Tête de Perroquet Bleu"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWZjOWEzYjlkNTg3OWMyMTUwOTg0ZGJmZTU4OGNjMmU2MWZiMWRlMWU2MGZkMmE0NjlmNjlkZDRiNmY2YTk5MyJ9fX0="
+          rarity: uncommon
+          condition: "GREEN"
+          name: "Tête de Perroquet Vert"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmM2NDcxZjIzNTQ3YjJkYmRmNjAzNDdlYTEyOGY4ZWIyYmFhNmE3OWIwNDAxNzI0ZjIzYmQ0ZTI1NjRhMmI2MSJ9fX0="
+          rarity: uncommon
+          condition: "CYAN"
+          name: "Tête de Perroquet Cyan"
+        - texture: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTNjMzQ3MjJhYzY0NDk2YzliODRkMGM1NDAxOWRhYWU2MTg1ZDYwOTQ5OTAxMzNhZDY4MTBlZWEzZDI0MDY3YSJ9fX0="
+          rarity: uncommon
+          condition: "GRAY"
+          name: "Tête de Perroquet Gris"

@@ -1,0 +1,225 @@
+# =============================================================================
+# RÉFÉRENCE DES ITEMS
+# =============================================================================
+# Chaque clé directement sous "items" est l'identifiant interne du loot.
+#
+# Item natif — toutes les clés disponibles :
+# items:
+#   exemple_natif:
+#     provider: native                 # Obligatoire. Item construit par ce plugin.
+#     material: DIAMOND                # Obligatoire. Nom d'un Material Paper.
+#     name: "<aqua>Nom affiché"        # Optionnel. Format MiniMessage, non italique par défaut.
+#     lore:                            # Optionnel. Une chaîne MiniMessage par ligne.
+#       - "<gray>Première ligne"
+#       - "<italic>Ligne volontairement italique"
+#     custom-model-data: 12001         # Optionnel. Entier utilisé par le resource pack.
+#     glint: true                      # Optionnel. true/false, force l'effet enchanté.
+#     unbreakable: false               # Optionnel. true/false, false par défaut.
+#     item-flags:                      # Optionnel. Valeurs de l'enum Paper ItemFlag.
+#       - HIDE_ENCHANTS
+#       - HIDE_UNBREAKABLE
+#     enchantments:                    # Optionnel. Clé d'enchantement -> niveau.
+#       sharpness: 3                   # Sans namespace, "minecraft" est utilisé.
+#       "minecraft:unbreaking": 1
+#     persistent-data:                 # Optionnel. Clé NamespacedKey -> valeur texte.
+#       "monplugin:qualite": "rare"
+#
+# Item fourni par MythicMobs :
+#   exemple_mythic:
+#     provider: mythicmobs             # Le provider doit être disponible au chargement.
+#     id: SkeletonEssence              # Obligatoire. Identifiant exact chez le provider.
+#
+# Item fourni par une extension :
+#   exemple_externe:
+#     provider: identifiant_provider   # Identifiant enregistré via l'API RareLootItemProvider.
+#     id: identifiant_item             # Identifiant compris par ce provider.
+#
+# Le plugin ajoute automatiquement le PDC "laboulangeriemmo:rare_loot_id" aux
+# items natifs. Une clé inconnue est ignorée par Bukkit ; utilisez uniquement les
+# clés décrites ci-dessus.
+# =============================================================================
+
+items:
+  # Mineur — plage CustomModelData 121xx
+  geode_shard:
+    provider: native
+    material: AMETHYST_SHARD
+    name: "<aqua>Éclat géodique"
+    lore:
+      - "<gray>Un cristal formé sous une pression extrême."
+      - "<dark_gray>Butin de maîtrise du Mineur"
+    custom-model-data: 12101
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "geode_shard"
+
+  luminous_core:
+    provider: native
+    material: GLOWSTONE_DUST
+    name: "<yellow>Noyau luminescent"
+    lore:
+      - "<gray>Une lumière minérale palpite en son centre."
+      - "<dark_gray>Butin de maîtrise du Mineur"
+    custom-model-data: 12102
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "luminous_core"
+
+  perfect_gem:
+    provider: native
+    material: DIAMOND
+    name: "<light_purple>Gemme parfaite"
+    lore:
+      - "<gray>Une gemme sans la moindre imperfection."
+      - "<dark_gray>Butin de maîtrise du Mineur"
+    custom-model-data: 12103
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "perfect_gem"
+
+  primordial_slag:
+    provider: native
+    material: NETHERITE_SCRAP
+    name: "<gold>Scorie primordiale"
+    lore:
+      - "<gray>Un résidu antérieur aux forges du Nether."
+      - "<dark_gray>Butin de maîtrise du Mineur"
+    custom-model-data: 12104
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "primordial_slag"
+
+  # Bûcheron — plage CustomModelData 122xx
+  amber_sap:
+    provider: native
+    material: HONEYCOMB
+    name: "<gold>Sève ambrée"
+    lore:
+      - "<gray>Une sève épaisse aux reflets dorés."
+      - "<dark_gray>Butin de maîtrise du Bûcheron"
+    custom-model-data: 12201
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "amber_sap"
+
+  ancient_knot:
+    provider: native
+    material: BOWL
+    name: "<yellow>Nœud centenaire"
+    lore:
+      - "<gray>Les saisons ont gravé leurs cercles dans ce bois."
+      - "<dark_gray>Butin de maîtrise du Bûcheron"
+    custom-model-data: 12202
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "ancient_knot"
+
+  spectral_bark:
+    provider: native
+    material: WARPED_FUNGUS
+    name: "<aqua>Écorce spectrale"
+    lore:
+      - "<gray>Une écorce du Nether chargée d'une énergie froide."
+      - "<dark_gray>Butin de maîtrise du Bûcheron"
+    custom-model-data: 12203
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "spectral_bark"
+
+  sylvan_heart:
+    provider: native
+    material: HEART_OF_THE_SEA
+    name: "<green>Cœur sylvestre"
+    lore:
+      - "<gray>Le dernier battement d'un arbre immémorial."
+      - "<dark_gray>Butin de maîtrise du Bûcheron"
+    custom-model-data: 12204
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "sylvan_heart"
+
+  # Fermier — plage CustomModelData 123xx
+  solar_grain:
+    provider: native
+    material: WHEAT_SEEDS
+    name: "<yellow>Grain solaire"
+    lore:
+      - "<gray>Un grain mûri par une lumière parfaite."
+      - "<dark_gray>Butin de maîtrise du Fermier"
+    custom-model-data: 12301
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "solar_grain"
+
+  royal_tuber:
+    provider: native
+    material: GOLDEN_CARROT
+    name: "<gold>Tubercule royal"
+    lore:
+      - "<gray>Une récolte digne des meilleures tables."
+      - "<dark_gray>Butin de maîtrise du Fermier"
+    custom-model-data: 12302
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "royal_tuber"
+
+  aether_spore:
+    provider: native
+    material: BROWN_MUSHROOM
+    name: "<light_purple>Spore d'éther"
+    lore:
+      - "<gray>Une spore qui semble flotter hors du temps."
+      - "<dark_gray>Butin de maîtrise du Fermier"
+    custom-model-data: 12303
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "aether_spore"
+
+  fertility_essence:
+    provider: native
+    material: GHAST_TEAR
+    name: "<green>Essence de fécondité"
+    lore:
+      - "<gray>Une essence née du cycle de la vie."
+      - "<dark_gray>Butin de maîtrise du Fermier"
+    custom-model-data: 12304
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "fertility_essence"
+
+  # Chasseur — plage CustomModelData 124xx
+  reinforced_bone:
+    provider: native
+    material: BONE
+    name: "<aqua>Os renforcé"
+    lore:
+      - "<gray>Un os anormalement résistant."
+      - "<dark_gray>Butin de maîtrise du Chasseur"
+    custom-model-data: 12401
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "reinforced_bone"
+
+  toxic_gland:
+    provider: native
+    material: FERMENTED_SPIDER_EYE
+    name: "<green>Glande toxique"
+    lore:
+      - "<gray>Un venin concentré aux usages mystérieux."
+      - "<dark_gray>Butin de maîtrise du Chasseur"
+    custom-model-data: 12402
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "toxic_gland"
+
+  spectral_eye:
+    provider: native
+    material: ENDER_EYE
+    name: "<light_purple>Œil spectral"
+    lore:
+      - "<gray>Son regard traverse encore les ténèbres."
+      - "<dark_gray>Butin de maîtrise du Chasseur"
+    custom-model-data: 12403
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "spectral_eye"
+
+  monstrous_heart:
+    provider: native
+    material: PRISMARINE_CRYSTALS
+    name: "<dark_red>Cœur monstrueux"
+    lore:
+      - "<gray>Le cœur cristallisé d'une créature légendaire."
+      - "<dark_gray>Butin de maîtrise du Chasseur"
+    custom-model-data: 12404
+    persistent-data:
+      "laboulangeriemmo:rare_loot": "monstrous_heart"
+
+  vex_armor_trim:
+    provider: native
+    material: VEX_ARMOR_TRIM_SMITHING_TEMPLATE

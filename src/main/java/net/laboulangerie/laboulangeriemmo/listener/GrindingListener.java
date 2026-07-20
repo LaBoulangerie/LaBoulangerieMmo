@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.Statistic;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
@@ -18,14 +19,29 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.event.entity.TrialSpawnerSpawnEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.persistence.PersistentDataType;
+
+import io.papermc.paper.event.entity.EntityFertilizeEggEvent;
 
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.GrindingCategory;
+import net.laboulangerie.laboulangeriemmo.core.XpMovementGuard;
 import net.laboulangerie.laboulangeriemmo.utils.MythicMobsSupport;
+import net.laboulangerie.laboulangeriemmo.utils.MythicMobContext;
+import net.laboulangerie.laboulangeriemmo.utils.MythicMobPolicy;
 
 public class GrindingListener implements Listener {
-    public GrindingListener() {}
+    private static final XpMovementGuard XP_MOVEMENT_GUARD = new XpMovementGuard();
+    private static final byte NORMAL_TRIAL = 1;
+    private static final byte OMINOUS_TRIAL = 2;
+
+    private final NamespacedKey trialTypeKey;
+
+    public GrindingListener() {
+        trialTypeKey = new NamespacedKey(LaBoulangerieMmo.PLUGIN, "hunter_trial_type");
+    }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
@@ -50,18 +66,29 @@ public class GrindingListener implements Listener {
     public void onEntityKill(EntityDeathEvent event) {
         if (event.isCancelled() || !(event.getEntity().getKiller() instanceof Player)) return;
 
-        boolean isMythicMob = false;
+        double trialMultiplier = getTrialMultiplier(event.getEntity());
+
+        MythicMobContext mythicMob = null;
         if (LaBoulangerieMmo.MYTHICMOBS_SUPPORT) {
             try {
-                isMythicMob = MythicMobsSupport.tryToGiveMythicReward(event.getEntity(), event.getEntity().getKiller());
-            } catch (Exception e) {
+                mythicMob = MythicMobsSupport.inspect(event.getEntity()).orElse(null);
+            } catch (RuntimeException | LinkageError e) {
                 LaBoulangerieMmo.PLUGIN.getLogger().warning("MythicMobs reward failed: '" + e);
             }
         }
 
-        if (!isMythicMob)
+        if (mythicMob == null) {
             giveReward(event.getEntity().getKiller(), GrindingCategory.KILL, event.getEntity().getType().toString(),
-                    event.getEntity().getEntitySpawnReason() == SpawnReason.SPAWNER);
+                    event.getEntity().getEntitySpawnReason() == SpawnReason.SPAWNER, trialMultiplier);
+        } else {
+            giveMythicHunterReward(event.getEntity().getKiller(), mythicMob, trialMultiplier);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onTrialSpawnerSpawn(TrialSpawnerSpawnEvent event) {
+        byte trialType = event.getTrialSpawner().isOminous() ? OMINOUS_TRIAL : NORMAL_TRIAL;
+        event.getEntity().getPersistentDataContainer().set(trialTypeKey, PersistentDataType.BYTE, trialType);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -84,7 +111,19 @@ public class GrindingListener implements Listener {
         giveReward((Player) event.getBreeder(), GrindingCategory.BREED, event.getEntityType().toString(), false);
     }
 
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onEggFertilized(EntityFertilizeEggEvent event) {
+        if (event.getBreeder() == null) return;
+
+        giveReward(event.getBreeder(), GrindingCategory.BREED, event.getEntityType().toString(), false);
+    }
+
     public static void giveReward(Player player, GrindingCategory category, String identifier, boolean isSpawnerMob) {
+        giveReward(player, category, identifier, isSpawnerMob, 1.0);
+    }
+
+    static void giveReward(Player player, GrindingCategory category, String identifier, boolean isSpawnerMob,
+            double rewardMultiplier) {
         if (player.getGameMode() == GameMode.CREATIVE) return;
         Set<String> keys =
                 LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding").getKeys(false);
@@ -109,8 +148,51 @@ public class GrindingListener implements Listener {
                     }
                     xpAmount = xpAmount < 0 ? 0 : xpAmount;
                 }
-                LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, xpAmount);
+                if (category == GrindingCategory.KILL) xpAmount *= rewardMultiplier;
+                if (xpAmount > 0 && XP_MOVEMENT_GUARD.canGainXp(player)) {
+                    LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, xpAmount);
+                }
             }
+        }
+    }
+
+    private static void giveMythicHunterReward(Player player, MythicMobContext context, double rewardMultiplier) {
+        Double explicitAmount = MythicMobPolicy.hunterXp(context.internalName());
+        if (explicitAmount != null) {
+            giveTalentReward(player, "hunter", explicitAmount * rewardMultiplier);
+            return;
+        }
+
+        if (context.disguiseProfile().isPresent()
+                && giveConfiguredHunterKillReward(
+                        player, context.disguiseProfile().get().mobType(), rewardMultiplier)) return;
+        giveConfiguredHunterKillReward(player, context.baseProfile().mobType(), rewardMultiplier);
+    }
+
+    private static boolean giveConfiguredHunterKillReward(Player player, String identifier, double rewardMultiplier) {
+        ConfigurationSection section = LaBoulangerieMmo.PLUGIN.getConfig()
+                .getConfigurationSection("talent-grinding.hunter." + GrindingCategory.KILL);
+        if (section == null || !section.contains(identifier)) return false;
+        giveTalentReward(player, "hunter", section.getDouble(identifier) * rewardMultiplier);
+        return true;
+    }
+
+    private double getTrialMultiplier(org.bukkit.entity.Entity entity) {
+        Byte trialType = entity.getPersistentDataContainer().get(trialTypeKey, PersistentDataType.BYTE);
+        if (trialType == null) return 1.0;
+        return configuredTrialMultiplier(LaBoulangerieMmo.PLUGIN.getConfig(), trialType == OMINOUS_TRIAL);
+    }
+
+    static double configuredTrialMultiplier(ConfigurationSection config, boolean ominous) {
+        String key = "talent-grinding.hunter.trial-multipliers." + (ominous ? "ominous" : "normal");
+        return config.getDouble(key, ominous ? 2.0 : 1.5);
+    }
+
+    private static void giveTalentReward(Player player, String talentName, double amount) {
+        if (player.getGameMode() == GameMode.CREATIVE || amount <= 0 || !Double.isFinite(amount)) return;
+        if (LaBoulangerieMmo.talentsRegistry.getTalent(talentName) == null) return;
+        if (XP_MOVEMENT_GUARD.canGainXp(player)) {
+            LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, amount);
         }
     }
 }

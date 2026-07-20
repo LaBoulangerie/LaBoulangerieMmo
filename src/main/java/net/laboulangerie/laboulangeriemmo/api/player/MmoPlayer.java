@@ -30,7 +30,6 @@ import net.laboulangerie.laboulangeriemmo.events.PlayerEarnsXpEvent;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 
 public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostProcessable {
-    private transient FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
     private transient XpCountDown xpCountdown;
 
     private UUID uniqueId;
@@ -71,6 +70,7 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
     }
 
     public void useAbility(AbilityArchetype ability, TalentArchetype talent) {
+        FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
         cooldownsHolder.startCooldown(ability, talent.identifier);
         Player player = Bukkit.getPlayer(uniqueId);
 
@@ -136,28 +136,37 @@ public class MmoPlayer implements GsonSerializable, PostProcessingEnabler.PostPr
 
 
     public void incrementXp(String talentId, double amount) {
+        incrementXp(talentId, amount, true);
+    }
+
+    /** Adds an exact administrative amount while preserving level-up side effects. */
+    public void incrementXpExact(String talentId, double amount) {
+        incrementXp(talentId, amount, false);
+    }
+
+    private void incrementXp(String talentId, double amount, boolean applyXpModifiers) {
         if (getTalent(talentId) == null) talents.put(talentId, new Talent(talentId));
 
-        int maxTalentLevel = config.getInt("max-talent-level", 100);
+        int maxTalentLevel = LaBoulangerieMmo.PLUGIN.getConfig().getInt("max-talent-level", 100);
 
         if (getTalent(talentId).getLevel() >= maxTalentLevel || amount <= 0) {
             return;
         }
-        PlayerEarnsXpEvent playerEarnsXpEvent = new PlayerEarnsXpEvent(amount, talentId, this);
-        Bukkit.getPluginManager().callEvent(playerEarnsXpEvent);
-
-        amount = playerEarnsXpEvent.getAmount();
+        if (applyXpModifiers) {
+            PlayerEarnsXpEvent playerEarnsXpEvent = new PlayerEarnsXpEvent(amount, talentId, this);
+            Bukkit.getPluginManager().callEvent(playerEarnsXpEvent);
+            amount = playerEarnsXpEvent.getAmount();
+        }
+        if (amount <= 0 || !Double.isFinite(amount)) return;
 
         int oldLevel = getTalent(talentId).getLevel();
 
-        xpCountdown.startCountDown(talentId, amount);
+        if (xpCountdown != null) xpCountdown.startCountDown(talentId, amount);
         getTalent(talentId).incrementXp(amount);
         int newLevel = getTalent(talentId).getLevel();
         if (oldLevel < newLevel) {
-            Bukkit.getPluginManager().callEvent(new PlayerLevelUpEvent(getTalent(talentId), this));
-            /*
-             * if (getPalier(this) == ???) { do some stuff }
-             */
+            Bukkit.getPluginManager()
+                    .callEvent(new PlayerLevelUpEvent(getTalent(talentId), this, oldLevel, newLevel));
         }
     }
 

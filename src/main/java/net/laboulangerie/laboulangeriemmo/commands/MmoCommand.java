@@ -142,7 +142,7 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             }
 
             if (args[2].equalsIgnoreCase("add")) {
-                talent.incrementXp(amount);
+                mmoPlayer.incrementXpExact(args[3], amount);
                 sender.sendMessage("§aVous avez ajouté §e" + args[4] + "§axp au talent §e"
                         + talent.getDisplayName() + "§a de §e" + args[1]);
                 return true;
@@ -170,14 +170,10 @@ public class MmoCommand implements CommandExecutor, TabCompleter {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            sender.sendMessage("§bReloading config...");
-            LaBoulangerieMmo.PLUGIN.saveDefaultConfig();
-            LaBoulangerieMmo.PLUGIN.reloadConfig();
-            sender.sendMessage("§bReloading abilities...");
-            LaBoulangerieMmo.abilitiesRegistry.init();
-            sender.sendMessage("§bReloading talents...");
-            LaBoulangerieMmo.talentsRegistry.init();
-            sender.sendMessage("§aReload complete");
+            sender.sendMessage("§bReloading config, abilities, talents and mob heads...");
+            var rareLootReload = LaBoulangerieMmo.PLUGIN.reloadRuntimeConfiguration();
+            sender.sendMessage((rareLootReload.success() ? "§a" : "§c") + rareLootReload.message());
+            sender.sendMessage(rareLootReload.success() ? "§aReload complete" : "§eGeneral reload complete; rare loots kept their previous configuration");
             return true;
         }
 

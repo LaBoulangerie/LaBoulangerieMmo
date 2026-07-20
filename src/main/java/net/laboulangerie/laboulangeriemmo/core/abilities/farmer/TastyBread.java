@@ -6,6 +6,7 @@ import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Sittable;
 import org.bukkit.entity.WaterMob;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerItemHeldEvent;
@@ -35,19 +36,24 @@ public class TastyBread extends AbilityExecutor {
             followRadius = 20;
         }
         for (Entity en : player.getNearbyEntities(followRadius, followRadius, followRadius)) {
-            if (level < getTier(2)) {
-                if (en.getType() == EntityType.COW || en.getType() == EntityType.PIG
-                        || en.getType() == EntityType.PIG || en.getType() == EntityType.CHICKEN
-                        || en.getType() == EntityType.SHEEP) {
-                    Creature animal = (Creature) en;
-                    animal.getPathfinder().moveTo(player, 1);
-                }
+            // Skip sitting animals (tamed wolves, cats, parrots)
+            if (en instanceof Sittable && ((Sittable) en).isSitting()) {
+                continue;
             }
-            if (level >= getTier(2)) {
-                if (en instanceof Breedable || en instanceof WaterMob) {
-                    Creature animal = (Creature) en;
-                    animal.getPathfinder().moveTo(player, 1);
-                }
+
+            boolean shouldAttract = false;
+            if (level < getTier(2)) {
+                shouldAttract = en.getType() == EntityType.COW
+                        || en.getType() == EntityType.PIG
+                        || en.getType() == EntityType.CHICKEN
+                        || en.getType() == EntityType.SHEEP;
+            } else {
+                shouldAttract = en instanceof Breedable || en instanceof WaterMob;
+            }
+
+            if (shouldAttract && en instanceof Creature) {
+                Creature animal = (Creature) en;
+                animal.getPathfinder().moveTo(player, 1);
             }
         }
     }

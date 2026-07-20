@@ -8,6 +8,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.BlockBreakEvent;
 
@@ -37,6 +38,7 @@ public class NatureTouch extends AbilityExecutor {
     public void trigger(Event baseEvent, int level) {
         BlockBreakEvent event = (BlockBreakEvent) baseEvent;
         final Block block = event.getBlock();
+        final Player player = event.getPlayer();
         Material cropMaterial = block.getType();
         BlockData blockData = block.getBlockData();
         Ageable ageable = (Ageable) blockData;
@@ -64,6 +66,11 @@ public class NatureTouch extends AbilityExecutor {
                         if (bisected.getHalf() == Bisected.Half.TOP) {
                             updatedBlock = block.getRelative(0, -1, 0);
                         }
+                    }
+
+                    if (!LaBoulangerieMmo.PLUGIN.getTalentProtection()
+                            .canPlace(player, updatedBlock, cropMaterial)) {
+                        return;
                     }
 
                     updatedBlock.setType(cropMaterial);

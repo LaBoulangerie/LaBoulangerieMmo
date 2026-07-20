@@ -7,10 +7,12 @@ import org.bukkit.Material;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityArchetype;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 
@@ -31,25 +33,29 @@ public class BetterBonemeal extends AbilityExecutor {
     @Override
     public void trigger(Event baseEvent, int level) {
         PlayerInteractEvent event = (PlayerInteractEvent) baseEvent;
+        Player player = event.getPlayer();
+        int radius;
+        int applications;
+
         if (level >= getTier(2)) {
-            ArrayList<Block> blocks =
-                    getBlocksAroundCenter(event.getClickedBlock().getLocation(), 20);
-            for (Block block : blocks) {
-                block.applyBoneMeal(BlockFace.UP);
-                block.applyBoneMeal(BlockFace.UP);
-                block.applyBoneMeal(BlockFace.UP);
-            }
+            radius = 20;
+            applications = 3;
         } else if (level >= getTier(1) && level < 45) {
-            ArrayList<Block> blocks =
-                    getBlocksAroundCenter(event.getClickedBlock().getLocation(), 10);
-            for (Block block : blocks) {
-                block.applyBoneMeal(BlockFace.UP);
-                block.applyBoneMeal(BlockFace.UP);
-            }
+            radius = 10;
+            applications = 2;
         } else {
-            ArrayList<Block> blocks =
-                    getBlocksAroundCenter(event.getClickedBlock().getLocation(), 5);
-            for (Block block : blocks) {
+            radius = 5;
+            applications = 1;
+        }
+
+        ArrayList<Block> blocks = getBlocksAroundCenter(event.getClickedBlock().getLocation(), radius);
+        for (Block block : blocks) {
+            if (!LaBoulangerieMmo.PLUGIN.getTalentProtection()
+                    .canPlace(player, block, block.getType())) {
+                continue;
+            }
+
+            for (int application = 0; application < applications; application++) {
                 block.applyBoneMeal(BlockFace.UP);
             }
         }

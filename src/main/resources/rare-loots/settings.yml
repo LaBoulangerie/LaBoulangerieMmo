@@ -1,0 +1,20 @@
+# =============================================================================
+# RÉFÉRENCE DES PARAMÈTRES GLOBAUX
+# =============================================================================
+# Toutes les clés disponibles sont présentées ci-dessous. Elles définissent le
+# comportement par défaut de chaque règle et peuvent être surchargées dans cette
+# règle avec un bloc "anti-farm" de même forme.
+#
+# anti-farm:
+#   allow-creative: false              # Autoriser les joueurs en mode Créatif.
+#   allow-placed-blocks: false         # Autoriser les blocs enregistrés par Blockus.
+#   allow-spawner-mobs: false          # Autoriser les mobs venant d'un spawner.
+#
+# Une valeur absente vaut false. Les événements annulés et les actions sans joueur
+# responsable restent toujours exclus et ne possèdent pas de surcharge.
+# =============================================================================
+
+anti-farm:
+  allow-creative: false
+  allow-placed-blocks: false
+  allow-spawner-mobs: false

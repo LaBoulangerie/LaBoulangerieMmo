@@ -160,6 +160,16 @@ public class TalentsRegistry {
                                     e.printStackTrace();
                                 }
                             }
+                            if (ability.isSet("tier_descriptions")) {
+                                abilityArchetype.tierDescriptions = ability.getStringList("tier_descriptions");
+                                if (abilityArchetype.tierDescriptions.size() != abilityArchetype.tiers.size()) {
+                                    LaBoulangerieMmo.PLUGIN.getLogger().warning(
+                                            "Field 'tier_descriptions' must contain one entry per tier for ability '"
+                                                    + abilityId + "' of talent '" + identifier
+                                                    + "'. Falling back to the generic description.");
+                                    abilityArchetype.tierDescriptions.clear();
+                                }
+                            }
                             talent.abilitiesArchetypes.put(abilityId, abilityArchetype);
                         }
                     }

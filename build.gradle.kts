@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     `maven-publish`
-    id("io.papermc.paperweight.userdev") version "1.7.3"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.21"
     id("com.gradleup.shadow") version "8.3.5"
 }
 
@@ -16,10 +16,6 @@ repositories {
 
     maven {
         url = uri("https://oss.sonatype.org/content/groups/public/")
-    }
-
-    maven {
-        url = uri("https://repo.dmulloy2.net/repository/public/")
     }
 
     maven {
@@ -39,7 +35,7 @@ repositories {
     }
 
     maven {
-        url = uri("https://nexus.betonquest.org/repository/betonquest/")
+        url = uri("https://repo.betonquest.org/betonquest/")
     }
 
     maven {
@@ -53,6 +49,13 @@ repositories {
     maven {
         url = uri("https://mvn.lumine.io/repository/maven-public/")
     }
+
+    maven {
+        url = uri("https://mvn.lib.co.nz/public")
+        content {
+            includeGroup("me.libraryaddict.disguises")
+        }
+    }
 }
 
 configurations {
@@ -62,18 +65,41 @@ configurations {
 }
 
 dependencies {
-    paperDevBundle("1.21.1-R0.1-SNAPSHOT")
-    implementation("net.kyori:adventure-api:4.17.0")
+    paperweight.paperDevBundle("1.21.11-R0.1-SNAPSHOT")
     compileOnly("com.github.luben:zstd-jni:1.5.0-4")
-    compileOnly("redis.clients:jedis:5.1.3")
-    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.3.0")
+    compileOnly("redis.clients:jedis:5.1.3") {
+        isTransitive = false
+    }
     compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
+    compileOnly("fr.minelet:minelet-api:1.2.0")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.palmergames.bukkit.towny:towny:0.100.4.0")
-    compileOnly("org.betonquest:betonquest:2.1.3")
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.12")
+    compileOnly("org.betonquest:betonquest:3.0.2") {
+        exclude(group = "dev.faststats.metrics")
+    }
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.15") {
+        isTransitive = false
+    }
+    compileOnly("com.sk89q.worldguard:worldguard-core:7.0.15") {
+        isTransitive = false
+    }
+    compileOnly("com.sk89q.worldedit:worldedit-bukkit:7.4.1") {
+        isTransitive = false
+    }
+    compileOnly("com.sk89q.worldedit:worldedit-core:7.4.1") {
+        isTransitive = false
+    }
+    compileOnly("net.kyori:adventure-text-serializer-ansi:4.26.1")
+    compileOnly("org.apache.commons:commons-pool2:2.12.0")
     compileOnly("io.lumine:Mythic-Dist:5.4.1")
+    compileOnly("me.libraryaddict.disguises:libsdisguises:11.0.0")
+    testImplementation(platform("org.junit:junit-bom:5.12.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.mockito:mockito-core:5.18.0")
+    testImplementation("redis.clients:jedis:5.1.3")
+    testImplementation("fr.minelet:minelet-api:1.2.0")
+    testImplementation("net.kyori:adventure-text-serializer-ansi:4.26.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 group = "net.laboulangerie"
@@ -103,6 +129,9 @@ tasks {
 
 tasks.withType<JavaCompile>() {
     options.encoding = "UTF-8"
+}
+tasks.test {
+    useJUnitPlatform()
 }
 publishing {
     publications {

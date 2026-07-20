@@ -10,8 +10,8 @@ import net.laboulangerie.laboulangeriemmo.api.ability.AbilityExecutor;
 
 public class AnimalTwins extends AbilityExecutor {
 
-    private final static float TIER_3_CHANCE = 1f;
-    private final static float TIER_2_CHANCE = 0.4f;
+    private final static float TIER_3_CHANCE = 0.35f;
+    private final static float TIER_2_CHANCE = 0.2f;
     private final static float TIER_1_CHANCE = 0.1f;
 
     public AnimalTwins(AbilityArchetype archetype) {

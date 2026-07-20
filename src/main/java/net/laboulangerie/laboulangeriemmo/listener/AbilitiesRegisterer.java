@@ -11,39 +11,42 @@ import net.laboulangerie.laboulangeriemmo.core.abilities.farmer.NatureTouch;
 import net.laboulangerie.laboulangeriemmo.core.abilities.farmer.TastyBread;
 import net.laboulangerie.laboulangeriemmo.core.abilities.mining.FastMine;
 import net.laboulangerie.laboulangeriemmo.core.abilities.mining.FastSmelt;
-import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MagneticField;
-import net.laboulangerie.laboulangeriemmo.core.abilities.mining.MinecraftExpMultiplier;
-import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.Dodging;
+import net.laboulangerie.laboulangeriemmo.core.abilities.mining.LuckyVein;
+import net.laboulangerie.laboulangeriemmo.core.abilities.mining.StoneSkin;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.ExpInBottle;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.FireBow;
 import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.Hiding;
+import net.laboulangerie.laboulangeriemmo.core.abilities.thehunter.HuntingTrophy;
 import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.DoubleDropLog;
+import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.NatureShelterAbility;
 import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.Stun;
-import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.ThickTree;
 import net.laboulangerie.laboulangeriemmo.core.abilities.woodcutting.Timber;
 
 public class AbilitiesRegisterer implements Listener {
     @EventHandler
     public void onRegisterTime(RegisterAbilitiesEvent event) {
+        // Miner abilities
         event.getRegistry().registerAbility("fast-mine", FastMine.class, AbilityTrigger.COMBO);
         event.getRegistry().registerAbility("fast-smelt", FastSmelt.class, AbilityTrigger.LEFT_CLICK_BLOCK);
-        event.getRegistry().registerAbility("minecraft-exp-multiplier", MinecraftExpMultiplier.class,
-                AbilityTrigger.BREAK);
-        event.getRegistry().registerAbility("magnetic-field", MagneticField.class, AbilityTrigger.RIGHT_CLICK_AIR);
+        event.getRegistry().registerAbility("stone-skin", StoneSkin.class, AbilityTrigger.COMBO);
+        event.getRegistry().registerAbility("lucky-vein", LuckyVein.class, AbilityTrigger.COMBO);
 
+        // Farmer abilities
         event.getRegistry().registerAbility("animal-twins", AnimalTwins.class, AbilityTrigger.BREED);
         event.getRegistry().registerAbility("better-bonemeal", BetterBonemeal.class, AbilityTrigger.RIGHT_CLICK_BLOCK);
         event.getRegistry().registerAbility("nature-touch", NatureTouch.class, AbilityTrigger.BREAK);
         event.getRegistry().registerAbility("tasty-bread", TastyBread.class, AbilityTrigger.HOLD_ITEM);
 
-        event.getRegistry().registerAbility("dodging", Dodging.class, AbilityTrigger.COMBO);
+        // Hunter abilities
         event.getRegistry().registerAbility("exp-in-bottle", ExpInBottle.class, AbilityTrigger.RIGHT_CLICK_AIR);
         event.getRegistry().registerAbility("fire-bow", FireBow.class, AbilityTrigger.COMBO);
         event.getRegistry().registerAbility("hiding", Hiding.class, AbilityTrigger.COMBO);
+        event.getRegistry().registerAbility("hunting-trophy", HuntingTrophy.class, AbilityTrigger.ENTITY_DEATH);
 
+        // Lumberjack abilities
         event.getRegistry().registerAbility("double-drop-log", DoubleDropLog.class, AbilityTrigger.BREAK);
         event.getRegistry().registerAbility("timber", Timber.class, AbilityTrigger.COMBO);
-        event.getRegistry().registerAbility("thick-tree", ThickTree.class, AbilityTrigger.COMBO);
         event.getRegistry().registerAbility("stun", Stun.class, AbilityTrigger.LEFT_CLICK_ENTITY);
+        event.getRegistry().registerAbility("nature-shelter", NatureShelterAbility.class, AbilityTrigger.PASSIVE);
     }
 }
