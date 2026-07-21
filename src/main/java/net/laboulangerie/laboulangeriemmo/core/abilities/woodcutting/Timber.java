@@ -36,7 +36,9 @@ public class Timber extends AbilityExecutor {
                     {1, 1, -1}, {-1, 1, 1}, {-1, 1, -1}, {1, -1, 0}, {-1, -1, 0}, {0, -1, 1},
                     {0, -1, -1}, {1, -1, 1}, {1, -1, -1}, {-1, -1, 1}, {-1, -1, -1}};
 
-    private static final int RANGE = 5;
+    private static final int TIER_ONE_RANGE = 3;
+    private static final int TIER_TWO_RANGE = 5;
+    private static final int TIER_THREE_RANGE = 7;
 
     private Material initType;
     private Location initLocation;
@@ -63,7 +65,8 @@ public class Timber extends AbilityExecutor {
 
         initType = block.getType();
         initLocation = block.getLocation();
-        List<List<Block>> treeByDepth = findTreeByDepth();
+        int range = rangeForLevel(level);
+        List<List<Block>> treeByDepth = findTreeByDepth(range);
 
         for (int depth = 0; depth < treeByDepth.size(); depth++) {
             List<Block> allowedBlocks = treeByDepth.get(depth).stream()
@@ -74,19 +77,25 @@ public class Timber extends AbilityExecutor {
 
             long delay = depth * 5L;
             if (delay == 0L) {
-                allowedBlocks.forEach(this::breakIfAllowed);
+                allowedBlocks.forEach(candidate -> breakIfAllowed(candidate, range));
             } else {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        allowedBlocks.forEach(Timber.this::breakIfAllowed);
+                        allowedBlocks.forEach(candidate -> Timber.this.breakIfAllowed(candidate, range));
                     }
                 }.runTaskLater(LaBoulangerieMmo.PLUGIN, delay);
             }
         }
     }
 
-    private List<List<Block>> findTreeByDepth() {
+    int rangeForLevel(int level) {
+        if (level >= getTier(2)) return TIER_THREE_RANGE;
+        if (level >= getTier(1)) return TIER_TWO_RANGE;
+        return TIER_ONE_RANGE;
+    }
+
+    private List<List<Block>> findTreeByDepth(int range) {
         List<List<Block>> treeByDepth = new ArrayList<>();
         Queue<TreeNode> queue = new ArrayDeque<>();
         Set<Location> visited = new HashSet<>();
@@ -95,14 +104,14 @@ public class Timber extends AbilityExecutor {
         while (!queue.isEmpty()) {
             TreeNode node = queue.remove();
             Location location = node.block().getLocation();
-            if (!visited.add(location) || !isMatchingTreeBlock(node.block())) continue;
+            if (!visited.add(location) || !isMatchingTreeBlock(node.block(), range)) continue;
 
             while (treeByDepth.size() <= node.depth()) treeByDepth.add(new ArrayList<>());
             treeByDepth.get(node.depth()).add(node.block());
 
             for (int[] coordinate : REL_COORDINATES) {
                 Block neighbour = node.block().getRelative(coordinate[0], coordinate[1], coordinate[2]);
-                if (!visited.contains(neighbour.getLocation()) && isInsideRange(neighbour)) {
+                if (!visited.contains(neighbour.getLocation()) && isInsideRange(neighbour, range)) {
                     queue.add(new TreeNode(neighbour, node.depth() + 1));
                 }
             }
@@ -111,21 +120,21 @@ public class Timber extends AbilityExecutor {
         return treeByDepth;
     }
 
-    private boolean isMatchingTreeBlock(Block candidate) {
+    private boolean isMatchingTreeBlock(Block candidate, int range) {
         Material logType = Material.getMaterial(initType.toString().replace("_WOOD", "_LOG"));
         Material woodType = Material.getMaterial(initType.toString().replace("_LOG", "_WOOD"));
-        return isInsideRange(candidate)
+        return isInsideRange(candidate, range)
                 && (candidate.getType() == logType || candidate.getType() == woodType);
     }
 
-    private boolean isInsideRange(Block candidate) {
+    private boolean isInsideRange(Block candidate, int range) {
         return candidate.getY() >= initLocation.getBlockY()
-                && Math.abs(candidate.getX() - initLocation.getBlockX()) <= RANGE
-                && Math.abs(candidate.getZ() - initLocation.getBlockZ()) <= RANGE;
+                && Math.abs(candidate.getX() - initLocation.getBlockX()) <= range
+                && Math.abs(candidate.getZ() - initLocation.getBlockZ()) <= range;
     }
 
-    private void breakIfAllowed(Block candidate) {
-        if (!isMatchingTreeBlock(candidate)
+    private void breakIfAllowed(Block candidate, int range) {
+        if (!isMatchingTreeBlock(candidate, range)
                 || !LaBoulangerieMmo.PLUGIN.getTalentProtection().canBreak(player, candidate)) {
             return;
         }

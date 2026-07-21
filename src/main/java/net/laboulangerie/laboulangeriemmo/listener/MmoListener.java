@@ -5,9 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,7 +24,6 @@ import net.laboulangerie.laboulangeriemmo.api.xpboost.XpBoostObj;
 import net.laboulangerie.laboulangeriemmo.core.XpBar;
 import net.laboulangerie.laboulangeriemmo.events.PlayerLevelUpEvent;
 import net.laboulangerie.laboulangeriemmo.events.XpCountDownFinishedEvent;
-import net.milkbowl.vault.economy.EconomyResponse;
 
 public class MmoListener implements Listener {
 
@@ -34,31 +31,13 @@ public class MmoListener implements Listener {
     public void onLevelUp(PlayerLevelUpEvent event) {
         FileConfiguration config = LaBoulangerieMmo.PLUGIN.getConfig();
 
-        OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(event.getPlayer().getUniqueId());
-        Player player = offlinePlayer.getPlayer();
+        Player player = Bukkit.getPlayer(event.getPlayer().getUniqueId());
         Talent talent = event.getTalent();
         TalentArchetype talentArchetype = LaBoulangerieMmo.talentsRegistry.getTalent(talent.getTalentId());
 
         List<TagResolver.Single> resolvers = new ArrayList<>();
         resolvers.add(Placeholder.parsed("level", Integer.toString(event.getNewLevel())));
         resolvers.add(Placeholder.parsed("talent", talent.getDisplayName()));
-
-        ConfigurationSection rewards =
-                config.getConfigurationSection("level-up-rewards." + talent.getTalentId());
-        double amount = calculateLevelRewards(
-                rewards, event.getPreviousLevel(), event.getNewLevel(), config.getString("rewards-rounding-method", "no"));
-        boolean rewardPaid = false;
-        if (amount > 0) {
-            EconomyResponse response = LaBoulangerieMmo.ECONOMY.depositPlayer(offlinePlayer, amount);
-            if (response.transactionSuccess()) {
-                rewardPaid = true;
-                resolvers.add(Placeholder.parsed("reward", LaBoulangerieMmo.ECONOMY.format(amount)));
-            } else {
-                LaBoulangerieMmo.PLUGIN.getLogger().warning("Unable to pay " + amount + " to "
-                        + offlinePlayer.getName() + " for " + talent.getTalentId() + " levels "
-                        + (event.getPreviousLevel() + 1) + "-" + event.getNewLevel() + ": " + response.errorMessage);
-            }
-        }
 
         if (player == null) return;
         Component prefix = MiniMessage.miniMessage().deserialize(config.getString("lang.prefix"));
@@ -86,9 +65,8 @@ public class MmoListener implements Listener {
             }
         }
 
-        String levelMessage = rewardPaid ? "lang.messages.level-up" : "lang.messages.level-up-no-reward";
         Component lvlUpComponent = MiniMessage.miniMessage()
-                .deserialize(config.getString(levelMessage), TagResolver.resolver(resolvers));
+                .deserialize(config.getString("lang.messages.level-up"), TagResolver.resolver(resolvers));
         player.sendMessage(prefix.append(lvlUpComponent));
 
         Component titleComponent =
@@ -129,54 +107,6 @@ public class MmoListener implements Listener {
         player.sendActionBar(message);
     }
 
-    static double calculateLevelReward(ConfigurationSection rewards, int level, double levelXp) {
-        if (rewards == null || level <= 0) return 0;
-
-        double amount = processMoneyAmount(rewards.getString("*"), levelXp);
-        amount += processMoneyAmount(rewards.getString(Integer.toString(level)), levelXp);
-
-        ConfigurationSection progressive = rewards.getConfigurationSection("progressive");
-        if (progressive == null || !progressive.isSet("levels-per-step")
-                || !progressive.isSet("amount-per-step")) {
-            return amount;
-        }
-
-        int levelsPerStep = progressive.getInt("levels-per-step");
-        double amountPerStep = progressive.getDouble("amount-per-step");
-        if (levelsPerStep <= 0 || amountPerStep <= 0) return amount;
-
-        return amount + ((level / levelsPerStep) + 1) * amountPerStep;
-    }
-
-    static double calculateLevelRewards(
-            ConfigurationSection rewards, int previousLevel, int newLevel, String roundingMethod) {
-        return calculateLevelRewards(
-                rewards, previousLevel, newLevel, roundingMethod, LaBoulangerieMmo.XP_MULTIPLIER);
-    }
-
-    static double calculateLevelRewards(ConfigurationSection rewards, int previousLevel, int newLevel,
-            String roundingMethod, double xpMultiplier) {
-        if (newLevel <= previousLevel) return 0;
-        if (xpMultiplier <= 0 || !Double.isFinite(xpMultiplier)) return 0;
-
-        double total = 0;
-        for (int level = Math.max(1, previousLevel + 1); level <= newLevel; level++) {
-            double levelXp = Math.pow(level / xpMultiplier, 2);
-            total += roundReward(calculateLevelReward(rewards, level, levelXp), roundingMethod);
-        }
-        return total;
-    }
-
-    private static double roundReward(double amount, String method) {
-        if (method == null) return amount;
-        return switch (method) {
-            case "closest" -> Math.round(amount);
-            case "up" -> Math.ceil(amount);
-            case "down" -> Math.floor(amount);
-            default -> amount;
-        };
-    }
-
     private static boolean crossedLevel(PlayerLevelUpEvent event, int requiredLevel) {
         return requiredLevel > event.getPreviousLevel() && requiredLevel <= event.getNewLevel();
     }
@@ -187,22 +117,4 @@ public class MmoListener implements Listener {
         player.sendMessage(prefix.append(component));
     }
 
-    private static double processMoneyAmount(String rawAmount, double levelXp) {
-        if (rawAmount == null) return 0;
-
-        if (rawAmount.endsWith("%")) {
-            double percentage = 0;
-            try {
-                percentage = Double.parseDouble(rawAmount.split("%")[0]);
-            } catch (Exception e) {
-            }
-            return levelXp * percentage / 100;
-        }
-        try {
-            return Double.parseDouble(rawAmount);
-        } catch (Exception e) {
-        }
-
-        return 0;
-    }
 }
