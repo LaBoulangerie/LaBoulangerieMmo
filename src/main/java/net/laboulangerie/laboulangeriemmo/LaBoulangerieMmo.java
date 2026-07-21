@@ -5,10 +5,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.logging.Level;
 import org.betonquest.betonquest.api.BetonQuestApi;
 import org.betonquest.betonquest.api.BetonQuestApiService;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import net.laboulangerie.laboulangeriemmo.api.ability.AbilitiesRegistry;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayerListener;
@@ -49,11 +47,9 @@ import net.laboulangerie.laboulangeriemmo.listener.RareLootListener;
 import net.laboulangerie.laboulangeriemmo.listener.ServerListener;
 import net.laboulangerie.laboulangeriemmo.listener.XpBoostListener;
 import net.laboulangerie.laboulangeriemmo.utils.WolrdGuardSupport;
-import net.milkbowl.vault.economy.Economy;
 
 public class LaBoulangerieMmo extends JavaPlugin {
     public static LaBoulangerieMmo PLUGIN;
-    public static Economy ECONOMY = null;
     public static double XP_MULTIPLIER = 0.1;
     public static TalentsRegistry talentsRegistry = null;
     public static AbilitiesRegistry abilitiesRegistry = null;
@@ -89,12 +85,6 @@ public class LaBoulangerieMmo extends JavaPlugin {
         saveDefaultConfig();
         reloadNumberFormatter();
         setupMineLetProtection();
-        if (!setupEconomy()) {
-            getLogger().log(Level.SEVERE, "Can't load the plugin, Vault isn't present");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
         if (getServer().getPluginManager().getPlugin("MythicMobs") != null) {
             MYTHICMOBS_SUPPORT = true;
             getLogger().info("Hooked into MythicMobs!");
@@ -241,14 +231,4 @@ public class LaBoulangerieMmo extends JavaPlugin {
         formatter.applyPattern("#.##");
     }
 
-    private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null)
-            return false;
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-        ECONOMY = rsp.getProvider();
-        return ECONOMY != null;
-    }
 }

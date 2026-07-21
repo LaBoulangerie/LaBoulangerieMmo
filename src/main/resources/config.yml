@@ -14,8 +14,7 @@ lang:
         delay: 200
     messages:
         ability_log: <yellow>You used <aqua><ability></aqua>, cooldown for <aqua><cooldown> <unit></aqua>
-        level-up: <yellow>You reached level <aqua><level> <talent></aqua> ! You earned <aqua><reward></aqua>
-        level-up-no-reward: <yellow>You reached level <aqua><level> <talent></aqua> !
+        level-up: <yellow>You reached level <aqua><level> <talent></aqua> !
         level-up-title: <bold><gradient:yellow:green>↑ LEVEL UP ↑
         level-up-subtitle: <aqua>Level <level> <talent>
         ability-unlocked: <yellow>Habilité <aqua><ability></aqua> débloquée !
@@ -319,9 +318,9 @@ talents:
                     - 65
                     - 95
                 tier_descriptions:
+                    - "Abat les bûches connectées de même type dans un rayon horizontal de 3 blocs"
                     - "Abat les bûches connectées de même type dans un rayon horizontal de 5 blocs"
-                    - "Abat les bûches connectées de même type dans un rayon horizontal de 5 blocs"
-                    - "Abat les bûches connectées de même type dans un rayon horizontal de 5 blocs"
+                    - "Abat les bûches connectées de même type dans un rayon horizontal de 7 blocs"
             stun:
                 display_name: Étourdissement
                 display_item: NETHER_STAR
@@ -570,26 +569,6 @@ talent-grinding:
             IRON_HOE: 50
             DIAMOND_HOE: 100
             NETHERITE_HOE: 200
-
-#Define money rewards when a player levels up in one talent
-level-up-rewards:
-    miner:
-        progressive:
-            levels-per-step: 10
-            amount-per-step: 10
-    hunter:
-        progressive:
-            levels-per-step: 10
-            amount-per-step: 10
-    lumberjack:
-        progressive:
-            levels-per-step: 10
-            amount-per-step: 10
-    farmer:
-        progressive:
-            levels-per-step: 10
-            amount-per-step: 10
-rewards-rounding-method: "no" # Round rewards defined above, accepted values no, closest, up, down
 
 blockus-ignored-blocks:
     - CARROTS

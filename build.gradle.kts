@@ -70,7 +70,6 @@ dependencies {
     compileOnly("redis.clients:jedis:5.1.3") {
         isTransitive = false
     }
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7.1")
     compileOnly("fr.minelet:minelet-api:1.2.0")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.palmergames.bukkit.towny:towny:0.100.4.0")

@@ -3,6 +3,7 @@ package net.laboulangerie.laboulangeriemmo.core.rareloot;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
+import java.util.SplittableRandom;
 import java.util.random.RandomGenerator;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.player.MmoPlayer;
@@ -23,7 +24,7 @@ public final class RareLootEngine {
     private volatile RareLootRegistry registry = RareLootRegistry.empty();
 
     public RareLootEngine(RareLootItemProviderRegistry providers) {
-        this(providers, RandomGenerator.getDefault());
+        this(providers, new SplittableRandom());
     }
 
     RareLootEngine(RareLootItemProviderRegistry providers, RandomGenerator random) {

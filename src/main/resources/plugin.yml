@@ -3,7 +3,6 @@ version: 2.3.2
 main: net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo
 api-version: '1.21.11'
 authors: [TheHunter365, Grooble_, Pikachuz3, PainOchoco, BlackoutBurst, SunshineDev]
-depend: [Vault]
 softdepend: [PlaceholderAPI, Towny, BetonQuest, WorldGuard, MythicMobs, LibsDisguises, Minelet]
 
 libraries:
