@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.minelet.api.MineLetAPI;
+import fr.minelet.api.MineletAPI;
 import fr.minelet.api.protection.IProtectionService;
 import fr.minelet.api.protection.ProtectionRequest;
 import fr.minelet.api.protection.ProtectionResult;
@@ -28,8 +28,8 @@ public final class MineLetTalentProtection implements TalentProtection {
     }
 
     public static MineLetTalentProtection create(JavaPlugin plugin) {
-        if (!MineLetAPI.isAvailable()) return null;
-        return new MineLetTalentProtection(plugin, MineLetAPI.getProtection(), String.valueOf(MineLetAPI.getVersion()));
+        if (!MineletAPI.isAvailable()) return null;
+        return new MineLetTalentProtection(plugin, MineletAPI.getProtection(), String.valueOf(MineletAPI.getVersion()));
     }
 
     public String getVersion() {

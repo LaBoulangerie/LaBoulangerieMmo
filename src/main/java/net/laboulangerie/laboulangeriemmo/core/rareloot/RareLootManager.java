@@ -2,12 +2,16 @@ package net.laboulangerie.laboulangeriemmo.core.rareloot;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.rareloot.RareLootItemProviderRegistry;
 import net.laboulangerie.laboulangeriemmo.api.rareloot.RegisterRareLootItemProvidersEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.inventory.ItemStack;
 
 public final class RareLootManager {
     public record ReloadResult(boolean success, String message, List<String> warnings) {}
@@ -61,5 +65,25 @@ public final class RareLootManager {
 
     public RareLootItemProviderRegistry providers() {
         return providers;
+    }
+
+    /** Returns the configured rare-loot ids in a stable order for commands and integrations. */
+    public List<String> itemIds() {
+        List<String> ids = new ArrayList<>(engine.registry().items().keySet());
+        ids.sort(Comparator.naturalOrder());
+        return List.copyOf(ids);
+    }
+
+    /** Creates one configured rare-loot item from its public catalogue id. */
+    public Optional<ItemStack> createItem(String itemId) {
+        if (itemId == null) return Optional.empty();
+        String resolvedId = engine.registry().items().keySet().stream()
+                .filter(id -> id.equalsIgnoreCase(itemId))
+                .findFirst()
+                .orElse(null);
+        if (resolvedId == null) return Optional.empty();
+
+        RareLootItemDefinition definition = engine.registry().items().get(resolvedId);
+        return providers.create(definition.provider(), definition.providerItemId());
     }
 }

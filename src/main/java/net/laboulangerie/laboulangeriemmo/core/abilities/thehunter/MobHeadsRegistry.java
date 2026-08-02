@@ -47,6 +47,7 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 
 public class MobHeadsRegistry {
 
+    public static final String DEFAULT_VARIANT = "DEFAULT";
     private static final Map<String, List<HeadConfig>> headsByMob = new HashMap<>();
     private static final Set<String> DISABLED_MOB_HEADS = Set.of("SILVERFISH");
     private static final Random random = new Random();
@@ -286,5 +287,54 @@ public class MobHeadsRegistry {
 
     public static boolean hasHead(String mobType) {
         return headsByMob.containsKey(mobType.toUpperCase());
+    }
+
+    /** Returns all configured mob identifiers in a stable order. */
+    public static List<String> getMobTypes() {
+        return headsByMob.keySet().stream().sorted().toList();
+    }
+
+    /**
+     * Returns the command-facing variants for a mob. Entries without a condition are represented
+     * by {@value #DEFAULT_VARIANT}.
+     */
+    public static List<String> getVariants(String mobType) {
+        if (mobType == null) return List.of();
+        List<HeadConfig> heads = headsByMob.get(mobType.toUpperCase());
+        if (heads == null) return List.of();
+        return heads.stream()
+                .map(MobHeadsRegistry::variantName)
+                .distinct()
+                .sorted()
+                .toList();
+    }
+
+    public static int getConfiguredHeadCount(String mobType) {
+        if (mobType == null) return 0;
+        List<HeadConfig> heads = headsByMob.get(mobType.toUpperCase());
+        return heads == null ? 0 : heads.size();
+    }
+
+    /**
+     * Resolves an exact configured head for administrative use. A missing variant is accepted only
+     * when the mob has exactly one configured head.
+     */
+    public static HeadConfig getConfiguredHead(String mobType, String variant) {
+        if (mobType == null) return null;
+        return selectConfiguredHead(headsByMob.get(mobType.toUpperCase()), variant);
+    }
+
+    static HeadConfig selectConfiguredHead(List<HeadConfig> heads, String variant) {
+        if (heads == null || heads.isEmpty()) return null;
+        if (variant == null || variant.isBlank()) return heads.size() == 1 ? heads.getFirst() : null;
+        return heads.stream()
+                .filter(head -> variantName(head).equalsIgnoreCase(variant))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static String variantName(HeadConfig head) {
+        String condition = head.getCondition();
+        return condition == null || condition.isBlank() ? DEFAULT_VARIANT : condition;
     }
 }
