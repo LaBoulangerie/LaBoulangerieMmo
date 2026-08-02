@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
 import java.util.HashSet;
 import java.util.Set;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -14,6 +16,16 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.junit.jupiter.api.Test;
 
 class RareLootResourcesTest {
+    private static final Map<String, JobPalette> JOB_PALETTES = Map.of(
+            "Mineur", new JobPalette("<#70B7E6>", "<#92A9B8>", Set.of(
+                    "geode_shard", "luminous_core", "perfect_gem", "primordial_slag")),
+            "Bûcheron", new JobPalette("<#D99A6C>", "<#B0A097>", Set.of(
+                    "amber_sap", "ancient_knot", "spectral_bark", "sylvan_heart")),
+            "Fermier", new JobPalette("<#82C982>", "<#9EADA0>", Set.of(
+                    "solar_grain", "royal_tuber", "aether_spore", "fertility_essence")),
+            "Chasseur", new JobPalette("<#D9828B>", "<#AD9A9D>", Set.of(
+                    "reinforced_bone", "toxic_gland", "spectral_eye", "monstrous_heart")));
+
     private static final String[] RESOURCES = {
         "rare-loots/settings.yml",
         "rare-loots/items.yml",
@@ -102,6 +114,30 @@ class RareLootResourcesTest {
         assertEquals(0.10, vexTrimChance.chanceAt(100));
     }
 
+    @Test
+    void masteryItemsUseTheirJobPaletteAndClassicGrayProvenance() throws Exception {
+        ConfigurationSection items = load("rare-loots/items.yml").getConfigurationSection("items");
+        assertNotNull(items);
+
+        for (var entry : JOB_PALETTES.entrySet()) {
+            String job = entry.getKey();
+            JobPalette palette = entry.getValue();
+            for (String itemId : palette.itemIds()) {
+                String name = items.getString(itemId + ".name");
+                List<String> lore = items.getStringList(itemId + ".lore");
+
+                assertNotNull(name, itemId);
+                assertTrue(name.startsWith(palette.nameColor()), itemId + " name");
+                assertEquals(2, lore.size(), itemId + " lore");
+                assertTrue(lore.get(0).startsWith(palette.descriptionColor()), itemId + " description");
+                assertEquals("<gray>Butin de maîtrise du " + job, lore.get(1), itemId + " provenance");
+
+                MiniMessage.miniMessage().deserialize(name);
+                lore.forEach(line -> MiniMessage.miniMessage().deserialize(line));
+            }
+        }
+    }
+
     private YamlConfiguration load(String resource) throws Exception {
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream(resource)) {
             assertNotNull(stream, "Missing resource " + resource);
@@ -110,4 +146,6 @@ class RareLootResourcesTest {
             return configuration;
         }
     }
+
+    private record JobPalette(String nameColor, String descriptionColor, Set<String> itemIds) {}
 }

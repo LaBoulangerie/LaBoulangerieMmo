@@ -12,7 +12,7 @@ libraries:
 commands:
     lbmmo:
         description: Main command for LaBoulangerieMmo
-        usage: /lbmmo [stats|combo|talent|towny|xp|xpboost|reload|blockus|leaderboards] ...
+        usage: /lbmmo [stats|combo|talent|towny|xp|xpboost|reload|blockus|leaderboards|masteryitem|hunterhead] ...
     stats:
         permission: laboulangeriemmo.stats
         description: See your level and other information

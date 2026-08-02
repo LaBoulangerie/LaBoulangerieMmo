@@ -25,6 +25,8 @@ public class LbmmoCommand implements CommandExecutor, TabCompleter {
         register("stats", new Stats(), "laboulangeriemmo.stats", true);
         register("combo", new Combo(), "laboulangeriemmo.combo", true);
         register("talent", new TalentTree(), "laboulangeriemmo.talent", true);
+        register("masteryitem", new MasteryItemCommand(), ADMIN_PERMISSION, true);
+        register("hunterhead", new HunterHeadCommand(), ADMIN_PERMISSION, true);
         if (LaBoulangerieMmo.PLUGIN.getServer().getPluginManager().getPlugin("Towny") != null) {
             register("towny", new TownyMmo(), null, true);
         }

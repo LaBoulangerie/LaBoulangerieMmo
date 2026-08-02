@@ -20,7 +20,7 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
  * WolrdGuardSupport
  */
 public class WolrdGuardSupport {
-    public static StateFlag USE_ABILITY_FLAG = new StateFlag("ability-use", false);
+    public static StateFlag USE_ABILITY_FLAG = new StateFlag("ability-use", true);
 
     public static void enableSupport() {
         FlagRegistry registry = WorldGuard.getInstance().getFlagRegistry();
@@ -46,6 +46,12 @@ public class WolrdGuardSupport {
         RegionQuery query = container.createQuery();
         ApplicableRegionSet set =
                 query.getApplicableRegions(BukkitAdapter.adapt(player.getLocation()));
-        return set.testState(WorldGuardPlugin.inst().wrapPlayer(player), USE_ABILITY_FLAG);
+        StateFlag.State state =
+                set.queryState(WorldGuardPlugin.inst().wrapPlayer(player), USE_ABILITY_FLAG);
+        return isAbilityUseAllowed(state);
+    }
+
+    static boolean isAbilityUseAllowed(StateFlag.State state) {
+        return state != StateFlag.State.DENY;
     }
 }

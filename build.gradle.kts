@@ -70,7 +70,7 @@ dependencies {
     compileOnly("redis.clients:jedis:5.1.3") {
         isTransitive = false
     }
-    compileOnly("fr.minelet:minelet-api:1.2.0")
+    compileOnly("fr.minelet:minelet-api:2.0.0")
     compileOnly("me.clip:placeholderapi:2.11.6")
     compileOnly("com.palmergames.bukkit.towny:towny:0.100.4.0")
     compileOnly("org.betonquest:betonquest:3.0.2") {
@@ -96,7 +96,10 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.mockito:mockito-core:5.18.0")
     testImplementation("redis.clients:jedis:5.1.3")
-    testImplementation("fr.minelet:minelet-api:1.2.0")
+    testImplementation("fr.minelet:minelet-api:2.0.0")
+    testImplementation("com.sk89q.worldguard:worldguard-core:7.0.15") {
+        isTransitive = false
+    }
     testImplementation("net.kyori:adventure-text-serializer-ansi:4.26.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
