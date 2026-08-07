@@ -139,7 +139,8 @@ public class Timber extends AbilityExecutor {
             return;
         }
 
-        GrindingListener.giveReward(player, GrindingCategory.BREAK, candidate.getType().toString(), false);
+        GrindingListener.giveRewardIgnoringMovementGuard(
+                player, GrindingCategory.BREAK, candidate.getType().toString(), false);
         candidate.breakNaturally(null, true);
     }
 

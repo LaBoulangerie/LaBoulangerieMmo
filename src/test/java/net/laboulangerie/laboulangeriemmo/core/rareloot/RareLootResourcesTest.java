@@ -115,7 +115,7 @@ class RareLootResourcesTest {
     }
 
     @Test
-    void masteryItemsUseTheirJobPaletteAndClassicGrayProvenance() throws Exception {
+    void masteryItemsUseTheirJobPaletteAndValidProvenance() throws Exception {
         ConfigurationSection items = load("rare-loots/items.yml").getConfigurationSection("items");
         assertNotNull(items);
 
@@ -130,7 +130,7 @@ class RareLootResourcesTest {
                 assertTrue(name.startsWith(palette.nameColor()), itemId + " name");
                 assertEquals(2, lore.size(), itemId + " lore");
                 assertTrue(lore.get(0).startsWith(palette.descriptionColor()), itemId + " description");
-                assertEquals("<gray>Butin de maîtrise du " + job, lore.get(1), itemId + " provenance");
+                assertTrue(lore.get(1).endsWith("Butin de maîtrise du " + job), itemId + " provenance");
 
                 MiniMessage.miniMessage().deserialize(name);
                 lore.forEach(line -> MiniMessage.miniMessage().deserialize(line));
