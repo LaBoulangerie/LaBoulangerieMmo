@@ -119,11 +119,21 @@ public class GrindingListener implements Listener {
     }
 
     public static void giveReward(Player player, GrindingCategory category, String identifier, boolean isSpawnerMob) {
-        giveReward(player, category, identifier, isSpawnerMob, 1.0);
+        giveReward(player, category, identifier, isSpawnerMob, 1.0, true);
+    }
+
+    public static void giveRewardIgnoringMovementGuard(Player player, GrindingCategory category, String identifier,
+            boolean isSpawnerMob) {
+        giveReward(player, category, identifier, isSpawnerMob, 1.0, false);
     }
 
     static void giveReward(Player player, GrindingCategory category, String identifier, boolean isSpawnerMob,
             double rewardMultiplier) {
+        giveReward(player, category, identifier, isSpawnerMob, rewardMultiplier, true);
+    }
+
+    private static void giveReward(Player player, GrindingCategory category, String identifier, boolean isSpawnerMob,
+            double rewardMultiplier, boolean applyMovementGuard) {
         if (player.getGameMode() == GameMode.CREATIVE) return;
         Set<String> keys =
                 LaBoulangerieMmo.PLUGIN.getConfig().getConfigurationSection("talent-grinding").getKeys(false);
@@ -149,7 +159,7 @@ public class GrindingListener implements Listener {
                     xpAmount = xpAmount < 0 ? 0 : xpAmount;
                 }
                 if (category == GrindingCategory.KILL) xpAmount *= rewardMultiplier;
-                if (xpAmount > 0 && XP_MOVEMENT_GUARD.canGainXp(player)) {
+                if (xpAmount > 0 && (!applyMovementGuard || XP_MOVEMENT_GUARD.canGainXp(player))) {
                     LaBoulangerieMmo.PLUGIN.getMmoPlayerManager().getPlayer(player).incrementXp(talentName, xpAmount);
                 }
             }
