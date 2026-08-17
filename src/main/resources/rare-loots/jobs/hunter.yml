@@ -59,7 +59,7 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 9: 0.30, 36: 0.45, 67: 0.65, 93: 0.85 }
+        levels: { 9: 0.015, 36: 0.0225, 67: 0.0325, 93: 0.0425 }
 
   toxic_gland:
     enabled: true
@@ -71,7 +71,7 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 26: 0.35, 54: 0.55, 81: 0.80 }
+        levels: { 26: 0.0175, 54: 0.0275, 81: 0.04 }
 
   spectral_eye:
     enabled: true
@@ -83,19 +83,43 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 52: 0.60, 73: 0.90, 96: 1.25 }
+        levels: { 52: 0.03, 73: 0.045, 96: 0.0625 }
 
-  monstrous_heart:
+  monstrous_heart_from_ravager:
     enabled: true
     action: KILL
     conditions:
-      entity-types: [RAVAGER, ELDER_GUARDIAN, WARDEN, WITHER]
+      entity-types: [RAVAGER]
+    loot:
+      item: monstrous_heart
+      amount: 1
+      chance:
+        default: 0
+        levels: { 84: 1.50, 94: 2.25, 100: 3.00 }
+
+  monstrous_heart_from_elder_guardian:
+    enabled: true
+    action: KILL
+    conditions:
+      entity-types: [ELDER_GUARDIAN]
     loot:
       item: monstrous_heart
       amount: 1
       chance:
         default: 0
         levels: { 84: 3.00, 94: 4.50, 100: 6.00 }
+
+  monstrous_heart_from_wither_or_warden:
+    enabled: true
+    action: KILL
+    conditions:
+      entity-types: [WITHER, WARDEN]
+    loot:
+      item: monstrous_heart
+      amount: 1
+      chance:
+        default: 0
+        levels: { 84: 1.00 }
 
   vex_armor_trim:
     enabled: true

@@ -6,11 +6,10 @@ import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.rareloot.RareLootAction;
 import net.laboulangerie.laboulangeriemmo.core.rareloot.RareLootContext;
 import net.laboulangerie.laboulangeriemmo.core.rareloot.RareLootEngine;
+import net.laboulangerie.laboulangeriemmo.core.rareloot.RareLootManager;
 import net.laboulangerie.laboulangeriemmo.utils.MythicMobsSupport;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Ageable;
-import org.bukkit.block.data.type.CaveVinesPlant;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,18 +24,19 @@ import org.bukkit.inventory.ItemStack;
 
 public final class RareLootListener implements Listener {
     private static final Map<Material, Material> STRIPPED = strippedMaterials();
+    private final RareLootManager manager;
     private final RareLootEngine engine;
 
-    public RareLootListener(RareLootEngine engine) {
-        this.engine = engine;
+    public RareLootListener(RareLootManager manager) {
+        this.manager = manager;
+        this.engine = manager.engine();
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
         boolean placed = LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(block) != null;
-        RareLootAction action = isMatureCrop(block) ? RareLootAction.HARVEST : RareLootAction.BLOCK_BREAK;
-        process(action, event.getPlayer(), block, block.getType(), null, null, null, placed);
+        manager.processBlockBreak(event.getPlayer(), block, placed);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -92,11 +92,6 @@ public final class RareLootListener implements Listener {
         ItemStack tool = player.getInventory().getItemInMainHand();
         engine.process(new RareLootContext(action, player, block.getLocation().add(0.5, 0.5, 0.5), source,
                 entityType, mythic, tool, block.getBiome(), spawnReason, null, placed));
-    }
-
-    private boolean isMatureCrop(Block block) {
-        if (block.getBlockData() instanceof Ageable ageable) return ageable.getAge() == ageable.getMaximumAge();
-        return block.getBlockData() instanceof CaveVinesPlant vines && vines.isBerries();
     }
 
     private boolean isAxe(Material material) {

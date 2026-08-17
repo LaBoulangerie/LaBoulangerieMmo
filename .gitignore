@@ -32,3 +32,4 @@ out/
 
 # Common working directory
 run/
+.claude/settings.local.json

@@ -59,7 +59,7 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 3: 0.05, 28: 0.08, 64: 0.13, 90: 0.18 }
+        levels: { 3: 0.005, 28: 0.008, 64: 0.013, 90: 0.018 }
 
   royal_tuber:
     enabled: true
@@ -71,7 +71,7 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 19: 0.06, 46: 0.11, 79: 0.17 }
+        levels: { 19: 0.006, 46: 0.011, 79: 0.017 }
 
   aether_spore:
     enabled: true
@@ -83,7 +83,7 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 44: 0.10, 71: 0.18, 95: 0.28 }
+        levels: { 44: 0.01, 71: 0.018, 95: 0.028 }
 
   fertility_essence:
     enabled: true
@@ -95,4 +95,4 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 76: 0.60, 88: 0.90, 100: 1.25 }
+        levels: { 76: 0.06, 88: 0.09, 100: 0.125 }

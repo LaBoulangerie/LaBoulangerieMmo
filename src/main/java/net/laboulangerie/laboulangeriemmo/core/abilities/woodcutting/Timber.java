@@ -135,10 +135,12 @@ public class Timber extends AbilityExecutor {
 
     private void breakIfAllowed(Block candidate, int range) {
         if (!isMatchingTreeBlock(candidate, range)
+                || LaBoulangerieMmo.PLUGIN.getBlockusHolder().getBlockus(candidate) != null
                 || !LaBoulangerieMmo.PLUGIN.getTalentProtection().canBreak(player, candidate)) {
             return;
         }
 
+        LaBoulangerieMmo.PLUGIN.getRareLootManager().processBlockBreak(player, candidate, false);
         GrindingListener.giveRewardIgnoringMovementGuard(
                 player, GrindingCategory.BREAK, candidate.getType().toString(), false);
         candidate.breakNaturally(null, true);
