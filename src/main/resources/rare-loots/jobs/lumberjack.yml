@@ -60,7 +60,7 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 4: 0.07, 33: 0.11, 68: 0.16, 94: 0.22 }
+        levels: { 4: 0.007, 33: 0.011, 68: 0.016, 94: 0.022 }
 
   ancient_knot:
     enabled: true
@@ -73,7 +73,7 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 22: 0.08, 52: 0.14, 83: 0.22 }
+        levels: { 22: 0.008, 52: 0.014, 83: 0.022 }
 
   spectral_bark:
     enabled: true
@@ -86,7 +86,7 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 48: 0.14, 74: 0.24, 97: 0.35 }
+        levels: { 48: 0.014, 74: 0.024, 97: 0.035 }
 
   sylvan_heart:
     enabled: true
@@ -99,4 +99,4 @@ rules:
       amount: 1
       chance:
         default: 0
-        levels: { 93: 0.01, 100: 0.02 }
+        levels: { 93: 0.005, 100: 0.01 }

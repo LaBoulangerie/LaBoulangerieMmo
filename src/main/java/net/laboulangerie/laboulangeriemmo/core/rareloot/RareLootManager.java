@@ -8,9 +8,15 @@ import java.util.List;
 import java.util.Optional;
 import net.laboulangerie.laboulangeriemmo.LaBoulangerieMmo;
 import net.laboulangerie.laboulangeriemmo.api.rareloot.RareLootItemProviderRegistry;
+import net.laboulangerie.laboulangeriemmo.api.rareloot.RareLootAction;
 import net.laboulangerie.laboulangeriemmo.api.rareloot.RegisterRareLootItemProvidersEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.type.CaveVinesPlant;
 import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public final class RareLootManager {
@@ -61,6 +67,22 @@ public final class RareLootManager {
 
     public RareLootEngine engine() {
         return engine;
+    }
+
+    /** Processes one player-driven block break, including synthetic breaks from abilities such as Timber. */
+    public void processBlockBreak(Player player, Block block, boolean placedBlock) {
+        ItemStack tool = player.getInventory().getItemInMainHand();
+        engine.process(new RareLootContext(actionFor(block.getBlockData()), player,
+                block.getLocation().add(0.5, 0.5, 0.5), block.getType(), null, null, tool, block.getBiome(), null,
+                null, placedBlock));
+    }
+
+    static RareLootAction actionFor(BlockData blockData) {
+        if (blockData instanceof Ageable ageable && ageable.getAge() == ageable.getMaximumAge()) {
+            return RareLootAction.HARVEST;
+        }
+        if (blockData instanceof CaveVinesPlant vines && vines.isBerries()) return RareLootAction.HARVEST;
+        return RareLootAction.BLOCK_BREAK;
     }
 
     public RareLootItemProviderRegistry providers() {

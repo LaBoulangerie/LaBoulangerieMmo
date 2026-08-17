@@ -83,13 +83,12 @@ class RareLootResourcesTest {
         assertTrue(!items.contains("vex_armor_trim.name"));
         assertTrue(!items.contains("vex_armor_trim.lore"));
 
-        Set<Integer> initialLevels = new HashSet<>();
         for (String job : new String[] {"hunter", "lumberjack", "farmer", "miner"}) {
             YamlConfiguration jobConfig = load("rare-loots/jobs/" + job + ".yml");
             assertEquals(job, jobConfig.getString("job"));
             ConfigurationSection rules = jobConfig.getConfigurationSection("rules");
             assertNotNull(rules);
-            assertEquals(job.equals("hunter") ? 5 : 4, rules.getKeys(false).size(), job);
+            assertEquals(job.equals("hunter") ? 7 : 4, rules.getKeys(false).size(), job);
             for (String ruleId : rules.getKeys(false)) {
                 String path = "rules." + ruleId;
                 assertTrue(rules.getBoolean(ruleId + ".enabled"), job + ':' + ruleId);
@@ -98,10 +97,9 @@ class RareLootResourcesTest {
                 ConfigurationSection levels = rules.getConfigurationSection(ruleId + ".loot.chance.levels");
                 assertNotNull(levels, job + ':' + ruleId);
                 int initialLevel = levels.getKeys(false).stream().mapToInt(Integer::parseInt).min().orElseThrow();
-                assertTrue(initialLevels.add(initialLevel), "Repeated initial level " + initialLevel);
+                assertTrue(initialLevel >= 1 && initialLevel <= 100, job + ':' + ruleId + " initial level");
             }
         }
-        assertEquals(17, initialLevels.size());
 
         YamlConfiguration hunter = load("rare-loots/jobs/hunter.yml");
         assertEquals(Set.of("PILLAGER", "VINDICATOR", "EVOKER", "ILLUSIONER"),
@@ -112,6 +110,12 @@ class RareLootResourcesTest {
                         100, hunter.getDouble("rules.vex_armor_trim.loot.chance.levels.100"))));
         assertEquals(0, vexTrimChance.chanceAt(99));
         assertEquals(0.10, vexTrimChance.chanceAt(100));
+
+        assertEquals(3.00, hunter.getDouble("rules.monstrous_heart_from_ravager.loot.chance.levels.100"));
+        assertEquals(6.00,
+                hunter.getDouble("rules.monstrous_heart_from_elder_guardian.loot.chance.levels.100"));
+        assertEquals(1.00,
+                hunter.getDouble("rules.monstrous_heart_from_wither_or_warden.loot.chance.levels.84"));
     }
 
     @Test

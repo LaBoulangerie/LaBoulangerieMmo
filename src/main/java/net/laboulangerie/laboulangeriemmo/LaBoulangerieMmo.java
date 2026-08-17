@@ -167,9 +167,11 @@ public class LaBoulangerieMmo extends JavaPlugin {
 
     private void registerListeners() {
         Arrays.asList(new ServerListener(), new MmoPlayerListener(), new GrindingListener(), new AbilitiesDispatcher(),
-                new MmoListener(), new BlockusListener(), new XpBoostListener(), LeaderBoardManager.getInstance(),
-                new ComboDispatcher(), new LuckyVeinListener(), new FireBowIgniteListener(),
-                new RareLootListener(rareLootManager.engine()))
+                new MmoListener(),
+                // Rare loot must snapshot the Blockus marker before BlockusListener removes it after the break.
+                new RareLootListener(rareLootManager), new BlockusListener(), new XpBoostListener(),
+                LeaderBoardManager.getInstance(), new ComboDispatcher(), new LuckyVeinListener(),
+                new FireBowIgniteListener())
                 .forEach(l -> getServer().getPluginManager().registerEvents(l, this));
     }
 
